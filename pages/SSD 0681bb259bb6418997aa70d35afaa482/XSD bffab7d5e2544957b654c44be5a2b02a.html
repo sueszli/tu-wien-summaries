@@ -1,0 +1,1581 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>XSD</title>
+        <style>
+            /* cspell:disable-file */
+            /* webkit printing magic: print all background colors */
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            * {
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media only screen {
+                body {
+                    margin: 2em auto;
+                    max-width: 900px;
+                    color: rgb(55, 53, 47);
+                }
+            }
+
+            body {
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            a,
+            a.visited {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .pdf-relative-link-path {
+                font-size: 80%;
+                color: #444;
+            }
+
+            h1,
+            h2,
+            h3 {
+                letter-spacing: -0.01em;
+                line-height: 1.2;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 0;
+                margin-bottom: 0.75em;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+                margin-top: 1.875rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .source {
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 1.5em;
+                word-break: break-all;
+            }
+
+            .callout {
+                border-radius: 3px;
+                padding: 1rem;
+            }
+
+            figure {
+                margin: 1.25em 0;
+                page-break-inside: avoid;
+            }
+
+            figcaption {
+                opacity: 0.5;
+                font-size: 85%;
+                margin-top: 0.5em;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+
+            .indented {
+                padding-left: 1.5em;
+            }
+
+            hr {
+                background: transparent;
+                display: block;
+                width: 100%;
+                height: 1px;
+                visibility: visible;
+                border: none;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            @media only print {
+                img {
+                    max-height: 100vh;
+                    object-fit: contain;
+                }
+            }
+
+            @page {
+                margin: 1in;
+            }
+
+            .collection-content {
+                font-size: 0.875rem;
+            }
+
+            .column-list {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .column {
+                padding: 0 1em;
+            }
+
+            .column:first-child {
+                padding-left: 0;
+            }
+
+            .column:last-child {
+                padding-right: 0;
+            }
+
+            .table_of_contents-item {
+                display: block;
+                font-size: 0.875rem;
+                line-height: 1.3;
+                padding: 0.125rem;
+            }
+
+            .table_of_contents-indent-1 {
+                margin-left: 1.5rem;
+            }
+
+            .table_of_contents-indent-2 {
+                margin-left: 3rem;
+            }
+
+            .table_of_contents-indent-3 {
+                margin-left: 4.5rem;
+            }
+
+            .table_of_contents-link {
+                text-decoration: none;
+                opacity: 0.7;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+            }
+
+            table,
+            th,
+            td {
+                border: 1px solid rgba(55, 53, 47, 0.09);
+                border-collapse: collapse;
+            }
+
+            table {
+                border-left: none;
+                border-right: none;
+            }
+
+            th,
+            td {
+                font-weight: normal;
+                padding: 0.25em 0.5em;
+                line-height: 1.5;
+                min-height: 1.5em;
+                text-align: left;
+            }
+
+            th {
+                color: rgba(55, 53, 47, 0.6);
+            }
+
+            ol,
+            ul {
+                margin: 0;
+                margin-block-start: 0.6em;
+                margin-block-end: 0.6em;
+            }
+
+            li > ol:first-child,
+            li > ul:first-child {
+                margin-block-start: 0.6em;
+            }
+
+            ul > li {
+                list-style: disc;
+            }
+
+            ul.to-do-list {
+                padding-inline-start: 0;
+            }
+
+            ul.to-do-list > li {
+                list-style: none;
+            }
+
+            .to-do-children-checked {
+                text-decoration: line-through;
+                opacity: 0.375;
+            }
+
+            ul.toggle > li {
+                list-style: none;
+            }
+
+            ul {
+                padding-inline-start: 1.7em;
+            }
+
+            ul > li {
+                padding-left: 0.1em;
+            }
+
+            ol {
+                padding-inline-start: 1.6em;
+            }
+
+            ol > li {
+                padding-left: 0.2em;
+            }
+
+            .mono ol {
+                padding-inline-start: 2em;
+            }
+
+            .mono ol > li {
+                text-indent: -0.4em;
+            }
+
+            .toggle {
+                padding-inline-start: 0em;
+                list-style-type: none;
+            }
+
+            /* Indent toggle children */
+            .toggle > li > details {
+                padding-left: 1.7em;
+            }
+
+            .toggle > li > details > summary {
+                margin-left: -1.1em;
+            }
+
+            .selected-value {
+                display: inline-block;
+                padding: 0 0.5em;
+                background: rgba(206, 205, 202, 0.5);
+                border-radius: 3px;
+                margin-right: 0.5em;
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+            }
+
+            .collection-title {
+                display: inline-block;
+                margin-right: 1em;
+            }
+
+            .page-description {
+                margin-bottom: 2em;
+            }
+
+            .simple-table {
+                margin-top: 1em;
+                font-size: 0.875rem;
+                empty-cells: show;
+            }
+            .simple-table td {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table th {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table-header-color {
+                background: rgb(247, 246, 243);
+                color: black;
+            }
+            .simple-table-header {
+                font-weight: 500;
+            }
+
+            time {
+                opacity: 0.5;
+            }
+
+            .icon {
+                display: inline-block;
+                max-width: 1.2em;
+                max-height: 1.2em;
+                text-decoration: none;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            img.icon {
+                border-radius: 3px;
+            }
+
+            .user-icon {
+                width: 1.5em;
+                height: 1.5em;
+                border-radius: 100%;
+                margin-right: 0.5rem;
+            }
+
+            .user-icon-inner {
+                font-size: 0.8em;
+            }
+
+            .text-icon {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+            .page-cover-image {
+                display: block;
+                object-fit: cover;
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            .page-header-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .page-header-icon-with-cover {
+                margin-top: -0.72em;
+                margin-left: 0.07em;
+            }
+
+            .page-header-icon img {
+                border-radius: 3px;
+            }
+
+            .link-to-page {
+                margin: 1em 0;
+                padding: 0;
+                border: none;
+                font-weight: 500;
+            }
+
+            p > .user {
+                opacity: 0.5;
+            }
+
+            td > .user,
+            td > time {
+                white-space: nowrap;
+            }
+
+            input[type="checkbox"] {
+                transform: scale(1.5);
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
+
+            p {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .image {
+                border: none;
+                margin: 1.5em 0;
+                padding: 0;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .code,
+            code {
+                background: rgba(135, 131, 120, 0.15);
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 85%;
+                tab-size: 2;
+            }
+
+            code {
+                color: #eb5757;
+            }
+
+            .code {
+                padding: 1.5em 1em;
+            }
+
+            .code-wrap {
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .code > code {
+                background: none;
+                padding: 0;
+                font-size: 100%;
+                color: inherit;
+            }
+
+            blockquote {
+                font-size: 1.25em;
+                margin: 1em 0;
+                padding-left: 1em;
+                border-left: 3px solid rgb(55, 53, 47);
+            }
+
+            .bookmark {
+                text-decoration: none;
+                max-height: 8em;
+                padding: 0;
+                display: flex;
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .bookmark-title {
+                font-size: 0.85em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 1.75em;
+                white-space: nowrap;
+            }
+
+            .bookmark-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bookmark-info {
+                flex: 4 1 180px;
+                padding: 12px 14px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark-image {
+                width: 33%;
+                flex: 1 1 180px;
+                display: block;
+                position: relative;
+                object-fit: cover;
+                border-radius: 1px;
+            }
+
+            .bookmark-description {
+                color: rgba(55, 53, 47, 0.6);
+                font-size: 0.75em;
+                overflow: hidden;
+                max-height: 4.5em;
+                word-break: break-word;
+            }
+
+            .bookmark-href {
+                font-size: 0.75em;
+                margin-top: 0.25em;
+            }
+
+            .sans {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+                    "Segoe UI Symbol";
+            }
+            .code {
+                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+            }
+            .serif {
+                font-family: Lyon-Text, Georgia, ui-serif, serif;
+            }
+            .mono {
+                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+            }
+            .pdf .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+            }
+            .pdf:lang(zh-CN) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+            }
+            .pdf:lang(zh-TW) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+            }
+            .pdf:lang(ko-KR) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+            }
+            .pdf .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK KR";
+            }
+            .pdf .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+            }
+            .pdf:lang(zh-CN) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+            }
+            .pdf:lang(zh-TW) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+            }
+            .pdf:lang(ko-KR) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+            }
+            .pdf .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+            }
+            .highlight-default {
+                color: rgba(55, 53, 47, 1);
+            }
+            .highlight-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .highlight-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .highlight-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .highlight-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .highlight-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .highlight-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .highlight-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .highlight-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .highlight-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .highlight-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .highlight-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .highlight-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .highlight-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .highlight-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .highlight-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .highlight-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .highlight-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .highlight-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .block-color-default {
+                color: inherit;
+                fill: inherit;
+            }
+            .block-color-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .block-color-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .block-color-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .block-color-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .block-color-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .block-color-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .block-color-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .block-color-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .block-color-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .block-color-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .block-color-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .block-color-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .block-color-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .block-color-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .block-color-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .block-color-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .block-color-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .block-color-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .select-value-color-interactiveBlue {
+                background-color: rgba(35, 131, 226, 0.07);
+            }
+            .select-value-color-pink {
+                background-color: rgba(245, 224, 233, 1);
+            }
+            .select-value-color-purple {
+                background-color: rgba(232, 222, 238, 1);
+            }
+            .select-value-color-green {
+                background-color: rgba(219, 237, 219, 1);
+            }
+            .select-value-color-gray {
+                background-color: rgba(227, 226, 224, 1);
+            }
+            .select-value-color-translucentGray {
+                background-color: rgba(255, 255, 255, 0.0375);
+            }
+            .select-value-color-orange {
+                background-color: rgba(250, 222, 201, 1);
+            }
+            .select-value-color-brown {
+                background-color: rgba(238, 224, 218, 1);
+            }
+            .select-value-color-red {
+                background-color: rgba(255, 226, 221, 1);
+            }
+            .select-value-color-yellow {
+                background-color: rgba(253, 236, 200, 1);
+            }
+            .select-value-color-blue {
+                background-color: rgba(211, 229, 239, 1);
+            }
+            .select-value-color-pageGlass {
+                background-color: undefined;
+            }
+            .select-value-color-washGlass {
+                background-color: undefined;
+            }
+
+            .checkbox {
+                display: inline-flex;
+                vertical-align: text-bottom;
+                width: 16;
+                height: 16;
+                background-size: 16px;
+                margin-left: 2px;
+                margin-right: 5px;
+            }
+
+            .checkbox-on {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            .checkbox-off {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            /* -------- injections from notionBackup -------- */
+
+            body {
+                white-space: normal !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+
+            .code,
+            code {
+                font-size: 100% !important;
+            }
+
+            blockquote {
+                font-size: 100% !important;
+            }
+
+            .callout {
+                white-space: normal !important;
+            }
+            .callout div:has(span.icon) {
+                font-size: 100% !important;
+            }
+
+            .source:not(.bookmark) {
+                font-size: 100% !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+        </style>
+    </head>
+    <body>
+        <article class="page sans">
+            <header>
+                <h1 class="page-title">XSD</h1>
+                <p class="page-description"></p>
+            </header>
+            <div class="page-body">
+                <figure class="link-to-page">
+                    <a href="XSD%20bffab7d5e2544957b654c44be5a2b02a/Examples%20fd57bea21e07424ea8b2ec040fc9242f.html">
+                        <span class="icon">📎</span>
+                        Examples
+                    </a>
+                </figure>
+                <p></p>
+                <nav class="block-color-gray table_of_contents">
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#a1c87311-96f1-40c3-812e-173b829e34d4">Definition</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#56379de0-ac83-4809-87fb-d824626b5a65">Simple Types</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#642be408-9b75-4162-af83-f6dadc858a18">Simple elements</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#92b24626-8236-46da-8b06-e6b65ae316e1">Facets / Restrictions of simple elements</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#afa99ef4-4a5b-48e3-8b0c-2d8b17d3023e">Complex Types</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#7edf67d6-c6ef-4346-9910-a93717eb36a2">Complex Elements</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#3ef40ce4-60eb-4901-8c0e-3e090872c9d4">Attributes</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#68982858-7f18-4203-8618-6dc60e65de50">Order</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#c26835a7-f8c7-4f45-bac5-75f08d28178b">Occurrence</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#6e5ac884-6b3f-4620-8140-d794711935b2">Extending other types</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#7513e28f-b86a-442f-a64c-ac3d1522fe45">Keys and References</a>
+                    </div>
+                </nav>
+                <p></p>
+                <p></p>
+                <h1>Definition</h1>
+                <p><mark class="highlight-blue">XSD</mark></p>
+                <div class="indented">
+                    <p>= XML Schema Definition</p>
+                    <p>more expressive than DTDs</p>
+                    <p>same syntax as XML</p>
+                </div>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>example</summary>
+                            <pre class="code"><code>&lt;person&gt;
+	&lt;fullname&gt; Mantas Šimkus &lt;/fullname&gt;
+	&lt;tel&gt; 18441 &lt;/tel&gt;
+&lt;/person&gt;</code></pre>
+                            <pre class="code"><code>&lt;!ELEMENT person (fullname, tel)&gt;
+&lt;!ELEMENT fullname (#PCDATA)&gt;
+&lt;!ELEMENT tel (#PCDATA)&gt;</code></pre>
+                            <pre class="code"><code>&lt;?xml version="1.0"?&gt;
+&lt;xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt; &lt;!--xsd as namespace-prefix--&gt;
+	&lt;xsd:element name="person"&gt;
+		&lt;xsd:complexType&gt;
+			&lt;xsd:sequence&gt;
+				&lt;xsd:element name="fullname" type="xsd:string"/&gt;
+				&lt;xsd:element name="tel" type="xsd:positiveInteger"/&gt;
+			&lt;/xsd:sequence&gt;
+		&lt;/xsd:complexType&gt;
+	&lt;/xsd:element&gt;
+&lt;/xsd:schema&gt;</code></pre>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <p><mark class="highlight-blue">Declaring the XSD</mark></p>
+                <div class="indented">
+                    <p>Referencing the XSD in the XML declaration</p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <mark class="highlight-gray"><code>xsi:schemaLocation</code></mark>
+                                </summary>
+                                <p>list of pairs: (namespace URI + schema URL)</p>
+                                <p>schema validates elements and attributes in namespace</p>
+                                <pre class="code"><code>&lt;?xml version="1.0"?&gt;
+&lt;person xmlns="http://www.example.com"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.com person.xsd"&gt;
+
+	&lt;name&gt; Alice &lt;/name&gt;
+&lt;/person&gt;</code></pre>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <mark class="highlight-gray"><code>xsi:noNamespaceSchemaLocation</code></mark>
+                                </summary>
+                                <p>schema only validates elements that are not in any namespace</p>
+                                <pre class="code"><code>&lt;?xml version="1.0"?&gt;
+&lt;person
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="person.xsd"&gt;
+
+	&lt;name&gt; Alice &lt;/name&gt;
+&lt;/person&gt;</code></pre>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Root element</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>xsd:schema</code></mark>
+                        <mark class="highlight-gray"></mark>
+                        →
+                        <mark class="highlight-gray"></mark>
+                        only once in root of every XSD-schema document
+                    </p>
+                    <p>other elements are in its namespace</p>
+                    <p>
+                        usually used with prefixes
+                        <mark class="highlight-gray"><code>xsd:</code></mark>
+                        <mark class="highlight-gray"></mark>
+                        or
+                        <mark class="highlight-gray"><code>xs:</code></mark>
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Global elements</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>xsd:element</code></mark>
+                        <mark class="highlight-gray"></mark>
+                        →
+                        <mark class="highlight-gray"></mark>
+                        children of root element
+                    </p>
+                    <p>can be the root in an “instance”-XSD-document.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Simple Types</h1>
+                <figure class="block-color-gray_background callout" style="white-space: pre-wrap; display: flex">
+                    <div style="font-size: 1.5em"><span class="icon">💡</span></div>
+                    <div style="width: 100%">Similar to primitive data types</div>
+                </figure>
+                <h2>Simple elements</h2>
+                <p><mark class="highlight-blue">Element types</mark></p>
+                <div class="indented">
+                    <p>
+                        <code><mark class="highlight-gray">&lt;xsd:element</mark></code>
+                        <code>name="elementName"</code>
+                        <code><mark class="highlight-gray"></mark></code>
+                        <code>type="elementType"</code>
+                        <code><mark class="highlight-gray">&gt;</mark></code>
+                    </p>
+                    <p>possible element types:</p>
+                    <div class="indented">
+                        <p>
+                            <mark class="highlight-gray"><code>xsd:boolean</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            true, false, 0, 1
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>xsd:string</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            can also be empty
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>xsd:date</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            YYYY-MM-DD
+                            <mark class="highlight-teal">+(or -)</mark>
+                            HH:MM
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>xsd:integer</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            arbitrary size
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>xsd:int</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            4-byte integer
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>xsd:positiveInteger</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            ≥ 1
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>xsd:nonNegativeInteger</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            ≥ 0
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>xsd:negativeInteger</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            &lt; 0
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>xsd:nonPositiveInteger</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            ≤ 0
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>xsd:time</code></mark>
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>xsd:decimal</code></mark>
+                        </p>
+                        <p>
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow><mo>…</mo></mrow>
+                                                    <annotation encoding="application/x-tex">\dots</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.12em; vertical-align: 0em"></span>
+                                                <span class="minner">…</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                        </p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Fixed values</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:element ....</code></mark>
+                        <code>fixed="value"</code>
+                        <mark class="highlight-gray"><code>/&gt;</code></mark>
+                    </p>
+                    <p>no other value can be specified</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Default values</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:element ...</code></mark>
+                        <code>default="value"</code>
+                        <mark class="highlight-gray"><code>/&gt;</code></mark>
+                    </p>
+                    <p>assigned when no other value is specified</p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Facets / Restrictions of simple elements</h2>
+                <figure class="block-color-gray_background callout" style="white-space: pre-wrap; display: flex">
+                    <div style="font-size: 1.5em"><span class="icon">💡</span></div>
+                    <div style="width: 100%">Similar to constraints for primitive data types</div>
+                </figure>
+                <p>
+                    <mark class="highlight-gray"><code>&lt;</code></mark>
+                    <code>xsd:restriction</code>
+                    <mark class="highlight-gray"><code>base="xsd:..."&gt;</code></mark>
+                </p>
+                <p>Extends the simple types by restricting them.</p>
+                <p></p>
+                <p><mark class="highlight-blue">Integers</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:minExclusive value="..."/&gt;</code></mark>
+                    </p>
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:maxExclusive value="..."/&gt;</code></mark>
+                    </p>
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:minInclusive value="..."/&gt;</code></mark>
+                    </p>
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:maxInclusive value="..."/&gt;</code></mark>
+                    </p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Enumerations</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:enumeration value="..."/&gt;</code></mark>
+                    </p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Patterns in strings</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:pattern value="..."/&gt;</code></mark>
+                    </p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>use regular expressions as value</summary>
+                                <p>
+                                    <mark class="highlight-gray"><code>[0-9]</code></mark>
+                                </p>
+                                <p>
+                                    <mark class="highlight-gray"><code>[a-zA-Z]</code></mark>
+                                </p>
+                                <p>
+                                    <mark class="highlight-gray"><code>([a-z])*</code></mark>
+                                </p>
+                                <p>
+                                    <mark class="highlight-gray"><code>([a-z])+</code></mark>
+                                </p>
+                                <p>
+                                    <mark class="highlight-gray"><code>([a-z]){3}</code></mark>
+                                </p>
+                                <p>
+                                    <mark class="highlight-gray"><code>day | night</code></mark>
+                                </p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Whitespace restrictions in strings</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:whiteSpace value="..."/&gt;</code></mark>
+                    </p>
+                    <p>whitespace characters = line feeds, tabs, spaces, carriage returns</p>
+                    <p>possible values:</p>
+                    <div class="indented">
+                        <p>
+                            <mark class="highlight-gray"><code>preserve</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            keep characters
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>replace</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            replace with space
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>collapse</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            only keep a single space from characters
+                        </p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Length</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:length value="..."/&gt;</code></mark>
+                    </p>
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:minLength value="..."/&gt;</code></mark>
+                    </p>
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:maxLength value="..."/&gt;</code></mark>
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Facets / restrictions as anonymous types</mark></p>
+                <div class="indented">
+                    <pre class="code"><code>&lt;xsd:element name="age"&gt;
+	&lt;xsd:simpleType&gt; &lt;!-- not named --&gt;
+		&lt;xsd:restriction base="xsd:integer"&gt;
+			&lt;xsd:minExclusive value="0"/&gt;
+			&lt;xsd:maxInclusive value="110"/&gt;
+		&lt;/xsd:restriction&gt;
+	&lt;/xsd:simpleType&gt;
+&lt;/xsd:element&gt;
+
+&lt;xsd:element name="duration"&gt;
+	&lt;xsd:simpleType&gt; &lt;!-- not named --&gt;
+		&lt;xsd:restriction base="xsd:integer"&gt;
+			&lt;xsd:minExclusive value="0"/&gt;
+			&lt;xsd:maxInclusive value="110"/&gt;
+		&lt;/xsd:restriction&gt;
+	&lt;/xsd:simpleType&gt;
+&lt;/xsd:element&gt;</code></pre>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Facets / restrictions as named types</mark></p>
+                <div class="indented">
+                    <pre class="code"><code>&lt;xsd:element name="age" type="intervalType"/&gt;
+&lt;xsd:element name="duration" type="intervalType"/&gt;
+
+&lt;xsd:simpleType name="intervalType"&gt; &lt;!-- named --&gt;
+	&lt;xsd:restriction base="xsd:integer"&gt;
+		&lt;xsd:minExclusive value="0"/&gt;
+		&lt;xsd:maxInclusive value="110"/&gt;
+	&lt;/xsd:restriction&gt;
+&lt;/xsd:simpleType&gt;</code></pre>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Complex Types</h1>
+                <p>can be anonymous or named like simple types (see above)</p>
+                <h2>Complex Elements</h2>
+                <p>can contain other elements and attributes, nothing or just text</p>
+                <p><mark class="highlight-blue">Empty</mark></p>
+                <div class="indented">
+                    <pre class="code"><code>&lt;person id="E832740"/&gt;</code></pre>
+                    <pre class="code"><code>&lt;xsd:element name="person" type="personType"/&gt;
+
+&lt;xsd:complexType name="personType"&gt;
+	&lt;xsd:attribute name="id" type="xsd:ID"/&gt; &lt;!-- attribute, nothing else --&gt;
+&lt;/xsd:complexType&gt;</code></pre>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Text only</mark></p>
+                <div class="indented">
+                    <pre class="code"><code>&lt;person id="E832740"&gt; Mantas Šimkus &lt;/person&gt;</code></pre>
+                    <pre class="code"><code>&lt;xsd:element name="person" type="personType"/&gt;
+
+&lt;xsd:complexType name="personType"&gt;
+	&lt;xsd:simpleContent&gt;	&lt;!-- wrap to extend string and add an attribute--&gt;
+		&lt;xsd:extension base="xsd:string"&gt;
+			&lt;xsd:attribute name="id" type="xsd:ID"/&gt;
+		&lt;/xsd:extension&gt;
+	&lt;/xsd:simpleContent&gt;
+&lt;/xsd:complexType&gt;</code></pre>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Element only</mark></p>
+                <div class="indented">
+                    <pre class="code"><code>&lt;person&gt;
+	&lt;firstname&gt; Mantas &lt;/firstname&gt;
+	&lt;lastname&gt; Šimkus &lt;/lastname&gt;
+&lt;/person&gt;</code></pre>
+                    <pre class="code"><code>&lt;xsd:element name="person" type="personType"/&gt;
+
+&lt;xsd:complexType name="personType"&gt;
+	&lt;xsd:sequence&gt;
+		&lt;xsd:element name="firstname" type="xsd:string"/&gt;
+		&lt;xsd:element name="lastname" type="xsd:string"/&gt;
+	&lt;/xsd:sequence&gt;
+&lt;/xsd:complexType&gt;</code></pre>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Mix of text and children</mark></p>
+                <div class="indented">
+                    <pre class="code"><code>&lt;definition&gt;
+	Woah I can combine text with &lt;term&gt; elements &lt;/term&gt; in here!
+&lt;/definition&gt;</code></pre>
+                    <pre class="code"><code>&lt;xsd:element name="definition" type="definitionType"/&gt;
+
+&lt;xsd:complexType name="definitionType" mixed="true"&gt; 
+	&lt;xsd:sequence&gt;
+		&lt;xsd:element name="term" type="xsd:string"/&gt;
+	&lt;/xsd:sequence&gt;
+&lt;/xsd:complexType&gt;</code></pre>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Attributes</h2>
+                <p>Only available for complex types</p>
+                <p><mark class="highlight-blue">Attribute types</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:attribute</code></mark>
+                        <code>name="attributeName" type="attributeType"</code>
+                        <mark class="highlight-gray"><code>/&gt;</code></mark>
+                    </p>
+                    <p>the attribute-type itself is of a simple type</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Default value</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:attribute ...</code></mark>
+                        <code>default="value"</code>
+                        <mark class="highlight-gray"><code>/&gt;</code></mark>
+                    </p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Fixed value</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:attribute ...</code></mark>
+                        <code>fixed="value"</code>
+                        <mark class="highlight-gray"><code>/&gt;</code></mark>
+                    </p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Optional</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:attribute ...</code></mark>
+                        <code>use="optional"</code>
+                        <mark class="highlight-gray"><code>/&gt;</code></mark>
+                    </p>
+                    <p>is the default setting</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Required</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>&lt;xsd:attribute ...</code></mark>
+                        <code>use="required"</code>
+                        <mark class="highlight-gray"><code>/&gt;</code></mark>
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Order</h2>
+                <p><mark class="highlight-blue">Order Indicators</mark></p>
+                <div class="indented">
+                    <p>Defining the order for children</p>
+                    <pre class="code"><code>&lt;xsd:complexType ...&gt;
+	&lt;xsd:all&gt;
+		&lt;xsd:element .../&gt;
+		&lt;xsd:element .../&gt;
+	&lt;/xsd:all&gt;
+&lt;/xsd:complexType&gt;</code></pre>
+                    <p>
+                        <mark class="highlight-gray"><code>all</code></mark>
+                        <mark class="highlight-gray"></mark>
+                        any order, but children must appear exactly once
+                    </p>
+                    <p>
+                        <em>minOccurs can be set to</em>
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow>
+                                                    <mstyle mathsize="0.8em">
+                                                        <mo>∈</mo>
+                                                        <mo stretchy="false">{</mo>
+                                                        <mn>0</mn>
+                                                        <mo separator="true">,</mo>
+                                                        <mn>1</mn>
+                                                        <mo stretchy="false">}</mo>
+                                                    </mstyle>
+                                                </mrow>
+                                                <annotation encoding="application/x-tex">\footnotesize \in \{0, 1\}</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.4625600000000001em; vertical-align: -0.03128em"></span>
+                                            <span class="mrel sizing reset-size6 size4">∈</span>
+                                            <span class="mspace" style="margin-right: 0.3252777777777778em"></span>
+                                        </span>
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.8em; vertical-align: -0.2em"></span>
+                                            <span class="mopen sizing reset-size6 size4">{</span>
+                                            <span class="mord sizing reset-size6 size4">0</span>
+                                            <span class="mpunct sizing reset-size6 size4">,</span>
+                                            <span class="mspace" style="margin-right: 0.19516666666666668em"></span>
+                                            <span class="mord sizing reset-size6 size4">1</span>
+                                            <span class="mclose sizing reset-size6 size4">}</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                    </p>
+                    <p>
+                        <mark class="highlight-gray"><code>choice</code></mark>
+                        exactly one child from list allowed to appear
+                    </p>
+                    <p>
+                        <mark class="highlight-gray"><code>sequence</code></mark>
+                        <mark class="highlight-gray"></mark>
+                        in given order
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Occurrence</h2>
+                <p><mark class="highlight-blue">Occurrence Indicators</mark></p>
+                <div class="indented">
+                    <pre class="code"><code>&lt;xsd:element name="person"&gt;
+	&lt;xsd:complexType name="personType"&gt;
+		&lt;xsd:sequence&gt;
+			&lt;xsd:element name="firstname" maxOccurs="2" type="xsd:string"/&gt; &lt;!-- child --&gt;
+			&lt;xsd:element name="lastname" maxOccurs="2" type="xsd:string"/&gt; &lt;!-- child --&gt;
+		&lt;/xsd:sequence&gt;
+	&lt;/xsd:complexType&gt;
+&lt;/xsd:element&gt;</code></pre>
+                    <pre class="code"><code>&lt;xsd:element name="person"&gt;
+	&lt;xsd:complexType name="personType"&gt;
+		&lt;xsd:sequence maxOccurs="2"&gt; &lt;!-- parent --&gt;
+			&lt;xsd:element name="firstname" type="xsd:string"/&gt;
+			&lt;xsd:element name="lastname" type="xsd:string"/&gt;
+		&lt;/xsd:sequence&gt;
+	&lt;/xsd:complexType&gt;
+&lt;/xsd:element&gt;</code></pre>
+                    <p><em>Warning: the code snippets above have different meaning!</em></p>
+                    <p>
+                        <mark class="highlight-gray"><code>minOccurs</code></mark>
+                        min. number of times the element can be a child
+                    </p>
+                    <p>
+                        <mark class="highlight-gray"><code>maxOccurs</code></mark>
+                        <mark class="highlight-gray"></mark>
+                        max. number of times the element can be a child → can be set to
+                        <mark class="highlight-gray"><code>unbounded</code></mark>
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Extending other types</h2>
+                <p><mark class="highlight-blue">Inheritance</mark></p>
+                <div class="indented">
+                    <p>of other existing complex types</p>
+                    <p>ie. here any element with the type “personType” can only contain a text:</p>
+                    <pre class="code"><code>&lt;xsd:element name="person" type="personType"/&gt;
+
+&lt;xsd:complexType name="personType"&gt;
+	&lt;xsd:simpleContent&gt;
+		&lt;xsd:extension base="xsd:string"&gt;
+			&lt;xsd:attribute name="id" type="xsd:ID"/&gt;
+		&lt;/xsd:extension&gt;
+	&lt;/xsd:simpleContent&gt;
+&lt;/xsd:complexType&gt;</code></pre>
+                    <p>and a student inherits the type from person:</p>
+                    <pre class="code"><code>&lt;xsd:element name="student" type="studentType"/&gt;
+
+&lt;xsd:complexType name="studentType"&gt;
+	&lt;xsd:complexContent&gt;
+		&lt;xsd:extension base="personType"&gt;
+			&lt;xsd:attribute name="subject" type="xsd:string"/&gt;
+		&lt;/xsd:extension&gt;
+	&lt;/xsd:complexContent&gt;
+&lt;/xsd:complexType&gt;</code></pre>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Keys and References</h1>
+                <p>
+                    <mark class="highlight-gray"><code>xsd:key</code></mark>
+                    unique field exists in all selected elements
+                </p>
+                <p>
+                    <mark class="highlight-gray"><code>xsd:unique</code></mark>
+                    if field exists for selected element, then its unique
+                </p>
+                <p></p>
+                <p><mark class="highlight-blue">Example</mark></p>
+                <div class="indented">
+                    <pre class="code"><code>&lt;company&gt;
+	&lt;employees&gt;
+		&lt;employee emp_id="e1"&gt; &lt;!-- key --&gt;
+			...
+		&lt;/employee&gt;
+		...
+	&lt;/employees&gt;
+	
+	&lt;managers&gt;
+		&lt;manager mgr_id="e1"&gt; &lt;!-- foreign key --&gt;
+			...
+		&lt;/manager&gt;
+		...
+	&lt;/managers&gt;
+&lt;/company&gt;</code></pre>
+                    <pre class="code"><code>&lt;xsd:element name="company" type="companyType"&gt;
+	&lt;xsd:key name="empKey"&gt;
+		&lt;xsd:selector xpath="employees/employee"/&gt;
+		&lt;xsd:field xpath="@emp_id"/&gt;
+	&lt;/xsd:key&gt;
+	
+	&lt;xsd:keyref name="empRef" refer="empKey"&gt;
+		&lt;xsd:selector xpath="managers/manager"/&gt;
+		&lt;xsd:field xpath="@mgr_id"/&gt;
+	&lt;/xsd:keyref&gt;
+&lt;/xsd:element&gt;
+
+&lt;xsd:complexType name="companyType"&gt;
+	...
+&lt;/xsd:complexType&gt;</code></pre>
+                    <p>If not all employees had ids, but all managers did -</p>
+                    <div class="indented">
+                        <p>
+                            then we would use
+                            <mark class="highlight-gray"><code>unique</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            instead of
+                            <mark class="highlight-gray"><code>key</code></mark>
+                            for each employee.
+                        </p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Same example with DTD</mark></p>
+                <div class="indented">
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>DTD solution</summary>
+                                <pre class="code"><code>&lt;employee emp_id="e1"&gt; E &lt;/employee&gt;
+&lt;project proj_id="p1"&gt; P &lt;/project&gt;
+
+&lt;manager mgr_id="e1"&gt; M &lt;/manager&gt; &lt;!-- manages employee with ID 'e1' --&gt;</code></pre>
+                                <pre class="code"><code>&lt;!ATTLIST employee emp_id ID #REQUIRED&gt;
+&lt;!ATTLIST project proj_id ID #REQUIRED&gt;
+&lt;!ATTLIST manager mgr_id IDREF #REQUIRED&gt;
+
+&lt;!ELEMENT employee (#PCDATA)&gt;
+&lt;!ELEMENT project (#PCDATA)&gt;
+&lt;!ELEMENT manager (#PCDATA)&gt;</code></pre>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">XPath is restricted in XSD</mark></p>
+                <div class="indented">
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Only allowes axes
+                            <mark class="highlight-gray"><code>child</code></mark>
+                            ,
+                            <mark class="highlight-gray"><code>descendant-or-self</code></mark>
+                            at the beginning of a path with special syntax
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Selects Elements (not attributes)</li>
+                    </ul>
+                    <figure>
+                        <div class="source"><a href="XSD%20bffab7d5e2544957b654c44be5a2b02a/6-XPath-in-XMLSchema_(2).pdf">6-XPath-in-XMLSchema_(2).pdf</a></div>
+                    </figure>
+                </div>
+                <p></p>
+            </div>
+        </article>
+    </body>
+</html>

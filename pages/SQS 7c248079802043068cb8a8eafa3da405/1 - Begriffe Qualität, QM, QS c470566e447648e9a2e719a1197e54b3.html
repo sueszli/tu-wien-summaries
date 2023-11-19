@@ -1,0 +1,1343 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>1 - Begriffe: Qualität, QM, QS</title>
+        <style>
+            /* cspell:disable-file */
+            /* webkit printing magic: print all background colors */
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            * {
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media only screen {
+                body {
+                    margin: 2em auto;
+                    max-width: 900px;
+                    color: rgb(55, 53, 47);
+                }
+            }
+
+            body {
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            a,
+            a.visited {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .pdf-relative-link-path {
+                font-size: 80%;
+                color: #444;
+            }
+
+            h1,
+            h2,
+            h3 {
+                letter-spacing: -0.01em;
+                line-height: 1.2;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 0;
+                margin-bottom: 0.75em;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+                margin-top: 1.875rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .source {
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 1.5em;
+                word-break: break-all;
+            }
+
+            .callout {
+                border-radius: 3px;
+                padding: 1rem;
+            }
+
+            figure {
+                margin: 1.25em 0;
+                page-break-inside: avoid;
+            }
+
+            figcaption {
+                opacity: 0.5;
+                font-size: 85%;
+                margin-top: 0.5em;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+
+            .indented {
+                padding-left: 1.5em;
+            }
+
+            hr {
+                background: transparent;
+                display: block;
+                width: 100%;
+                height: 1px;
+                visibility: visible;
+                border: none;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            @media only print {
+                img {
+                    max-height: 100vh;
+                    object-fit: contain;
+                }
+            }
+
+            @page {
+                margin: 1in;
+            }
+
+            .collection-content {
+                font-size: 0.875rem;
+            }
+
+            .column-list {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .column {
+                padding: 0 1em;
+            }
+
+            .column:first-child {
+                padding-left: 0;
+            }
+
+            .column:last-child {
+                padding-right: 0;
+            }
+
+            .table_of_contents-item {
+                display: block;
+                font-size: 0.875rem;
+                line-height: 1.3;
+                padding: 0.125rem;
+            }
+
+            .table_of_contents-indent-1 {
+                margin-left: 1.5rem;
+            }
+
+            .table_of_contents-indent-2 {
+                margin-left: 3rem;
+            }
+
+            .table_of_contents-indent-3 {
+                margin-left: 4.5rem;
+            }
+
+            .table_of_contents-link {
+                text-decoration: none;
+                opacity: 0.7;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+            }
+
+            table,
+            th,
+            td {
+                border: 1px solid rgba(55, 53, 47, 0.09);
+                border-collapse: collapse;
+            }
+
+            table {
+                border-left: none;
+                border-right: none;
+            }
+
+            th,
+            td {
+                font-weight: normal;
+                padding: 0.25em 0.5em;
+                line-height: 1.5;
+                min-height: 1.5em;
+                text-align: left;
+            }
+
+            th {
+                color: rgba(55, 53, 47, 0.6);
+            }
+
+            ol,
+            ul {
+                margin: 0;
+                margin-block-start: 0.6em;
+                margin-block-end: 0.6em;
+            }
+
+            li > ol:first-child,
+            li > ul:first-child {
+                margin-block-start: 0.6em;
+            }
+
+            ul > li {
+                list-style: disc;
+            }
+
+            ul.to-do-list {
+                padding-inline-start: 0;
+            }
+
+            ul.to-do-list > li {
+                list-style: none;
+            }
+
+            .to-do-children-checked {
+                text-decoration: line-through;
+                opacity: 0.375;
+            }
+
+            ul.toggle > li {
+                list-style: none;
+            }
+
+            ul {
+                padding-inline-start: 1.7em;
+            }
+
+            ul > li {
+                padding-left: 0.1em;
+            }
+
+            ol {
+                padding-inline-start: 1.6em;
+            }
+
+            ol > li {
+                padding-left: 0.2em;
+            }
+
+            .mono ol {
+                padding-inline-start: 2em;
+            }
+
+            .mono ol > li {
+                text-indent: -0.4em;
+            }
+
+            .toggle {
+                padding-inline-start: 0em;
+                list-style-type: none;
+            }
+
+            /* Indent toggle children */
+            .toggle > li > details {
+                padding-left: 1.7em;
+            }
+
+            .toggle > li > details > summary {
+                margin-left: -1.1em;
+            }
+
+            .selected-value {
+                display: inline-block;
+                padding: 0 0.5em;
+                background: rgba(206, 205, 202, 0.5);
+                border-radius: 3px;
+                margin-right: 0.5em;
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+            }
+
+            .collection-title {
+                display: inline-block;
+                margin-right: 1em;
+            }
+
+            .page-description {
+                margin-bottom: 2em;
+            }
+
+            .simple-table {
+                margin-top: 1em;
+                font-size: 0.875rem;
+                empty-cells: show;
+            }
+            .simple-table td {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table th {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table-header-color {
+                background: rgb(247, 246, 243);
+                color: black;
+            }
+            .simple-table-header {
+                font-weight: 500;
+            }
+
+            time {
+                opacity: 0.5;
+            }
+
+            .icon {
+                display: inline-block;
+                max-width: 1.2em;
+                max-height: 1.2em;
+                text-decoration: none;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            img.icon {
+                border-radius: 3px;
+            }
+
+            .user-icon {
+                width: 1.5em;
+                height: 1.5em;
+                border-radius: 100%;
+                margin-right: 0.5rem;
+            }
+
+            .user-icon-inner {
+                font-size: 0.8em;
+            }
+
+            .text-icon {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+            .page-cover-image {
+                display: block;
+                object-fit: cover;
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            .page-header-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .page-header-icon-with-cover {
+                margin-top: -0.72em;
+                margin-left: 0.07em;
+            }
+
+            .page-header-icon img {
+                border-radius: 3px;
+            }
+
+            .link-to-page {
+                margin: 1em 0;
+                padding: 0;
+                border: none;
+                font-weight: 500;
+            }
+
+            p > .user {
+                opacity: 0.5;
+            }
+
+            td > .user,
+            td > time {
+                white-space: nowrap;
+            }
+
+            input[type="checkbox"] {
+                transform: scale(1.5);
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
+
+            p {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .image {
+                border: none;
+                margin: 1.5em 0;
+                padding: 0;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .code,
+            code {
+                background: rgba(135, 131, 120, 0.15);
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 85%;
+                tab-size: 2;
+            }
+
+            code {
+                color: #eb5757;
+            }
+
+            .code {
+                padding: 1.5em 1em;
+            }
+
+            .code-wrap {
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .code > code {
+                background: none;
+                padding: 0;
+                font-size: 100%;
+                color: inherit;
+            }
+
+            blockquote {
+                font-size: 1.25em;
+                margin: 1em 0;
+                padding-left: 1em;
+                border-left: 3px solid rgb(55, 53, 47);
+            }
+
+            .bookmark {
+                text-decoration: none;
+                max-height: 8em;
+                padding: 0;
+                display: flex;
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .bookmark-title {
+                font-size: 0.85em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 1.75em;
+                white-space: nowrap;
+            }
+
+            .bookmark-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bookmark-info {
+                flex: 4 1 180px;
+                padding: 12px 14px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark-image {
+                width: 33%;
+                flex: 1 1 180px;
+                display: block;
+                position: relative;
+                object-fit: cover;
+                border-radius: 1px;
+            }
+
+            .bookmark-description {
+                color: rgba(55, 53, 47, 0.6);
+                font-size: 0.75em;
+                overflow: hidden;
+                max-height: 4.5em;
+                word-break: break-word;
+            }
+
+            .bookmark-href {
+                font-size: 0.75em;
+                margin-top: 0.25em;
+            }
+
+            .sans {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+                    "Segoe UI Symbol";
+            }
+            .code {
+                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+            }
+            .serif {
+                font-family: Lyon-Text, Georgia, ui-serif, serif;
+            }
+            .mono {
+                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+            }
+            .pdf .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+            }
+            .pdf:lang(zh-CN) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+            }
+            .pdf:lang(zh-TW) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+            }
+            .pdf:lang(ko-KR) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+            }
+            .pdf .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK KR";
+            }
+            .pdf .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+            }
+            .pdf:lang(zh-CN) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+            }
+            .pdf:lang(zh-TW) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+            }
+            .pdf:lang(ko-KR) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+            }
+            .pdf .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+            }
+            .highlight-default {
+                color: rgba(55, 53, 47, 1);
+            }
+            .highlight-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .highlight-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .highlight-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .highlight-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .highlight-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .highlight-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .highlight-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .highlight-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .highlight-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .highlight-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .highlight-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .highlight-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .highlight-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .highlight-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .highlight-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .highlight-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .highlight-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .highlight-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .block-color-default {
+                color: inherit;
+                fill: inherit;
+            }
+            .block-color-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .block-color-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .block-color-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .block-color-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .block-color-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .block-color-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .block-color-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .block-color-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .block-color-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .block-color-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .block-color-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .block-color-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .block-color-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .block-color-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .block-color-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .block-color-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .block-color-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .block-color-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .select-value-color-interactiveBlue {
+                background-color: rgba(35, 131, 226, 0.07);
+            }
+            .select-value-color-pink {
+                background-color: rgba(245, 224, 233, 1);
+            }
+            .select-value-color-purple {
+                background-color: rgba(232, 222, 238, 1);
+            }
+            .select-value-color-green {
+                background-color: rgba(219, 237, 219, 1);
+            }
+            .select-value-color-gray {
+                background-color: rgba(227, 226, 224, 1);
+            }
+            .select-value-color-translucentGray {
+                background-color: rgba(255, 255, 255, 0.0375);
+            }
+            .select-value-color-orange {
+                background-color: rgba(250, 222, 201, 1);
+            }
+            .select-value-color-brown {
+                background-color: rgba(238, 224, 218, 1);
+            }
+            .select-value-color-red {
+                background-color: rgba(255, 226, 221, 1);
+            }
+            .select-value-color-yellow {
+                background-color: rgba(253, 236, 200, 1);
+            }
+            .select-value-color-blue {
+                background-color: rgba(211, 229, 239, 1);
+            }
+            .select-value-color-pageGlass {
+                background-color: undefined;
+            }
+            .select-value-color-washGlass {
+                background-color: undefined;
+            }
+
+            .checkbox {
+                display: inline-flex;
+                vertical-align: text-bottom;
+                width: 16;
+                height: 16;
+                background-size: 16px;
+                margin-left: 2px;
+                margin-right: 5px;
+            }
+
+            .checkbox-on {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            .checkbox-off {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            /* -------- injections from notionBackup -------- */
+
+            body {
+                white-space: normal !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+
+            .code,
+            code {
+                font-size: 100% !important;
+            }
+
+            blockquote {
+                font-size: 100% !important;
+            }
+
+            .callout {
+                white-space: normal !important;
+            }
+            .callout div:has(span.icon) {
+                font-size: 100% !important;
+            }
+
+            .source:not(.bookmark) {
+                font-size: 100% !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+        </style>
+    </head>
+    <body>
+        <article class="page sans">
+            <header>
+                <h1 class="page-title">1 - Begriffe: Qualität, QM, QS</h1>
+                <p class="page-description"></p>
+            </header>
+            <div class="page-body">
+                <p></p>
+                <nav class="block-color-gray table_of_contents">
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#1c005834-24f7-4f45-9641-8992e1387f2c">Qualität</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#300e0b99-7eaa-4827-9e00-5d83e10d29af">Einflussfaktoren</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#503122b0-0598-4f5d-a297-293bcc3bc7a6">Messungen</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#bd691972-dc46-4ca0-b232-b17c2f20e241">PDCA Zylus</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#2040edb4-f5cd-40b5-971f-367ca415cad4">Qualitätsmanagement QM</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#2845e0f9-1a04-461a-8766-eafac6f1166d">Qualitätssicherung QS</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#4a229a2f-e2a4-4e02-8d3c-4828d5e5138f">
+                            Konstruktive Methoden vs. analystische Methoden der QS
+                        </a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#d515a0f3-5824-4387-8f52-e7cf2cc7bd21">QS in Vorgehensmodellen</a>
+                    </div>
+                </nav>
+                <p></p>
+                <h1>Qualität</h1>
+                <p><mark class="highlight-blue">(Software-)Qualität</mark></p>
+                <div class="indented">
+                    <p>keine einheitliche Definition in Literatur</p>
+                    <div class="indented">
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">termingerecht, im Rahmen des Budgets</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">für Anwender verwendbar</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">für Entwickler verständlich, änderbar</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">für Betreiber effizient und administrierbar</li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <p>zB definiert durch</p>
+                    <div class="indented">
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Kundenzufriedenheit</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">
+                                Erfüllung von Anforderungen, Attributen, Qualitätsfaktoren nach McCall durch Eigenschaften, Merkmalen von Produkt, Leistung
+                                <p>
+                                    <mark class="highlight-gray">Nach DIN8402:</mark>
+                                    <mark class="highlight-gray">
+                                        <em>
+                                            “Die Beschaffenheit einer Einheit bezüglich ihrer Eignung festgelegte und vorausgesetzte Erfordernisse zu erfüllen”
+                                        </em>
+                                    </mark>
+                                </p>
+                            </li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">
+                                Erfüllung von Vorgaben, Richtlinien, Normen, Standards, gesetzlichen Regelungen (für Produkt und Dienstleistung)
+                            </li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <p>Erstellung von qualitativ hochwertiger Software braucht:</p>
+                    <div class="indented">
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Softwareprozess (zB life-cycle Modell)</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">
+                                Vorgehensmodelle (zB V-Modell XT, RUP, Spiralmodell, SCRUM)
+                                <p>
+                                    <mark class="highlight-gray">
+                                        Wann müssen welche Produkte in welchem Fertigstellungsgrad und auf welchem Qualitätsniveau vorliegen?
+                                    </mark>
+                                </p>
+                            </li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Methoden zur Produkterstellung</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">
+                                Methoden zur Produkt-Verbesserung, Prozessverbesserung (zB Review, Inspektion, Test, PDCA-Zyklus)
+                            </li>
+                        </ul>
+                        <p>Qualität dadurch nicht garantiert sondern wahrscheinlicher.</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Qualitätsfaktoren nach IEEE</mark></p>
+                <div class="indented">
+                    <p>
+                        Korrektheit Zuverlässigkeit Effizienz Integrität Verwendbarkeit Wiederverwendbarkeit Wartbarkeit Flexibilität Testbarkeit Portabilität
+                        Verknüpfbarkeit
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Qualitätsfaktoren nach McCall</mark></p>
+                <div class="indented">
+                    <p>Stufenweise Verfeinerung von Qualitätsfaktoren:</p>
+                    <p>Qualitäts-Faktoren Verhalten des Systems</p>
+                    <p>Qualitäts-Kriterien Bedinungen für Umsetzung in Softwareentwicklung</p>
+                    <p>Qualitäts-Metriken Zur Bemessung</p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled.png">
+                        <img style="width: 240px" src="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Qualitätsfaktoren nach ISO/IEC 25010</mark></p>
+                <div class="indented">
+                    <p>Funktionale Qualitäten</p>
+                    <p>Strukturelle Qualitäten</p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%201.png">
+                        <img style="width: 240px" src="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%201.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Qualitätsfaktoren: Mehrwert vs. Hygienefaktor</mark></p>
+                <div class="indented">
+                    <p>– Kunde zahlt Aufpreis für Mehrwert – Kunde nimmt Produkt (egal wie gut es ist) Hygienefaktor-Mängeln nicht an</p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Einflussfaktoren</h2>
+                <p><mark class="highlight-blue">Einflussfaktoren / Zielsetzungen</mark></p>
+                <div class="indented">
+                    <p>Beeinflussen sich gegenseitig:</p>
+                    <div class="indented">
+                        <p>Qualität Fehleranzahl, Termintreue, Kostentreue</p>
+                        <p>Quantität Umfang: Anzahl der implementierten Funktionen, LoC</p>
+                        <p>Entwicklungsdauer Aufwand: zB in (Personen-)Monaten</p>
+                        <p>Kosten Ausgaben</p>
+                    </div>
+                    <p></p>
+                    <p>Teufelsquadrat nach Sneed: Spannungsfeld</p>
+                    <div class="indented">
+                        <p>Fläche des Quadrates (= Produktivität) ändert sich nicht</p>
+                        <p>zB Mehr Qualität, kürzere Entwicklungsdauer = Geringerer Umfang, Erhöhung von Kosten</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%202.png">
+                        <img style="width: 132px" src="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%202.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <h2>Messungen</h2>
+                <p><mark class="highlight-blue">Messungen</mark></p>
+                <div class="indented">
+                    <p>
+                        <em>
+                            <mark class="highlight-gray">
+                                DIN 1319: “Ermitteln eines Wertes durch quantitativen Vergleich der Messgröße mit einer Einheit (Normal)”
+                            </mark>
+                        </em>
+                    </p>
+                    <p>Direkt vs. Indirekt</p>
+                    <div class="indented">
+                        <p>Werteermittlung direkt beim Objekt (zB Dauer, Aufwand)</p>
+                        <p>Indirekt (durch Index: zB Effizienz der Fehlererkennungsmethode = Fehleranzahl / Zeit)</p>
+                    </div>
+                    <p></p>
+                    <p>Objektiv vs. Subjektiv</p>
+                    <div class="indented">
+                        <p>Objektiv (LoC, Aufwand, Deadline, ...)</p>
+                        <p>Subjektiv (Fragebögen für Zufriedenheit, ...)</p>
+                    </div>
+                    <p></p>
+                    <p>Quantiativ vs. Qualitativ</p>
+                    <div class="indented">
+                        <p>konkrete Zahlen (von statistischen Auswertungen)</p>
+                        <p>visualisierte Informationen (Text, Bilder) durch Interviews, Interpretationen, ...</p>
+                    </div>
+                    <p></p>
+                    <hr />
+                    <p>Beispiel: Messung von</p>
+                    <div class="indented">
+                        <p>Prozess durch Aufwand für eine Aufgabe in PM</p>
+                        <p>Produkt durch Größe in Lines of Code LoCs</p>
+                        <p>Ressourcen durch Erfahrung in Anzahl der Projekte</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">GQM: Messung von Softwarequalität</mark></p>
+                <div class="indented">
+                    <p>GQM nach Basili, Rombach</p>
+                    <div class="indented">
+                        <p>Goal Konzeptuelle Stufe</p>
+                        <p>Question Operative Stufe</p>
+                        <p>Metric Quantitative Stufe</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%203.png">
+                        <img style="width: 288px" src="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%203.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <h2>PDCA Zylus</h2>
+                <p>Dient der Produktverbesserung, Prozessverbesserung</p>
+                <p><mark class="highlight-blue">PDCA-Zyklus → Software Process Improvement SPI</mark></p>
+                <div class="indented">
+                    <p>Plan Planen: Planen der nächsten Iteration im SPI-Zyklus mit Erfahrungswerten, Zielsetzung</p>
+                    <p>Do Implementierung: Aktivität (Task, Projekt) durchführen</p>
+                    <p>Check Analytische QS: Überprüfung der Ergebnisse (Produkt, Prozess) durch Messung</p>
+                    <p>Act Rückkopplung nach Ergebnissanalyse: Erkenntnisse im nächsten Zyklus nutzen</p>
+                    <p>
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow><mo>↺</mo></mrow>
+                                                <annotation encoding="application/x-tex">\circlearrowleft</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.6639600000000001em; vertical-align: -0.08198em"></span>
+                                            <span class="mrel amsrm">↺</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Ebenen des PDCA</mark></p>
+                <div class="indented">
+                    <p>Arbeitspaket-Ebene work space, task level</p>
+                    <p>Projekt-Ebene</p>
+                    <p>Unternehmens-Ebene management, QM-Systeme</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Qualitätsmanagement QM</h1>
+                <figure class="link-to-page">
+                    <a
+                        href="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Beispiel%20Online%20Banking%20446a139038254390abc913f0072d6cc5.html">
+                        Beispiel: Online Banking
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Qualitätsmanagement QM</mark></p>
+                <div class="indented">
+                    <p>
+                        = Menge aller Aktivitäten, Vorgehensweisen, Techniken, Hilfsmittel zum Herstellen, Sicherstellen dass ein Qualitäts-Standard für das
+                        Endprodukt erreicht wird.
+                    </p>
+                    <p>Qualitätsplanung, Qualitätslenkung, Qualitätssicherung, Qualitätsverbesserung.</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Prinzipien des QM</mark></p>
+                <div class="indented">
+                    <p>Prinzip der ständigen Bewertung, Verbesserung von Produkten, Prozessen, eingesetzten Qualitätsmaßnahmen</p>
+                    <p>Organisation nach QM-Systemen (z.B. ISO 9001, CMM-I, SPICE-ISO 15504)</p>
+                    <hr />
+                    <p>Fehlern und Mangel frühzeitige Entdeckung, Behebung</p>
+                    <p>Qualitätsmerkmale konkret, operationalisierbar</p>
+                    <p>Qualitätsplanung produktunabhängig, projektunabhängig</p>
+                    <p>Qualitätsprüfungen unabhängig, mehraugenkontrolliert, rückgekoppelt (Fehler beheben)</p>
+                    <hr />
+                    <p>Feedback um in jeder Phase (Entwicklung, Test, Betrieb, Wartung) Qualität zu erreichen</p>
+                </div>
+                <p></p>
+                <p></p>
+                <h1>Qualitätssicherung QS</h1>
+                <p>Aktivitäten der QS untersützten in allen Phasen der Entwicklung.</p>
+                <p><mark class="highlight-blue">Qualitätssicherung QS</mark></p>
+                <div class="indented">
+                    <p>= Verifikation und Validierung in allen Phasen der Entwicklung</p>
+                    <div class="indented">
+                        <p>
+                            Verfahren, Aktivitäten, Prozesse die sicherstellen, dass Produkt Anforderungen (Spezifikation und Kundenanforderungen) entspricht.
+                        </p>
+                    </div>
+                    <p></p>
+                    <p>sollte projektunabhängig organisiert sein</p>
+                    <p>Qualität kann nicht später hinzugefügt werden - sie muss während der Entwicklung gesichert werden</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Leistungen einer QS-Stelle</mark></p>
+                <div class="indented">
+                    <p>Qualitätsplanung in Projektplanung</p>
+                    <p>Lokale Standards auf Projektebene, Organisationsebene</p>
+                    <p>Review von Dokumenten</p>
+                    <p>Organisation von Reviews: Ausbildung, Planung, Durchführung, Verbesserungsvorschläge</p>
+                    <p>Unterstützung bei Aufnahme von Personal, Zukauf von Werkzeugen</p>
+                    <p>Produkttest Vorbereitung, Auswertung</p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Konstruktive Methoden vs. analystische Methoden der QS</h2>
+                <p><mark class="highlight-blue">Konstruktive Qualitätsmaßnahmen / Methoden</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><em>Entwicklungsart der Produkte</em></mark>
+                    </p>
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            <mark class="highlight-teal">Technische</mark>
+                            <p>Prinzipien, Methoden, Werkzeuge der SE: Model-Driven-Development, Test-Driven-Development</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            <mark class="highlight-teal">Organisatorische</mark>
+                            <p>
+                                <mark class="highlight-gray"><em>Schaffen Infrastruktur, steuern Qualitätsprozess</em></mark>
+                            </p>
+                            <p>Vorgehensmodelle/Standards/Prozesse, Templates/Checklisten, Wissensmanagement</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>
+                            <mark class="highlight-teal">Menschliche</mark>
+                            <p>Schulung von Mitarbeitern</p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Analytische Qualitätsmaßnahmen / Methoden</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><em>Prüfung und Bewertung von Produktqualität</em></mark>
+                    </p>
+                    <p>
+                        <mark class="highlight-gray"><em>Verifikation und Validierung der Projektergebnisse</em></mark>
+                    </p>
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            <mark class="highlight-teal">Statische Prüfungen</mark>
+                            <p>
+                                <mark class="highlight-gray"><em>Software muss nicht ausführbar oder integriert sein → Fokus auf interne Struktur</em></mark>
+                            </p>
+                            <p>Reviews, Inspektionen, Audits, toolgestützte Code Analyse</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            <mark class="highlight-teal">Dynamische Prüfungen</mark>
+                            <p>
+                                <mark class="highlight-gray"><em>Teile von Software müssen ausführbar sein</em></mark>
+                            </p>
+                            <p>Software Tests</p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Besonders zu unterstützende Maßnahmen (in QS und QM)</mark></p>
+                <div class="indented">
+                    <p>Maßnahmen die</p>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Hygienefaktoren betreffen
+                            <p>
+                                Hygienefaktoren werden von Entwicklern leicht ausgeblendet → schnelles Feedback an Entwickler in unterschiedlichen Phasen
+                                (direkt und indirekt)
+                            </p>
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            vorbeugend wirken - die das richtige machen möglichst einfach und das falsche möglichst schwer machen.
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>QS in Vorgehensmodellen</h2>
+                <p>QS lässt sich in Prozessmodelle / Vorgehensmodelle integrieren</p>
+                <p></p>
+                <p><mark class="highlight-blue">Systemtypen</mark></p>
+                <div class="indented">
+                    <p>Kommerzielles System</p>
+                    <p>Echtzeitsystem</p>
+                    <p>Webapplikation</p>
+                    <p>Computerspiele</p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%204.png">
+                        <img style="width: 192px" src="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%204.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Sequentielles Prozessmodell: V-Modell97</mark></p>
+                <div class="indented">
+                    <p>Spezifikation, Voraussetzungen und Annahmen verstehen → Umsetzung, Testen</p>
+                    <p>Verschiedene Sichten und Rollen</p>
+                    <p>Problem: Fehler aus frühen Entwicklungsphasen übertragen sich auf die nächsten</p>
+                    <p>Einsatz von QS</p>
+                    <div class="indented">
+                        <p>Analytische Seite Testplanerstellung in jeder Phase, danach immer ein Review</p>
+                        <p>Synthetische Seite nach jeder Ebene die Tests nach Testplan durchführen</p>
+                        <p>(Modultests, Integrationstests, Systemtest)</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%205.png">
+                        <img style="width: 192px" src="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%205.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">V-Modell XT</mark></p>
+                <div class="indented">
+                    <p>QS als eigenständiger Vorgehensbaustein, verpflichtend in allen Projekttypen.</p>
+                    <p>Projekttyp “Einführung und Wartung eines organisationsspezifischen Vorgehensmodells“ beinhaltet Idee der ständigen Verbesserung.</p>
+                    <p>Hat “Quality Gates” wie zB Projektgenehmigung bei denen Qualität assen muss.</p>
+                    <hr />
+                    <p>Qualitätsplanung, Reviews</p>
+                    <p>Testen: Testvorbereitung, Testdurchführung, Fehlerbehebung</p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%206.png">
+                        <img style="width: 192px" src="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%206.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Rational Unified Process RUP</mark></p>
+                <div class="indented">
+                    <p>QS mit Rollen durch gesamtes Projekt → Review bei Meilensteinen</p>
+                    <p>eigene “Test Discipline”</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Agil: SCRUM</mark></p>
+                <div class="indented">
+                    <p>Reviews nach jedem Sprint</p>
+                    <p>Test Driven Development TDD</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Agil: XP</mark></p>
+                <figure class="image">
+                    <a href="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%207.png">
+                        <img style="width: 240px" src="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%207.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Iteratives Modell: Spiral Modell</mark></p>
+                <div class="indented">
+                    <p>Orientiert an Investitionen, Risikomanagement</p>
+                    <p>Jede Phase ist ein Subprojekt</p>
+                    <div class="indented">
+                        <ol type="1" class="numbered-list" start="1">
+                            <li>Kickoff Bestimmung von Zielen und Alternativen</li>
+                        </ol>
+                        <ol type="1" class="numbered-list" start="2">
+                            <li>Risikoeinschätzung bzw Suche nach Alternativen</li>
+                        </ol>
+                        <ol type="1" class="numbered-list" start="3">
+                            <li>Entwicklung und Test</li>
+                        </ol>
+                        <ol type="1" class="numbered-list" start="4">
+                            <li>Plan von nächsten Phase</li>
+                        </ol>
+                        <p>
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow><mo>↺</mo></mrow>
+                                                    <annotation encoding="application/x-tex">\circlearrowleft</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.6639600000000001em; vertical-align: -0.08198em"></span>
+                                                <span class="mrel amsrm">↺</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                        </p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%208.png">
+                        <img style="width: 240px" src="1%20-%20Begriffe%20Qualita%CC%88t,%20QM,%20QS%20c470566e447648e9a2e719a1197e54b3/Untitled%208.png" />
+                    </a>
+                </figure>
+                <p></p>
+            </div>
+        </article>
+    </body>
+</html>

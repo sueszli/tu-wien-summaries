@@ -1,0 +1,2490 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>CSS</title>
+        <style>
+            /* cspell:disable-file */
+            /* webkit printing magic: print all background colors */
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            * {
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media only screen {
+                body {
+                    margin: 2em auto;
+                    max-width: 900px;
+                    color: rgb(55, 53, 47);
+                }
+            }
+
+            body {
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            a,
+            a.visited {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .pdf-relative-link-path {
+                font-size: 80%;
+                color: #444;
+            }
+
+            h1,
+            h2,
+            h3 {
+                letter-spacing: -0.01em;
+                line-height: 1.2;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 0;
+                margin-bottom: 0.75em;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+                margin-top: 1.875rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .source {
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 1.5em;
+                word-break: break-all;
+            }
+
+            .callout {
+                border-radius: 3px;
+                padding: 1rem;
+            }
+
+            figure {
+                margin: 1.25em 0;
+                page-break-inside: avoid;
+            }
+
+            figcaption {
+                opacity: 0.5;
+                font-size: 85%;
+                margin-top: 0.5em;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+
+            .indented {
+                padding-left: 1.5em;
+            }
+
+            hr {
+                background: transparent;
+                display: block;
+                width: 100%;
+                height: 1px;
+                visibility: visible;
+                border: none;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            @media only print {
+                img {
+                    max-height: 100vh;
+                    object-fit: contain;
+                }
+            }
+
+            @page {
+                margin: 1in;
+            }
+
+            .collection-content {
+                font-size: 0.875rem;
+            }
+
+            .column-list {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .column {
+                padding: 0 1em;
+            }
+
+            .column:first-child {
+                padding-left: 0;
+            }
+
+            .column:last-child {
+                padding-right: 0;
+            }
+
+            .table_of_contents-item {
+                display: block;
+                font-size: 0.875rem;
+                line-height: 1.3;
+                padding: 0.125rem;
+            }
+
+            .table_of_contents-indent-1 {
+                margin-left: 1.5rem;
+            }
+
+            .table_of_contents-indent-2 {
+                margin-left: 3rem;
+            }
+
+            .table_of_contents-indent-3 {
+                margin-left: 4.5rem;
+            }
+
+            .table_of_contents-link {
+                text-decoration: none;
+                opacity: 0.7;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+            }
+
+            table,
+            th,
+            td {
+                border: 1px solid rgba(55, 53, 47, 0.09);
+                border-collapse: collapse;
+            }
+
+            table {
+                border-left: none;
+                border-right: none;
+            }
+
+            th,
+            td {
+                font-weight: normal;
+                padding: 0.25em 0.5em;
+                line-height: 1.5;
+                min-height: 1.5em;
+                text-align: left;
+            }
+
+            th {
+                color: rgba(55, 53, 47, 0.6);
+            }
+
+            ol,
+            ul {
+                margin: 0;
+                margin-block-start: 0.6em;
+                margin-block-end: 0.6em;
+            }
+
+            li > ol:first-child,
+            li > ul:first-child {
+                margin-block-start: 0.6em;
+            }
+
+            ul > li {
+                list-style: disc;
+            }
+
+            ul.to-do-list {
+                padding-inline-start: 0;
+            }
+
+            ul.to-do-list > li {
+                list-style: none;
+            }
+
+            .to-do-children-checked {
+                text-decoration: line-through;
+                opacity: 0.375;
+            }
+
+            ul.toggle > li {
+                list-style: none;
+            }
+
+            ul {
+                padding-inline-start: 1.7em;
+            }
+
+            ul > li {
+                padding-left: 0.1em;
+            }
+
+            ol {
+                padding-inline-start: 1.6em;
+            }
+
+            ol > li {
+                padding-left: 0.2em;
+            }
+
+            .mono ol {
+                padding-inline-start: 2em;
+            }
+
+            .mono ol > li {
+                text-indent: -0.4em;
+            }
+
+            .toggle {
+                padding-inline-start: 0em;
+                list-style-type: none;
+            }
+
+            /* Indent toggle children */
+            .toggle > li > details {
+                padding-left: 1.7em;
+            }
+
+            .toggle > li > details > summary {
+                margin-left: -1.1em;
+            }
+
+            .selected-value {
+                display: inline-block;
+                padding: 0 0.5em;
+                background: rgba(206, 205, 202, 0.5);
+                border-radius: 3px;
+                margin-right: 0.5em;
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+            }
+
+            .collection-title {
+                display: inline-block;
+                margin-right: 1em;
+            }
+
+            .page-description {
+                margin-bottom: 2em;
+            }
+
+            .simple-table {
+                margin-top: 1em;
+                font-size: 0.875rem;
+                empty-cells: show;
+            }
+            .simple-table td {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table th {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table-header-color {
+                background: rgb(247, 246, 243);
+                color: black;
+            }
+            .simple-table-header {
+                font-weight: 500;
+            }
+
+            time {
+                opacity: 0.5;
+            }
+
+            .icon {
+                display: inline-block;
+                max-width: 1.2em;
+                max-height: 1.2em;
+                text-decoration: none;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            img.icon {
+                border-radius: 3px;
+            }
+
+            .user-icon {
+                width: 1.5em;
+                height: 1.5em;
+                border-radius: 100%;
+                margin-right: 0.5rem;
+            }
+
+            .user-icon-inner {
+                font-size: 0.8em;
+            }
+
+            .text-icon {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+            .page-cover-image {
+                display: block;
+                object-fit: cover;
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            .page-header-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .page-header-icon-with-cover {
+                margin-top: -0.72em;
+                margin-left: 0.07em;
+            }
+
+            .page-header-icon img {
+                border-radius: 3px;
+            }
+
+            .link-to-page {
+                margin: 1em 0;
+                padding: 0;
+                border: none;
+                font-weight: 500;
+            }
+
+            p > .user {
+                opacity: 0.5;
+            }
+
+            td > .user,
+            td > time {
+                white-space: nowrap;
+            }
+
+            input[type="checkbox"] {
+                transform: scale(1.5);
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
+
+            p {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .image {
+                border: none;
+                margin: 1.5em 0;
+                padding: 0;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .code,
+            code {
+                background: rgba(135, 131, 120, 0.15);
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 85%;
+                tab-size: 2;
+            }
+
+            code {
+                color: #eb5757;
+            }
+
+            .code {
+                padding: 1.5em 1em;
+            }
+
+            .code-wrap {
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .code > code {
+                background: none;
+                padding: 0;
+                font-size: 100%;
+                color: inherit;
+            }
+
+            blockquote {
+                font-size: 1.25em;
+                margin: 1em 0;
+                padding-left: 1em;
+                border-left: 3px solid rgb(55, 53, 47);
+            }
+
+            .bookmark {
+                text-decoration: none;
+                max-height: 8em;
+                padding: 0;
+                display: flex;
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .bookmark-title {
+                font-size: 0.85em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 1.75em;
+                white-space: nowrap;
+            }
+
+            .bookmark-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bookmark-info {
+                flex: 4 1 180px;
+                padding: 12px 14px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark-image {
+                width: 33%;
+                flex: 1 1 180px;
+                display: block;
+                position: relative;
+                object-fit: cover;
+                border-radius: 1px;
+            }
+
+            .bookmark-description {
+                color: rgba(55, 53, 47, 0.6);
+                font-size: 0.75em;
+                overflow: hidden;
+                max-height: 4.5em;
+                word-break: break-word;
+            }
+
+            .bookmark-href {
+                font-size: 0.75em;
+                margin-top: 0.25em;
+            }
+
+            .sans {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+                    "Segoe UI Symbol";
+            }
+            .code {
+                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+            }
+            .serif {
+                font-family: Lyon-Text, Georgia, ui-serif, serif;
+            }
+            .mono {
+                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+            }
+            .pdf .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+            }
+            .pdf:lang(zh-CN) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+            }
+            .pdf:lang(zh-TW) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+            }
+            .pdf:lang(ko-KR) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+            }
+            .pdf .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK KR";
+            }
+            .pdf .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+            }
+            .pdf:lang(zh-CN) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+            }
+            .pdf:lang(zh-TW) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+            }
+            .pdf:lang(ko-KR) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+            }
+            .pdf .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+            }
+            .highlight-default {
+                color: rgba(55, 53, 47, 1);
+            }
+            .highlight-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .highlight-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .highlight-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .highlight-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .highlight-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .highlight-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .highlight-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .highlight-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .highlight-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .highlight-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .highlight-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .highlight-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .highlight-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .highlight-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .highlight-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .highlight-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .highlight-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .highlight-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .block-color-default {
+                color: inherit;
+                fill: inherit;
+            }
+            .block-color-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .block-color-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .block-color-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .block-color-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .block-color-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .block-color-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .block-color-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .block-color-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .block-color-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .block-color-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .block-color-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .block-color-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .block-color-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .block-color-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .block-color-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .block-color-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .block-color-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .block-color-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .select-value-color-interactiveBlue {
+                background-color: rgba(35, 131, 226, 0.07);
+            }
+            .select-value-color-pink {
+                background-color: rgba(245, 224, 233, 1);
+            }
+            .select-value-color-purple {
+                background-color: rgba(232, 222, 238, 1);
+            }
+            .select-value-color-green {
+                background-color: rgba(219, 237, 219, 1);
+            }
+            .select-value-color-gray {
+                background-color: rgba(227, 226, 224, 1);
+            }
+            .select-value-color-translucentGray {
+                background-color: rgba(255, 255, 255, 0.0375);
+            }
+            .select-value-color-orange {
+                background-color: rgba(250, 222, 201, 1);
+            }
+            .select-value-color-brown {
+                background-color: rgba(238, 224, 218, 1);
+            }
+            .select-value-color-red {
+                background-color: rgba(255, 226, 221, 1);
+            }
+            .select-value-color-yellow {
+                background-color: rgba(253, 236, 200, 1);
+            }
+            .select-value-color-blue {
+                background-color: rgba(211, 229, 239, 1);
+            }
+            .select-value-color-pageGlass {
+                background-color: undefined;
+            }
+            .select-value-color-washGlass {
+                background-color: undefined;
+            }
+
+            .checkbox {
+                display: inline-flex;
+                vertical-align: text-bottom;
+                width: 16;
+                height: 16;
+                background-size: 16px;
+                margin-left: 2px;
+                margin-right: 5px;
+            }
+
+            .checkbox-on {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            .checkbox-off {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            /* -------- injections from notionBackup -------- */
+
+            body {
+                white-space: normal !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+
+            .code,
+            code {
+                font-size: 100% !important;
+            }
+
+            blockquote {
+                font-size: 100% !important;
+            }
+
+            .callout {
+                white-space: normal !important;
+            }
+            .callout div:has(span.icon) {
+                font-size: 100% !important;
+            }
+
+            .source:not(.bookmark) {
+                font-size: 100% !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+        </style>
+    </head>
+    <body>
+        <article class="page sans">
+            <header>
+                <h1 class="page-title">CSS</h1>
+                <p class="page-description"></p>
+            </header>
+            <div class="page-body">
+                <nav class="block-color-gray table_of_contents">
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#11a2b49b-c042-4b01-adf5-3b9e9c6f5aa9">CSS</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#d39f1a0d-274c-413e-9aed-ce661ca583e4">Syntax</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#3f2723b2-7599-4bcd-89ef-e8a650750426">Sizes and Proportions</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#5ec77af4-94b7-41d0-801f-b31c3db6b605">The Box Model</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#131f7c41-4405-4c9e-b0a2-13667b6208a9">Layouting</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#470f3b6c-ea3f-41c5-bdf1-86eafff934ba">&lt;display-outside&gt;</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-2">
+                        <a class="table_of_contents-link" href="#5e58ec8a-5c3e-4e23-b889-8b67af4400d4">
+                            <strong><code>block</code></strong>
+                        </a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-2">
+                        <a class="table_of_contents-link" href="#73463b7b-4c9d-489b-8e0e-1a8c2bf3da25">
+                            <strong><code>inline</code></strong>
+                        </a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#fe7d1e8c-eef4-4e94-bb55-898fd4231b8d">&lt;display-inside&gt;</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-2">
+                        <a class="table_of_contents-link" href="#5fd94b64-fc5f-4a50-862a-95b82febeeb6">
+                            <code><strong>flow</strong></code>
+                        </a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-2">
+                        <a class="table_of_contents-link" href="#bdbd923e-b2fe-4205-af82-797add785bb0">
+                            <code><strong>flow-root</strong></code>
+                        </a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-2">
+                        <a class="table_of_contents-link" href="#3bc67364-f6ed-4061-8f2a-a8f31d4bfc38">
+                            <code><strong>table</strong></code>
+                        </a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-2">
+                        <a class="table_of_contents-link" href="#2e768a67-3024-4dac-86b9-8691c55e1b5e">
+                            <code><strong>flex</strong></code>
+                        </a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-2">
+                        <a class="table_of_contents-link" href="#ea0034cf-6662-4962-b85e-996f7092269e">
+                            <code><strong>grid</strong></code>
+                        </a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-2">
+                        <a class="table_of_contents-link" href="#3c6dc1e5-191b-490f-be8a-0f6f5bce497f">
+                            <code><strong>ruby</strong></code>
+                            <strong></strong>
+                        </a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#2b26fdd8-a6cf-4a54-b4f3-e739ea62681d">Holy Grail Layout</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#1e814bff-c039-4420-b4b8-8c42a2cc2794">Responsive Design</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#6d70fa1b-85fa-45a7-921f-556cf0ea1eb0">Media Queries</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#b38d456b-e792-4d4b-9037-4eac62f8e3a8">Sources</a>
+                    </div>
+                </nav>
+                <p></p>
+                <h1>CSS</h1>
+                <p>Cascading Style Sheets</p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Integration into HTML</summary>
+                            <p>External (prefered)</p>
+                            <div class="indented">
+                                <p>
+                                    linking to an external CSS file in
+                                    <code>&lt;head&gt;</code>
+                                </p>
+                                <p>
+                                    local link:
+                                    <code>&lt;link rel="stylesheet" href="style.css"&gt;</code>
+                                </p>
+                                <p>
+                                    If semantics used correctly in HTML:
+                                    <code>&lt;link&gt;</code>
+                                    to external website
+                                </p>
+                            </div>
+                            <p></p>
+                            <p></p>
+                            <p>Internal</p>
+                            <div class="indented">
+                                <p>
+                                    <code>&lt;style&gt;</code>
+                                    in
+                                    <code>&lt;head&gt;</code>
+                                </p>
+                                <p>overwrites any external CSS</p>
+                            </div>
+                            <p></p>
+                            <p></p>
+                            <p>Inline</p>
+                            <div class="indented">
+                                <p>
+                                    In HTML elements
+                                    <code>&lt;tagname style="property:value;"&gt;content&lt;/tagname&gt;</code>
+                                </p>
+                            </div>
+                            <p></p>
+                        </details>
+                    </li>
+                </ul>
+                <p>Seperation of core concerns:</p>
+                <div class="indented">
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">structure / content (markdown document, HTML)</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">style / design / layout</li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <h1>Syntax</h1>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Selectors</summary>
+                            <p>
+                                select HTML elements that we change the attribute of
+                                <code>selector { property:value; }</code>
+                            </p>
+                            <p>
+                                Selectors can be grouped by separating them via comma
+                                <code>','</code>
+                            </p>
+                            <p>
+                                <mark class="highlight-teal">Specificity</mark>
+                                determines style when multiple selectors match:
+                                <a href="https://specificity.keegan.st/">https://specificity.keegan.st/</a>
+                            </p>
+                            <div class="indented"><p>Most specific rules wins.</p></div>
+                            <p></p>
+                            <p></p>
+                            <ol type="1" class="numbered-list" start="1">
+                                <li>
+                                    Type Selector group via name
+                                    <pre class="code"><code>&lt;h1&gt;...&lt;/h1&gt;
+h1	{	font-size:	12pt; }</code></pre>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="2">
+                                <li>
+                                    ID Selector unique element via id
+                                    <code>'#'</code>
+                                    <pre class="code"><code>&lt;p id="first"&gt;…&lt;/p&gt;
+#first {	color:	red; }</code></pre>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="3">
+                                <li>
+                                    Class Selector group via class
+                                    <code>'.'</code>
+                                    <pre class="code"><code>&lt;p class="small"&gt;…&lt;/p&gt;
+&lt;h1	class="small"&gt;…&lt;h1/&gt;
+.small {	font-size:	5pt; }</code></pre>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="4">
+                                <li>
+                                    Descendants Separate using space
+                                    <code>' '</code>
+                                    <pre class="code"><code>body	p	{ ...	}</code></pre>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="5">
+                                <li>
+                                    Children Separate using
+                                    <code>'&gt;'</code>
+                                    <pre class="code"><code>body &gt; p { ...	}</code></pre>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="6">
+                                <li>
+                                    Siblings Separate using
+                                    <code>'~'</code>
+                                    <pre class="code"><code>span ~ em { ...	}</code></pre>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="7">
+                                <li>
+                                    Adjacent Siblings Separate using
+                                    <code>'+'</code>
+                                    <pre class="code"><code>p	+	div	{ ...	}</code></pre>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="8">
+                                <li>
+                                    Attribute group via
+                                    <code>[att=val]</code>
+                                    <pre class="code"><code>h1[title="a"] { ...	}
+input[invalid] { ... }</code></pre>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="9">
+                                <li>
+                                    Pseudo Class
+                                    <p>
+                                        Pseudo Class: i.e. when cursor hovers over a link
+                                        <code>a:hover</code>
+                                        selects
+                                        <code>&lt;a&gt;</code>
+                                        :nth-child, :first-of-type, [attribute*=value], …
+                                    </p>
+                                    <pre class="code"><code>p:nth-child(2) {	...	}
+p:only-child { ... }</code></pre>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="10">
+                                <li>
+                                    Negation
+                                    <code>[attribute*:value]</code>
+                                    <pre class="code"><code>body *:not(p) { ... }</code></pre>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="11">
+                                <li>
+                                    Every element
+                                    <code>*{ ... }</code>
+                                </li>
+                            </ol>
+                            <p></p>
+                        </details>
+                    </li>
+                </ul>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Basic Properties</summary>
+                            <p>Formatting Text and Fonts</p>
+                            <div class="indented">
+                                <pre class="code"><code>font-family:	  Arial, sans-serif;
+font-style:	    italic;
+font-size:	    1.2em;
+font-weight:	  bold;
+color:	        #00ff00;
+line-height:	  120%;
+text-alignment:	center;</code></pre>
+                            </div>
+                            <p></p>
+                            <p></p>
+                            <p>Background</p>
+                            <div class="indented">
+                                <pre class="code"><code>background-color:	   rgb(250,20,16);
+background-image:	   url("bg.jpg");
+background-repeat:	 repeat-x;
+background-position: right	top;</code></pre>
+                            </div>
+                            <p></p>
+                            <p></p>
+                            <p>Lists</p>
+                            <div class="indented">
+                                <pre class="code"><code>list-style-type:	circle;
+list-style-image:	url('logo.gif');</code></pre>
+                            </div>
+                            <p></p>
+                            <p></p>
+                            <p>Borders</p>
+                            <div class="indented">
+                                <pre class="code"><code>border:	        2px solid #A1A1A1;
+border-radius:  25px;
+box-shadow:     3px	3px	3px	#FF9900;</code></pre>
+                            </div>
+                            <p></p>
+                            <p></p>
+                        </details>
+                    </li>
+                </ul>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>(Global) Variables</summary>
+                            <p>
+                                Custom Property Syntax
+                                <code>--name: value</code>
+                            </p>
+                            <p>Has to defined in a certain scope (selector)</p>
+                            <p>
+                                Selector that property is defined in determines scope of usage ▪
+                                <code>:root</code>
+                                Pseudo class is a common best practice
+                            </p>
+                            <p></p>
+                            <p>
+                                Fallback values (if name does not exist):
+                                <code>var(--name, black)</code>
+                            </p>
+                            <pre class="code"><code>h2 {
+		--alarm-color:	darkred;
+}
+:root {
+		--alarm-color:	crimson;
+}</code></pre>
+                            <p></p>
+                        </details>
+                    </li>
+                </ul>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Pseudo Classes</summary>
+                            <p>Use information present outside the document tree based on:</p>
+                            <ul class="bulleted-list">
+                                <li style="list-style-type: disc">
+                                    form status
+                                    <p>
+                                        <code>:hover, :focus</code>
+                                        Element the user hovers the mouse over / has selected via tabbing
+                                    </p>
+                                    <p>
+                                        <code>:visited, :link</code>
+                                        All visited/unvisited links
+                                    </p>
+                                </li>
+                            </ul>
+                            <ul class="bulleted-list">
+                                <li style="list-style-type: disc">
+                                    user input
+                                    <p>
+                                        <code>:enabled, :disabled</code>
+                                        Whether input in an element is allowed or not
+                                    </p>
+                                    <p>
+                                        <code>:required, :optional</code>
+                                        Whether inputs are required or not
+                                    </p>
+                                    <p>
+                                        <code>:valid, :invalid</code>
+                                        Whether form / input has valid input or not
+                                    </p>
+                                </li>
+                            </ul>
+                            <ul class="bulleted-list">
+                                <li style="list-style-type: disc">
+                                    DOM position
+                                    <p>
+                                        <code>:nth-child(n), :nth-last-child</code>
+                                        If element is the n-th child of it's parent
+                                    </p>
+                                    <p>
+                                        <code>:nth-of-type(n)</code>
+                                        If element is the n-th child of the same type of it's parent
+                                    </p>
+                                </li>
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Pseudo Elements</summary>
+                            <p>
+                                <code>::first-line, ::first-letter</code>
+                                First letter or line
+                            </p>
+                            <p>
+                                <code>::selection</code>
+                                Current selection
+                            </p>
+                            <p>
+                                <code>::before, ::after</code>
+                                Content inserted before or after the specified element
+                            </p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <h1>Sizes and Proportions</h1>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Absolute values - physical or pixel units</summary>
+                            <p>For fixed sized rendering (printed pages, images)</p>
+                            <p>Inches (in), Centimeters (cm), Millimeters (mm), Points (pt), Picas (pc), Pixel (px)</p>
+                        </details>
+                    </li>
+                </ul>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Relative values - relative to: parent, font or viewport size</summary>
+                            <p><span style="border-bottom: 0.05em solid">Parent Size</span></p>
+                            <div class="indented">
+                                <p>
+                                    <code>%</code>
+                                    (relative to parent)
+                                </p>
+                                <p></p>
+                            </div>
+                            <p></p>
+                            <p><span style="border-bottom: 0.05em solid">Font Sizes</span></p>
+                            <div class="indented">
+                                <p>Can be used for anything but rely on font sizes</p>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>em</code>
+                                        : relative to the parent element (which also could be the html)
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>rem</code>
+                                        : relative to root element (&lt;HTML&gt;) font size.
+                                        <p class="block-color-gray">a) 16 px by default</p>
+                                        <p class="block-color-gray">b) set by the browser settings</p>
+                                        <div class="indented">
+                                            <p><mark class="highlight-gray">Good for accessibility because it is convenient for the user.</mark></p>
+                                            <figure class="image">
+                                                <a href="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled.png">
+                                                    <img style="width: 288px" src="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled.png" />
+                                                </a>
+                                            </figure>
+                                            <p><mark class="highlight-gray">rem is more predictable than em and more useful for grids.</mark></p>
+                                        </div>
+                                        <p></p>
+                                        <p class="block-color-gray">c) sized by ourselves - like so:</p>
+                                        <div class="indented">
+                                            <pre class="code"><code>html{
+	font-size: 10px;
+}</code></pre>
+                                        </div>
+                                        <p></p>
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>ex</code>
+                                        (Thex height): relies on font-family.
+                                        <p class="block-color-gray">The height of the lower-case x of that font.</p>
+                                        <p class="block-color-gray">Often times, this is about at the middle mark of the font.</p>
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>ch</code>
+                                        (character unit): relies on font-family.
+                                        <p class="block-color-gray">The width of the glyph for “0”.</p>
+                                        <p class="block-color-gray">
+                                            In other words, if I were to create a floated element with just a “0” and no whitespace between it, then would be
+                                            precisely 1ch.
+                                        </p>
+                                        <p class="block-color-gray">
+                                            Therefore: width: 40ch; can always contain a string with 40 characters in that particular font.
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p></p>
+                            <p></p>
+                            <p><span style="border-bottom: 0.05em solid">Viewport Sizes</span></p>
+                            <div class="indented">
+                                <p class="block-color-gray">Viewport - The virtual “window” / Visible area of webpage.</p>
+                                <p>
+                                    <code>vw</code>
+                                    : percent of browser window width
+                                </p>
+                                <p>
+                                    <code>vh</code>
+                                    : percent of browser window height
+                                </p>
+                                <p>
+                                    <code>vmin</code>
+                                    : min(1vw, 1vh) → chooses smaller viewport length
+                                </p>
+                                <p>
+                                    <code>vmax</code>
+                                    : max(1vw, 1vh) → chooses bigger viewport length
+                                </p>
+                            </div>
+                            <p></p>
+                            <p></p>
+                            <p><span style="border-bottom: 0.05em solid">calculated values</span></p>
+                            <div class="indented">
+                                <p>
+                                    <code>calc</code>
+                                    : Calculates value (through addition or subtraction)
+                                </p>
+                                <pre class="code"><code>width:	calc(2.5em	–	3px)</code></pre>
+                            </div>
+                            <p></p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <h1>The Box Model</h1>
+                <p>Everything in CSS has a box around it.</p>
+                <figure class="image">
+                    <a href="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%201.png">
+                        <img style="width: 192px" src="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%201.png" />
+                    </a>
+                </figure>
+                <p><span style="border-bottom: 0.05em solid">Block Box</span></p>
+                <div class="indented">
+                    <p>
+                        Examples: Headings (e.g.&nbsp;
+                        <code>&lt;h1&gt;</code>
+                        ),
+                        <code>&lt;p&gt;</code>
+                        &nbsp;all use&nbsp;
+                        <code>block</code>
+                        &nbsp;as their outer display type by default.
+                    </p>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">breaks new line</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Fills up 100% of available space in container in the
+                            <em>inline</em>
+                            direction.
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Respects the&nbsp;
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width"><code>width</code></a>
+                            &nbsp;and&nbsp;
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height"><code>height</code></a>
+                            &nbsp;properties
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Padding, margin and border will push other elements away</li>
+                    </ul>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Inline Box</span></p>
+                <div class="indented">
+                    <p>
+                        Examples:
+                        <code>&lt;a&gt;</code>
+                        ,&nbsp;
+                        <code>&lt;span&gt;</code>
+                        ,&nbsp;
+                        <code>&lt;em&gt;</code>
+                        &nbsp;and&nbsp;
+                        <code>&lt;strong&gt;</code>
+                        &nbsp;- inline by default.
+                    </p>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">will not break onto a new line.</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            The&nbsp;
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width"><code>width</code></a>
+                            &nbsp;and&nbsp;
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height"><code>height</code></a>
+                            &nbsp;properties will be ignored.
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Vertical padding, margins, and borders will apply but will not cause other inline boxes to move away from the box.
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Horizontal padding, margins, and borders will apply and will cause other inline boxes to move away from the box.
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <h1>Layouting</h1>
+                <p>CSS page layout techniques allow us to control where elements on a web page are positioned:</p>
+                <div class="indented">
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">relative to their default position in normal layout flow</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">the other elements around them</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">their parent container</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">the main viewport/window.</li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p>
+                    The display property
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/display"><code>display: &lt;mode&gt;</code></a>
+                    sets whether an element is treated
+                </p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            as a block or inline element (
+                            <code>&lt;outer-display&gt;</code>
+                            type)
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            and the layout used for its children (elements inside the box), such as flow layout, grid or flex (
+                            <code>&lt;inner-display&gt;</code>
+                            type)
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <pre class="code"><code>/* legacy values */
+display: block;
+display: inline;
+display: inline-block;
+display: flex;
+display: inline-flex;
+display: grid;
+display: inline-grid;
+display: flow-root;
+
+/* box generation */
+display: none;
+display: contents;
+
+/* two-value syntax */
+display: block flow;
+display: inline flow;
+display: inline flow-root;
+display: block flex;
+display: inline flex;
+display: block grid;
+display: inline grid;
+display: block flow-root;
+
+/* other values */
+display: table;
+display: table-row; /* all table elements have an equivalent CSS display value */
+display: list-item;
+
+/* Global values */
+display: inherit;
+display: initial;
+display: unset;</code></pre>
+                <p></p>
+                <h2>&lt;display-outside&gt;</h2>
+                <p>These keywords specify the element’s outer display type, which is essentially its role in flow layout.</p>
+                <p class="block-color-gray">
+                    The direction in which words are displayed in a sentence is according to the&nbsp;
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Writing_Modes">Writing Mode</a>
+                    &nbsp;of the document.
+                </p>
+                <p class="block-color-gray">
+                    In English therefore, inline elements display one after the other, starting on the left, and block elements start at the top and move down
+                    the page.
+                </p>
+                <p></p>
+                <h3>
+                    <strong><code>block</code></strong>
+                </h3>
+                <p>The element generates a block element box.</p>
+                <div class="indented"><p>Line breaks before and after the element in the normal flow.</p></div>
+                <p></p>
+                <p></p>
+                <h3>
+                    <strong><code>inline</code></strong>
+                </h3>
+                <p>The element generates one or more inline element boxes.</p>
+                <div class="indented"><p>The next element will be on the same line if there is space in normal flow.</p></div>
+                <p></p>
+                <p></p>
+                <h2>&lt;display-inside&gt;</h2>
+                <p>Defines the type of formatting context that its contents are laid out in.</p>
+                <p></p>
+                <h3>
+                    <code><strong>flow</strong></code>
+                </h3>
+                <p>(default - without a display-inside parameter)</p>
+                <div class="indented">
+                    <p>flow layout = block-and-inline layout, normal flow.</p>
+                    <p>Depending on the value of other properties - such as:</p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <strong>
+                                        <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/position"><code>position</code></a>
+                                    </strong>
+                                </summary>
+                                <p>Rather used for fine tuning, not for layouts.</p>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <mark class="highlight-gray"><code>position: static</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        default, normal flow
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <mark class="highlight-gray"><code>position: relative</code></mark>
+                                        moving relative to its position in normal flow
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <mark class="highlight-gray"><code>position: absolute</code></mark>
+                                        moving relative to the edges of its parent element
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <mark class="highlight-gray"><code>position: fixed</code></mark>
+                                        relative to the browser viewport (not another element)
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <mark class="highlight-gray"><code>position: sticky</code></mark>
+                                        static, elements hits an offset from viewport, then like&nbsp;
+                                        <mark class="highlight-gray"><code>fixed</code></mark>
+                                    </li>
+                                </ul>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <strong>
+                                        <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/float"><code>float</code></a>
+                                    </strong>
+                                </summary>
+                                <p>
+                                    <mark class="highlight-gray"><code>clear</code></mark>
+                                    <mark class="highlight-gray">to turn floating off</mark>
+                                </p>
+                                <p>has 4 possible values:</p>
+                                <div class="indented">
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            <mark class="highlight-gray"><code>left</code></mark>
+                                            <mark class="highlight-gray">&nbsp;</mark>
+                                            Floats the element to the left.
+                                        </li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            <mark class="highlight-gray"><code>right</code></mark>
+                                            <mark class="highlight-gray">&nbsp;</mark>
+                                            Floats the element to the right.
+                                        </li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            <mark class="highlight-gray"><code>none</code></mark>
+                                            <mark class="highlight-gray">&nbsp;</mark>
+                                            Specifies no floating at all. (default)
+                                        </li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            <mark class="highlight-gray"><code>inherit</code></mark>
+                                            <mark class="highlight-gray">&nbsp;</mark>
+                                            property should be inherited from the parent element.
+                                        </li>
+                                    </ul>
+                                    <p></p>
+                                </div>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <strong>
+                                        <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/overflow"><code>overflow</code></a>
+                                    </strong>
+                                </summary>
+                                <p>
+                                    Sets the desired behavior for an element's overflow — i.e. when an element's content is too big to fit in its block
+                                    formatting context — in both directions.
+                                </p>
+                                <pre class="code"><code>/* Keyword values */
+overflow: visible;
+overflow: hidden;
+overflow: clip;
+overflow: scroll;
+overflow: auto;
+overflow: hidden visible;
+
+/* Global values */
+overflow: inherit;
+overflow: initial;
+overflow: unset;</code></pre>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <p>
+                        <code>z-index</code>
+                        defines which elements should be placed in front.
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <h3>
+                    <code><strong>flow-root</strong></code>
+                </h3>
+                <p>
+                    generates a new&nbsp;
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context">block formatting context</a>
+                    → defining new formatting root
+                </p>
+                <p></p>
+                <h3>
+                    <code><strong>table</strong></code>
+                </h3>
+                <p>
+                    like HTML&nbsp;
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table"><code>&lt;table&gt;</code></a>
+                    &nbsp;elements
+                </p>
+                <div class="indented">
+                    <p>
+                        should be considered a legacy method at this point, for those situations where you have very old browsers without support for Flexbox or
+                        Grid.
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <h3>
+                    <code><strong>flex</strong></code>
+                </h3>
+                <p>
+                    The element behaves like a block element and lays out its content according to the&nbsp;
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout">flexbox model</a>
+                    . Flexbox is the short name for the Flexible Box Layout Module.
+                </p>
+                <p></p>
+                <div class="indented">
+                    <p>CSS Properties:</p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex"><code>flex</code></a>
+                                    → sizing
+                                </summary>
+                                <p>
+                                    <code>flex: 1;</code>
+                                    gives the element exactly one fraction unit
+                                </p>
+                                <p>
+                                    <code>flex: 200px;</code>
+                                    → means that each element must be at least 200px wide
+                                </p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis"><code>flex-basis</code></a>
+                                </summary>
+                                <p>specifies the initial size of the item before CSS makes adjustments with flex-shrink or flex-grow.</p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink"><code>flex-shrink</code></a>
+                                </summary>
+                                <p>allows an item to shrink if the flex container is too small.</p>
+                                <p>
+                                    Items shrink when the width of the parent container is smaller than the combined widths of all the flex items within it. →
+                                    Takes numbers as values.
+                                </p>
+                                <p>The higher the number, the more it will shrink compared to other items - similar to fractional units.</p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow"><code>flex-grow</code></a>
+                                </summary>
+                                <p>controls the size of items when the parent container expands.</p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction"><code>flex-direction</code></a>
+                                </summary>
+                                <p>
+                                    Initial value is
+                                    <code>row</code>
+                                    . Can be changed to
+                                    <code>column</code>
+                                    ,
+                                    <code>column-reverse</code>
+                                    ,
+                                    <code>row-reverse</code>
+                                </p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow"><code>flex-flow</code></a>
+                                </summary>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap"><code>flex-wrap</code></a>
+                                    → overflow
+                                </summary>
+                                <p>
+                                    When you have a fixed amount of width or height in your layout eventually your flexbox children will overflow their
+                                    container, breaking the layout.
+                                </p>
+                                <div class="indented">
+                                    <p class="block-color-gray">
+                                        (
+                                        <mark class="highlight-gray"><code>flex: 200px;</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        → means that each element must be at least 200px wide)
+                                    </p>
+                                </div>
+                                <p></p>
+                                <p>This means extra items move into a new row or column.</p>
+                                <p>The break point of where the wrapping happens depends on the size of the items and the size of the container.</p>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>nowrap</code>
+                                        (default) does not wrap items
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>wrap</code>
+                                        wraps items onto multiple lines
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>wrap-reverse</code>
+                                        wraps items onto multiple lines in reverse order
+                                    </li>
+                                </ul>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/order"><code>order</code></a>
+                                </summary>
+                                <p>used to tell CSS the order of how flex items appear in the flex container.</p>
+                                <p>By default, items will appear in the same order they come in the source HTML.</p>
+                            </details>
+                        </li>
+                    </ul>
+                    <p></p>
+                    <p>Alignment Properties:</p>
+                    <p>Aligns the items in the flex container</p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content"><code>justify-content</code></a>
+                                    → x-Axis (main axis)
+                                </summary>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>flex-start</code>
+                                        (default) start
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>flex-end</code>
+                                        end
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>space-between</code>
+                                        center, with space between items - first and last are locked to edges
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>space-around</code>
+                                        like
+                                        <code>space-between</code>
+                                        &nbsp;but first and last are not locked to edges
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>space-evenly</code>
+                                        Even space distribution with full space at bith ends
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>center</code>
+                                        center
+                                    </li>
+                                </ul>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-content"><code>align-content</code></a>
+                                    → y-Axis (cross axis)
+                                </summary>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>stretch</code>
+                                        (default) stretch to fill entire container
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>flex-start</code>
+                                        start
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>flex-end</code>
+                                        end
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>center</code>
+                                        center with equal space
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>baseline</code>
+                                        baselines (is a text concept
+                                        <style>
+                                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                        </style>
+                                        <span
+                                            data-token-index="0"
+                                            contenteditable="false"
+                                            class="notion-text-equation-token"
+                                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                            <span></span>
+                                            <span>
+                                                <span class="katex">
+                                                    <span class="katex-mathml">
+                                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                            <semantics>
+                                                                <mrow><mo>≈</mo></mrow>
+                                                                <annotation encoding="application/x-tex">\approx</annotation>
+                                                            </semantics>
+                                                        </math>
+                                                    </span>
+                                                    <span class="katex-html" aria-hidden="true">
+                                                        <span class="base">
+                                                            <span class="strut" style="height: 0.48312em; vertical-align: 0em"></span>
+                                                            <span class="mrel">≈</span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span>﻿</span>
+                                        </span>
+                                        the line that the letters sit on)
+                                    </li>
+                                </ul>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-items"><code>align-items</code></a>
+                                </summary>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-self"><code>align-self</code></a>
+                                    → individual
+                                </summary>
+                                <p>accepts the same values as align-items and will override any value set by the align-items property.</p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/place-content"><code>place-content</code></a>
+                                </summary>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/place-items"><code>place-items</code></a>
+                                </summary>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/row-gap"><code>row-gap</code></a>
+                                </summary>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/column-gap"><code>column-gap</code></a>
+                                </summary>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gap"><code>gap</code></a>
+                                </summary>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%202.png">
+                        <img style="width: 192px" src="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%202.png" />
+                    </a>
+                </figure>
+                <figure class="image">
+                    <a href="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%203.png">
+                        <img style="width: 192px" src="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%203.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <h3>
+                    <code><strong>grid</strong></code>
+                </h3>
+                <p>
+                    The element behaves like a block element and lays out its content according to the&nbsp;
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout">grid model</a>
+                    .
+                </p>
+                <div class="indented">
+                    <p>
+                        Lining things up in rows and columns + gaps between them (
+                        <em>gutters</em>
+                        ).
+                    </p>
+                    <p>For designs where elements don’t jump around or change width as we move from page to page, providing greater consistency websites.</p>
+                    <p></p>
+                    <p>Components:</p>
+                    <div class="indented">
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Grid Line Horizontal and vertical dividing line within a grid</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Grid Track Space between two adjacent grid lines — columns or rows of the grid</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Grid Cell Single unit of the grid</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Grid Area Adjacent grid cells that form a rectangle</li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <p></p>
+                    <p>Properties:</p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Grid Container properties</summary>
+                                <p><span style="border-bottom: 0.05em solid">Sizing</span></p>
+                                <p>
+                                    <code>grid-template-columns</code>
+                                    and
+                                    <code>grid-template-rows</code>
+                                    : The number of parameters given indicates the number of
+                                    <em>columns or rows</em>
+                                    in the grid, and the value of each parameter indicates the width or height of each.
+                                </p>
+                                <p></p>
+                                <p><span style="border-bottom: 0.05em solid">Spacing</span></p>
+                                <p>
+                                    <code>grid-column-gap</code>
+                                    or
+                                    <code>grid-row-gap</code>
+                                    : sets spacing between cells
+                                </p>
+                                <p></p>
+                                <p><span style="border-bottom: 0.05em solid">Units</span></p>
+                                <p>
+                                    You can use absolute and relative units like&nbsp;
+                                    <code>px</code>
+                                    &nbsp;and&nbsp;
+                                    <code>em</code>
+                                    &nbsp;in CSS Grid to define the size of rows and columns. You can use these as well:
+                                </p>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>fr</code>
+                                        : sets the column or row to a fraction of the available space,
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>auto</code>
+                                        : sets the column or row to the width or height of its content automatically,
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>%</code>
+                                        : adjusts the column or row to the percent width of its container.
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>repeat()</code>
+                                        : can also use
+                                        <code>auto-fill</code>
+                                        or
+                                        <code>auto-fit</code>
+                                        as an input
+                                        <pre class="code code-wrap"><code>repeat(auto-fill, minmax(60px, 1fr));</code></pre>
+                                        <p>
+                                            When the container changes size, this setup keeps inserting 60px columns and stretching them until it can insert
+                                            another one.&nbsp;-&nbsp;If your container can't fit all your items on one row, it will move them down to a new one.
+                                        </p>
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        <code>minmax()</code>
+                                        : defines a minimum and maximum value
+                                    </li>
+                                </ul>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Grid Cell properties</summary>
+                                <p>Indexing starts with 1.</p>
+                                <div class="indented">
+                                    <figure class="image">
+                                        <a href="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%204.png">
+                                            <img style="width: 144px" src="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%204.png" />
+                                        </a>
+                                    </figure>
+                                </div>
+                                <p></p>
+                                <p></p>
+                                <p><span style="border-bottom: 0.05em solid">Sizing</span></p>
+                                <p>
+                                    <code>grid-column</code>
+                                    /
+                                    <code>grid-row</code>
+                                    : To control the amount of columns / rows an item will consume: the line numbers you want the item to start at / stop at.
+                                </p>
+                                <p></p>
+                                <p><span style="border-bottom: 0.05em solid">Alignment (x-Axis)</span></p>
+                                <p>
+                                    <code>justify-self</code>
+                                    :
+                                </p>
+                                <div class="indented">
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            <code>stretch</code>
+                                            : (default) will make the content fill the whole width of the cell.
+                                        </li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            <code>start</code>
+                                            : aligns the content at the left of the cell.
+                                        </li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            <code>center</code>
+                                            : aligns the content in the center of the cell,
+                                        </li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            <code>end</code>
+                                            : aligns the content at the right of the cell.
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p></p>
+                                <p></p>
+                                <p><span style="border-bottom: 0.05em solid">Alignment (y-Axis)</span></p>
+                                <p><code>align-self</code></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Grid Area properties</summary>
+                                <p>
+                                    <code>grid-template-areas</code>
+                                    : group cells of your grid together into an area and give the area a custom name.
+                                </p>
+                                <div class="indented">
+                                    <pre class="code code-wrap"><code>grid-template-areas:
+  "header header header"
+  "advert content content"
+  "footer footer footer";</code></pre>
+                                    <p>
+                                        The code above merges the top three cells together into an area named header, the bottom three cells into a footer area,
+                                        and it makes two areas in the middle row; advert and content. In addition to custom labels, you can use a period (.) to
+                                        designate an empty cell in the grid.
+                                    </p>
+                                    <p>
+                                        After creating an area's template for your grid container, you can place an item in your custom area by referencing the
+                                        name you gave it:
+                                    </p>
+                                    <pre class="code code-wrap"><code>.item1 {
+  grid-area: header;
+}</code></pre>
+                                    <p>
+                                        This lets the grid know that you want the&nbsp;
+                                        <code>item1</code>
+                                        &nbsp;class to go in the area named&nbsp;
+                                        <code>header</code>
+                                        . In this case, the item will use the entire top row because that whole row is named as the header area.
+                                    </p>
+                                    <p>
+                                        If your grid doesn't have an areas template to reference, you can create an area on the fly for an item to be placed
+                                        like this:
+                                    </p>
+                                    <pre class="code code-wrap"><code>item1 { grid-area: 1/1/2/4; }</code></pre>
+                                    <p>The numbers in the example above represent these values:</p>
+                                    <pre
+                                        class="code code-wrap"><code>grid-area: horizontal line to start at / vertical line to start at / horizontal line to end at / vertical line to end at;</code></pre>
+                                    <p>So the item in the example will consume the rows between lines 1 and 2, and the columns between lines 1 and 4.</p>
+                                    <p></p>
+                                </div>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%205.png">
+                        <img style="width: 192px" src="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%205.png" />
+                    </a>
+                </figure>
+                <figure class="image">
+                    <a href="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%206.png">
+                        <img style="width: 192px" src="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%206.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Flexbox vs. Grid</span></p>
+                <div class="indented">
+                    <p>Flexbox and Grid are not mutually exclusive within a page.</p>
+                    <p>Flexbox (1D) - Content first ▪ Enable existing content to align and adapt ▪ Rules decided by children</p>
+                    <p>
+                        Grid (2D) - Layout first ▪ Specific rigid layout in mind children are placed in ▪ Declaratively control specifically where elements end
+                        up — Rules decided by parent
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <h3>
+                    <code><strong>ruby</strong></code>
+                    <strong></strong>
+                </h3>
+                <p>The element behaves like an inline element and lays out its content according to the ruby formatting model.</p>
+                <p></p>
+                <h1>Holy Grail Layout</h1>
+                <p>With Flexbox</p>
+                <div class="indented">
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Header, Footer</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Fluid content, fixed sides</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">&gt;2 equal height columns</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Content before remaining columns</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">“order” property only for visual ordering</li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <pre class="code"><code>main	{	display:	flex; }
+main	&gt;	article	{	order:	2;	min-width:	12em;	flex:	1; }
+main	&gt;	nav			{	order:	1;	width:	200px; }
+main	&gt;	aside		{	order:	3;	width:	200px; }
+
+@media	all	and	(max-width:	600px)	{
+		main	{	flex-flow:	column; }
+		main	&gt;	article,	main	&gt;	nav,	main	&gt;	aside	{
+				order:	0;	width:	auto;
+		}
+}</code></pre>
+                <pre class="code"><code>&lt;!DOCTYPE	html&gt;
+...
+&lt;header&gt;...&lt;/header&gt;
+&lt;main&gt;
+		&lt;article&gt;...&lt;/article&gt;
+		&lt;nav&gt;...&lt;/nav&gt;
+		&lt;aside&gt;...&lt;/aside&gt;
+&lt;/main&gt;
+&lt;footer&gt;...&lt;/footer&gt;</code></pre>
+                <div class="column-list">
+                    <div style="width: 31.25%" class="column">
+                        <figure class="image">
+                            <a href="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%207.png">
+                                <img style="width: 192px" src="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%207.png" />
+                            </a>
+                        </figure>
+                    </div>
+                    <div style="width: 68.75%" class="column">
+                        <figure class="image">
+                            <a href="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%208.png">
+                                <img style="width: 72px" src="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%208.png" />
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+                <p></p>
+                <h1>Responsive Design</h1>
+                <p>The terms "fluid layout" and "responsive web design" are two different things.</p>
+                <p>Using them together is best practice.</p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Fluid layout - Scaling based on viewport sizes</summary>
+                            <p>layout of the page resizes as the window size is changed → Using percentages instead of fixed pixel widths.</p>
+                            <figure class="block-color-gray_background callout" style="white-space: pre-wrap; display: flex">
+                                <div style="font-size: 1.5em"><span class="icon">💡</span></div>
+                                <div style="width: 100%">
+                                    Deals with the "grey area" between breakpoints in media queries for responsive design → Linear progression between fix-sized
+                                    designs.
+                                </div>
+                            </figure>
+                            <p></p>
+                        </details>
+                    </li>
+                </ul>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Responsive web design - Different stylesheets based on breakpoints</summary>
+                            <p>
+                                CSS
+                                <em>media queries</em>
+                                , which load different styles depending on the width of the window or the type of device used to access the page.
+                            </p>
+                            <figure class="image">
+                                <a href="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%209.png">
+                                    <img style="width: 336px" src="CSS%20bcd736f4a71047e7a6c286ef8255ffb6/Untitled%209.png" />
+                                </a>
+                            </figure>
+                            <p></p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Responsive Design Techniques</span></p>
+                <div class="indented">
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Media queries: Let content fill the container and define min/max constraints</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Use relative units to specify position and size of text and media</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Fluid, Grid-based Layout</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Resposive Images</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Font Scaling</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">...</li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Fluid Images</span></p>
+                <div class="indented">
+                    <p>Scale images like other content using relative values.</p>
+                    <div class="indented">
+                        <p>Problems: Browser needs to scale, Large download sizes.</p>
+                        <p>Solution: Responsive and Adaptive Images</p>
+                    </div>
+                    <p></p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Responsive and Adaptive Images</span></p>
+                <div class="indented">
+                    <pre class="code"><code>&lt;picture&gt;	
+		&lt;source	src="pic-mobile.jpg"	media="(max-width: 720px)"	/&gt;
+		&lt;source	src="pic-tablet.jpg"	media="(max-width: 1280px)"	/&gt;
+		&lt;source	src="pic-desktop.jpg"	/&gt;
+		&lt;img	src="default.png"	/&gt;	&lt;!–-	User	Agent	not	supporting	picture	element	--&gt;
+&lt;/picture&gt;</code></pre>
+                    <p>Picture isn't supported on every browser → Using &lt;img&gt; just in case problem occurs</p>
+                    <div class="indented">
+                        <p>Detect visitor screen size, resolution, and pixel density</p>
+                        <p>Fetch respective image, size or version (additional download!)</p>
+                        <p>Use JavaScript, CSS media queries, and/or HTML5 markup</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p>
+                    <span style="border-bottom: 0.05em solid">The Viewport</span>
+                    - The virtual “window”
+                </p>
+                <div class="indented">
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Visible area of webpage</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Size content to viewport</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Avoid horizontal scrolling</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Avoid necessity to zoom</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Control viewport in HTML5 through meta-element
+                            <pre class="code"><code>&lt;meta name="viewport"
+			content=
+      "width=device-width,
+			initial-scale=1.0,
+			maximum-scale=3,
+			minimum-scale=0.5" /&gt;</code></pre>
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Consider mobile → Sometimes narrower/wider, default shrinking</li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <h1>Media Queries</h1>
+                <pre class="code code-wrap"><code>@media media-type and (media-feature-rule) {
+  /* CSS rules */
+}</code></pre>
+                <p></p>
+                <p>Build complex queries using logical operators (not, and, only).</p>
+                <p></p>
+                <p><mark class="highlight-teal">defining breakpoints and style switches:</mark></p>
+                <div class="indented">
+                    <pre class="code"><code>@media	only	screen	and	(max-width:	500px)	{	…	}
+@media	tv	and	(min-width:	700px)	and	(orientation:	landscape)	{	…	}
+&lt;!--	comma	acts	as	'or'	--&gt;
+@media	(min-width:	700px),	handheld	and	(orientation:	landscape)	{	…	}</code></pre>
+                </div>
+                <p></p>
+                <p></p>
+                <p>Many modern mobile devices have high-density screens that are difficult to read.</p>
+                <p>Use media queries and relative values for your fonts:</p>
+                <div class="indented">
+                    <pre class="code"><code>@media	screen	and	(min-width:	481px)	and	(max-width:	768px)	{
+		p	{	font-size:	0.9em; }
+}
+@media	screen	and	(max-width:	480px)	{
+		p	{	font-size:	0.7em; }
+}</code></pre>
+                </div>
+                <p></p>
+                <p></p>
+                <h1>Sources</h1>
+                <p>Layouts:</p>
+                <div class="indented">
+                    <p>
+                        <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout">
+                            https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout
+                        </a>
+                    </p>
+                </div>
+                <p></p>
+                <p>Practice CSS:</p>
+                <div class="indented">
+                    <p><a href="https://www.freecodecamp.org/learn/responsive-web-design">https://www.freecodecamp.org/learn/responsive-web-design</a></p>
+                    <p><a href="http://flexboxfroggy.com/#de">http://flexboxfroggy.com/#de</a></p>
+                </div>
+                <p></p>
+                <p>Useful tools:</p>
+                <div class="indented">
+                    <p><a href="https://hugogiraudel.github.io/selectors-explained/">CSS Selectors explained in plain English</a></p>
+                    <p>
+                        Some browsers still dont support newer layouts:
+                        <a href="http://caniuse.com/">http://caniuse.com</a>
+                    </p>
+                </div>
+                <p></p>
+                <p>Grid examples:</p>
+                <div class="indented">
+                    <p>
+                        <a href="https://webkit.org/blog/7434/css-grid-layout-a-new-layout-module-for-the-web/">
+                            https://webkit.org/blog/7434/css-grid-layout-a-new-layout-module-for-the-web/
+                        </a>
+                    </p>
+                    <p><a href="https://gridbyexample.com/examples/">https://gridbyexample.com/examples/</a></p>
+                </div>
+                <p></p>
+            </div>
+        </article>
+    </body>
+</html>

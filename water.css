@@ -1,0 +1,46 @@
+/* water.css customization - see: https://github.com/kognise/water.css */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+
+/* elements */
+.icon {
+    fill: currentColor;
+}
+a {
+    color: inherit !important;
+}
+.button {
+    cursor: pointer !important;
+    text-decoration: none !important;
+
+    display: block !important;
+    background-color: transparent !important;
+    border: 1px solid !important;
+    border-radius: 0.5rem !important;
+
+    /* center text */
+    min-height: 3rem !important;
+    line-height: 3rem !important;
+
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: medium !important;
+
+    text-align: left !important;
+    padding: 0.25rem 2rem !important;
+}
+.button:hover {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* spacing */
+.mt-2 {
+    margin-top: 2rem !important;
+}
+
+/* sections */
+section,
+main,
+footer {
+    margin-top: 4rem !important;
+}

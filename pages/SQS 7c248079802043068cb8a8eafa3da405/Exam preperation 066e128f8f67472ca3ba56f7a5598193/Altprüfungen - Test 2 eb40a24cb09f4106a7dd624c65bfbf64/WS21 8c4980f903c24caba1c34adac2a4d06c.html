@@ -1,0 +1,1231 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>WS21</title>
+        <style>
+            /* cspell:disable-file */
+            /* webkit printing magic: print all background colors */
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            * {
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media only screen {
+                body {
+                    margin: 2em auto;
+                    max-width: 900px;
+                    color: rgb(55, 53, 47);
+                }
+            }
+
+            body {
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            a,
+            a.visited {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .pdf-relative-link-path {
+                font-size: 80%;
+                color: #444;
+            }
+
+            h1,
+            h2,
+            h3 {
+                letter-spacing: -0.01em;
+                line-height: 1.2;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 0;
+                margin-bottom: 0.75em;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+                margin-top: 1.875rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .source {
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 1.5em;
+                word-break: break-all;
+            }
+
+            .callout {
+                border-radius: 3px;
+                padding: 1rem;
+            }
+
+            figure {
+                margin: 1.25em 0;
+                page-break-inside: avoid;
+            }
+
+            figcaption {
+                opacity: 0.5;
+                font-size: 85%;
+                margin-top: 0.5em;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+
+            .indented {
+                padding-left: 1.5em;
+            }
+
+            hr {
+                background: transparent;
+                display: block;
+                width: 100%;
+                height: 1px;
+                visibility: visible;
+                border: none;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            @media only print {
+                img {
+                    max-height: 100vh;
+                    object-fit: contain;
+                }
+            }
+
+            @page {
+                margin: 1in;
+            }
+
+            .collection-content {
+                font-size: 0.875rem;
+            }
+
+            .column-list {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .column {
+                padding: 0 1em;
+            }
+
+            .column:first-child {
+                padding-left: 0;
+            }
+
+            .column:last-child {
+                padding-right: 0;
+            }
+
+            .table_of_contents-item {
+                display: block;
+                font-size: 0.875rem;
+                line-height: 1.3;
+                padding: 0.125rem;
+            }
+
+            .table_of_contents-indent-1 {
+                margin-left: 1.5rem;
+            }
+
+            .table_of_contents-indent-2 {
+                margin-left: 3rem;
+            }
+
+            .table_of_contents-indent-3 {
+                margin-left: 4.5rem;
+            }
+
+            .table_of_contents-link {
+                text-decoration: none;
+                opacity: 0.7;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+            }
+
+            table,
+            th,
+            td {
+                border: 1px solid rgba(55, 53, 47, 0.09);
+                border-collapse: collapse;
+            }
+
+            table {
+                border-left: none;
+                border-right: none;
+            }
+
+            th,
+            td {
+                font-weight: normal;
+                padding: 0.25em 0.5em;
+                line-height: 1.5;
+                min-height: 1.5em;
+                text-align: left;
+            }
+
+            th {
+                color: rgba(55, 53, 47, 0.6);
+            }
+
+            ol,
+            ul {
+                margin: 0;
+                margin-block-start: 0.6em;
+                margin-block-end: 0.6em;
+            }
+
+            li > ol:first-child,
+            li > ul:first-child {
+                margin-block-start: 0.6em;
+            }
+
+            ul > li {
+                list-style: disc;
+            }
+
+            ul.to-do-list {
+                padding-inline-start: 0;
+            }
+
+            ul.to-do-list > li {
+                list-style: none;
+            }
+
+            .to-do-children-checked {
+                text-decoration: line-through;
+                opacity: 0.375;
+            }
+
+            ul.toggle > li {
+                list-style: none;
+            }
+
+            ul {
+                padding-inline-start: 1.7em;
+            }
+
+            ul > li {
+                padding-left: 0.1em;
+            }
+
+            ol {
+                padding-inline-start: 1.6em;
+            }
+
+            ol > li {
+                padding-left: 0.2em;
+            }
+
+            .mono ol {
+                padding-inline-start: 2em;
+            }
+
+            .mono ol > li {
+                text-indent: -0.4em;
+            }
+
+            .toggle {
+                padding-inline-start: 0em;
+                list-style-type: none;
+            }
+
+            /* Indent toggle children */
+            .toggle > li > details {
+                padding-left: 1.7em;
+            }
+
+            .toggle > li > details > summary {
+                margin-left: -1.1em;
+            }
+
+            .selected-value {
+                display: inline-block;
+                padding: 0 0.5em;
+                background: rgba(206, 205, 202, 0.5);
+                border-radius: 3px;
+                margin-right: 0.5em;
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+            }
+
+            .collection-title {
+                display: inline-block;
+                margin-right: 1em;
+            }
+
+            .page-description {
+                margin-bottom: 2em;
+            }
+
+            .simple-table {
+                margin-top: 1em;
+                font-size: 0.875rem;
+                empty-cells: show;
+            }
+            .simple-table td {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table th {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table-header-color {
+                background: rgb(247, 246, 243);
+                color: black;
+            }
+            .simple-table-header {
+                font-weight: 500;
+            }
+
+            time {
+                opacity: 0.5;
+            }
+
+            .icon {
+                display: inline-block;
+                max-width: 1.2em;
+                max-height: 1.2em;
+                text-decoration: none;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            img.icon {
+                border-radius: 3px;
+            }
+
+            .user-icon {
+                width: 1.5em;
+                height: 1.5em;
+                border-radius: 100%;
+                margin-right: 0.5rem;
+            }
+
+            .user-icon-inner {
+                font-size: 0.8em;
+            }
+
+            .text-icon {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+            .page-cover-image {
+                display: block;
+                object-fit: cover;
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            .page-header-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .page-header-icon-with-cover {
+                margin-top: -0.72em;
+                margin-left: 0.07em;
+            }
+
+            .page-header-icon img {
+                border-radius: 3px;
+            }
+
+            .link-to-page {
+                margin: 1em 0;
+                padding: 0;
+                border: none;
+                font-weight: 500;
+            }
+
+            p > .user {
+                opacity: 0.5;
+            }
+
+            td > .user,
+            td > time {
+                white-space: nowrap;
+            }
+
+            input[type="checkbox"] {
+                transform: scale(1.5);
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
+
+            p {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .image {
+                border: none;
+                margin: 1.5em 0;
+                padding: 0;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .code,
+            code {
+                background: rgba(135, 131, 120, 0.15);
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 85%;
+                tab-size: 2;
+            }
+
+            code {
+                color: #eb5757;
+            }
+
+            .code {
+                padding: 1.5em 1em;
+            }
+
+            .code-wrap {
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .code > code {
+                background: none;
+                padding: 0;
+                font-size: 100%;
+                color: inherit;
+            }
+
+            blockquote {
+                font-size: 1.25em;
+                margin: 1em 0;
+                padding-left: 1em;
+                border-left: 3px solid rgb(55, 53, 47);
+            }
+
+            .bookmark {
+                text-decoration: none;
+                max-height: 8em;
+                padding: 0;
+                display: flex;
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .bookmark-title {
+                font-size: 0.85em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 1.75em;
+                white-space: nowrap;
+            }
+
+            .bookmark-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bookmark-info {
+                flex: 4 1 180px;
+                padding: 12px 14px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark-image {
+                width: 33%;
+                flex: 1 1 180px;
+                display: block;
+                position: relative;
+                object-fit: cover;
+                border-radius: 1px;
+            }
+
+            .bookmark-description {
+                color: rgba(55, 53, 47, 0.6);
+                font-size: 0.75em;
+                overflow: hidden;
+                max-height: 4.5em;
+                word-break: break-word;
+            }
+
+            .bookmark-href {
+                font-size: 0.75em;
+                margin-top: 0.25em;
+            }
+
+            .sans {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+                    "Segoe UI Symbol";
+            }
+            .code {
+                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+            }
+            .serif {
+                font-family: Lyon-Text, Georgia, ui-serif, serif;
+            }
+            .mono {
+                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+            }
+            .pdf .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+            }
+            .pdf:lang(zh-CN) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+            }
+            .pdf:lang(zh-TW) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+            }
+            .pdf:lang(ko-KR) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+            }
+            .pdf .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK KR";
+            }
+            .pdf .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+            }
+            .pdf:lang(zh-CN) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+            }
+            .pdf:lang(zh-TW) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+            }
+            .pdf:lang(ko-KR) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+            }
+            .pdf .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+            }
+            .highlight-default {
+                color: rgba(55, 53, 47, 1);
+            }
+            .highlight-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .highlight-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .highlight-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .highlight-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .highlight-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .highlight-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .highlight-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .highlight-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .highlight-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .highlight-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .highlight-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .highlight-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .highlight-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .highlight-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .highlight-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .highlight-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .highlight-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .highlight-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .block-color-default {
+                color: inherit;
+                fill: inherit;
+            }
+            .block-color-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .block-color-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .block-color-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .block-color-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .block-color-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .block-color-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .block-color-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .block-color-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .block-color-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .block-color-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .block-color-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .block-color-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .block-color-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .block-color-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .block-color-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .block-color-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .block-color-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .block-color-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .select-value-color-interactiveBlue {
+                background-color: rgba(35, 131, 226, 0.07);
+            }
+            .select-value-color-pink {
+                background-color: rgba(245, 224, 233, 1);
+            }
+            .select-value-color-purple {
+                background-color: rgba(232, 222, 238, 1);
+            }
+            .select-value-color-green {
+                background-color: rgba(219, 237, 219, 1);
+            }
+            .select-value-color-gray {
+                background-color: rgba(227, 226, 224, 1);
+            }
+            .select-value-color-translucentGray {
+                background-color: rgba(255, 255, 255, 0.0375);
+            }
+            .select-value-color-orange {
+                background-color: rgba(250, 222, 201, 1);
+            }
+            .select-value-color-brown {
+                background-color: rgba(238, 224, 218, 1);
+            }
+            .select-value-color-red {
+                background-color: rgba(255, 226, 221, 1);
+            }
+            .select-value-color-yellow {
+                background-color: rgba(253, 236, 200, 1);
+            }
+            .select-value-color-blue {
+                background-color: rgba(211, 229, 239, 1);
+            }
+            .select-value-color-pageGlass {
+                background-color: undefined;
+            }
+            .select-value-color-washGlass {
+                background-color: undefined;
+            }
+
+            .checkbox {
+                display: inline-flex;
+                vertical-align: text-bottom;
+                width: 16;
+                height: 16;
+                background-size: 16px;
+                margin-left: 2px;
+                margin-right: 5px;
+            }
+
+            .checkbox-on {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            .checkbox-off {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            /* -------- injections from notionBackup -------- */
+
+            body {
+                white-space: normal !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+
+            .code,
+            code {
+                font-size: 100% !important;
+            }
+
+            blockquote {
+                font-size: 100% !important;
+            }
+
+            .callout {
+                white-space: normal !important;
+            }
+            .callout div:has(span.icon) {
+                font-size: 100% !important;
+            }
+
+            .source:not(.bookmark) {
+                font-size: 100% !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+        </style>
+    </head>
+    <body>
+        <article class="page sans">
+            <header>
+                <h1 class="page-title">WS21</h1>
+                <p class="page-description"></p>
+            </header>
+            <div class="page-body">
+                <figure>
+                    <div class="source">
+                        <a
+                            href="../Altpru%CC%88fungen%20-%20Test%201%20f3a8585548a24ff6b3f9b42ebb31a120/All%20vowi%20documents%20(V0)%20291d6f3c51a54a7d82c239aba340fa7a/TU_Wien-Software-Qualittssicherung_VU_(Biffl)_-_Praxis_Test_WS21.pdf">
+                            TU_Wien-Software-Qualittssicherung_VU_(Biffl)_-_Praxis_Test_WS21.pdf
+                        </a>
+                    </div>
+                </figure>
+                <p></p>
+                <p></p>
+                <h1>Mock vs. Stub</h1>
+                <p>Ein System nützt die folgende Schnittstelle zum Suchen nach Events:</p>
+                <pre class="code"><code>interface OnlineEventService {
+
+	/**
+	* Searches for events in the given location on the given date.
+	*
+	* @param location must not be null
+	* @param date must not be in the past
+	* @return a list with the results
+	*/
+	List&lt;String&gt; find(String location, LocalDate date);
+}</code></pre>
+                <p></p>
+                <p>Um das System isoliert mit Unit-Tests zu testen wurde folgender Test Double implementiert:</p>
+                <pre class="code"><code>public class SimpleEventService implements OnlineEventService {
+	private List&lt;String&gt; events;
+	private boolean called;
+
+	public void setEvents(List&lt;String&gt; events) { this.events = events; }
+	public boolean isCalled(){ return called; }
+
+	@Override
+	public List&lt;String&gt; find(String location, LocalDate date) {
+		Assertions.assertNotNull(location);
+		Assertlons.assertNotNull(date);
+		Assertions.assertTrue(date.isAfter(LocalDate.now());
+		
+		called = true;
+		return events;
+	}
+}</code></pre>
+                <p></p>
+                <p>Handelt es sich dabei um ein Stub oder ein Mock?</p>
+                <p>Begründen Sie Ihre Antwort und erläutern Sie den Unterschied basierend auf dem gegebenen Beispiel.</p>
+                <p><mark class="highlight-gray">Es handelt sich um ein Mock, da die Argumente die an das Mock gegeben werden auch überprüft werden.</mark></p>
+                <p><mark class="highlight-gray">Ein Mock erkennt wenn unerwartete Werte erhalten werden - mit Assertions und Exceptions.</mark></p>
+                <p></p>
+                <p></p>
+                <h1>Äquivalenzklassen</h1>
+                <p>Ein Wintersportgebiet wirbt mit einer Rabattaktion.</p>
+                <p>Auf Tageskarten wird deshalb 10% Rabatt, auf Wochenkarten 15% Rabatt und auf Stundenkarten 5% Rabatt vergeben.</p>
+                <p>Personen, die eine aktive Mitgliedschaft beim Alpenverein haben, erhalten beim Kauf einer Tages- bzw. Wochenkarte zusätzlich 20% Rabatt.</p>
+                <p>Bei Online-Kauf werden allen Personen zusätzlich 5% auf Tageskarten gewährt.</p>
+                <p>Rabatte akkumulieren sich.</p>
+                <p></p>
+                <p>Definieren Sie anhand der gegebenen Informationen alle Aquivalenzklassen.</p>
+                <p>Geben Sie zwei wichtige Testfälle (nicht JUnit-Tests) an.</p>
+                <p></p>
+                <p><mark class="highlight-gray">Äquivalenzklassen:</mark></p>
+                <pre class="code"><code>Tageskarten
+	Aktive Mitgliedschaft
+		Online -&gt; 30%
+		Offline -&gt; 30%
+	Keine aktive Mitliedschaft
+		Online -&gt; 10%
+		Offline -&gt; 10%
+
+Wochenkarten
+	Aktive Mitgliedschaft
+		Online -&gt; 35%
+		Offline -&gt; 35%
+	Keine aktive Mitliedschaft
+		Online -&gt; 10%
+		Offline -&gt; 10%
+
+Stundenkarten
+	Aktive Mitgliedschaft
+		Online -&gt; 10%
+		Offline -&gt; 5%
+	Keine aktive Mitliedschaft
+		Online -&gt; 10%
+		Offline -&gt; 5%</code></pre>
+                <p></p>
+                <p><mark class="highlight-gray">Zwei wichtige Testfälle (ohne JUnit)</mark></p>
+                <div class="indented">
+                    <p class="block-color-gray">
+                        <mark class="highlight-gray">Die folgenden Testfälle sind wichtig, da sie aus ganz unterschiedlichen Äquivalenzklassen sind:</mark>
+                    </p>
+                    <ol type="1" class="block-color-gray numbered-list" start="1">
+                        <li>Tageskarte / Aktive Mitgliedschaft / Online → 30% Rabatt</li>
+                    </ol>
+                    <ol type="1" class="block-color-gray numbered-list" start="2">
+                        <li>Stundenkarte / Keine aktive Mitgliedschaft / Offline → 5% Rabatt</li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>JUnit Testfälle</h1>
+                <p>Führen Sie ein Review der nachfolgenden JUnit-5 Testfälle durch.</p>
+                <p>Finden Sie 5 Fehler in der Implementierung der Testfälle.</p>
+                <p>Erklären Sie die gefundenen Probleme und geben Sie Vorschläge zur Behebung.</p>
+                <p>Achten Sie im Speziellen auf Bad Practices.</p>
+                <p></p>
+                <p>(Hinweis: Mehrfach auftretende Fehler der selben Art nur 1x aufzählen)</p>
+                <pre class="code"><code>public class SimpleListTest {
+	private static List&lt;String&gt; list;
+	
+	@BeforeAll
+	public static void setUp() {
+		list = new ArrayList&lt;&gt;();
+		list.add("A");
+		list.add("B");
+	}
+	
+	@Test // (1)
+	public void testContains_shouldFindElement() {
+		list.add("C");
+		boolean isFound = list.contains("C");
+	}
+	
+	@Test // (2)
+	public void testAdd_shouldAddElement() {
+		for (int i=0; i&lt;3; i++) {
+			list.add(i, "C-" + i);
+		}
+		assertTrue(
+			list.get(0).equals("C-0")
+			&amp;&amp; list.get(1).equals("C-1")
+			&amp;&amp; list.get(2).equals("C-2")
+		);
+	}
+
+	@Test // (3)
+	public void test_shouldFail(){
+		if (!list.contains("Z")) {
+			assertTrue(true);
+		} else{
+			fail();
+		}
+	}
+
+	@Test // (4)
+	public void testAddWrongIndex_shouldFail() throws IndexOutOfBoundsException {
+		assertThrows(Exception.class, () -&gt; list.add(100, "Elem-100"));
+	}
+}</code></pre>
+                <p></p>
+                <p class="block-color-gray">Fehler:</p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            Keine Testisolation
+                            <p>
+                                <mark class="highlight-gray">Die Datenstruktur</mark>
+                                <mark class="highlight-gray"><code>list</code></mark>
+                                wird innerhalb aller Aufrufe benützt.
+                            </p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            Kein Testen
+                            <p>
+                                Die erste Test-Methode prüft die Variable
+                                <mark class="highlight-gray"><code>isFound</code></mark>
+                                <mark class="highlight-gray">nicht mit asserts ab</mark>
+                                .
+                            </p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>
+                            Logik (Verzweigungen und Schleifen)
+                            <p>Test 2, 3 beinhalten Verzweigungen oder Schleifen</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>
+                            Keine sprechenden / einheitlichen Namen für Testmethoden
+                            <p>
+                                <mark class="highlight-gray">Es steht zwei Mal in den Methodennamen, das Wort</mark>
+                                <mark class="highlight-gray"><code>shouldFail</code></mark>
+                                <mark class="highlight-gray">aber die</mark>
+                                <mark class="highlight-gray"><code>fail()</code></mark>
+                                <mark class="highlight-gray">Methode wird nur 1x aufgerufen.</mark>
+                            </p>
+                            <p>Die dritte Methode hat eine andere Namensstruktur als die anderen.</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="5">
+                        <li>
+                            Nicht implementierte Methoden
+                            <p>
+                                Die Methode
+                                <mark class="highlight-gray"><code>fail()</code></mark>
+                                <mark class="highlight-gray"></mark>
+                                ist nicht implementiert
+                            </p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="6">
+                        <li>
+                            Sinnlose asserts
+                            <p>
+                                <mark class="highlight-gray"><code>assertTrue(true)</code></mark>
+                                <mark class="highlight-gray">wird immer erfüllt</mark>
+                            </p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Stringbasierter Stack, JUnit</h1>
+                <p>Bei der Klasse StringStack handelt es sich um eine stringbasierte Stack Implementierung.</p>
+                <pre class="code"><code>public class StringStack
+	private String[] storage;
+	private int position;
+
+	public StringStack(int capacity) { this.storage = new String[capacity]; }
+
+	public int size() { return position; }
+
+	// doesn't check whether position &lt; storage.length()
+	// can cause IndexOutOfBound
+	public void push (String elem) {
+		storage[position] = elem;
+		position++;
+	}
+
+	public String pop() throws EmptyStackException {
+		if (position == 0) { throw new EmptyStackEx ception (); }
+
+		String elem = storage[position-1];
+		storage[position-1] = null;
+		position--;
+		
+		return elem;
+	}
+}</code></pre>
+                <p></p>
+                <p>Überprüfen Sie die Funktionalität der Methode pop() indem Sie für folgende zwei Szenarien einen JUnit 5 Test definieren:</p>
+                <div class="indented">
+                    <p>
+                        a)
+                        <em>Normalfall:</em>
+                        Aufruf der Methode pop() auf einem befüllten Stack
+                    </p>
+                    <pre class="code"><code>@Test
+public void testPop_fullStack_shouldSucceed() {
+	StringStack s = new StringStack(2);
+	s.push("foo");
+	s.push("bar");
+	assertEquals("bar", s.pop());
+}</code></pre>
+                    <p>
+                        b)
+                        <em>Fehlerfall:</em>
+                        Aufruf der Methode pop() auf einem leeren Stack
+                    </p>
+                    <pre class="code"><code>@Test
+public void testPop_emptyStack_shouldThrowEmptyStackException() {
+	StringStack s = new StringStack(0);
+	assertThrows(EmptyStackException.class, () -&gt; s.pop());
+}</code></pre>
+                </div>
+                <p></p>
+                <p>Bedenken Sie auch Best Practices bei der Erstellung von Tests.</p>
+                <p>Sie können davon ausgehen, dass die Methoden size() sowie push() korrekt funktionieren.</p>
+                <p></p>
+                <h1>Qualitätsfaktoren</h1>
+                <p>Ihr Unternehmen wurde mit der Entwicklung einer Web Applikation für Schulen beauftragt.</p>
+                <p>
+                    Die Applikation soll im ersten Schritt die Stundenpläne der einzelnen Klassen darstellen und Lehrern/Lehrerinnen die Anwesenhitskontrolle
+                    der Schüler/Schülerinnen während des Unterrichts ermöglichen.
+                </p>
+                <p>Auf die Stundenpläne haben sowohl Lehrer/Lehrerinnen, als auch Schüler/Schülerinnen jederzeit Zugriff.</p>
+                <p>Die Erweiterung um weitere Features für e-Learning ist bereits beschlossen und befindet sich in Planung.</p>
+                <p></p>
+                <p>
+                    Nennen und beschreiben Sie drei wichtige Qualitätsfaktoren (nicht-funktionale Anforderungen) an die Applikation, die hier besonders
+                    berücksichtigt werden müssen!
+                </p>
+                <p>Begründen Sie Ihre Antwort.</p>
+                <p></p>
+                <p><mark class="highlight-gray">3 wichtige nichtfunktionale Anforderungen / Qualitätsanforderungen</mark></p>
+                <div class="indented">
+                    <ol type="1" class="block-color-gray numbered-list" start="1">
+                        <li>
+                            Usability
+                            <p>Das System sollte gut dokumentiert sein, sodass sie weiterskalieren kann.</p>
+                            <p>
+                                Das System sollte von weniger Technik-affinen Nutzenden wie Schülern leicht nutzbar sein um ihre Stundenpläne nachzuschlagen.
+                                Das muss mit qualitativen Untersuchungen festgestellt werden.
+                            </p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="block-color-gray numbered-list" start="2">
+                        <li>
+                            Reliability
+                            <p>
+                                Bei einem Systemausfall sollten Administratoren benachrichtigt werden und es muss die Möglichkeit bestehen die Daten zur
+                                Anwesenheit / Abwesenheit auch lokal im System zu speichern und nachträglich hochzuladen wenn das System wieder erreichbar ist.
+                            </p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="block-color-gray numbered-list" start="3">
+                        <li>
+                            Supportability
+                            <p>Es wurde bereits beschlossen, dass der Funktionsumfang erweitert werden sollte.</p>
+                            <p>
+                                Deshalb sollten statische Code Analysewerkzeuge die den Code nach coding-conventions untersuchen wie SonarLint mit den
+                                Conventions von Google eingesetzt werden.
+                            </p>
+                            <p>Dadurch wird gewährleistet, dass das Projekt weiterskalieren kann.</p>
+                        </li>
+                    </ol>
+                    <p></p>
+                </div>
+                <p></p>
+                <p>
+                    <em><mark class="highlight-gray">Klassifikation nach FURPS</mark></em>
+                </p>
+                <div class="indented">
+                    <p>
+                        <del><mark class="highlight-gray">Functional (Funktional) Features, Fähigkeiten, Sicherheitsvorrichtungen</mark></del>
+                    </p>
+                    <p><mark class="highlight-gray">Usability (Benutzerfreundlich) Human factors, Nützlichkeit, Dokumentation</mark></p>
+                    <p><mark class="highlight-gray">Reliability (Zuverlässig) Uptime, Verlässlichkeit, Wiederherstellbarkeit</mark></p>
+                    <p><mark class="highlight-gray">Performance Antwortzeiten, Durchsatz, Genauigkeit</mark></p>
+                    <p><mark class="highlight-gray">Supportability (Wartbarkeit) Modifizierbarkeit, Wartung, Konfiguration</mark></p>
+                    <hr />
+                    <p><mark class="highlight-gray">Zur Laufzeit messbar: Performanz, Sicherheit, Verfügbarkeit, Verwendbarkeit</mark></p>
+                    <p><mark class="highlight-gray">Nicht zur Laufzeit messbar: Modifizierbarkeit, Portabilität, Wiederverwendbarkeit</mark></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p>
+                    <em><mark class="highlight-gray">Nichtfunktionale Anforderungen (”Qualitätsanforderungen”)</mark></em>
+                </p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">Charakteristika, nicht-technische Beschreibung, Eigenschaften</mark></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Coverage</h1>
+                <figure class="image">
+                    <a href="WS21%208c4980f903c24caba1c34adac2a4d06c/Untitled.png">
+                        <img style="width: 336px" src="WS21%208c4980f903c24caba1c34adac2a4d06c/Untitled.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p>Geben Sie an wie viele Testfälle erforderlich sind für eine vollständige:</p>
+                <div class="indented">
+                    <ol type="a" class="numbered-list" start="1">
+                        <li>
+                            Statement coverage
+                            <p><mark class="highlight-gray">4 Testfälle</mark></p>
+                            <figure class="image">
+                                <a href="WS21%208c4980f903c24caba1c34adac2a4d06c/Untitled%201.png">
+                                    <img style="width: 120px" src="WS21%208c4980f903c24caba1c34adac2a4d06c/Untitled%201.png" />
+                                </a>
+                            </figure>
+                        </li>
+                    </ol>
+                    <ol type="a" class="numbered-list" start="2">
+                        <li>
+                            Branch coverage
+                            <p><mark class="highlight-gray">10 Testfälle</mark></p>
+                            <figure class="image">
+                                <a href="WS21%208c4980f903c24caba1c34adac2a4d06c/Untitled%202.png">
+                                    <img style="width: 120px" src="WS21%208c4980f903c24caba1c34adac2a4d06c/Untitled%202.png" />
+                                </a>
+                            </figure>
+                        </li>
+                    </ol>
+                    <ol type="a" class="numbered-list" start="3">
+                        <li>
+                            Path coverage
+                            <p><mark class="highlight-gray">3 Testfälle</mark></p>
+                            <figure class="image">
+                                <a href="WS21%208c4980f903c24caba1c34adac2a4d06c/Untitled%203.png">
+                                    <img style="width: 120px" src="WS21%208c4980f903c24caba1c34adac2a4d06c/Untitled%203.png" />
+                                </a>
+                            </figure>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <p>Definieren Sie zusätzlich 3 konkrete Testfälle (Input-Daten, ausgeführte Statements) auf Basis von Grenzwerten.</p>
+                <p>
+                    <mark class="highlight-gray">Grenzwerte von Knoten</mark>
+                    <code><mark class="highlight-gray">A</mark></code>
+                    <mark class="highlight-gray">-</mark>
+                    <code><mark class="highlight-gray">4,5,6</mark></code>
+                </p>
+                <p>
+                    <mark class="highlight-gray">Grenzwerte von Knoten</mark>
+                    <code><mark class="highlight-gray">B</mark></code>
+                    <mark class="highlight-gray">-</mark>
+                    <code><mark class="highlight-gray">9,10,11</mark></code>
+                </p>
+                <p>
+                    <mark class="highlight-gray">Grenzwerte von Knoten</mark>
+                    <code><mark class="highlight-gray">C</mark></code>
+                    <mark class="highlight-gray">-</mark>
+                    <code><mark class="highlight-gray">-1,0,1</mark></code>
+                </p>
+                <p></p>
+                <p>
+                    <mark class="highlight-gray">Ausgewählte Testfällte (Eingabevektoren der Form</mark>
+                    <code><mark class="highlight-gray">(A, B, C)</mark></code>
+                    <mark class="highlight-gray">)</mark>
+                </p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>(4,9,-1)</code></mark>
+                    </p>
+                    <p>
+                        <mark class="highlight-gray"><code>(5,10,0)</code></mark>
+                    </p>
+                    <p>
+                        <mark class="highlight-gray"><code>(6,11,1)</code></mark>
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+            </div>
+        </article>
+    </body>
+</html>

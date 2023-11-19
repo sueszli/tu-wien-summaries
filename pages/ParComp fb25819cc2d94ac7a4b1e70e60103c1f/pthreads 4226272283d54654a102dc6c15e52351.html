@@ -1,0 +1,3163 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>pthreads</title>
+        <style>
+            /* cspell:disable-file */
+            /* webkit printing magic: print all background colors */
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            * {
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media only screen {
+                body {
+                    margin: 2em auto;
+                    max-width: 900px;
+                    color: rgb(55, 53, 47);
+                }
+            }
+
+            body {
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            a,
+            a.visited {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .pdf-relative-link-path {
+                font-size: 80%;
+                color: #444;
+            }
+
+            h1,
+            h2,
+            h3 {
+                letter-spacing: -0.01em;
+                line-height: 1.2;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 0;
+                margin-bottom: 0.75em;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+                margin-top: 1.875rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .source {
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 1.5em;
+                word-break: break-all;
+            }
+
+            .callout {
+                border-radius: 3px;
+                padding: 1rem;
+            }
+
+            figure {
+                margin: 1.25em 0;
+                page-break-inside: avoid;
+            }
+
+            figcaption {
+                opacity: 0.5;
+                font-size: 85%;
+                margin-top: 0.5em;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+
+            .indented {
+                padding-left: 1.5em;
+            }
+
+            hr {
+                background: transparent;
+                display: block;
+                width: 100%;
+                height: 1px;
+                visibility: visible;
+                border: none;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            @media only print {
+                img {
+                    max-height: 100vh;
+                    object-fit: contain;
+                }
+            }
+
+            @page {
+                margin: 1in;
+            }
+
+            .collection-content {
+                font-size: 0.875rem;
+            }
+
+            .column-list {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .column {
+                padding: 0 1em;
+            }
+
+            .column:first-child {
+                padding-left: 0;
+            }
+
+            .column:last-child {
+                padding-right: 0;
+            }
+
+            .table_of_contents-item {
+                display: block;
+                font-size: 0.875rem;
+                line-height: 1.3;
+                padding: 0.125rem;
+            }
+
+            .table_of_contents-indent-1 {
+                margin-left: 1.5rem;
+            }
+
+            .table_of_contents-indent-2 {
+                margin-left: 3rem;
+            }
+
+            .table_of_contents-indent-3 {
+                margin-left: 4.5rem;
+            }
+
+            .table_of_contents-link {
+                text-decoration: none;
+                opacity: 0.7;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+            }
+
+            table,
+            th,
+            td {
+                border: 1px solid rgba(55, 53, 47, 0.09);
+                border-collapse: collapse;
+            }
+
+            table {
+                border-left: none;
+                border-right: none;
+            }
+
+            th,
+            td {
+                font-weight: normal;
+                padding: 0.25em 0.5em;
+                line-height: 1.5;
+                min-height: 1.5em;
+                text-align: left;
+            }
+
+            th {
+                color: rgba(55, 53, 47, 0.6);
+            }
+
+            ol,
+            ul {
+                margin: 0;
+                margin-block-start: 0.6em;
+                margin-block-end: 0.6em;
+            }
+
+            li > ol:first-child,
+            li > ul:first-child {
+                margin-block-start: 0.6em;
+            }
+
+            ul > li {
+                list-style: disc;
+            }
+
+            ul.to-do-list {
+                padding-inline-start: 0;
+            }
+
+            ul.to-do-list > li {
+                list-style: none;
+            }
+
+            .to-do-children-checked {
+                text-decoration: line-through;
+                opacity: 0.375;
+            }
+
+            ul.toggle > li {
+                list-style: none;
+            }
+
+            ul {
+                padding-inline-start: 1.7em;
+            }
+
+            ul > li {
+                padding-left: 0.1em;
+            }
+
+            ol {
+                padding-inline-start: 1.6em;
+            }
+
+            ol > li {
+                padding-left: 0.2em;
+            }
+
+            .mono ol {
+                padding-inline-start: 2em;
+            }
+
+            .mono ol > li {
+                text-indent: -0.4em;
+            }
+
+            .toggle {
+                padding-inline-start: 0em;
+                list-style-type: none;
+            }
+
+            /* Indent toggle children */
+            .toggle > li > details {
+                padding-left: 1.7em;
+            }
+
+            .toggle > li > details > summary {
+                margin-left: -1.1em;
+            }
+
+            .selected-value {
+                display: inline-block;
+                padding: 0 0.5em;
+                background: rgba(206, 205, 202, 0.5);
+                border-radius: 3px;
+                margin-right: 0.5em;
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+            }
+
+            .collection-title {
+                display: inline-block;
+                margin-right: 1em;
+            }
+
+            .page-description {
+                margin-bottom: 2em;
+            }
+
+            .simple-table {
+                margin-top: 1em;
+                font-size: 0.875rem;
+                empty-cells: show;
+            }
+            .simple-table td {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table th {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table-header-color {
+                background: rgb(247, 246, 243);
+                color: black;
+            }
+            .simple-table-header {
+                font-weight: 500;
+            }
+
+            time {
+                opacity: 0.5;
+            }
+
+            .icon {
+                display: inline-block;
+                max-width: 1.2em;
+                max-height: 1.2em;
+                text-decoration: none;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            img.icon {
+                border-radius: 3px;
+            }
+
+            .user-icon {
+                width: 1.5em;
+                height: 1.5em;
+                border-radius: 100%;
+                margin-right: 0.5rem;
+            }
+
+            .user-icon-inner {
+                font-size: 0.8em;
+            }
+
+            .text-icon {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+            .page-cover-image {
+                display: block;
+                object-fit: cover;
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            .page-header-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .page-header-icon-with-cover {
+                margin-top: -0.72em;
+                margin-left: 0.07em;
+            }
+
+            .page-header-icon img {
+                border-radius: 3px;
+            }
+
+            .link-to-page {
+                margin: 1em 0;
+                padding: 0;
+                border: none;
+                font-weight: 500;
+            }
+
+            p > .user {
+                opacity: 0.5;
+            }
+
+            td > .user,
+            td > time {
+                white-space: nowrap;
+            }
+
+            input[type="checkbox"] {
+                transform: scale(1.5);
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
+
+            p {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .image {
+                border: none;
+                margin: 1.5em 0;
+                padding: 0;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .code,
+            code {
+                background: rgba(135, 131, 120, 0.15);
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 85%;
+                tab-size: 2;
+            }
+
+            code {
+                color: #eb5757;
+            }
+
+            .code {
+                padding: 1.5em 1em;
+            }
+
+            .code-wrap {
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .code > code {
+                background: none;
+                padding: 0;
+                font-size: 100%;
+                color: inherit;
+            }
+
+            blockquote {
+                font-size: 1.25em;
+                margin: 1em 0;
+                padding-left: 1em;
+                border-left: 3px solid rgb(55, 53, 47);
+            }
+
+            .bookmark {
+                text-decoration: none;
+                max-height: 8em;
+                padding: 0;
+                display: flex;
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .bookmark-title {
+                font-size: 0.85em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 1.75em;
+                white-space: nowrap;
+            }
+
+            .bookmark-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bookmark-info {
+                flex: 4 1 180px;
+                padding: 12px 14px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark-image {
+                width: 33%;
+                flex: 1 1 180px;
+                display: block;
+                position: relative;
+                object-fit: cover;
+                border-radius: 1px;
+            }
+
+            .bookmark-description {
+                color: rgba(55, 53, 47, 0.6);
+                font-size: 0.75em;
+                overflow: hidden;
+                max-height: 4.5em;
+                word-break: break-word;
+            }
+
+            .bookmark-href {
+                font-size: 0.75em;
+                margin-top: 0.25em;
+            }
+
+            .sans {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+                    "Segoe UI Symbol";
+            }
+            .code {
+                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+            }
+            .serif {
+                font-family: Lyon-Text, Georgia, ui-serif, serif;
+            }
+            .mono {
+                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+            }
+            .pdf .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+            }
+            .pdf:lang(zh-CN) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+            }
+            .pdf:lang(zh-TW) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+            }
+            .pdf:lang(ko-KR) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+            }
+            .pdf .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK KR";
+            }
+            .pdf .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+            }
+            .pdf:lang(zh-CN) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+            }
+            .pdf:lang(zh-TW) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+            }
+            .pdf:lang(ko-KR) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+            }
+            .pdf .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+            }
+            .highlight-default {
+                color: rgba(55, 53, 47, 1);
+            }
+            .highlight-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .highlight-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .highlight-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .highlight-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .highlight-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .highlight-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .highlight-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .highlight-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .highlight-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .highlight-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .highlight-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .highlight-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .highlight-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .highlight-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .highlight-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .highlight-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .highlight-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .highlight-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .block-color-default {
+                color: inherit;
+                fill: inherit;
+            }
+            .block-color-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .block-color-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .block-color-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .block-color-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .block-color-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .block-color-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .block-color-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .block-color-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .block-color-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .block-color-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .block-color-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .block-color-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .block-color-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .block-color-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .block-color-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .block-color-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .block-color-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .block-color-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .select-value-color-interactiveBlue {
+                background-color: rgba(35, 131, 226, 0.07);
+            }
+            .select-value-color-pink {
+                background-color: rgba(245, 224, 233, 1);
+            }
+            .select-value-color-purple {
+                background-color: rgba(232, 222, 238, 1);
+            }
+            .select-value-color-green {
+                background-color: rgba(219, 237, 219, 1);
+            }
+            .select-value-color-gray {
+                background-color: rgba(227, 226, 224, 1);
+            }
+            .select-value-color-translucentGray {
+                background-color: rgba(255, 255, 255, 0.0375);
+            }
+            .select-value-color-orange {
+                background-color: rgba(250, 222, 201, 1);
+            }
+            .select-value-color-brown {
+                background-color: rgba(238, 224, 218, 1);
+            }
+            .select-value-color-red {
+                background-color: rgba(255, 226, 221, 1);
+            }
+            .select-value-color-yellow {
+                background-color: rgba(253, 236, 200, 1);
+            }
+            .select-value-color-blue {
+                background-color: rgba(211, 229, 239, 1);
+            }
+            .select-value-color-pageGlass {
+                background-color: undefined;
+            }
+            .select-value-color-washGlass {
+                background-color: undefined;
+            }
+
+            .checkbox {
+                display: inline-flex;
+                vertical-align: text-bottom;
+                width: 16;
+                height: 16;
+                background-size: 16px;
+                margin-left: 2px;
+                margin-right: 5px;
+            }
+
+            .checkbox-on {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            .checkbox-off {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            /* -------- injections from notionBackup -------- */
+
+            body {
+                white-space: normal !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+
+            .code,
+            code {
+                font-size: 100% !important;
+            }
+
+            blockquote {
+                font-size: 100% !important;
+            }
+
+            .callout {
+                white-space: normal !important;
+            }
+            .callout div:has(span.icon) {
+                font-size: 100% !important;
+            }
+
+            .source:not(.bookmark) {
+                font-size: 100% !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+        </style>
+    </head>
+    <body>
+        <article class="page sans">
+            <header>
+                <h1 class="page-title">pthreads</h1>
+                <p class="page-description"></p>
+            </header>
+            <div class="page-body">
+                <p></p>
+                <nav class="block-color-gray table_of_contents">
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#58c618f7-8764-45b1-bcb2-2f4e704dc021">Definition</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#ea02eb73-0ec6-4451-8628-a71af2e01852">Programming model</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#8eac42b3-f1c1-4bd3-8cae-5b759399aaeb">Synchronization</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#16997797-85b4-49df-b387-22a76b2698bb">Safety</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#c1e79b8a-6885-40cc-9cd6-8a260aae5f22">Wait free vs. lock free</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#61d88227-91c1-4ec0-8cf3-c4a5a5c21dc8">Synchronization constructs</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#c5818493-23bd-451b-9a85-74cc35e2f7dc">Locks</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#ca34988a-dfae-4a2e-aac8-427fe89f6805">Condition variables</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#13c23758-8331-4cfb-8c2f-128daeadbf68">Barriers</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#c80de966-e0a7-4663-8298-39a9c25a5064">Semaphores</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#f79595fa-bf9e-41c3-8365-88bd87505450">Atomic operation</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#8b78fb38-d747-4c35-acd0-b8d5cb620516">Work-pools (master-worker pattern)</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#e8147a13-d8c3-4487-89fb-fc00cee48f7f">Centralized work-pool</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#55519ea0-81db-426d-9729-632d69f5a744">Decentralized work-pool</a>
+                    </div>
+                </nav>
+                <p></p>
+                <h1>Definition</h1>
+                <p><mark class="highlight-blue">Process</mark></p>
+                <div class="indented"><p>Program in execution</p></div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Thread</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><em>Used for thread parallel programming.</em></mark>
+                    </p>
+                    <p>Smallest independent stream of instructions that can be scheduled by OS.</p>
+                    <div class="indented">
+                        <p><mark class="highlight-gray">Each contain local variable stack, registers, thread local storage.</mark></p>
+                    </div>
+                    <p></p>
+                    <p>
+                        If scheduled by OS, then OS thread = lives inside an OS-process and shares global information (file pointers, global variables, static
+                        variables, heap storage).
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">POSIX threads, pthreads</mark></p>
+                <div class="indented">
+                    <p>POSIX = Portable Operating System Interface for uniX</p>
+                    <p>Low level interface for thread programming in C/Unix</p>
+                    <p><em>Have no cost model, no memory model, ...</em></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Programming model</h1>
+                <p><mark class="highlight-blue">(p)threads programming model</mark></p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            Fork-join parallelism
+                            <p>A thread can spawn (start) any number of new threads and wait for them to terminate.</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            Master thread
+                            <p>There is initially only one active main thread.</p>
+                            <p>Code for threads are functions. All threads execute within the same program (SPMD) but can be different functions.</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>
+                            Peer threads
+                            <p>A thread can wait for another “peer thread” to terminate.</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>
+                            Parallelism
+                            <p>Threads are scheduled by the underlying system and may or may not run simultaneously on different processors.</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="5">
+                        <li>
+                            Synchronization between threads
+                            <p>There is no implicit synchronization between threasd - the progress independently and asynchronously.</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="6">
+                        <li>Threads share process global data</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="7">
+                        <li>
+                            Coordination mechanisms
+                            <p>for protecting access to shared variables (locks, condition variables).</p>
+                            <p>All concurrent updates must be protected otherwise: illegal program with undefined outcome.</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="8">
+                        <li>
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow><mo>…</mo></mrow>
+                                                    <annotation encoding="application/x-tex">\dots</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.12em; vertical-align: 0em"></span>
+                                                <span class="minner">…</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="pthreads%204226272283d54654a102dc6c15e52351/Untitled.png">
+                        <img style="width: 144px" src="pthreads%204226272283d54654a102dc6c15e52351/Untitled.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Pragmatics for parallel computing</mark></p>
+                <div class="indented"><p>Threads get scheduled and bound specified cores (non-standard).</p></div>
+                <p></p>
+                <p><mark class="highlight-blue">Symmetric Multi-Processor SMP</mark></p>
+                <div class="indented">
+                    <figure class="block-color-gray_background callout" style="white-space: pre-wrap; display: flex">
+                        <div style="font-size: 1.5em"><span class="icon">💡</span></div>
+                        <div style="width: 100%">Don’t confuse symmetric multi-processor SMP with symmetric multi-processing SMP.</div>
+                    </figure>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Single OS</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">all cores treated equally</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">threads not bound to cores</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">there can be more threads than cores</li>
+                    </ul>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="pthreads%204226272283d54654a102dc6c15e52351/Untitled%201.png">
+                        <img style="width: 144px" src="pthreads%204226272283d54654a102dc6c15e52351/Untitled%201.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Explicit parallelization of data parallel loop</mark></p>
+                <div class="indented">
+                    <p>Increased performance by spawning threads recursively instead of using loops.</p>
+                    <pre class="code"><code>start = rank*n/p
+end = (rank+1)*n/p
+
+for (i=start; i&lt;end; i++) {
+	a[i] = f(i);
+}</code></pre>
+                    <p>
+                        <mark class="highlight-gray"><code>rank</code></mark>
+                        <mark class="highlight-gray"></mark>
+                        is the virtual thread id and is set by the spawning thread.
+                    </p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>implementation (in depth)</summary>
+                                <p>Using the argument struct</p>
+                                <pre class="code"><code>typedef struct {
+	int *array;
+	int n;
+	int rank;
+	int size;
+} array_t;</code></pre>
+                                <pre class="code"><code>loopblock(void *what) {
+	array_t *ix = (array_t*)what;
+	int *a = ix-&gt;array;
+	int i;
+	int n = ix-&gt;n;
+	int p = ix-&gt;size; // no. of threads
+	int start = ix-&gt;rank*(n/p);
+	int end = start+n/p;
+	
+	for (i=start; i&lt;end; i++) {
+		a[i] = f(i);
+	}
+}</code></pre>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>example: matrix-vector product</summary>
+                                <p>
+                                    <style>
+                                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                    </style>
+                                    <span
+                                        data-token-index="0"
+                                        contenteditable="false"
+                                        class="notion-text-equation-token"
+                                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                        <span></span>
+                                        <span>
+                                            <span class="katex">
+                                                <span class="katex-mathml">
+                                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                        <semantics>
+                                                            <mrow>
+                                                                <mstyle mathsize="0.9em">
+                                                                    <mover accent="true">
+                                                                        <mi>y</mi>
+                                                                        <mo>⃗</mo>
+                                                                    </mover>
+                                                                    <mo>=</mo>
+                                                                    <mi>X</mi>
+                                                                    <mo>⋅</mo>
+                                                                    <mover accent="true">
+                                                                        <mi>a</mi>
+                                                                        <mo>⃗</mo>
+                                                                    </mover>
+                                                                </mstyle>
+                                                            </mrow>
+                                                            <annotation encoding="application/x-tex">\small \vec y = X \cdot \vec a</annotation>
+                                                        </semantics>
+                                                    </math>
+                                                </span>
+                                                <span class="katex-html" aria-hidden="true">
+                                                    <span class="base">
+                                                        <span class="strut" style="height: 0.817596em; vertical-align: -0.174996em"></span>
+                                                        <span class="mord accent sizing reset-size6 size5">
+                                                            <span class="vlist-t vlist-t2">
+                                                                <span class="vlist-r">
+                                                                    <span class="vlist" style="height: 0.714em">
+                                                                        <span style="top: -2.9em">
+                                                                            <span class="pstrut" style="height: 2.9em"></span>
+                                                                            <span class="mord mathnormal" style="margin-right: 0.03588em">y</span>
+                                                                        </span>
+                                                                        <span style="top: -2.9em">
+                                                                            <span class="pstrut" style="height: 2.9em"></span>
+                                                                            <span class="accent-body" style="left: -0.17994em">
+                                                                                <span class="overlay" style="height: 0.714em; width: 0.471em">
+                                                                                    <svg
+                                                                                        width="0.471em"
+                                                                                        height="0.714em"
+                                                                                        style="width: 0.471em"
+                                                                                        viewBox="0 0 471 714"
+                                                                                        preserveAspectRatio="xMinYMin">
+                                                                                        <path
+                                                                                            d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"></path>
+                                                                                    </svg>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class="vlist-s">​</span>
+                                                                </span>
+                                                                <span class="vlist-r">
+                                                                    <span class="vlist" style="height: 0.19444em"><span></span></span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                                        <span class="mrel sizing reset-size6 size5">=</span>
+                                                        <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                                    </span>
+                                                    <span class="base">
+                                                        <span class="strut" style="height: 0.614997em; vertical-align: 0em"></span>
+                                                        <span class="mord mathnormal sizing reset-size6 size5" style="margin-right: 0.07847em">X</span>
+                                                        <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
+                                                        <span class="mbin sizing reset-size6 size5">⋅</span>
+                                                        <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
+                                                    </span>
+                                                    <span class="base">
+                                                        <span class="strut" style="height: 0.6426em; vertical-align: 0em"></span>
+                                                        <span class="mord accent sizing reset-size6 size5">
+                                                            <span class="vlist-t">
+                                                                <span class="vlist-r">
+                                                                    <span class="vlist" style="height: 0.714em">
+                                                                        <span style="top: -2.9em">
+                                                                            <span class="pstrut" style="height: 2.9em"></span>
+                                                                            <span class="mord mathnormal">a</span>
+                                                                        </span>
+                                                                        <span style="top: -2.9em">
+                                                                            <span class="pstrut" style="height: 2.9em"></span>
+                                                                            <span class="accent-body" style="left: -0.2355em">
+                                                                                <span class="overlay" style="height: 0.714em; width: 0.471em">
+                                                                                    <svg
+                                                                                        width="0.471em"
+                                                                                        height="0.714em"
+                                                                                        style="width: 0.471em"
+                                                                                        viewBox="0 0 471 714"
+                                                                                        preserveAspectRatio="xMinYMin">
+                                                                                        <path
+                                                                                            d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"></path>
+                                                                                    </svg>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span>﻿</span>
+                                    </span>
+                                </p>
+                                <p>Sequential solution</p>
+                                <div class="indented">
+                                    <pre class="code"><code>for (i=0; i&lt;n; i++) {
+	y[i] = 0;
+	for (j=0; j&lt;m; j++) {
+		y[i] += x[i][j]*A[j];
+	}
+}</code></pre>
+                                </div>
+                                <p></p>
+                                <p>Parallel solution</p>
+                                <div class="indented">
+                                    <ul class="toggle">
+                                        <li>
+                                            <details open="">
+                                                <summary>using cache ineffectively</summary>
+                                                <p>
+                                                    Thread with
+                                                    <mark class="highlight-gray"><code>id</code></mark>
+                                                    rank rank handles every
+                                                    <mark class="highlight-gray"><code>p</code></mark>
+                                                    ‘th index of matrix
+                                                    <mark class="highlight-gray"><code>x</code></mark>
+                                                </p>
+                                                <div class="indented">
+                                                    <pre class="code"><code>for (i=rank; i&lt;n; i+=p) {
+	y[i] = 0;
+	for (j=0;j&lt;m; j++) {
+		y[i] += x[i][j]*A[j];
+	}
+}</code></pre>
+                                                    <figure class="image">
+                                                        <a href="pthreads%204226272283d54654a102dc6c15e52351/Untitled%202.png">
+                                                            <img style="width: 240px" src="pthreads%204226272283d54654a102dc6c15e52351/Untitled%202.png" />
+                                                        </a>
+                                                    </figure>
+                                                </div>
+                                                <p></p>
+                                                <p>
+                                                    But this way we use the cache ineffectively and each thread writes and reads into
+                                                    <mark class="highlight-gray"><code>y</code></mark>
+                                                    <mark class="highlight-gray"></mark>
+                                                    at the same time.
+                                                </p>
+                                                <p></p>
+                                            </details>
+                                        </li>
+                                    </ul>
+                                    <pre class="code"><code>for (i=rank*n/p; i&lt;(rank+1)*n/p; i++) {
+	y[i] = 0;
+	for (j=0;j&lt;m; j++) {
+		y[i] += x[i][j]*a[j];
+	}
+}</code></pre>
+                                    <figure class="image">
+                                        <a href="pthreads%204226272283d54654a102dc6c15e52351/Untitled%203.png">
+                                            <img style="width: 192px" src="pthreads%204226272283d54654a102dc6c15e52351/Untitled%203.png" />
+                                        </a>
+                                    </figure>
+                                </div>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <p></p>
+                    <p></p>
+                </div>
+                <p></p>
+                <h1>Synchronization</h1>
+                <p>Synchronization / coordination constructs (from concurrent computing) prevent malicious non-determinism (ie. race conditions).</p>
+                <div class="indented"><p>Allow solving algorithms under weak memory consistency assumptions.</p></div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Race condition</mark></p>
+                <div class="indented">
+                    <p>Outcome of parallel program execution depends on the relative timing of the updates by processors/threads (in an undesired way).</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Data race</mark></p>
+                <div class="indented">
+                    <p>Several threads (or cores, processes, …) compete for updating a shared variable.</p>
+                    <p>Outcome depends on relative timing.</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Deadlock</mark></p>
+                <div class="indented">
+                    <p>Two or more threads in situation where they depend on eachother and can’t progress.</p>
+                    <p>Deadlocks spread to all threads and eventually the program can not terminate.</p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>example</summary>
+                                <pre class="code"><code>pthread_mutex_t lock1 = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t lock2 = PTHREAD_MUTEX_INITIALIZER;</code></pre>
+                                <div class="column-list">
+                                    <div style="width: 50%" class="column">
+                                        <pre class="code"><code>…
+pthread_mutex_lock(&amp;lock1);
+pthread_mutex_lock(&amp;lock2);
+…</code></pre>
+                                    </div>
+                                    <div style="width: 50%" class="column">
+                                        <pre class="code"><code>…
+pthread_mutex_lock(&amp;lock2);
+pthread_mutex_lock(&amp;lock1);
+…</code></pre>
+                                    </div>
+                                </div>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Shared resources</mark></p>
+                <div class="indented"><p>Simple variables, data structures, devices, ... accessible by multiple threads</p></div>
+                <p></p>
+                <p><mark class="highlight-blue">Critical section</mark></p>
+                <div class="indented">
+                    <p>The manipulated shared resources by code, are not allowed to be manipulated by other entities (threads, processes, ...) concurrently.</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Mutual exclusion property</mark></p>
+                <div class="indented"><p>There is at most one thread in critical section at any fiven time.</p></div>
+                <p></p>
+                <p></p>
+                <h2>Safety</h2>
+                <p><mark class="highlight-blue">pthreads memory model for “safe” programs</mark></p>
+                <div class="indented">
+                    <p>Thread not allowed to update variables outside of critical sections.</p>
+                    <p><mark class="highlight-gray">(Lock constructs used to ensure consistent memory views)</mark></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Thread safe functions</mark></p>
+                <div class="indented">
+                    <p>Function can be executed concurrently by any number of threads and will always produce the correct result.</p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Non-thread safe functions have side effects</summary>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">Don’t protect (write access) to shared (ie. static) variables</li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">Keep a state over successive invocations</li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">Return pointers to static variables</li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        call thread-unsafe functions
+                                        <p><mark class="highlight-gray">these unsafe functions can also be system functions:</mark></p>
+                                        <div class="indented">
+                                            <p class="block-color-gray">
+                                                ie.
+                                                <mark class="highlight-gray"><code>rand()</code></mark>
+                                                ,
+                                                <mark class="highlight-gray"><code>random()</code></mark>
+                                                <mark class="highlight-gray"></mark>
+                                                keep internal state in static variables
+                                            </p>
+                                            <p class="block-color-gray">
+                                                solution: using
+                                                <code><mark class="highlight-gray">random_r()</mark></code>
+                                                with an explicit state, locking, ...
+                                            </p>
+                                            <p class="block-color-gray">problem: serialization can lead to slowdown, deadlocks, ...</p>
+                                        </div>
+                                        <p></p>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Example: concurrent read and thread-safety</summary>
+                                <p>
+                                    Where
+                                    <mark class="highlight-gray"><code>x</code></mark>
+                                    <mark class="highlight-gray"></mark>
+                                    is the input.
+                                </p>
+                                <div class="column-list">
+                                    <div style="width: 33.333333333333336%" class="column">
+                                        <pre class="code"><code>a = f(x);</code></pre>
+                                    </div>
+                                    <div style="width: 33.333333333333336%" class="column">
+                                        <pre class="code"><code>b = f(x);</code></pre>
+                                    </div>
+                                    <div style="width: 33.33333333333333%" class="column">
+                                        <pre class="code"><code>c = f(y);</code></pre>
+                                    </div>
+                                </div>
+                                <p>
+                                    Conclusion: There is a concurrent read of
+                                    <mark class="highlight-gray"><code>x</code></mark>
+                                    .
+                                </p>
+                                <div class="indented">
+                                    <p>
+                                        This program is only safe for concurrent execution, if
+                                        <mark class="highlight-gray"><code>f</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        has no side effects (is
+                                        <em>thread safe</em>
+                                        ).
+                                    </p>
+                                </div>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Wait free vs. lock free</h2>
+                <p>
+                    Wait-freedom
+                    <style>
+                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                    </style>
+                    <span
+                        data-token-index="0"
+                        contenteditable="false"
+                        class="notion-text-equation-token"
+                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                        <span></span>
+                        <span>
+                            <span class="katex">
+                                <span class="katex-mathml">
+                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                        <semantics>
+                                            <mrow><mo>⇒</mo></mrow>
+                                            <annotation encoding="application/x-tex">\Rarr</annotation>
+                                        </semantics>
+                                    </math>
+                                </span>
+                                <span class="katex-html" aria-hidden="true">
+                                    <span class="base">
+                                        <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
+                                        <span class="mrel">⇒</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                        <span>﻿</span>
+                    </span>
+                    lock-freedom
+                </p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray">(but lock-freedom</mark>
+                        <mark class="highlight-gray">
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow><mo>⇏</mo></mrow>
+                                                    <annotation encoding="application/x-tex">\not \Rarr</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.8888799999999999em; vertical-align: -0.19444em"></span>
+                                                <span class="mrel">
+                                                    <span class="mord vbox">
+                                                        <span class="thinbox">
+                                                            <span class="rlap">
+                                                                <span class="strut" style="height: 0.8888799999999999em; vertical-align: -0.19444em"></span>
+                                                                <span class="inner">
+                                                                    <span class="mord"><span class="mrel"></span></span>
+                                                                </span>
+                                                                <span class="fix"></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
+                                                <span class="mrel">⇒</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                        </mark>
+                        <mark class="highlight-gray">wait-freedom)</mark>
+                    </p>
+                    <p>Both require hardware support (ie. atomic counter).</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p>
+                    <mark class="highlight-blue">Wait free</mark>
+                    <mark class="highlight-gray">algorithm on concurrent data</mark>
+                </p>
+                <div class="indented">
+                    <p>Each thread can always do progress no matter what other threads are doing.</p>
+                    <p>
+                        If thread tries to execute the operation,
+                        <span style="border-bottom: 0.05em solid">progress is guaranteed and does not depend on other threads</span>
+                        or their attempt to execute the same operation.
+                    </p>
+                </div>
+                <p></p>
+                <p>
+                    <mark class="highlight-blue">Lock free</mark>
+                    <mark class="highlight-gray">algorithm on concurrent data</mark>
+                </p>
+                <div class="indented">
+                    <p>
+                        If several threads are attempting to execute the operation,
+                        <mark class="highlight-teal"></mark>
+                        <span style="border-bottom: 0.05em solid">at least one of the threads can make progress</span>
+                        on the operation.
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Synchronization constructs</h1>
+                <p><mark class="highlight-gray">Slow implementation</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray">
+                            These constructs were developed for small numbers of concurrent tasks, not scalable HPC (many threads on many cores).
+                        </mark>
+                    </p>
+                    <p><mark class="highlight-gray">Most of them have sequential parts that slow down (Amdahl).</mark></p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Locks</h2>
+                <p><mark class="highlight-blue">Locks</mark></p>
+                <div class="indented">
+                    <p>= shared object between threads, guarantee mutual exclusion</p>
+                    <p>called “mutex” in pthreads</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">States of locks</mark></p>
+                <div class="indented">
+                    <p>2 possible states:</p>
+                    <div class="indented">
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">acquired (locked)</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">released (unlocked)</li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <p>Only one thread can acquire lock and must release it after use.</p>
+                    <p>
+                        If another thread tries to acquire the locked lock, it is
+                        <em>blocked</em>
+                        and must wait until its release.
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Properties of locks</mark></p>
+                <div class="indented">
+                    <p>Deadlock freedom Some thread will always succeed in acquiring the lock</p>
+                    <p>Starvation freedom If a thread is trying to acquire the lock it will eventually succeed</p>
+                    <p>Fairness First come first serve: thread that acquired first will get the lock first</p>
+                    <p>Bounded waiting Bounded time / steps after which a thread must succeed in</p>
+                    <p>acquiring the lock it is trying to acquire.</p>
+                    <hr />
+                    <p>By definition, locks are not lock-free, not wait-free.</p>
+                    <div class="indented"><p>A thread that acquired the lock can keep it indefinitely while no other thread makes progress.</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">pthreads rule</mark></p>
+                <div class="indented">
+                    <p>
+                        Whatever thread
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow>
+                                                    <mstyle mathsize="0.9em">
+                                                        <msub>
+                                                            <mi>T</mi>
+                                                            <mn>1</mn>
+                                                        </msub>
+                                                    </mstyle>
+                                                </mrow>
+                                                <annotation encoding="application/x-tex">\small T_1</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span>
+                                            <span class="mord sizing reset-size6 size5">
+                                                <span class="mord mathnormal" style="margin-right: 0.13889em">T</span>
+                                                <span class="msupsub">
+                                                    <span class="vlist-t vlist-t2">
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.2796266666666667em">
+                                                                <span style="top: -2.45em; margin-left: -0.13889em; margin-right: 0.05555555555555556em">
+                                                                    <span class="pstrut" style="height: 2.6em"></span>
+                                                                    <span class="sizing reset-size5 size2 mtight"><span class="mord mtight">1</span></span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="vlist-s">​</span>
+                                                        </span>
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        can view in memory when releasing the lock,
+                    </p>
+                    <p>
+                        thread
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow>
+                                                    <mstyle mathsize="0.9em">
+                                                        <msub>
+                                                            <mi>T</mi>
+                                                            <mn>2</mn>
+                                                        </msub>
+                                                    </mstyle>
+                                                </mrow>
+                                                <annotation encoding="application/x-tex">\small T_2</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span>
+                                            <span class="mord sizing reset-size6 size5">
+                                                <span class="mord mathnormal" style="margin-right: 0.13889em">T</span>
+                                                <span class="msupsub">
+                                                    <span class="vlist-t vlist-t2">
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.2796266666666667em">
+                                                                <span style="top: -2.45em; margin-left: -0.13889em; margin-right: 0.05555555555555556em">
+                                                                    <span class="pstrut" style="height: 2.6em"></span>
+                                                                    <span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="vlist-s">​</span>
+                                                        </span>
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        can view when acquiring the lock.
+                    </p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Properties of pthread locks</mark></p>
+                <div class="indented">
+                    <p>Not fair, not starvation free, no bounded waiting - pthread locks are deadlock free but not starvation free.</p>
+                    <p>Threads can starve eachother by never allowing the others to enter the critical section.</p>
+                    <p>There is no guarantee that a thread will eventually acquire the lock it wants.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Lock pattern</mark></p>
+                <div class="indented">
+                    <pre class="code"><code>flag = 1; x = … ;</code></pre>
+                    <div class="column-list">
+                        <div style="width: 33.333333333333336%" class="column">
+                            <pre class="code"><code>lock(&amp;lock);
+if (flag) {
+	a = x;
+	flag = 0;
+}
+unlock(&amp;lock);</code></pre>
+                        </div>
+                        <div style="width: 33.333333333333336%" class="column">
+                            <pre class="code"><code>lock(&amp;lock);
+if (flag) {
+	a = x;
+	flag = 0;
+}
+unlock(&amp;lock);</code></pre>
+                        </div>
+                        <div style="width: 33.33333333333333%" class="column">
+                            <pre class="code"><code>lock(&amp;lock);
+if (flag) {
+	a = x;
+	flag = 0;
+}
+unlock(&amp;lock);</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Example: using locks</mark></p>
+                <div class="indented">
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>unsafe program: race condition</summary>
+                                <p>
+                                    initial value:
+                                    <mark class="highlight-gray"><code>x = 0;</code></mark>
+                                </p>
+                                <div class="column-list">
+                                    <div style="width: 33.333333333333336%" class="column">
+                                        <pre class="code"><code>if (flag) {
+	a = x;
+	flag = 0;
+}</code></pre>
+                                    </div>
+                                    <div style="width: 33.333333333333336%" class="column">
+                                        <pre class="code"><code>if (flag) {
+	a = x;
+	flag = 0;
+}</code></pre>
+                                    </div>
+                                    <div style="width: 33.33333333333333%" class="column">
+                                        <pre class="code"><code>flag = 1;
+x = 27;</code></pre>
+                                    </div>
+                                </div>
+                                <p>
+                                    <em>Conclusion: race condition -</em>
+                                    What happens depends on relative timing.
+                                </p>
+                                <div class="indented">
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            Either
+                                            <mark class="highlight-gray"><code>a</code></mark>
+                                            <mark class="highlight-gray"></mark>
+                                            is some unintended value of
+                                            <mark class="highlight-gray"><code>x</code></mark>
+                                            <mark class="highlight-gray"></mark>
+                                            (before it was initialized) or 27.
+                                        </li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">Both threads might enter critical secion</li>
+                                    </ul>
+                                </div>
+                                <p></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>safe program (implements pattern)</summary>
+                                <p>
+                                    what is the intended value of
+                                    <mark class="highlight-gray"><code>a</code></mark>
+                                    <mark class="highlight-gray"></mark>
+                                    for thread0, thread1?
+                                </p>
+                                <pre class="code"><code>pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+x = 0;</code></pre>
+                                <div class="column-list">
+                                    <div style="width: 33.333333333333336%" class="column">
+                                        <pre class="code"><code>lock(&amp;lock);
+if (flag) {
+	a = x;
+	flag = 0;
+}
+unlock(&amp;lock);</code></pre>
+                                    </div>
+                                    <div style="width: 33.333333333333336%" class="column">
+                                        <pre class="code"><code>lock(&amp;lock);
+if (flag) {
+	a = x;
+	flag = 0;
+}
+unlock(&amp;lock);</code></pre>
+                                    </div>
+                                    <div style="width: 33.33333333333333%" class="column">
+                                        <pre class="code"><code>lock(&amp;lock);
+flag = 1;
+x = 27;
+unlock(&amp;lock);</code></pre>
+                                    </div>
+                                </div>
+                                <p>Conclusion:</p>
+                                <div class="indented">
+                                    <p>
+                                        Both read and write accesses to
+                                        <mark class="highlight-gray"><code>x</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        now protected by lock (mutex).
+                                    </p>
+                                    <p>Mutual exclusion, consistent memory ensured by locking.</p>
+                                </div>
+                                <p></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>unsafe program: deadlock</summary>
+                                <p>
+                                    what is the intended value of
+                                    <mark class="highlight-gray"><code>a</code></mark>
+                                    <mark class="highlight-gray"></mark>
+                                    for thread0, thread1?
+                                </p>
+                                <pre class="code"><code>pthread_mutex_t lock1 = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t lock2 = PTHREAD_MUTEX_INITIALIZER;
+x = 0;</code></pre>
+                                <pre class="code"><code>lock(&amp;lock1); // executed
+lock(&amp;lock2); // &lt;-- needs unlock of lock2 from thread1 to progress 
+if (…)
+unlock(&amp;lock2);
+unlock(&amp;lock1);</code></pre>
+                                <pre class="code"><code>lock(&amp;lock2); // executed
+lock(&amp;lock1); // &lt;-- needs unlock of lock1 from thread0 to progress
+if (…)
+unlock(&amp;lock1);
+unlock(&amp;lock2);</code></pre>
+                                <pre class="code"><code>lock(&amp;lock1);
+flag = 1;
+x = 27;
+unlock(&amp;lock1);</code></pre>
+                                <hr />
+                                <p>Conclusion: Deadlock</p>
+                                <div class="indented">
+                                    <p>Deadlock occurs if thread0 and thread1 try to progress “simultaniously” by each alternately executing one instruction</p>
+                                </div>
+                                <p></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Example: using global locks</mark></p>
+                <div class="indented">
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>List procesing: locking entire list</summary>
+                                <p>
+                                    <mark class="highlight-gray"><code>delete(e)</code></mark>
+                                    operation:
+                                </p>
+                                <div class="indented">
+                                    <ol type="1" class="numbered-list" start="1">
+                                        <li>
+                                            <mark class="highlight-gray"><code>lock(listlock)</code></mark>
+                                        </li>
+                                    </ol>
+                                    <ol type="1" class="numbered-list" start="2">
+                                        <li>
+                                            scan sequentially until element
+                                            <mark class="highlight-gray"><code>e</code></mark>
+                                            <mark class="highlight-gray"></mark>
+                                            is found
+                                        </li>
+                                    </ol>
+                                    <ol type="1" class="numbered-list" start="3">
+                                        <li>
+                                            dereference / free
+                                            <mark class="highlight-gray"><code>e</code></mark>
+                                            <mark class="highlight-gray"></mark>
+                                            from list via its predecessor
+                                        </li>
+                                    </ol>
+                                    <ol type="1" class="numbered-list" start="4">
+                                        <li>
+                                            <mark class="highlight-gray"><code>unlock(listlock)</code></mark>
+                                        </li>
+                                    </ol>
+                                </div>
+                                <p></p>
+                                <hr />
+                                <p>
+                                    <em>This is inefficient: Thread using list blocks all other threads for</em>
+                                    <em>
+                                        <style>
+                                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                        </style>
+                                        <span
+                                            data-token-index="0"
+                                            contenteditable="false"
+                                            class="notion-text-equation-token"
+                                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                            <span></span>
+                                            <span>
+                                                <span class="katex">
+                                                    <span class="katex-mathml">
+                                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                            <semantics>
+                                                                <mrow>
+                                                                    <mstyle mathsize="0.9em">
+                                                                        <mi>O</mi>
+                                                                        <mo stretchy="false">(</mo>
+                                                                        <mi>n</mi>
+                                                                        <mo stretchy="false">)</mo>
+                                                                    </mstyle>
+                                                                </mrow>
+                                                                <annotation encoding="application/x-tex">\small O(n)</annotation>
+                                                            </semantics>
+                                                        </math>
+                                                    </span>
+                                                    <span class="katex-html" aria-hidden="true">
+                                                        <span class="base">
+                                                            <span class="strut" style="height: 0.9em; vertical-align: -0.225em"></span>
+                                                            <span class="mord mathnormal sizing reset-size6 size5" style="margin-right: 0.02778em">O</span>
+                                                            <span class="mopen sizing reset-size6 size5">(</span>
+                                                            <span class="mord mathnormal sizing reset-size6 size5">n</span>
+                                                            <span class="mclose sizing reset-size6 size5">)</span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span>﻿</span>
+                                        </span>
+                                    </em>
+                                    <em>steps for list of size</em>
+                                    <em>
+                                        <style>
+                                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                        </style>
+                                        <span
+                                            data-token-index="0"
+                                            contenteditable="false"
+                                            class="notion-text-equation-token"
+                                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                            <span></span>
+                                            <span>
+                                                <span class="katex">
+                                                    <span class="katex-mathml">
+                                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                            <semantics>
+                                                                <mrow>
+                                                                    <mstyle mathsize="0.9em"><mi>n</mi></mstyle>
+                                                                </mrow>
+                                                                <annotation encoding="application/x-tex">\small n</annotation>
+                                                            </semantics>
+                                                        </math>
+                                                    </span>
+                                                    <span class="katex-html" aria-hidden="true">
+                                                        <span class="base">
+                                                            <span class="strut" style="height: 0.387504em; vertical-align: 0em"></span>
+                                                            <span class="mord mathnormal sizing reset-size6 size5">n</span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span>﻿</span>
+                                        </span>
+                                    </em>
+                                    <em>.</em>
+                                </p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>List procesing: locking each element individually</summary>
+                                <p>
+                                    <mark class="highlight-gray"><code>insert(e)</code></mark>
+                                    operation:
+                                </p>
+                                <div class="indented">
+                                    <p>
+                                        We want to insert element
+                                        <mark class="highlight-gray"><code>e</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        between
+                                        <mark class="highlight-gray"><code>e1</code></mark>
+                                        and
+                                        <mark class="highlight-gray"><code>e2</code></mark>
+                                        .
+                                    </p>
+                                    <p>
+                                        We will need to lock
+                                        <mark class="highlight-gray"><code>e1</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        and
+                                        <mark class="highlight-gray"><code>e2</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        for this.
+                                    </p>
+                                </div>
+                                <p></p>
+                                <hr />
+                                <p>
+                                    <mark class="highlight-gray"><code>delete(e)</code></mark>
+                                    operation:
+                                </p>
+                                <div class="indented">
+                                    <p>
+                                        We want to delete element
+                                        <mark class="highlight-gray"><code>e</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        between
+                                        <mark class="highlight-gray"><code>e1</code></mark>
+                                        and
+                                        <mark class="highlight-gray"><code>e2</code></mark>
+                                        .
+                                    </p>
+                                    <p>
+                                        We will need to lock
+                                        <mark class="highlight-gray"><code>e1</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        and
+                                        <mark class="highlight-gray"><code>e2</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        for this.
+                                    </p>
+                                </div>
+                                <p></p>
+                                <hr />
+                                <p><em>This is solution is expensive (needs a lot of space).</em></p>
+                                <p>
+                                    <em>Deadlocks can still occur -</em>
+                                    We don’t know how the code for every thread is written → locks are not composable.
+                                </p>
+                                <div class="indented">
+                                    <p>Assume the operations are written by 2 different programmers.</p>
+                                    <div class="indented">
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">
+                                                Insert: first lock
+                                                <mark class="highlight-gray"><code>e1</code></mark>
+                                                , then
+                                                <mark class="highlight-gray"><code>e2</code></mark>
+                                            </li>
+                                        </ul>
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">
+                                                Delete: first lock
+                                                <mark class="highlight-gray"><code>e2</code></mark>
+                                                , then
+                                                <mark class="highlight-gray"><code>e1</code></mark>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <p></p>
+                                    <p>Then by executing them both a deadlock occurs</p>
+                                </div>
+                                <p></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Example: using read/write locks</mark></p>
+                <div class="indented">
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Reading arbitrary value</summary>
+                                <pre class="code"><code>pthread_rwlock_t lock = PTHREAD_RWLOCK_INITIALIZER;
+flag = false;</code></pre>
+                                <div class="column-list">
+                                    <div style="width: 33.333333333333336%" class="column">
+                                        <pre class="code"><code>rdlock(&amp;lock);
+if (flag) { 
+	a = x;
+}
+unlock(&amp;lock);</code></pre>
+                                    </div>
+                                    <div style="width: 33.333333333333336%" class="column">
+                                        <pre class="code"><code>rdlock(&amp;lock);
+if (flag) {
+	b = x;
+}
+unlock(&amp;lock);</code></pre>
+                                    </div>
+                                    <div style="width: 33.33333333333333%" class="column">
+                                        <pre class="code"><code>wrlock(&amp;lock);
+x = c;
+flag = true;
+unlock(&amp;lock);</code></pre>
+                                    </div>
+                                </div>
+                                <p>Conclusion</p>
+                                <div class="indented">
+                                    <p>Thread0, thread1 can both enter their critical section simultaneously (read lock).</p>
+                                    <p>Thread2 is always alone in its critical section (write lock).</p>
+                                    <p>
+                                        Therefore the thread0, thread1 either read the old
+                                        <mark class="highlight-gray"><code>x</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        value (
+                                        <mark class="highlight-gray"><code>== 0</code></mark>
+                                        ) or new value set by thread2.
+                                    </p>
+                                </div>
+                                <p></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>
+                                    Reading newly assigned value (deadlock possible) → can be solved with
+                                    <mark class="highlight-teal">condiction variables</mark>
+                                </summary>
+                                <pre class="code"><code>pthread_rwlock_t lock = PTHREAD_RWLOCK_INITIALIZER;
+flag = false;</code></pre>
+                                <div class="column-list">
+                                    <div style="width: 33.333333333333336%" class="column">
+                                        <pre class="code"><code>rdlock(&amp;lock);
+while(!flag) {}
+a = x;
+unlock(&amp;lock);</code></pre>
+                                    </div>
+                                    <div style="width: 33.333333333333336%" class="column">
+                                        <pre class="code"><code>rdlock(&amp;lock);
+while (!flag) {}
+b = x;
+unlock(&amp;lock);</code></pre>
+                                    </div>
+                                    <div style="width: 33.33333333333333%" class="column">
+                                        <pre class="code"><code>wrlock(&amp;lock);
+x = c;
+flag = true;
+unlock(&amp;lock);</code></pre>
+                                    </div>
+                                </div>
+                                <p>Same as above but threads wait until condition is met before continuing (because of the while loop).</p>
+                                <p>Problem</p>
+                                <div class="indented">
+                                    <p>Active wait is inefficient.</p>
+                                    <p>Deadlock is possible.</p>
+                                </div>
+                                <p></p>
+                                <p>Solution</p>
+                                <div class="indented"><p>Condition variables</p></div>
+                                <p></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Using locks to avoid deadlocks</mark></p>
+                <div class="indented">
+                    <p>The best solution is avoiding locks altogether by replicating shared information.</p>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Use one lock at a time</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            If not possible: always acquire and release in the same order
+                            <mark class="highlight-gray">(this is difficult to do with libraries, because we don’t know how they are implemented)</mark>
+                            <p>
+                                Can be done by assigning a level to each lock, sorting them via their IDs, using “trylocks” (if a lock can’t be aquired, release
+                                all locks, wait, try again)
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Condition variables</h2>
+                <p><mark class="highlight-gray">See above for use-case example</mark></p>
+                <p></p>
+                <p><mark class="highlight-blue">Condition variables / Monitor</mark></p>
+                <div class="indented">
+                    <p>
+                        Allows thread to temporarily release lock and wait (suspend) for
+                        <em>condition-signal</em>
+                        with a
+                        <em>condition variable</em>
+                        .
+                    </p>
+                    <div class="indented">
+                        <p>
+                            Different from semaphore object
+                            <mark class="highlight-gray">(which is not part of standard pthreads)</mark>
+                        </p>
+                    </div>
+                    <p></p>
+                    <p>Waiting for signal inside critical section on condition variable:</p>
+                    <div class="indented">
+                        <ol type="1" class="numbered-list" start="1">
+                            <li>Thread acquires lock and enters critical section.</li>
+                        </ol>
+                        <ol type="1" class="numbered-list" start="2">
+                            <li>
+                                Thread suspends itself, relinquishes (temporarily releases) lock but stays suspended - and waits in critical section until the
+                                condition is met.
+                            </li>
+                        </ol>
+                        <ol type="1" class="numbered-list" start="3">
+                            <li>
+                                Thread is resumed (woken up) later by a signal from some other signaling thread.
+                                <p>It has again acquired the lock.</p>
+                            </li>
+                        </ol>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Mutual exclusion</mark></p>
+                <div class="indented">
+                    <p>Mutual exclusion still guaranteed.</p>
+                    <p>Suspended thread is only resumed when signaling thread left critical section.</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Risk of deadlock</mark></p>
+                <div class="indented">
+                    <p>if threads mutually wait on some condition but there are no signal-threads.</p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">weird bug in pthreads</mark></p>
+                <div class="indented">
+                    <p>There can be unwanted wakeups by signals from the runtime-system without explicit wakeup from other thread.</p>
+                    <p>Good practice: rechecking whether wait-condition is fulfilled - even after waking up.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Standard pattern</mark></p>
+                <div class="indented">
+                    <p>Thread waiting for condition (signalled thread)</p>
+                    <div class="indented">
+                        <pre class="code"><code>lock(&amp;lock);
+// critical section ::
+
+while (!condition()) {
+	pthread_cond_wait(&amp;cond, &amp;lock); // wait and release lock temporarily
+}
+// thread has been signaled, condition holds, lock is acquired again
+
+// :: critical section
+unlock(&amp;lock);</code></pre>
+                    </div>
+                    <p></p>
+                    <p>
+                        Thread broadcasting signal (signaling thread)
+                        <mark class="highlight-gray">— can be done inside or outside the critical section</mark>
+                    </p>
+                    <div class="indented">
+                        <ul class="toggle">
+                            <li>
+                                <details open="">
+                                    <summary>
+                                        <mark class="highlight-teal"><em>Inside</em></mark>
+                                    </summary>
+                                    <pre class="code"><code>lock(&amp;lock);
+// critical section ::
+
+... // establishing condition
+cond_signal(&amp;cond); // signal if condition holds
+
+// :: critical section
+unlock(&amp;lock);</code></pre>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            Advantage: Establishing condition in critical section → therefore it should hold when suspended thread is resumed.
+                                        </li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            Disadvantage: Suspended thread will block on mutex again - until signaling thread leaves the section.
+                                        </li>
+                                    </ul>
+                                </details>
+                            </li>
+                        </ul>
+                        <ul class="toggle">
+                            <li>
+                                <details open="">
+                                    <summary>
+                                        <mark class="highlight-teal"><em>Outside</em></mark>
+                                    </summary>
+                                    <pre class="code"><code>lock(&amp;lock);
+... // establishing condition (in critical section)
+unlock(&amp;lock);
+
+cond_signal(&amp;cond); // signal</code></pre>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">Advantage: Suspended thread can immediately continue without blocking.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                        </ul>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Example</mark></p>
+                <div class="indented">
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Readers-writers lock (with condition variables and locks) → unfair</summary>
+                                <pre class="code"><code>typedef struct {
+	int readers; // actice readers
+	int writer;	// (boolean) active writer
+	int waiting; // pending writes (writers in queue) 
+	pthread_cond_t read_ok; // condition: reading allowed
+	pthread_cond_t write_ok; // condition: writing allowed
+	pthread_mutex_t gateway; // lock
+
+} rwlock_t;</code></pre>
+                                <pre class="code"><code>void rwlock_rlock(rwlock_t *rwlock) {
+	pthread_mutex_lock(&amp;rwlock-&gt;gateway); // acquire gateway lock
+
+	while (rwlock-&gt;waiting &gt; 0 || rwlock-&gt;writer) {
+		// writers exist or wait - release gateway lock and wait for read_ok signal
+		pthread_cond_wait(rwlock-&gt;read_ok, &amp;rwlock-&gt;gateway);
+	}
+
+	rwlock-&gt;readers++; // increment readers
+	pthread_mutex_unlock(&amp;rwlock-&gt;gateway); // release gateway lock
+}</code></pre>
+                                <pre class="code"><code>void rwlock_wlock(rwlock_t *rwlock) {
+	pthread_mutex_lock(&amp;rwlock-&gt;gateway); // acquire gateway lock
+	rwlock-&gt;waiting++; // pending write
+	
+	while (rwlock-&gt;readers &gt; 0 || rwlock-&gt;writer ) {
+		// readers, writers exist - release gateway lock and wait for read_ok signal
+		pthread_cond_wait(&amp;rwlock-&gt;writer_ok,	&amp;rwlock-&gt;gateway);
+	}
+	
+	rwlock-&gt;waiting--; // remove writer from queue
+	rwlock-&gt;writer = 1; // active writer == true 
+	pthread_mutex_unlock(&amp;rwlock-&gt;gateway); // release gateway lock
+}</code></pre>
+                                <pre class="code"><code>void rwlock_unlock(rwlock_t *rwlock) {
+	pthread_mutex_lock(&amp;rwlock-&gt;gateway); // acquire gateway lock
+
+	// remove active writer or reader
+	if (rwlock-&gt;writer) {
+		rwlock-&gt;writer = 0;
+	} else {
+		rwlock-&gt;readers--;
+	}
+
+	// send signal: resume threads waiting to acquire
+	if (rwlock-&gt;readers == 0 &amp;&amp; rwlock-&gt;waiting &gt; 0) {
+		pthread_cond_signal(&amp;rwlock-&gt;writer_ok); // no readers, waiting writer
+	} else {
+		pthread_cond_broadcast(&amp;rwlock-&gt;reader_ok); // reader || no waiting writer
+	}
+
+	pthread_mutex_unlock(&amp;rwlock-&gt;gateway); // release gateway lock
+}</code></pre>
+                                <p>
+                                    The signal in the release function could also be sent outside the critical section, but it would change up the semantics
+                                    (readers/writers can be changed by other threads after unlock).
+                                </p>
+                                <p>This way, we release the signal but keep the lock - therefore the signalled threads get blocked when they wake up.</p>
+                                <p>Correctness can be proven using invariants.</p>
+                                <p></p>
+                                <p><mark class="highlight-teal">Problem: Unfairness</mark></p>
+                                <div class="indented">
+                                    <p>Threads acquiring write can starve threads wanting to acquire read.</p>
+                                    <div class="indented">
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">Newer writer can starve older writer</li>
+                                        </ul>
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">Newer reader can acquire lock before older reader or writer</li>
+                                        </ul>
+                                    </div>
+                                    <p></p>
+                                </div>
+                                <p></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Barrier synchronization (with condition variables and locks) → inefficient</summary>
+                                <p>
+                                    Each thread executing
+                                    <mark class="highlight-gray"><code>&lt;barrier&gt;</code></mark>
+                                    must wait until all or some number of threads have also executed
+                                    <mark class="highlight-gray"><code>&lt;barrier&gt;</code></mark>
+                                    .
+                                </p>
+                                <pre class="code"><code>typedef struct {
+	int tc; // thread count
+	pthread_cond_t barrier_ok;
+	pthread_mutex_t barwait;
+
+} barrier_t;</code></pre>
+                                <pre class="code"><code>void barrier(barrier_t *b, int total_tc) {
+	pthread_mutex_lock(&amp;b-&gt;barwait); // acquire barwait lock
+
+	b-&gt;tc++;
+	if (b-&gt;tc == total_tc) { // threshold reached
+		b-&gt;tc = 0;
+		pthread_cond_broadcast(&amp;b-&gt;barrier_ok);
+	} else { // wait until barrier_ok signal (acquire and immediately release barwait)
+		pthread_cond_wait(&amp;b-&gt;barrier_ok, &amp;b-&gt;barwait);
+	}
+
+	pthread_mutex_unlock(&amp;b-&gt;barwait); // release barwait lock
+}</code></pre>
+                                <hr />
+                                <p>Problems</p>
+                                <div class="indented">
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            Not scalable
+                                            <style>
+                                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                            </style>
+                                            <span
+                                                data-token-index="0"
+                                                contenteditable="false"
+                                                class="notion-text-equation-token"
+                                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                                <span></span>
+                                                <span>
+                                                    <span class="katex">
+                                                        <span class="katex-mathml">
+                                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                                <semantics>
+                                                                    <mrow>
+                                                                        <mstyle mathsize="0.9em">
+                                                                            <mi>O</mi>
+                                                                            <mo stretchy="false">(</mo>
+                                                                            <mi>p</mi>
+                                                                            <mo stretchy="false">)</mo>
+                                                                        </mstyle>
+                                                                    </mrow>
+                                                                    <annotation encoding="application/x-tex">\small O(p)</annotation>
+                                                                </semantics>
+                                                            </math>
+                                                        </span>
+                                                        <span class="katex-html" aria-hidden="true">
+                                                            <span class="base">
+                                                                <span class="strut" style="height: 0.9em; vertical-align: -0.225em"></span>
+                                                                <span class="mord mathnormal sizing reset-size6 size5" style="margin-right: 0.02778em">O</span>
+                                                                <span class="mopen sizing reset-size6 size5">(</span>
+                                                                <span class="mord mathnormal sizing reset-size6 size5">p</span>
+                                                                <span class="mclose sizing reset-size6 size5">)</span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                                <span>﻿</span>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">Probably not safe on spurious (unexpected) wake ups</li>
+                                    </ul>
+                                </div>
+                                <p></p>
+                                <p>Solution: Tree structured barrier with an extra flag</p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Barriers</h2>
+                <p><mark class="highlight-blue">Barriers</mark></p>
+                <div class="indented">
+                    <p>
+                        Each thread executing
+                        <mark class="highlight-gray"><code>&lt;barrier&gt;</code></mark>
+                        must wait until all or some number of threads have also executed
+                        <mark class="highlight-gray"><code>&lt;barrier&gt;</code></mark>
+                        .
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Semaphores</h2>
+                <p><mark class="highlight-blue">Semaphore (by dijkstra)</mark></p>
+                <div class="indented">
+                    <p>concurrenct counter object with operations.</p>
+                    <div class="indented">
+                        <p>
+                            <mark class="highlight-gray"><code>up(x)</code></mark>
+                            atomic increment → wakes
+                            <mark class="highlight-gray"><code>x</code></mark>
+                            up if it was negative
+                            <mark class="highlight-gray">(signal, post, V)</mark>
+                        </p>
+                        <p>
+                            <mark class="highlight-gray"><code>down(x)</code></mark>
+                            atomic decrement → blocks
+                            <mark class="highlight-gray"><code>x</code></mark>
+                            <mark class="highlight-gray"></mark>
+                            if it turned negative
+                            <mark class="highlight-gray">(wait, P)</mark>
+                        </p>
+                    </div>
+                    <p></p>
+                    <p>If there is no thread in queue, the signals are not lost (contrary to condition variables).</p>
+                    <p></p>
+                </div>
+                <p></p>
+                <h2>Atomic operation</h2>
+                <p><mark class="highlight-blue">Atomic operation</mark></p>
+                <div class="indented">
+                    <p>Update to memory location or complex object that is atomic (can not be delayed, in one, uninterrupted):</p>
+                    <div class="indented">
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Indivisible either the whole result or nothing is seen by other threads</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Time bounded completed in finite time (wait-free, independent of other threads)</li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <p>Usually done by hardware:</p>
+                    <div class="indented">
+                        <p>Require expensive hardware support and complex interaction with memory system (ie. cache-line invalidation).</p>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">load/stores atomic loads and stores (can be ordered in program)</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">ready-modify-write read, update, store</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Swap swap two memory locations (based on condition)</li>
+                        </ul>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Example: finding all primes in interval</mark></p>
+                <div class="indented">
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Finding all primes in interval with atomic operation</summary>
+                                <p>
+                                    Find all primes between
+                                    <style>
+                                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                    </style>
+                                    <span
+                                        data-token-index="0"
+                                        contenteditable="false"
+                                        class="notion-text-equation-token"
+                                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                        <span></span>
+                                        <span>
+                                            <span class="katex">
+                                                <span class="katex-mathml">
+                                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                        <semantics>
+                                                            <mrow>
+                                                                <mstyle mathsize="0.9em"><mn>2</mn></mstyle>
+                                                            </mrow>
+                                                            <annotation encoding="application/x-tex">\small 2</annotation>
+                                                        </semantics>
+                                                    </math>
+                                                </span>
+                                                <span class="katex-html" aria-hidden="true">
+                                                    <span class="base">
+                                                        <span class="strut" style="height: 0.5799960000000001em; vertical-align: 0em"></span>
+                                                        <span class="mord sizing reset-size6 size5">2</span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span>﻿</span>
+                                    </span>
+                                    and
+                                    <style>
+                                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                    </style>
+                                    <span
+                                        data-token-index="0"
+                                        contenteditable="false"
+                                        class="notion-text-equation-token"
+                                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                        <span></span>
+                                        <span>
+                                            <span class="katex">
+                                                <span class="katex-mathml">
+                                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                        <semantics>
+                                                            <mrow>
+                                                                <mstyle mathsize="0.9em">
+                                                                    <mn>1</mn>
+                                                                    <msup>
+                                                                        <mn>0</mn>
+                                                                        <mn>9</mn>
+                                                                    </msup>
+                                                                </mstyle>
+                                                            </mrow>
+                                                            <annotation encoding="application/x-tex">\small 10^9</annotation>
+                                                        </semantics>
+                                                    </math>
+                                                </span>
+                                                <span class="katex-html" aria-hidden="true">
+                                                    <span class="base">
+                                                        <span class="strut" style="height: 0.713364em; vertical-align: 0em"></span>
+                                                        <span class="mord sizing reset-size6 size5">1</span>
+                                                        <span class="mord sizing reset-size6 size5">
+                                                            <span class="mord">0</span>
+                                                            <span class="msupsub">
+                                                                <span class="vlist-t">
+                                                                    <span class="vlist-r">
+                                                                        <span class="vlist" style="height: 0.7926266666666666em">
+                                                                            <span style="top: -2.963em; margin-right: 0.05555555555555556em">
+                                                                                <span class="pstrut" style="height: 2.6em"></span>
+                                                                                <span class="sizing reset-size5 size2 mtight">
+                                                                                    <span class="mord mtight">9</span>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span>﻿</span>
+                                    </span>
+                                    .
+                                </p>
+                                <div class="indented">
+                                    <pre class="code"><code>for (i=2; i&lt;1000000000; i++) {
+	if (isPrime(i)) printf("Found %d\n",i);
+}</code></pre>
+                                </div>
+                                <p></p>
+                                <p><mark class="highlight-teal">Solution 1) Statically scheduled data parallel loop</mark></p>
+                                <div class="indented">
+                                    <p>
+                                        Each thread executes block of size
+                                        <style>
+                                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                        </style>
+                                        <span
+                                            data-token-index="0"
+                                            contenteditable="false"
+                                            class="notion-text-equation-token"
+                                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                            <span></span>
+                                            <span>
+                                                <span class="katex">
+                                                    <span class="katex-mathml">
+                                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                            <semantics>
+                                                                <mrow>
+                                                                    <mstyle mathsize="0.9em">
+                                                                        <mn>1</mn>
+                                                                        <msup>
+                                                                            <mn>0</mn>
+                                                                            <mn>9</mn>
+                                                                        </msup>
+                                                                        <mi mathvariant="normal">/</mi>
+                                                                        <mi>p</mi>
+                                                                    </mstyle>
+                                                                </mrow>
+                                                                <annotation encoding="application/x-tex">\small 10^9/p</annotation>
+                                                            </semantics>
+                                                        </math>
+                                                    </span>
+                                                    <span class="katex-html" aria-hidden="true">
+                                                        <span class="base">
+                                                            <span class="strut" style="height: 0.938364em; vertical-align: -0.225em"></span>
+                                                            <span class="mord sizing reset-size6 size5">1</span>
+                                                            <span class="mord sizing reset-size6 size5">
+                                                                <span class="mord">0</span>
+                                                                <span class="msupsub">
+                                                                    <span class="vlist-t">
+                                                                        <span class="vlist-r">
+                                                                            <span class="vlist" style="height: 0.7926266666666666em">
+                                                                                <span style="top: -2.963em; margin-right: 0.05555555555555556em">
+                                                                                    <span class="pstrut" style="height: 2.6em"></span>
+                                                                                    <span class="sizing reset-size5 size2 mtight">
+                                                                                        <span class="mord mtight">9</span>
+                                                                                    </span>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="mord sizing reset-size6 size5">/</span>
+                                                            <span class="mord mathnormal sizing reset-size6 size5">p</span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span>﻿</span>
+                                        </span>
+                                        → load imbalance, only few processors perform expensive
+                                        <mark class="highlight-gray"><code>isPrime()</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        checks.
+                                    </p>
+                                    <p>Problem:</p>
+                                    <div class="indented">
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">Almost no speedup.</li>
+                                        </ul>
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">Array compaction cannot help since we dont know where primes are in advance.</li>
+                                        </ul>
+                                    </div>
+                                    <p></p>
+                                </div>
+                                <p></p>
+                                <p><mark class="highlight-teal">Solution 2) Shared global counter with global variable</mark></p>
+                                <div class="indented">
+                                    <pre class="code"><code>int i = 0; // shared globally</code></pre>
+                                    <pre class="code"><code>// thread code (function)
+while (i&lt;1000000000) {
+	int j = i; // thread gets next value of i 
+	i++; // illegal concurrent update -&gt; race condition 
+	if (isPrime(j)) printf("Found %d\n",j);
+}</code></pre>
+                                    <p>Problem:</p>
+                                    <div class="indented">
+                                        <p>
+                                            Unsafe because of multiple threads update
+                                            <mark class="highlight-gray"><code>i</code></mark>
+                                            <mark class="highlight-gray"></mark>
+                                            at the same time.
+                                        </p>
+                                        <ul class="toggle">
+                                            <li>
+                                                <details open="">
+                                                    <summary>
+                                                        <mark class="highlight-gray"><code>i++</code></mark>
+                                                        <mark class="highlight-gray"></mark>
+                                                        is not atomic
+                                                    </summary>
+                                                    <p>
+                                                        <mark class="highlight-gray"><code>i++</code></mark>
+                                                        actually translates to:
+                                                    </p>
+                                                    <pre class="code"><code>tmp = i;
+tmp = tmp+1;
+i = tmp;</code></pre>
+                                                    <p>
+                                                        This way we can have an unwanted interleaving where
+                                                        <mark class="highlight-gray"><code>i</code></mark>
+                                                        <mark class="highlight-gray"></mark>
+                                                        is only incremented by 1 between two threads:
+                                                    </p>
+                                                    <pre class="code"><code>										tmp = i;
+tmp = i;
+										tmp = tmp+1;
+tmp = tmp+1;
+i = tmp;
+										i = tmp;</code></pre>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <p></p>
+                                </div>
+                                <p></p>
+                                <p><mark class="highlight-teal">Solution 3) Shared global counter with mutex</mark></p>
+                                <div class="indented">
+                                    <pre class="code"><code>int i = 0; // shared global. init once
+pthread_mutex_t count_lock = …;</code></pre>
+                                    <pre class="code"><code>// thread code (function)
+while (i&lt;1000000000) {
+	int j;
+	pthread_mutex_lock(&amp;count_lock); // critical section ::
+	j = i;
+	i++;
+	if (isPrime(j)) printf("Found %d\n",j);
+	pthread_mutex_unlock(&amp;count_lock); // :: critical section
+}</code></pre>
+                                    <ul class="toggle">
+                                        <li>
+                                            <details open="">
+                                                <summary>
+                                                    Alternative: putting
+                                                    <mark class="highlight-gray"><code>isPrime()</code></mark>
+                                                    <mark class="highlight-gray"></mark>
+                                                    out of the critical section
+                                                </summary>
+                                                <pre class="code"><code>int i = 0; // shared global. init once
+pthread_mutex_t count_lock = …;</code></pre>
+                                                <pre class="code"><code>// thread code (function)
+while (i&lt;1000000000) {
+	int j;
+	pthread_mutex_lock(&amp;count_lock); // critical section ::
+	j = i;
+	i++; // thread could just stop here somewhere arbitrarily
+	pthread_mutex_unlock(&amp;count_lock); // :: critical section
+	if (isPrime(j)) printf("Found %d\n",j);
+}</code></pre>
+                                                <p>
+                                                    Problem: thread can sleep arbitrarily and make no progress
+                                                    <em>after</em>
+                                                    acquiring the lock, while other threads just wait.
+                                                </p>
+                                                <p></p>
+                                            </details>
+                                        </li>
+                                    </ul>
+                                    <p>Problem:</p>
+                                    <div class="indented">
+                                        <p>
+                                            No speedup → all the other threads can’t make any progress when
+                                            <mark class="highlight-gray"><code>isPrime()</code></mark>
+                                            <mark class="highlight-gray"></mark>
+                                            checks are in the critical section
+                                        </p>
+                                    </div>
+                                    <p></p>
+                                </div>
+                                <p></p>
+                                <p><mark class="highlight-teal">Solution 4) Atomic increment</mark></p>
+                                <div class="indented">
+                                    <pre class="code"><code>int i = 0; // shared global</code></pre>
+                                    <pre class="code"><code>// thread code (function)
+int done = 0;
+do {
+	int j = fetch_and_inc(&amp;i); // return i, increment O(1) 
+	if (j==1000000000) done = 1;
+	else if (isPrime(j)) printf("Found %d\n",j);
+} while (!done);</code></pre>
+                                    <p>Wait-free algorithm</p>
+                                </div>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Work-pools (master-worker pattern)</h1>
+                <p>Useful implementation of higher-level parallel paradigm.</p>
+                <p></p>
+                <p>
+                    <mark class="highlight-blue">Master</mark>
+                    Maintains pool of work
+                </p>
+                <p>
+                    <mark class="highlight-blue">Workers</mark>
+                    ask for work, execute, return new results to master (until done)
+                </p>
+                <p></p>
+                <h2>Centralized work-pool</h2>
+                <p>
+                    <mark class="highlight-blue">Work-pool</mark>
+                    distributed pool of work nodes (function and arguments)
+                </p>
+                <figure class="image">
+                    <a href="pthreads%204226272283d54654a102dc6c15e52351/Untitled%204.png">
+                        <img style="width: 192px" src="pthreads%204226272283d54654a102dc6c15e52351/Untitled%204.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Scalability bottleneck</mark></p>
+                <div class="indented">
+                    <p>Getting work = explicitly asking master or accessing shared data structure</p>
+                    <p>There is a competition for the work in the work-pool.</p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="pthreads%204226272283d54654a102dc6c15e52351/Untitled%205.png">
+                        <img style="width: 192px" src="pthreads%204226272283d54654a102dc6c15e52351/Untitled%205.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Implementation</mark></p>
+                <div class="indented">
+                    <p>Assume that work is executed in the order it was generated in (use deque data-structure as work-pool).</p>
+                    <p>Each thread repeats until termination:</p>
+                    <div class="indented">
+                        <ol type="1" class="numbered-list" start="1">
+                            <li>Acquire mutex, check queue, if non-empty, take from front (else wait for condition variable).</li>
+                        </ol>
+                        <ol type="1" class="numbered-list" start="2">
+                            <li>Execute work</li>
+                        </ol>
+                        <ol type="1" class="numbered-list" start="3">
+                            <li>If new work generated: acquire mutex, insert at end of deque, wake up waiting threads</li>
+                        </ol>
+                    </div>
+                    <p></p>
+                    <p>Work task as linked list:</p>
+                    <div class="indented">
+                        <pre class="code"><code>typedef struct work {
+	void (*routine)(void *args); // function
+	void *args; // args
+	struct work *next; // next node in list
+} work_t;</code></pre>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Problems with centralized work pool</mark></p>
+                <div class="indented">
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Centralized resource
+                            <p>Bad for scalability</p>
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Locks
+                            <p>Thread updating shared resource can lock out all other threads indefinitely</p>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Solutions</mark></p>
+                <div class="indented">
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Local task queues
+                            <p>thread primarily uses local queue → work stealing from other thread’s, when it’s empty</p>
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Lock-free/wait-free data structures
+                            <p>Enabling a thread always to either make progress by itself or to ensure that others are also making progress.</p>
+                            <p>Make extensive use of strong atomic operations of type “compare and swap CAS”.</p>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Decentralized work-pool</h2>
+                <p>Each thread maintains local pool of work and executes work from own pool.</p>
+                <figure class="image">
+                    <a href="pthreads%204226272283d54654a102dc6c15e52351/Untitled%206.png">
+                        <img style="width: 240px" src="pthreads%204226272283d54654a102dc6c15e52351/Untitled%206.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p>
+                    <mark class="highlight-blue">Work stealing</mark>
+                    local pool empty → steal work from other pools
+                </p>
+                <p>
+                    <mark class="highlight-blue">Work dealing</mark>
+                    local pool full → distribute work to other pools
+                </p>
+                <div class="indented"><p></p></div>
+                <p></p>
+                <p><mark class="highlight-blue">Randomized stealing</mark></p>
+                <div class="indented">
+                    <p>has good theoretical properties.</p>
+                    <p>
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow>
+                                                    <mstyle mathsize="0.9em">
+                                                        <mtext>Tpar</mtext>
+                                                        <mo stretchy="false">(</mo>
+                                                        <mi>p</mi>
+                                                        <mo separator="true">,</mo>
+                                                        <mi>n</mi>
+                                                        <mo stretchy="false">)</mo>
+                                                        <mo>=</mo>
+                                                        <msub>
+                                                            <mi>T</mi>
+                                                            <mi mathvariant="normal">∞</mi>
+                                                        </msub>
+                                                    </mstyle>
+                                                </mrow>
+                                                <annotation encoding="application/x-tex">\small \text{Tpar}(p,n) = T_\infin</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.9em; vertical-align: -0.225em"></span>
+                                            <span class="mord text sizing reset-size6 size5"><span class="mord">Tpar</span></span>
+                                            <span class="mopen sizing reset-size6 size5">(</span>
+                                            <span class="mord mathnormal sizing reset-size6 size5">p</span>
+                                            <span class="mpunct sizing reset-size6 size5">,</span>
+                                            <span class="mspace" style="margin-right: 0.16666666666666666em"></span>
+                                            <span class="mord mathnormal sizing reset-size6 size5">n</span>
+                                            <span class="mclose sizing reset-size6 size5">)</span>
+                                            <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                            <span class="mrel sizing reset-size6 size5">=</span>
+                                            <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                        </span>
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span>
+                                            <span class="mord sizing reset-size6 size5">
+                                                <span class="mord mathnormal" style="margin-right: 0.13889em">T</span>
+                                                <span class="msupsub">
+                                                    <span class="vlist-t vlist-t2">
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.13703999999999997em">
+                                                                <span style="top: -2.45em; margin-left: -0.13889em; margin-right: 0.05555555555555556em">
+                                                                    <span class="pstrut" style="height: 2.6em"></span>
+                                                                    <span class="sizing reset-size5 size2 mtight"><span class="mord mtight">∞</span></span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="vlist-s">​</span>
+                                                        </span>
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                    </p>
+                    <p>
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow>
+                                                    <mstyle mathsize="0.9em">
+                                                        <mtext>Wpar</mtext>
+                                                        <mo stretchy="false">(</mo>
+                                                        <mi>p</mi>
+                                                        <mo separator="true">,</mo>
+                                                        <mi>n</mi>
+                                                        <mo stretchy="false">)</mo>
+                                                        <mo>=</mo>
+                                                        <mi>O</mi>
+                                                        <mo stretchy="false">(</mo>
+                                                        <msub>
+                                                            <mi>T</mi>
+                                                            <mi mathvariant="normal">∞</mi>
+                                                        </msub>
+                                                        <mo>+</mo>
+                                                        <mi>n</mi>
+                                                        <mi mathvariant="normal">/</mi>
+                                                        <mi>p</mi>
+                                                        <mo stretchy="false">)</mo>
+                                                    </mstyle>
+                                                </mrow>
+                                                <annotation encoding="application/x-tex">\small \text{Wpar}(p,n) = O(T_\infin + n/p)</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.9em; vertical-align: -0.225em"></span>
+                                            <span class="mord text sizing reset-size6 size5"><span class="mord">Wpar</span></span>
+                                            <span class="mopen sizing reset-size6 size5">(</span>
+                                            <span class="mord mathnormal sizing reset-size6 size5">p</span>
+                                            <span class="mpunct sizing reset-size6 size5">,</span>
+                                            <span class="mspace" style="margin-right: 0.16666666666666666em"></span>
+                                            <span class="mord mathnormal sizing reset-size6 size5">n</span>
+                                            <span class="mclose sizing reset-size6 size5">)</span>
+                                            <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                            <span class="mrel sizing reset-size6 size5">=</span>
+                                            <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                        </span>
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.9em; vertical-align: -0.225em"></span>
+                                            <span class="mord mathnormal sizing reset-size6 size5" style="margin-right: 0.02778em">O</span>
+                                            <span class="mopen sizing reset-size6 size5">(</span>
+                                            <span class="mord sizing reset-size6 size5">
+                                                <span class="mord mathnormal" style="margin-right: 0.13889em">T</span>
+                                                <span class="msupsub">
+                                                    <span class="vlist-t vlist-t2">
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.13703999999999997em">
+                                                                <span style="top: -2.45em; margin-left: -0.13889em; margin-right: 0.05555555555555556em">
+                                                                    <span class="pstrut" style="height: 2.6em"></span>
+                                                                    <span class="sizing reset-size5 size2 mtight"><span class="mord mtight">∞</span></span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="vlist-s">​</span>
+                                                        </span>
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
+                                            <span class="mbin sizing reset-size6 size5">+</span>
+                                            <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
+                                        </span>
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.9em; vertical-align: -0.225em"></span>
+                                            <span class="mord mathnormal sizing reset-size6 size5">n</span>
+                                            <span class="mord sizing reset-size6 size5">/</span>
+                                            <span class="mord mathnormal sizing reset-size6 size5">p</span>
+                                            <span class="mclose sizing reset-size6 size5">)</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                    </p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Deterministic stealing</mark></p>
+                <div class="indented">
+                    <p>Stealing from top of non-local queue.</p>
+                    <p>Can provide good locality (cache) properties.</p>
+                </div>
+                <p></p>
+            </div>
+        </article>
+    </body>
+</html>

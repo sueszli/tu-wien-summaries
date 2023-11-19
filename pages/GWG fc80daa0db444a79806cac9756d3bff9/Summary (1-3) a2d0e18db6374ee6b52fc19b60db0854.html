@@ -1,0 +1,1612 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Summary (1-3)</title>
+        <style>
+            /* cspell:disable-file */
+            /* webkit printing magic: print all background colors */
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            * {
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media only screen {
+                body {
+                    margin: 2em auto;
+                    max-width: 900px;
+                    color: rgb(55, 53, 47);
+                }
+            }
+
+            body {
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            a,
+            a.visited {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .pdf-relative-link-path {
+                font-size: 80%;
+                color: #444;
+            }
+
+            h1,
+            h2,
+            h3 {
+                letter-spacing: -0.01em;
+                line-height: 1.2;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 0;
+                margin-bottom: 0.75em;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+                margin-top: 1.875rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .source {
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 1.5em;
+                word-break: break-all;
+            }
+
+            .callout {
+                border-radius: 3px;
+                padding: 1rem;
+            }
+
+            figure {
+                margin: 1.25em 0;
+                page-break-inside: avoid;
+            }
+
+            figcaption {
+                opacity: 0.5;
+                font-size: 85%;
+                margin-top: 0.5em;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+
+            .indented {
+                padding-left: 1.5em;
+            }
+
+            hr {
+                background: transparent;
+                display: block;
+                width: 100%;
+                height: 1px;
+                visibility: visible;
+                border: none;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            @media only print {
+                img {
+                    max-height: 100vh;
+                    object-fit: contain;
+                }
+            }
+
+            @page {
+                margin: 1in;
+            }
+
+            .collection-content {
+                font-size: 0.875rem;
+            }
+
+            .column-list {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .column {
+                padding: 0 1em;
+            }
+
+            .column:first-child {
+                padding-left: 0;
+            }
+
+            .column:last-child {
+                padding-right: 0;
+            }
+
+            .table_of_contents-item {
+                display: block;
+                font-size: 0.875rem;
+                line-height: 1.3;
+                padding: 0.125rem;
+            }
+
+            .table_of_contents-indent-1 {
+                margin-left: 1.5rem;
+            }
+
+            .table_of_contents-indent-2 {
+                margin-left: 3rem;
+            }
+
+            .table_of_contents-indent-3 {
+                margin-left: 4.5rem;
+            }
+
+            .table_of_contents-link {
+                text-decoration: none;
+                opacity: 0.7;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+            }
+
+            table,
+            th,
+            td {
+                border: 1px solid rgba(55, 53, 47, 0.09);
+                border-collapse: collapse;
+            }
+
+            table {
+                border-left: none;
+                border-right: none;
+            }
+
+            th,
+            td {
+                font-weight: normal;
+                padding: 0.25em 0.5em;
+                line-height: 1.5;
+                min-height: 1.5em;
+                text-align: left;
+            }
+
+            th {
+                color: rgba(55, 53, 47, 0.6);
+            }
+
+            ol,
+            ul {
+                margin: 0;
+                margin-block-start: 0.6em;
+                margin-block-end: 0.6em;
+            }
+
+            li > ol:first-child,
+            li > ul:first-child {
+                margin-block-start: 0.6em;
+            }
+
+            ul > li {
+                list-style: disc;
+            }
+
+            ul.to-do-list {
+                padding-inline-start: 0;
+            }
+
+            ul.to-do-list > li {
+                list-style: none;
+            }
+
+            .to-do-children-checked {
+                text-decoration: line-through;
+                opacity: 0.375;
+            }
+
+            ul.toggle > li {
+                list-style: none;
+            }
+
+            ul {
+                padding-inline-start: 1.7em;
+            }
+
+            ul > li {
+                padding-left: 0.1em;
+            }
+
+            ol {
+                padding-inline-start: 1.6em;
+            }
+
+            ol > li {
+                padding-left: 0.2em;
+            }
+
+            .mono ol {
+                padding-inline-start: 2em;
+            }
+
+            .mono ol > li {
+                text-indent: -0.4em;
+            }
+
+            .toggle {
+                padding-inline-start: 0em;
+                list-style-type: none;
+            }
+
+            /* Indent toggle children */
+            .toggle > li > details {
+                padding-left: 1.7em;
+            }
+
+            .toggle > li > details > summary {
+                margin-left: -1.1em;
+            }
+
+            .selected-value {
+                display: inline-block;
+                padding: 0 0.5em;
+                background: rgba(206, 205, 202, 0.5);
+                border-radius: 3px;
+                margin-right: 0.5em;
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+            }
+
+            .collection-title {
+                display: inline-block;
+                margin-right: 1em;
+            }
+
+            .page-description {
+                margin-bottom: 2em;
+            }
+
+            .simple-table {
+                margin-top: 1em;
+                font-size: 0.875rem;
+                empty-cells: show;
+            }
+            .simple-table td {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table th {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table-header-color {
+                background: rgb(247, 246, 243);
+                color: black;
+            }
+            .simple-table-header {
+                font-weight: 500;
+            }
+
+            time {
+                opacity: 0.5;
+            }
+
+            .icon {
+                display: inline-block;
+                max-width: 1.2em;
+                max-height: 1.2em;
+                text-decoration: none;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            img.icon {
+                border-radius: 3px;
+            }
+
+            .user-icon {
+                width: 1.5em;
+                height: 1.5em;
+                border-radius: 100%;
+                margin-right: 0.5rem;
+            }
+
+            .user-icon-inner {
+                font-size: 0.8em;
+            }
+
+            .text-icon {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+            .page-cover-image {
+                display: block;
+                object-fit: cover;
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            .page-header-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .page-header-icon-with-cover {
+                margin-top: -0.72em;
+                margin-left: 0.07em;
+            }
+
+            .page-header-icon img {
+                border-radius: 3px;
+            }
+
+            .link-to-page {
+                margin: 1em 0;
+                padding: 0;
+                border: none;
+                font-weight: 500;
+            }
+
+            p > .user {
+                opacity: 0.5;
+            }
+
+            td > .user,
+            td > time {
+                white-space: nowrap;
+            }
+
+            input[type="checkbox"] {
+                transform: scale(1.5);
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
+
+            p {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .image {
+                border: none;
+                margin: 1.5em 0;
+                padding: 0;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .code,
+            code {
+                background: rgba(135, 131, 120, 0.15);
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 85%;
+                tab-size: 2;
+            }
+
+            code {
+                color: #eb5757;
+            }
+
+            .code {
+                padding: 1.5em 1em;
+            }
+
+            .code-wrap {
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .code > code {
+                background: none;
+                padding: 0;
+                font-size: 100%;
+                color: inherit;
+            }
+
+            blockquote {
+                font-size: 1.25em;
+                margin: 1em 0;
+                padding-left: 1em;
+                border-left: 3px solid rgb(55, 53, 47);
+            }
+
+            .bookmark {
+                text-decoration: none;
+                max-height: 8em;
+                padding: 0;
+                display: flex;
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .bookmark-title {
+                font-size: 0.85em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 1.75em;
+                white-space: nowrap;
+            }
+
+            .bookmark-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bookmark-info {
+                flex: 4 1 180px;
+                padding: 12px 14px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark-image {
+                width: 33%;
+                flex: 1 1 180px;
+                display: block;
+                position: relative;
+                object-fit: cover;
+                border-radius: 1px;
+            }
+
+            .bookmark-description {
+                color: rgba(55, 53, 47, 0.6);
+                font-size: 0.75em;
+                overflow: hidden;
+                max-height: 4.5em;
+                word-break: break-word;
+            }
+
+            .bookmark-href {
+                font-size: 0.75em;
+                margin-top: 0.25em;
+            }
+
+            .sans {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+                    "Segoe UI Symbol";
+            }
+            .code {
+                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+            }
+            .serif {
+                font-family: Lyon-Text, Georgia, ui-serif, serif;
+            }
+            .mono {
+                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+            }
+            .pdf .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+            }
+            .pdf:lang(zh-CN) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+            }
+            .pdf:lang(zh-TW) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+            }
+            .pdf:lang(ko-KR) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+            }
+            .pdf .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK KR";
+            }
+            .pdf .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+            }
+            .pdf:lang(zh-CN) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+            }
+            .pdf:lang(zh-TW) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+            }
+            .pdf:lang(ko-KR) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+            }
+            .pdf .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+            }
+            .highlight-default {
+                color: rgba(55, 53, 47, 1);
+            }
+            .highlight-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .highlight-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .highlight-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .highlight-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .highlight-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .highlight-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .highlight-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .highlight-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .highlight-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .highlight-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .highlight-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .highlight-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .highlight-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .highlight-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .highlight-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .highlight-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .highlight-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .highlight-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .block-color-default {
+                color: inherit;
+                fill: inherit;
+            }
+            .block-color-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .block-color-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .block-color-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .block-color-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .block-color-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .block-color-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .block-color-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .block-color-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .block-color-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .block-color-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .block-color-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .block-color-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .block-color-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .block-color-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .block-color-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .block-color-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .block-color-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .block-color-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .select-value-color-interactiveBlue {
+                background-color: rgba(35, 131, 226, 0.07);
+            }
+            .select-value-color-pink {
+                background-color: rgba(245, 224, 233, 1);
+            }
+            .select-value-color-purple {
+                background-color: rgba(232, 222, 238, 1);
+            }
+            .select-value-color-green {
+                background-color: rgba(219, 237, 219, 1);
+            }
+            .select-value-color-gray {
+                background-color: rgba(227, 226, 224, 1);
+            }
+            .select-value-color-translucentGray {
+                background-color: rgba(255, 255, 255, 0.0375);
+            }
+            .select-value-color-orange {
+                background-color: rgba(250, 222, 201, 1);
+            }
+            .select-value-color-brown {
+                background-color: rgba(238, 224, 218, 1);
+            }
+            .select-value-color-red {
+                background-color: rgba(255, 226, 221, 1);
+            }
+            .select-value-color-yellow {
+                background-color: rgba(253, 236, 200, 1);
+            }
+            .select-value-color-blue {
+                background-color: rgba(211, 229, 239, 1);
+            }
+            .select-value-color-pageGlass {
+                background-color: undefined;
+            }
+            .select-value-color-washGlass {
+                background-color: undefined;
+            }
+
+            .checkbox {
+                display: inline-flex;
+                vertical-align: text-bottom;
+                width: 16;
+                height: 16;
+                background-size: 16px;
+                margin-left: 2px;
+                margin-right: 5px;
+            }
+
+            .checkbox-on {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            .checkbox-off {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            /* -------- injections from notionBackup -------- */
+
+            body {
+                white-space: normal !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+
+            .code,
+            code {
+                font-size: 100% !important;
+            }
+
+            blockquote {
+                font-size: 100% !important;
+            }
+
+            .callout {
+                white-space: normal !important;
+            }
+            .callout div:has(span.icon) {
+                font-size: 100% !important;
+            }
+
+            .source:not(.bookmark) {
+                font-size: 100% !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+        </style>
+    </head>
+    <body>
+        <article class="page sans">
+            <header>
+                <h1 class="page-title">Summary (1-3)</h1>
+                <p class="page-description"></p>
+            </header>
+            <div class="page-body">
+                <nav class="block-color-gray table_of_contents">
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#df6a2d3e-f2ea-4543-8da3-12b61ef8f16d">Ziele der LVA</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#f2d482d8-e3ea-481f-8d62-bd72adbfbcb3">Perspektiven</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#b1a3e541-45d8-44f0-8526-abd11624933c">🔧 Technische Perspektive</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#57f452ce-933d-4ae1-b230-a4d668c05935">🫂 Soziotechnische Perspektive</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#5c60cd2a-7663-45cb-85b6-a33c5f88bc62">Wieso braucht man die soziotechnische Perspektive?</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#ddd292ce-e43f-4788-9c37-e78bbe762101">Soziotechnische Interaktionsnetzwerke STIN (Modell)</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#072ae159-db5b-4cb0-ad29-80a04039640e">Technikaneignung / Evolving Use</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#e1c408ea-1ad2-45d1-bd71-fd466b8ac1d4">Technik-Soziologie</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#d6a6e85a-77b8-4acc-a026-f85d55cf91e6">Social Informatics</a>
+                    </div>
+                </nav>
+                <p></p>
+                <h1>Ziele der LVA</h1>
+                <p><mark class="highlight-blue">Ziele</mark></p>
+                <div class="indented">
+                    <p>Soziale und gesellschaftliche Aspekte der Computerisierung</p>
+                    <div class="indented">
+                        <p>ICT (Information and communication technologies)</p>
+                        <p>Entstehung, Gestaltung, Nutzung, Konsequenzen von ICTs</p>
+                        <p>Informationsgesellschaft</p>
+                    </div>
+                    <p></p>
+                    <p>Informatik als Praxis und Wissenschaft</p>
+                    <div class="indented">
+                        <p>Modell vs. Wirklichkeit</p>
+                        <p>Informatik als Gestaltungswissenschaft (Design-Science)</p>
+                        <p>Risiken vs. Chancen: Folgenabschätzung</p>
+                        <div class="indented">
+                            <p><em>"integrierte Technik-Folgenabschätzung"</em></p>
+                            <p>Gesellschaftliche Folgen, Implikationen, Konsequenzen</p>
+                            <div class="indented">
+                                <p>Gerechtigkeit, Fairness</p>
+                                <p>Machtverteilung</p>
+                                <p>Bias vs. rationale Entscheidung</p>
+                                <p>Privacy vs. Überwachung</p>
+                            </div>
+                            <p></p>
+                        </div>
+                        <p></p>
+                        <p>Gesellschaftliche Verantwortung, Ethik</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Vorschau</mark></p>
+                <div class="indented">
+                    <p>Wo sind die Grenzen der Automatisierung?</p>
+                    <div class="indented">
+                        <p>Wer sind Verantwortungsträger von ICTs / automatisierten Systemen?</p>
+                        <p>Wie weit darf automatisiert werden?</p>
+                    </div>
+                    <p></p>
+                    <p>Fehlentwicklungen vs. beabsichtigte Design-Entschiedungen</p>
+                    <p>Betrug mit ICTs</p>
+                    <div class="indented">
+                        <p>VW Abgasskandal: Abgase manipuliert</p>
+                        <p>Datenschnittstellen in Arzt-Software: Data Leak</p>
+                    </div>
+                    <p></p>
+                    <p>Grenzen der Automatisierung: Ethische Entscheidungen</p>
+                    <div class="indented">
+                        <p>Autonomes fahren</p>
+                        <p>Kriminalitätsneigung anhand von Bildern abschätzen (Risk assessment in Gerichten)</p>
+                        <p>Sexuelle Orientierung anhand von Bildern abschätzen</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Perspektiven</h1>
+                <p>Wenn man ICTs entwickelt (Computerartefakte, Computer und Softwaresysteme)</p>
+                <p>entwickelt man eigentlich STINs (Soziotechnische Interaktionsnetzwerke)</p>
+                <p></p>
+                <h2>🔧 Technische Perspektive</h2>
+                <p><mark class="highlight-blue">Technische Perspektive</mark></p>
+                <div class="indented">
+                    <p><em>Dekontexualisiert, simplifiziert, verallgemeinert auf Funktionalität</em></p>
+                    <p>Technik unabhängig vom Sozialen.</p>
+                    <div class="indented">
+                        <p>
+                            nur
+                            <em>kognitiver</em>
+                            und
+                            <em>instrumenteller</em>
+                            Aspekt der Nutzung.
+                        </p>
+                    </div>
+                    <p></p>
+                    <p>vereinfachte Abstraktion von der Wirklichkeit zum Arbeiten mit technischen Systemen.</p>
+                    <div class="indented">
+                        <p>Alles was nicht Teil des Systems ist, ist die Umwelt (auch Nutzer).</p>
+                        <p>Für Konstruktion, Produktion.</p>
+                        <p>System muss Funktionen erfüllen, ansonsten defekt.</p>
+                    </div>
+                    <p></p>
+                    <p>Komponenten.</p>
+                    <p>Mangelnde Berücksichtigung von</p>
+                    <div class="indented"><p>Kontext, STIN, Techniknutzung, Organisation, zeitlicher Dimension technologischer Innovation.</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Technik</mark></p>
+                <div class="indented">
+                    <p>
+                        <em>allopoietisch</em>
+                        - von außen gemacht.
+                    </p>
+                    <p>
+                        ist nicht
+                        <em>Selbstzweck</em>
+                        oder
+                        <em>autonom</em>
+                    </p>
+                    <div class="indented">
+                        <p>= nicht unabhängig von sozialen strukturen</p>
+                        <p>im Gegensatz zur Natur (mit ihren unveränderlichen Naturgesetzen)</p>
+                        <p>Technik ist nicht einfach da</p>
+                    </div>
+                    <p></p>
+                    <p>ist von den Menschen für den Menschen</p>
+                    <div class="indented"><p>Menschen als Entwickler und Nutzer</p></div>
+                    <p></p>
+                    <p>
+                        ist abhängig vom
+                        <em>sozialen Kontext</em>
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-gray">Naturwissenschaft</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">Erklären von Gesetzmäßigkeiten</mark></p>
+                    <p><mark class="highlight-gray">fixer Gegenstandsbereich, "nomologische Realität"</mark></p>
+                    <div class="indented">
+                        <p><mark class="highlight-gray">innerhalb bestimmter Grenzen konstant</mark></p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p class="block-color-gray">Die Moderne</p>
+                <div class="indented">
+                    <p>Zeit ab der Aufklärung, Industrialisierung</p>
+                    <p>Aktive Gestaltung der Umwelt</p>
+                    <p>Bestimmung der äußeren Natur mit Technik</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h2>🫂 Soziotechnische Perspektive</h2>
+                <p>Gesellschaft gestaltet Technik.</p>
+                <p>Technik beeinflusst Gesellschaft.</p>
+                <p></p>
+                <p><mark class="highlight-blue">Soziotechnische Perspektive</mark></p>
+                <div class="indented">
+                    <p>Zusammenhang von Technik und sozialen Prozessen, Rollen, Strukturen, Interaktionen.</p>
+                    <div class="indented">
+                        <p>Soziales = Netzwerke aus immer wiederkehrenden Verhaltensmustern die sich auf einander und sich selbst auswirken.</p>
+                        <p>Gesellschaft = Gesamtheit des Sozialen Gemeinsames Handeln.</p>
+                    </div>
+                    <p></p>
+                    <p>Technik ist nicht selbstzweck und entwickelt sich nicht von selbst sondern entwickelt von Menschen und für Menschen.</p>
+                    <p>Organisationen.</p>
+                    <p>Ganzheitliche Sicht, schließt dynamischen Kontext, nicht-Determiniertheit ein.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Kennzeichnung</mark></p>
+                <p>Berücksichtigung von:</p>
+                <div class="indented">
+                    <p><mark class="highlight-blue">Wechselseitigkeit</mark></p>
+                    <div class="indented">
+                        <p>Wechselwirkung, Wechselseitige Abhängigkeit</p>
+                        <p>
+                            <em>Interdepdendenz</em>
+                            , Zusammenhang, wechselseitige Einflüsse zwischen Technik / ICTs und Sozialem
+                        </p>
+                        <p>Gestaltung und Nutzung von ICTs</p>
+                        <p>gesellschaftlich soziale Konsequenzen der Computernutzung</p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-blue">situated / Situertheit = (STIN + Kontext)</mark></p>
+                    <div class="indented">
+                        <p>
+                            STINs, Nutzung, Entwicklung sind immer
+                            <em>socially embedded / sozial eingebettet / im sozialen Kontext</em>
+                        </p>
+                        <p><em>Embeddedness</em></p>
+                        <p>Interpretation von Daten passiert beim Nutzer</p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-blue">zeitliche Dimension</mark></p>
+                    <div class="indented"><p>Geschichte von technische Innovation</p></div>
+                    <p></p>
+                    <p><mark class="highlight-blue">Co-evolution</mark></p>
+                    <div class="indented"><p>gemeinsame Entwicklung</p></div>
+                    <p></p>
+                    <p><mark class="highlight-blue">Mutual adaptiveness</mark></p>
+                    <div class="indented">
+                        <p>Gegenseitige Anpassung</p>
+                        <p></p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Soziales</mark></p>
+                <div class="indented">
+                    <p>Menschen, Gruppen, Institutionen, Gesellschaften (= Gesamtheit aller Akteure)</p>
+                    <div class="indented"><p>soziale Prozesse, Strukturen, Organisationen, Kulturen</p></div>
+                    <p></p>
+                    <p><em>reflexiv autopoietisch</em></p>
+                    <div class="indented">
+                        <p>sich selbst verändernd, sich selbst steuernd, dynamisch entwickelnd.</p>
+                        <p>konstruktives, aktives Handeln, Gestalten.</p>
+                        <p>Erzeugt Regeln, Struktur zur Selbststeuerung.</p>
+                    </div>
+                    <p></p>
+                    <p>In Wechselwirkung mit Umwelt, Kontext.</p>
+                    <div class="indented"><p>Nur verständlich in Zusammenhang mit Historie: Pfadabhängigkeit</p></div>
+                    <p></p>
+                    <p><em>Kontingenz, offener Entwicklungshorizont.</em></p>
+                    <p>Situationen, keine Zustände.</p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-gray">Kulturwissenschaften</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">Verstehen von Zusammenhängen im Kontext</mark></p>
+                    <p><mark class="highlight-gray">variabler, kontextabhängiger Gegenstandsbereich, "autopoietische Realität"</mark></p>
+                    <div class="indented">
+                        <p><mark class="highlight-gray">In Wechselwirkung mit Kontext, nicht determiniert mit Kontext.</mark></p>
+                        <p><mark class="highlight-gray">offener Entwicklungshorizont</mark></p>
+                        <p><mark class="highlight-gray">innerhalb bestimmter Grenzen veränderlich</mark></p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p class="block-color-gray">ICTs have a...</p>
+                <div class="indented">
+                    <p class="block-color-gray">social nature</p>
+                    <div class="indented">
+                        <p>Nutzung und Interpretation unterschiedlich je nach Anwender</p>
+                        <p>Können soziale Aktionen und Beziehungen ermöglichen</p>
+                        <p>Können soziale Kontrollstrukturen ändern</p>
+                    </div>
+                    <p></p>
+                    <p class="block-color-gray">technical nature</p>
+                    <div class="indented">
+                        <p>communicative and computational</p>
+                        <p>temporal and spacial consequences</p>
+                        <p>no social transformations</p>
+                    </div>
+                    <p></p>
+                    <p class="block-color-gray">institutional nature</p>
+                    <div class="indented"><p>political consequences</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Kontext</mark></p>
+                <div class="indented">
+                    <p>situative, zeitliche, dynamische Prozesse in Organisationen</p>
+                    <p>Absichten von Akteure</p>
+                    <p>besondere Merkmale von Technologien</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h2>Wieso braucht man die soziotechnische Perspektive?</h2>
+                <p>Gemeinsame Gestaltung notwendig:</p>
+                <div class="indented">
+                    <p>Gute Technologien alleine ohne soziotechnische Perspektive reichen nicht für ökonomische und soziale Vorteile aus.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p>Experimente als Eye-Opener:</p>
+                <p>
+                    <mark class="highlight-blue">zB: Technische Optimierung: Kammerpfeilerbau-Verfahren</mark>
+                    <mark class="highlight-blue">
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow><mo>→</mo></mrow>
+                                                <annotation encoding="application/x-tex">\rarr</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
+                                            <span class="mrel">→</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                    </mark>
+                    <mark class="highlight-blue">Strebbau-Verfahren (GB in 1950er)</mark>
+                </p>
+                <div class="indented">
+                    <p>Objektive Optimierung von Kohle-Abbau-Verfahren</p>
+                    <div class="indented">
+                        <p>Kammerpfeilerbau: Kohle nicht ganz abbauen, Kohlesäulen ("Pfeiler") als Stützen lassen.</p>
+                        <p>Strebbau: Metallsäulen benutzen, alles abbauen.</p>
+                    </div>
+                    <p></p>
+                    <p>Konsequenz</p>
+                    <div class="indented">
+                        <p>Geringere Produktivität, Arbeitsmotivation</p>
+                        <p>Höhere Krankheitsquoten, Fluktuation der Leistung</p>
+                    </div>
+                    <p></p>
+                    <p>Foruschung von Travistock Institute of Human Relations</p>
+                    <div class="indented">
+                        <p>Kammerpfeilerbau: Kleingruppen, alle gemeinsam für gesamten Prozess und Endergebnis verantworlich</p>
+                        <p>Strebbau: Spezialisierung, nur für einen Prozessabschnitt verantwortlich.</p>
+                    </div>
+                    <p></p>
+                    <p>Schlussfolgerung: Sozialen Prozesse und Strukturen nicht berücksichtigt</p>
+                    <div class="indented">
+                        <p>Technik-Nutzung</p>
+                        <p>Arbeitsorganisation: Gruppen, Rollen, Hierarchien aufgelöst</p>
+                    </div>
+                    <p></p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">zB: Produktivitätsparadoxon (Kling 1999)</mark></p>
+                <div class="indented">
+                    <p>
+                        Falsche Annahme: Computernutzung / "Computerisierung"
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow><mo>→</mo></mrow>
+                                                <annotation encoding="application/x-tex">\rarr</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
+                                            <span class="mrel">→</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        Produktivitäts-Zunahme
+                    </p>
+                    <p>Produktivität nur unter bestimmten Bedingungen:</p>
+                    <div class="indented"><p>korrekter Einsatz, notwendige Ausbildung, Kompetenz, Erfahrung.</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <hr />
+                <p></p>
+                <p>Schlussfolgerung von Travistock Institute of Human Relations</p>
+                <div class="indented">
+                    <p><mark class="highlight-blue">Joint Optimization, Co-Evolution (gleichzeitige Verbesserung)</mark></p>
+                    <div class="indented">
+                        <p>Technische, Organisation gemeinsam gestalten</p>
+                        <p>Lebens und Arbeitsbedingungen</p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-blue">Organizational choice</mark></p>
+                    <div class="indented">
+                        <p>Technische Systeme determinieren Organisation, Arbeitsorganisation nicht vollständig.</p>
+                        <p>Organisation hat Handlungsspielraum für Nutzung der Technologie</p>
+                        <div class="indented">
+                            <p>Interpretation von Daten passiert beim Nutzer</p>
+                            <p>
+                                unterschiedliche
+                                <em>Freiheitsgrade</em>
+                            </p>
+                        </div>
+                        <p></p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Soziotechnische Interaktionsnetzwerke STIN (Modell)</h1>
+                <p>ICTs sind Teil von STINs</p>
+                <div class="indented"><p>sie sind eingebunden im Kontext</p></div>
+                <p></p>
+                <p></p>
+                <p>beschreiben Wechselwirkungen, Beziehungsgeflechte, Netzwerke</p>
+                <p>aus soziotechnischer Perspektive</p>
+                <p>zwischen technischen Produkten und Mensch.</p>
+                <p><mark class="highlight-gray">STIN entwickeln und steuern sich selbst (gleiche Definition, siehe oben).</mark></p>
+                <p></p>
+                <p>Modellieren den Kontext / Umgebung von</p>
+                <div class="indented">
+                    <p>Techniknutzung</p>
+                    <p>Organisation in der Technik eingesetzt wird</p>
+                    <p>zeitliche Dimension von Innovation</p>
+                </div>
+                <p></p>
+                <p></p>
+                <figure class="image">
+                    <a href="Summary%20(1-3)%20a2d0e18db6374ee6b52fc19b60db0854/Untitled.png">
+                        <img style="width: 240px" src="Summary%20(1-3)%20a2d0e18db6374ee6b52fc19b60db0854/Untitled.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Bestandteile</mark></p>
+                <div class="indented">
+                    <p>Akteure</p>
+                    <div class="indented">
+                        <p>Personen, Gruppen, Organisationen, Stakeholder</p>
+                        <p><mark class="highlight-gray">zB Wohngemeinschaft</mark></p>
+                    </div>
+                    <p></p>
+                    <p>Gerät, Technischer Artefakt, Produkt</p>
+                    <p>Handlungen</p>
+                    <div class="indented">
+                        <p>Erzeugung von einem Produkt</p>
+                        <p><mark class="highlight-gray">zB Arbeit, Fortbewegung</mark></p>
+                    </div>
+                    <p></p>
+                    <p>Kommunikation</p>
+                    <div class="indented">
+                        <p><mark class="highlight-gray">zB. Email, Social Media</mark></p>
+                    </div>
+                    <p></p>
+                    <p>Ressourcen</p>
+                    <div class="indented"><p>Geld, Fähigkeiten, Status</p></div>
+                    <p></p>
+                    <p>gesetzliche Rahmenbedingungen, Zwänge</p>
+                    <p>Ressourcenflüsse</p>
+                    <p>Arbeit</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">zB</mark></p>
+                <div class="indented">
+                    <p>Nutzung von Social Network Sites</p>
+                    <p>CNC-Maschinen in Produktion</p>
+                    <p>Email Kommunkation</p>
+                    <p>Internet of things IoT</p>
+                    <p>Cyberphysical production Systems - Industry 4.0</p>
+                    <p>...</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Technikaneignung / Evolving Use</h1>
+                <p>Gesellschaft gestaltet Technik.</p>
+                <div class="indented">
+                    <p>
+                        Nutzung:
+                        <em>neue Nutzungsweisen, Technikakzeptanz</em>
+                    </p>
+                    <p>Technik wird darauf folgend an Bedürfnisse, Erfordernisse angepasst.</p>
+                </div>
+                <p></p>
+                <p>Technik beeinflusst Gesellschaft.</p>
+                <p></p>
+                <figure class="image">
+                    <a href="Summary%20(1-3)%20a2d0e18db6374ee6b52fc19b60db0854/Untitled%201.png">
+                        <img style="width: 240px" src="Summary%20(1-3)%20a2d0e18db6374ee6b52fc19b60db0854/Untitled%201.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Technikaneignung / Evolving use</mark></p>
+                <div class="indented">
+                    <p>Technik wird für neue ursprünglich nicht vorgesehene Zwecke (zb nach Gebrauchsanleitung) verwendet.</p>
+                    <p>ist ein sozialer, offener Prozess</p>
+                    <p>kann nicht deterministisch gesteuert werden</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Beispiel</mark></p>
+                <div class="indented"><p>SMS: Ursprünglich von GSM-Mobilfunk für Statusmitteilungen</p></div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Technik-Soziologie</h1>
+                <p><mark class="highlight-blue">Technikdeterminismus</mark></p>
+                <div class="indented">
+                    <p>stimmt nicht.</p>
+                    <p>
+                        keine
+                        <em>Extrapolation</em>
+                        von Technik auf Gesellschaft
+                    </p>
+                    <p>alle Probleme der Menschheit lassen sich nicht exklusiv technisch lösen.</p>
+                    <hr />
+                    <p>Technik entsteht durch einen gesellschaftlich-sozialen Prozess und entwickelt sich weiter.</p>
+                    <div class="indented">
+                        <p>Freiheitsgrade in Entwicklung einer Lösung für eine Anforderung.</p>
+                        <p>Technik folgt dem gesellschaftlichen Prozess</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Technik-Genese, -Gestaltung, -Realisierung</mark></p>
+                <div class="indented">
+                    <p>Technikentwicklung: Erstellung von Technik in kulturellem Kontext (oder konkreter Technik)</p>
+                    <p>zu berücksichtigen während Erstellung</p>
+                    <div class="indented">
+                        <p>gesellschaftlicher Bedarf, Interessen, Zielgruppe</p>
+                        <p>Kontext (kulturell, historisch)</p>
+                        <p></p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">verstärkende Rückkopplung / Rückwirkung</mark></p>
+                <div class="indented"><p>Anforderung → Nutzungsweise → Anpassung der Technologie → Verfestigung der ursprünglichen Anforderung</p></div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">strukturierende Funktion</mark></p>
+                <div class="indented"><p>Konsequenzen für das Soziale entfaltet sich</p></div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Spiegeln von Absichten</mark></p>
+                <div class="indented">
+                    <p><em>Technik als Manifestation sozialer Absichten</em></p>
+                    <div class="indented"><p>Kann fördernd sein oder behindernd für manche Nutzungsweisen und Menschengruppen</p></div>
+                    <p></p>
+                    <p>Eingebaute, eingeschriebene Zwecke, Bias (beabsichtigt / unbeabsichtigt)</p>
+                    <div class="indented">
+                        <p>Spiegeln Intentionen, politische Ansichten wieder</p>
+                        <p>beeinflussen Menschen je nach Nutzung</p>
+                        <p></p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <hr />
+                <p></p>
+                <p>Technik kann</p>
+                <div class="indented">
+                    <p>unterschiedlich genutzt werden</p>
+                    <p>von unterschiedliche Bedeutung im jeweiligen Kontext / Kultur haben</p>
+                    <p>je nach Nutzung Konsequenzen für Gesellschaft haben</p>
+                    <p>Menschen ersetzen</p>
+                    <p>Menschen einschränken</p>
+                    <p>Arbeit erleichtern, defizite ausgleichen</p>
+                    <p>neue soziale Prozesse ermöglichen</p>
+                    <p>soziale Normen, Absichten verfestigen</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Social Informatics</h1>
+                <p><mark class="highlight-blue">Ziele</mark></p>
+                <div class="indented">
+                    <p>Generation von zuverlässigem Wissen über ICTs und sozialen Wandel</p>
+                    <p>basierend auf empirischer Forschung</p>
+                    <p>für zB Politik, Alltag</p>
+                    <hr />
+                    <p>
+                        <em>nuanciertes, fundierteres</em>
+                        Verständnis
+                    </p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Ziele (Kling 1999)</mark></p>
+                <div class="indented">
+                    <p>Aktuelles Problem: ICT-Produkte nicht immer nützlich.</p>
+                    <p>Konzepte entwickeln die helfen ICTs zu verstehen und nutzbar zu machen.</p>
+                    <div class="indented">
+                        <p>Design, Gestaltung</p>
+                        <p>Use, Nutzung</p>
+                        <p>Configuration, Konfiguration</p>
+                        <p>Consequences, Konsequenzen</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Gesichtspunkte (Kling 2000)</mark></p>
+                <div class="indented">
+                    <p>normative Orientierung</p>
+                    <div class="indented">
+                        <p>Leilinien für IT-Professionals</p>
+                        <p>ICT-Technologie-Politik</p>
+                    </div>
+                    <p></p>
+                    <p>analytische Orientierung</p>
+                    <div class="indented">
+                        <p>objektiver Erkenntnisgewinn</p>
+                        <div class="indented"><p>empirische Forschung + theoretische Analyste</p></div>
+                        <p></p>
+                        <p>Handlungsmöglichkeiten finden</p>
+                    </div>
+                    <p></p>
+                    <p>kritische Orientierung</p>
+                    <div class="indented">
+                        <p>Neue Perpektiven</p>
+                        <p>Nicht das technisch machbare sondern umfassende Lösungen in einem Kontext</p>
+                    </div>
+                    <p></p>
+                    <p>praktische Orientierung</p>
+                    <div class="indented">
+                        <p>Reflexion und Design</p>
+                        <p>Eigene Anwendung</p>
+                    </div>
+                    <p></p>
+                    <p></p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Summary%20(1-3)%20a2d0e18db6374ee6b52fc19b60db0854/Untitled%202.png">
+                        <img style="width: 240px" src="Summary%20(1-3)%20a2d0e18db6374ee6b52fc19b60db0854/Untitled%202.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Contextual inquiry (Kling)</mark></p>
+                <div class="indented">
+                    <p>"context matters"</p>
+                    <p>Kontextbezogene Untersuchung</p>
+                    <div class="indented">
+                        <p>Gestaltung, Entwicklung, Auslieferung</p>
+                        <p>unterschiedliche Interpretation, Nutzung, Bedeutung</p>
+                        <p></p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Erkenntnisse (Sawyer 2008)</mark></p>
+                <div class="indented">
+                    <p>ICTs sind</p>
+                    <div class="indented">
+                        <p>nicht neutral</p>
+                        <div class="indented"><p>Nutzung kann Gewinner und Verlierer schaffen</p></div>
+                        <p></p>
+                        <p>konfigurierbar</p>
+                        <div class="indented">
+                            <p>
+                                ICTs sind
+                                <em>aggregationen unterschiedlicher Komponenten</em>
+                            </p>
+                            <p>an Bedürfnisse angepasst</p>
+                            <p>lassen sich hacken, ausweiten, ändern</p>
+                        </div>
+                        <p></p>
+                        <p>haben Konsequenzen</p>
+                        <div class="indented">
+                            <p>basierend auf Nutzung</p>
+                            <p>
+                                können
+                                <em>paradox</em>
+                                sein
+                            </p>
+                        </div>
+                        <p></p>
+                        <p>verursachen keinen sozialen Wandel sondern sind nur eine verstärkende Rückwirkung von bestehenden Werten</p>
+                        <p>haben ethische Aspekte</p>
+                        <div class="indented">
+                            <p>soziale Konsequenzen</p>
+                            <p>Ansammlung von Einzelentscheidungen</p>
+                        </div>
+                        <p></p>
+                    </div>
+                    <p></p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Erkenntnisse (Organizational Informatics - Kling 2000)</mark></p>
+                <div class="indented">
+                    <p>Rolle, Funktion von Computerisierung bei Gestaltung von Organisationsstrukturen</p>
+                    <p>Institution</p>
+                    <div class="indented"><p>soziale Strukturen mit Regeln, standardisierten Handlungsmustern</p></div>
+                    <p></p>
+                    <p>Organisation</p>
+                    <div class="indented">
+                        <p>etablierte soziale Einheit</p>
+                        <p>hat Ziele</p>
+                        <p>Formalisierung von Regeln, Erwartungen, Pflichten</p>
+                        <p><em>hierarchische Autoritätsstrukturen</em></p>
+                        <p><em>Machtverteilung</em></p>
+                        <p><em>Kommunikaitons und Kooperationsstrukturen</em></p>
+                    </div>
+                    <p></p>
+                    <hr />
+                    <p>aus der Sicht der Informatik sind Organisationen STINs</p>
+                    <div class="indented">
+                        <p>Einbettung von ICTs bedeutet</p>
+                        <div class="indented">
+                            <p>
+                                Veränderung vom
+                                <em>sozio-technischen-Gefüge</em>
+                            </p>
+                            <p>
+                                Umgestaltung,
+                                <em>aktives Change-Management</em>
+                            </p>
+                            <p>aktives Change Management</p>
+                            <p></p>
+                        </div>
+                        <p></p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Systemrationalisierung</mark></p>
+                <div class="indented">
+                    <p>falsches Konzept.</p>
+                    <p>Systeme als rationale Systeme mit formalen Zielen und abläufen</p>
+                    <p>
+                        Prozesse und Ziele sind
+                        <em>vielschichtig, nuanciert, komplex</em>
+                    </p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Politische Konsequenzen von ICTs</mark></p>
+                <div class="indented">
+                    <p>Organizational policy</p>
+                    <div class="indented">
+                        <p>Einfluss und Veränderung von</p>
+                        <div class="indented">
+                            <p>Prozessen für Steuerung von Organisationen (Managementstrukturen, Machtverhältnisse)</p>
+                            <p>Zielen, Strategien, Regelwerken</p>
+                            <p>Ressourcenzuweisung</p>
+                        </div>
+                        <p></p>
+                    </div>
+                    <p></p>
+                    <p>Information als Machtfaktor</p>
+                    <div class="indented"><p>bedeutet Unterstützung, Widerstand, Sabotage von Entwicklungen</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Konsequenzen für Kommunikationsverhältnisse (Sproull / Kiesler)</mark></p>
+                <div class="indented">
+                    <p>Tendenz richtung Egalität, Demokratie</p>
+                    <p>größere Offenheit, mehr Beteiligung, weniger Statusunterschiede</p>
+                    <p>Aber auch Ineffizienz, Flaming, Indifferenz</p>
+                    <p>Neue Arbeitsplätze und Abläufe</p>
+                    <p>Erhöhte Transparenz</p>
+                    <p>Intransparente, implizite Regeln und Biases</p>
+                    <p>
+                        <em>Integrierte Sicht</em>
+                        und Dokumentation
+                    </p>
+                    <div class="indented"><p>kann zu Überwachung fühlen</p></div>
+                    <p></p>
+                    <p></p>
+                </div>
+                <p></p>
+            </div>
+        </article>
+    </body>
+</html>

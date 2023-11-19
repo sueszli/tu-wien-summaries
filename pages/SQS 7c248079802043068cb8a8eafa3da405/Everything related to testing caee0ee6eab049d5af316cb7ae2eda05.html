@@ -1,0 +1,2924 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Everything related to testing</title>
+        <style>
+            /* cspell:disable-file */
+            /* webkit printing magic: print all background colors */
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            * {
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media only screen {
+                body {
+                    margin: 2em auto;
+                    max-width: 900px;
+                    color: rgb(55, 53, 47);
+                }
+            }
+
+            body {
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            a,
+            a.visited {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .pdf-relative-link-path {
+                font-size: 80%;
+                color: #444;
+            }
+
+            h1,
+            h2,
+            h3 {
+                letter-spacing: -0.01em;
+                line-height: 1.2;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 0;
+                margin-bottom: 0.75em;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+                margin-top: 1.875rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .source {
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 1.5em;
+                word-break: break-all;
+            }
+
+            .callout {
+                border-radius: 3px;
+                padding: 1rem;
+            }
+
+            figure {
+                margin: 1.25em 0;
+                page-break-inside: avoid;
+            }
+
+            figcaption {
+                opacity: 0.5;
+                font-size: 85%;
+                margin-top: 0.5em;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+
+            .indented {
+                padding-left: 1.5em;
+            }
+
+            hr {
+                background: transparent;
+                display: block;
+                width: 100%;
+                height: 1px;
+                visibility: visible;
+                border: none;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            @media only print {
+                img {
+                    max-height: 100vh;
+                    object-fit: contain;
+                }
+            }
+
+            @page {
+                margin: 1in;
+            }
+
+            .collection-content {
+                font-size: 0.875rem;
+            }
+
+            .column-list {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .column {
+                padding: 0 1em;
+            }
+
+            .column:first-child {
+                padding-left: 0;
+            }
+
+            .column:last-child {
+                padding-right: 0;
+            }
+
+            .table_of_contents-item {
+                display: block;
+                font-size: 0.875rem;
+                line-height: 1.3;
+                padding: 0.125rem;
+            }
+
+            .table_of_contents-indent-1 {
+                margin-left: 1.5rem;
+            }
+
+            .table_of_contents-indent-2 {
+                margin-left: 3rem;
+            }
+
+            .table_of_contents-indent-3 {
+                margin-left: 4.5rem;
+            }
+
+            .table_of_contents-link {
+                text-decoration: none;
+                opacity: 0.7;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+            }
+
+            table,
+            th,
+            td {
+                border: 1px solid rgba(55, 53, 47, 0.09);
+                border-collapse: collapse;
+            }
+
+            table {
+                border-left: none;
+                border-right: none;
+            }
+
+            th,
+            td {
+                font-weight: normal;
+                padding: 0.25em 0.5em;
+                line-height: 1.5;
+                min-height: 1.5em;
+                text-align: left;
+            }
+
+            th {
+                color: rgba(55, 53, 47, 0.6);
+            }
+
+            ol,
+            ul {
+                margin: 0;
+                margin-block-start: 0.6em;
+                margin-block-end: 0.6em;
+            }
+
+            li > ol:first-child,
+            li > ul:first-child {
+                margin-block-start: 0.6em;
+            }
+
+            ul > li {
+                list-style: disc;
+            }
+
+            ul.to-do-list {
+                padding-inline-start: 0;
+            }
+
+            ul.to-do-list > li {
+                list-style: none;
+            }
+
+            .to-do-children-checked {
+                text-decoration: line-through;
+                opacity: 0.375;
+            }
+
+            ul.toggle > li {
+                list-style: none;
+            }
+
+            ul {
+                padding-inline-start: 1.7em;
+            }
+
+            ul > li {
+                padding-left: 0.1em;
+            }
+
+            ol {
+                padding-inline-start: 1.6em;
+            }
+
+            ol > li {
+                padding-left: 0.2em;
+            }
+
+            .mono ol {
+                padding-inline-start: 2em;
+            }
+
+            .mono ol > li {
+                text-indent: -0.4em;
+            }
+
+            .toggle {
+                padding-inline-start: 0em;
+                list-style-type: none;
+            }
+
+            /* Indent toggle children */
+            .toggle > li > details {
+                padding-left: 1.7em;
+            }
+
+            .toggle > li > details > summary {
+                margin-left: -1.1em;
+            }
+
+            .selected-value {
+                display: inline-block;
+                padding: 0 0.5em;
+                background: rgba(206, 205, 202, 0.5);
+                border-radius: 3px;
+                margin-right: 0.5em;
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+            }
+
+            .collection-title {
+                display: inline-block;
+                margin-right: 1em;
+            }
+
+            .page-description {
+                margin-bottom: 2em;
+            }
+
+            .simple-table {
+                margin-top: 1em;
+                font-size: 0.875rem;
+                empty-cells: show;
+            }
+            .simple-table td {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table th {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table-header-color {
+                background: rgb(247, 246, 243);
+                color: black;
+            }
+            .simple-table-header {
+                font-weight: 500;
+            }
+
+            time {
+                opacity: 0.5;
+            }
+
+            .icon {
+                display: inline-block;
+                max-width: 1.2em;
+                max-height: 1.2em;
+                text-decoration: none;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            img.icon {
+                border-radius: 3px;
+            }
+
+            .user-icon {
+                width: 1.5em;
+                height: 1.5em;
+                border-radius: 100%;
+                margin-right: 0.5rem;
+            }
+
+            .user-icon-inner {
+                font-size: 0.8em;
+            }
+
+            .text-icon {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+            .page-cover-image {
+                display: block;
+                object-fit: cover;
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            .page-header-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .page-header-icon-with-cover {
+                margin-top: -0.72em;
+                margin-left: 0.07em;
+            }
+
+            .page-header-icon img {
+                border-radius: 3px;
+            }
+
+            .link-to-page {
+                margin: 1em 0;
+                padding: 0;
+                border: none;
+                font-weight: 500;
+            }
+
+            p > .user {
+                opacity: 0.5;
+            }
+
+            td > .user,
+            td > time {
+                white-space: nowrap;
+            }
+
+            input[type="checkbox"] {
+                transform: scale(1.5);
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
+
+            p {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .image {
+                border: none;
+                margin: 1.5em 0;
+                padding: 0;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .code,
+            code {
+                background: rgba(135, 131, 120, 0.15);
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 85%;
+                tab-size: 2;
+            }
+
+            code {
+                color: #eb5757;
+            }
+
+            .code {
+                padding: 1.5em 1em;
+            }
+
+            .code-wrap {
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .code > code {
+                background: none;
+                padding: 0;
+                font-size: 100%;
+                color: inherit;
+            }
+
+            blockquote {
+                font-size: 1.25em;
+                margin: 1em 0;
+                padding-left: 1em;
+                border-left: 3px solid rgb(55, 53, 47);
+            }
+
+            .bookmark {
+                text-decoration: none;
+                max-height: 8em;
+                padding: 0;
+                display: flex;
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .bookmark-title {
+                font-size: 0.85em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 1.75em;
+                white-space: nowrap;
+            }
+
+            .bookmark-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bookmark-info {
+                flex: 4 1 180px;
+                padding: 12px 14px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark-image {
+                width: 33%;
+                flex: 1 1 180px;
+                display: block;
+                position: relative;
+                object-fit: cover;
+                border-radius: 1px;
+            }
+
+            .bookmark-description {
+                color: rgba(55, 53, 47, 0.6);
+                font-size: 0.75em;
+                overflow: hidden;
+                max-height: 4.5em;
+                word-break: break-word;
+            }
+
+            .bookmark-href {
+                font-size: 0.75em;
+                margin-top: 0.25em;
+            }
+
+            .sans {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+                    "Segoe UI Symbol";
+            }
+            .code {
+                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+            }
+            .serif {
+                font-family: Lyon-Text, Georgia, ui-serif, serif;
+            }
+            .mono {
+                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+            }
+            .pdf .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+            }
+            .pdf:lang(zh-CN) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+            }
+            .pdf:lang(zh-TW) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+            }
+            .pdf:lang(ko-KR) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+            }
+            .pdf .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK KR";
+            }
+            .pdf .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+            }
+            .pdf:lang(zh-CN) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+            }
+            .pdf:lang(zh-TW) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+            }
+            .pdf:lang(ko-KR) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+            }
+            .pdf .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+            }
+            .highlight-default {
+                color: rgba(55, 53, 47, 1);
+            }
+            .highlight-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .highlight-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .highlight-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .highlight-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .highlight-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .highlight-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .highlight-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .highlight-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .highlight-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .highlight-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .highlight-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .highlight-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .highlight-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .highlight-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .highlight-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .highlight-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .highlight-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .highlight-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .block-color-default {
+                color: inherit;
+                fill: inherit;
+            }
+            .block-color-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .block-color-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .block-color-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .block-color-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .block-color-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .block-color-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .block-color-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .block-color-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .block-color-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .block-color-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .block-color-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .block-color-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .block-color-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .block-color-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .block-color-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .block-color-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .block-color-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .block-color-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .select-value-color-interactiveBlue {
+                background-color: rgba(35, 131, 226, 0.07);
+            }
+            .select-value-color-pink {
+                background-color: rgba(245, 224, 233, 1);
+            }
+            .select-value-color-purple {
+                background-color: rgba(232, 222, 238, 1);
+            }
+            .select-value-color-green {
+                background-color: rgba(219, 237, 219, 1);
+            }
+            .select-value-color-gray {
+                background-color: rgba(227, 226, 224, 1);
+            }
+            .select-value-color-translucentGray {
+                background-color: rgba(255, 255, 255, 0.0375);
+            }
+            .select-value-color-orange {
+                background-color: rgba(250, 222, 201, 1);
+            }
+            .select-value-color-brown {
+                background-color: rgba(238, 224, 218, 1);
+            }
+            .select-value-color-red {
+                background-color: rgba(255, 226, 221, 1);
+            }
+            .select-value-color-yellow {
+                background-color: rgba(253, 236, 200, 1);
+            }
+            .select-value-color-blue {
+                background-color: rgba(211, 229, 239, 1);
+            }
+            .select-value-color-pageGlass {
+                background-color: undefined;
+            }
+            .select-value-color-washGlass {
+                background-color: undefined;
+            }
+
+            .checkbox {
+                display: inline-flex;
+                vertical-align: text-bottom;
+                width: 16;
+                height: 16;
+                background-size: 16px;
+                margin-left: 2px;
+                margin-right: 5px;
+            }
+
+            .checkbox-on {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            .checkbox-off {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            /* -------- injections from notionBackup -------- */
+
+            body {
+                white-space: normal !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+
+            .code,
+            code {
+                font-size: 100% !important;
+            }
+
+            blockquote {
+                font-size: 100% !important;
+            }
+
+            .callout {
+                white-space: normal !important;
+            }
+            .callout div:has(span.icon) {
+                font-size: 100% !important;
+            }
+
+            .source:not(.bookmark) {
+                font-size: 100% !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+        </style>
+    </head>
+    <body>
+        <article class="page sans">
+            <header>
+                <h1 class="page-title">Everything related to testing</h1>
+                <p class="page-description"></p>
+            </header>
+            <div class="page-body">
+                <p></p>
+                <nav class="block-color-gray table_of_contents">
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#b8566479-d3cd-4b5d-8527-1084b874b8fd">Definition</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#dfd5abdd-56a0-4338-95ba-8c0a7f3a20f1">Prinzipien</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#b7751a8c-bf7a-4232-a16a-1596b4d0dd81">Teststufen</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#7022c3b0-a41e-4a75-9e80-e311655f01fc">Test-Entwurfsverfahren</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#a7e2cec4-640e-4ad4-8a02-d587fb44de40">Test-Automatisierung</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#d4ed33ef-8581-47ad-b2ea-4765b37ea938">_________________________________________</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#53f20c68-d5aa-4777-b706-1e40038d3b43">Testfälle</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#e90412c2-7b6b-4e51-98d7-18c7fc6793b0">Äquivalenzklassen, Grenzwerte</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#9d952ab4-79fe-4a5f-9ce1-021727a59abe">
+                            Test Abdeckung: Kontrollflussorientierte Testverfahren
+                        </a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#aa7366c9-ead2-4fcd-b877-7544c94f844a">_________________________________________</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#2c3a65c6-d29a-4052-a884-09b18d8ce2e3">Unit Tests, JUnit</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#1e178f35-d0dc-4436-9e1a-a7a67e08905a">Test Doubles</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#1d71e6a5-7cae-4e8e-955a-417904679de2">_________________________________________</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#4a5deb26-016d-4e80-b536-682c73d645ef">Statische Code Analyse</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#a9099977-c3c5-4c78-becc-80cdf00ce6d2">Refactoring</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#47b5cb87-78b4-46f2-99e2-4d4992005c5a">_________________________________________</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#6ac664ad-0796-488d-9d44-769685902df6">Anforderungen</a>
+                    </div>
+                </nav>
+                <p></p>
+                <p></p>
+                <h1>Definition</h1>
+                <p><mark class="highlight-blue">Testen</mark></p>
+                <div class="indented">
+                    <p>Analytische QS-Methode</p>
+                    <p>Programm mit der Absicht ausgeführt:</p>
+                    <div class="indented"><p>– Fehler zu finden, zu verhindern – Informationen und Vertrauen bezüglich Softwarequalität zu bekommen</p></div>
+                    <p></p>
+                    <p>Nicht mit der Absicht von:</p>
+                    <div class="indented"><p>– Lokalisierung, Entfernung (Debugging) – Nachweis von Fehlerfreiheit (Formaler Korrektheitsbeweis)</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Verifikation</mark></p>
+                <div class="indented">
+                    <p>
+                        Test gegen Spezifikation
+                        <mark class="highlight-gray">“Bauen wir das Produkt richtig?”</mark>
+                    </p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Validierung</mark></p>
+                <div class="indented">
+                    <p>
+                        Test gegen Nutzer-Anforderungen
+                        <mark class="highlight-gray">“Bauen wir das richtige Produkt?”</mark>
+                    </p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Fehler</mark></p>
+                <div class="indented"><p>Abweichung von Spezifikation oder Nutzer-Anforderungen</p></div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Prinzipien</h1>
+                <p><mark class="highlight-blue">ISTQB Testprinzipien</mark></p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            <mark class="highlight-teal">Testen zeigt Fehler auf</mark>
+                            <p>beweist aber nicht Fehlerfreiheit</p>
+                            <p>“Testen zeigt die Anwesenheit von Fehlern, nicht die Abwesenheit”</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            <mark class="highlight-teal">Vollständiges Testen ist nicht möglich</mark>
+                            <p>Nicht alle Kombinationen an Eingaben, Vorbedingungen, Zuständen testbar (praktikabel zu testen)</p>
+                            <p>Stattdessen priorisiert nach Risiko testen</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>
+                            <mark class="highlight-teal">Frühzeitig Testen</mark>
+                            <p>Je früher Fehler gefunden werden desto einfacher und günstiger zu beheben</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>
+                            <mark class="highlight-teal">Fehlerhäufungen beachten</mark>
+                            <p>Fehler sind nicht gleichmäßig verteilt - tendenziell dort wo Fehler gefunden auch mehr zu erwarten</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="5">
+                        <li>
+                            <mark class="highlight-teal">Veränderung statt Wiederholung</mark>
+                            <p>Wiederholtes ausführen von den selben Testcases wird keine neuen Fehler finden</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="6">
+                        <li><mark class="highlight-teal">Testen ist kontextabhängig</mark></li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="7">
+                        <li>
+                            <mark class="highlight-teal">Fehlerlose Systeme sind nicht unbedingt brauchbar</mark>
+                            <p>Fehler finden, beheben garantiert nicht, dass Produkt den Anforderungen und Bedürfnissen vom Benutzer entspricht</p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Teststufen</h1>
+                <p>Teststufen = Tests auf unterschiedlichen Ebenen des Entwicklungsprozesses</p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">bestehen aus einem oder mehr Test-Typen (bestimmte Art von Tests)</mark></p>
+                </div>
+                <p></p>
+                <p>Testtypen = Review, Funktionaler-Test, Massentest, Stresstest, Performancetest.</p>
+                <p></p>
+                <p><mark class="highlight-blue">Akzeptanztests / Abnahmetests</mark></p>
+                <div class="indented">
+                    <p>Testen ob System in Produktivumgebung den Abnahmekriterien vom Kunden entspricht (Validierung).</p>
+                    <p>wie Systemtest nur von Kunden, Benutzern ausgeführt</p>
+                    <p>
+                        Dient
+                        <em>nicht</em>
+                        dazu Fehler im System zu finden.
+                    </p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Systemtests</mark></p>
+                <div class="indented">
+                    <p>Testen vom integrierten System nach Kunden-Anforderungen (Validierung) und nach Spezifikation (Verifikation).</p>
+                    <p>von unabhängigem Testteam ausgeführt.</p>
+                    <p>Testumgebung sollte wie Produktivumgebung sein (umgebungsspezifische Fehler vermeiden).</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Integrationtests</mark></p>
+                <div class="indented">
+                    <p>Suche nach Fehlern in Interaktion zwischen Komponenten / Schnittstellen.</p>
+                    <p>Zusammenführung (Integration) von mehreren Komponenten.</p>
+                    <p>von Entwicklern erstellt und ausgeführt</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Komponententests / Modultests / Unittests</mark></p>
+                <div class="indented">
+                    <p>Testet Komponente isoliert vom restlichen System gegen Spezifikation.</p>
+                    <p><mark class="highlight-gray">Testet Implementierung: Argumente werden übergeben, Ausgabe wird kontrolliert</mark></p>
+                    <p>von Entwicklern erstellt und ausgeführt</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-gray">Privater Test</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">Vom Entwickler vor der Freigabe, undokumentiert</mark></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-gray">Regressionstests</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">Vor Durchführung von Veränderungen - Wiederholung von Tests</mark></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Test-Entwurfsverfahren</h1>
+                <p><mark class="highlight-blue">Test driven development TDD / testgetriebene Entwicklung</mark></p>
+                <div class="indented">
+                    <p><em>meistens sind es eher Unit-Tests, automatisiert in CI</em></p>
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            <mark class="highlight-teal">Think</mark>
+                            <p>Auswahl von Anforderungen die implementiert werden sollen.</p>
+                            <p>Spezifikation von Testfällen</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            <mark class="highlight-teal">Red</mark>
+                            <p>Implementierung und Ausführung von Testfällen (müssen alle fehlschlagen)</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>
+                            <mark class="highlight-teal">Green</mark>
+                            <p>Implementierung der Komponenten und Klassen und Ausführung der Testfälle</p>
+                            <div class="indented">
+                                <p>Falls erfolgreich → Refactor</p>
+                                <p>Falls fehlgeschlagen → bei Green bleiben</p>
+                            </div>
+                            <p></p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>
+                            <mark class="highlight-teal">Refactor</mark>
+                            <p>Optimierung der Implementierung ohne Änderung der Funktionalität.</p>
+                            <p>Ausführung der Testfälle → dürfen nicht fehlschlagen.</p>
+                            <p>Danach Auswahl der nächsten Anforderung (Schritt 1)</p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%205.png">
+                        <img
+                            style="width: 60px"
+                            src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%205.png" />
+                    </a>
+                </figure>
+                <p>TDD Beispiel: Testen von Wörterbuch</p>
+                <div class="indented">
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Anforderungen</summary>
+                                <p>Keine Duplikate</p>
+                                <p>Operationen:</p>
+                                <div class="indented">
+                                    <p>
+                                        <mark class="highlight-gray"><code>add</code></mark>
+                                        <mark class="highlight-gray">wort hinzufügen</mark>
+                                    </p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>first</code></mark>
+                                        <mark class="highlight-gray">erstes Element liefern</mark>
+                                    </p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>last</code></mark>
+                                        <mark class="highlight-gray">letztes Element liefern</mark>
+                                    </p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>get</code></mark>
+                                        <mark class="highlight-gray">Element abrufen</mark>
+                                    </p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>size</code></mark>
+                                        <mark class="highlight-gray">Anzahl der Wörter liefern</mark>
+                                    </p>
+                                </div>
+                                <p></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Ablauf</summary>
+                                <ol type="1" class="numbered-list" start="1">
+                                    <li>
+                                        <mark class="highlight-blue">Interface/Klasse vorbereiten</mark>
+                                        <p>Interface erstellen</p>
+                                        <div class="indented">
+                                            <figure class="image">
+                                                <a href="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled.png">
+                                                    <img
+                                                        style="width: 192px"
+                                                        src="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled.png" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <p></p>
+                                    </li>
+                                </ol>
+                                <ol type="1" class="numbered-list" start="2">
+                                    <li>
+                                        <mark class="highlight-blue">Testfall Schreiben</mark>
+                                        <p>Auswahl der Anforderung, Spezifikation der Testfälle</p>
+                                        <p>Test muss fehlschlagen</p>
+                                        <div class="indented">
+                                            <figure class="image">
+                                                <a href="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%201.png">
+                                                    <img
+                                                        style="width: 192px"
+                                                        src="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%201.png" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <p></p>
+                                    </li>
+                                </ol>
+                                <ol type="1" class="numbered-list" start="3">
+                                    <li>
+                                        <mark class="highlight-blue">Implementierung</mark>
+                                        <p>Testfall muss dann erfolgreich durchlaufen</p>
+                                        <div class="indented">
+                                            <figure class="image">
+                                                <a href="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%202.png">
+                                                    <img
+                                                        style="width: 192px"
+                                                        src="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%202.png" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <p></p>
+                                    </li>
+                                </ol>
+                                <ol type="1" class="numbered-list" start="4">
+                                    <li>
+                                        <mark class="highlight-blue">Refactoring</mark>
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">Refactoring der Implementierung</li>
+                                        </ul>
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">Tests müssen weiterhin erfolgreich durchlaufen</li>
+                                        </ul>
+                                        <p><em>TDD Zyklus mit nächster Anforderung wiederholen</em></p>
+                                    </li>
+                                </ol>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Abnahmetestgetriebene Entwicklung</mark></p>
+                <div class="indented">
+                    <p>US enthält Abnahmekriterien → bestimmen Tests</p>
+                    <p><mark class="highlight-gray">Wiederverwendbare Tests für Regressionserstellung.</mark></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Behaviour Driven Development BDD / Verhaltensgetriebene Entwicklung</mark></p>
+                <div class="indented">
+                    <p>
+                        Entwickler testet
+                        <em>erwartetes Verhalten</em>
+                    </p>
+                    <p>In manchen Frameworks Gherkin-Format (deklarativ) → automatische Testerstellung.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Blackbox Tests</mark></p>
+                <div class="indented">
+                    <p>Spezifikation ohne Wissen über innere Struktur</p>
+                    <p>Daten-getrieben (Input-Output getrieben)</p>
+                    <p>Überdeckung von Anforderungen</p>
+                    <p>Partitionierung der Eingabedaten</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Whitebox Tests</mark></p>
+                <div class="indented">
+                    <p>Spezifikation mit Wissen über innere Struktur</p>
+                    <p>Logik-getrieben</p>
+                    <p>Überdeckung von Knoten, Kanten, Pfaden</p>
+                    <p>
+                        Partitionierung von Eingabedaten für Bedingungsüberdeckung (
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow>
+                                                    <mstyle mathsize="0.9em">
+                                                        <msub>
+                                                            <mi>C</mi>
+                                                            <mn>0</mn>
+                                                        </msub>
+                                                        <mo>−</mo>
+                                                        <msub>
+                                                            <mi>C</mi>
+                                                            <mn>3</mn>
+                                                        </msub>
+                                                    </mstyle>
+                                                </mrow>
+                                                <annotation encoding="application/x-tex">\small C_0 - C_3</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span>
+                                            <span class="mord sizing reset-size6 size5">
+                                                <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
+                                                <span class="msupsub">
+                                                    <span class="vlist-t vlist-t2">
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.2796266666666667em">
+                                                                <span style="top: -2.45em; margin-left: -0.07153em; margin-right: 0.05555555555555556em">
+                                                                    <span class="pstrut" style="height: 2.6em"></span>
+                                                                    <span class="sizing reset-size5 size2 mtight"><span class="mord mtight">0</span></span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="vlist-s">​</span>
+                                                        </span>
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
+                                            <span class="mbin sizing reset-size6 size5">−</span>
+                                            <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
+                                        </span>
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span>
+                                            <span class="mord sizing reset-size6 size5">
+                                                <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
+                                                <span class="msupsub">
+                                                    <span class="vlist-t vlist-t2">
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.2796266666666667em">
+                                                                <span style="top: -2.45em; margin-left: -0.07153em; margin-right: 0.05555555555555556em">
+                                                                    <span class="pstrut" style="height: 2.6em"></span>
+                                                                    <span class="sizing reset-size5 size2 mtight"><span class="mord mtight">3</span></span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="vlist-s">​</span>
+                                                        </span>
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        )
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Erfahrungsbasiertes Testen / Exploratives Testen</mark></p>
+                <div class="indented">
+                    <p>zusätzlich zu anderen Testentwurfsverfahren</p>
+                    <div class="indented">
+                        <p>falls Zeit begrenzt für Datenanalyse und genauen US</p>
+                        <p>basiert auf Intuition, Erfahrung des Testers</p>
+                        <p>zB Erfahrung aus anderen Projekten, Stellen die unter Zeitdruck entstanden sind etc.</p>
+                    </div>
+                    <p></p>
+                    <p>muss ausführlich dokumentiert werden</p>
+                    <p>Varianten:</p>
+                    <div class="indented">
+                        <p>
+                            – Erfahrungsbasiertes Verfahren – Riskobasiertes Testen – Anforderungsbasiertes Testen – Modellbasiertes Testen –
+                            Regessionsvermeidendes Testen
+                        </p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Test-Automatisierung</h1>
+                <p><mark class="highlight-blue">Continuous Integration and Test (CI&amp;T Environment)</mark></p>
+                <div class="indented">
+                    <p>= ein System, dass täglich oder bei Änderungen im SCM automatisch eine Pipeline an tools nützt:</p>
+                    <div class="indented">
+                        <p>Aktivitäten:</p>
+                        <div class="indented">
+                            <p>Konfigurationsmanagement</p>
+                            <p>Statische Codeanalyse</p>
+                            <p>Compiling, linking, executable herstellen (building)</p>
+                            <p>Unittests, Code Coverage</p>
+                            <p>Integration</p>
+                            <p>Installation in Production-Environment und Testumgebung</p>
+                            <p>Integrationstests, Systemtests in Testumgebung, Berechnung von Metriken (zB Test converage)</p>
+                            <p>Deployment (Bereitstellung)</p>
+                            <p>Dashboard anzeigen</p>
+                        </div>
+                        <p></p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Continuous Delivery / Deployment CD</mark></p>
+                <div class="indented">
+                    <p>Auslieferung / Deployment / Release erfolgt automatisiert nach Qualitätsüberprüfung.</p>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Continuous Delivery: Automatisches deployment von Artefakten</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Continuous Deployment: Automatische Installation in Produktion</li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <h1>_________________________________________</h1>
+                <p></p>
+                <p></p>
+                <h1>Testfälle</h1>
+                <p><mark class="highlight-blue">Tests</mark></p>
+                <div class="indented"><p>bestehen aus einer Menge an Testfällen</p></div>
+                <p></p>
+                <p><mark class="highlight-blue">Testfälle (= Testsuite)</mark></p>
+                <div class="indented">
+                    <p>bestehen aus einer Menge von (V, E, A, R):</p>
+                    <p>V Vorbedingungen (zB Systemzustand, DB-Zustand)</p>
+                    <p>E Eingabewerte</p>
+                    <p>A Aktionen zur Eingabe der Werte</p>
+                    <p>R Erwartete Ergebnisse (Orakel)</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Testfall Typen</mark></p>
+                <div class="indented">
+                    <p>NF Normalfall soll bei korrekter Implementierung funktionieren</p>
+                    <p>SF Spezialfall Grenze zwischen Normalfall und Fehlerfall</p>
+                    <p>FF Fehlerfall soll bei korrekter Implementierung Fehlermeldung werfen</p>
+                    <p>Auswahl nach:</p>
+                    <div class="indented"><p>Minimale Anzahl, Qualität, Risiko der Systemfunktionalität</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%208.png">
+                        <img
+                            style="width: 144px"
+                            src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%208.png" />
+                    </a>
+                </figure>
+                <p><mark class="highlight-blue">Testerfolg</mark></p>
+                <div class="indented">
+                    <p>Wenn Fehler gefunden wird</p>
+                    <p>Falls keine Fehler gefunden geben sie Information über Produktqualität durch systematische Testüberdeckung</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Äquivalenzklassen, Grenzwerte</h1>
+                <p><mark class="highlight-blue">Äquivalenzklassen-Zerlegung</mark></p>
+                <div class="indented">
+                    <p>Zerlegung von Input oder Output Datenmenge in Äquivalenzklassen (Untermengen):</p>
+                    <div class="indented">
+                        <p>basierend auf erwartetes Verhalten - äquivalente Ergebnisse und Wirkungen</p>
+                        <p>Jede Klasse muss 1x getestet werden - weniger Test-Aufwand</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><em>Schritte</em></p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>Zu testende Funktion bestimmen</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            Argumente (Eingabevektor, Eingabefaktor) bestimmen
+                            <em>(A, B, C, ...)</em>
+                            <p><mark class="highlight-gray">explizit: Parameter</mark></p>
+                            <p><mark class="highlight-gray">implizit: globale Variablen, Systemzustand, Datenbankzustand, ...</mark></p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>Für jedes Argument die gültigen, ungültigen Äquivalenzklassen finden und daraus Werte wählen.</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>
+                            Werte Kombinieren
+                            <p>die Wahl bestimmt die Intensität</p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Grenzwertanalyse</mark></p>
+                <div class="indented">
+                    <p>
+                        für bessere
+                        <em>Überdeckung</em>
+                    </p>
+                    <p>
+                        Grenzwerte aus Klassengrenzen wählen, da dort am häufigsten Fehler (zB falscher Vergleichsoperator, oder Index one-off Fehler)
+                        auftreten.
+                    </p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%209.png">
+                        <img
+                            style="width: 144px"
+                            src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%209.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Beispiele</mark></p>
+                <div class="indented">
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Alter</summary>
+                                <p><mark class="highlight-blue">Anforderungen</mark></p>
+                                <div class="indented"><p>18 &lt; Alter ≤ 65</p></div>
+                                <p></p>
+                                <p><mark class="highlight-blue">Äquivalenzklassen</mark></p>
+                                <div class="indented">
+                                    <p>A1: Alter ≤ 18 (ungültig)</p>
+                                    <p>A2: 18 &lt; Alter ≤ 65 (gültig)</p>
+                                    <p>A3: Alter &gt; 65 (ungültig)</p>
+                                </div>
+                                <p></p>
+                                <p><mark class="highlight-blue">Testfälle</mark></p>
+                                <div class="indented">
+                                    <p>
+                                        x
+                                        <style>
+                                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                        </style>
+                                        <span
+                                            data-token-index="0"
+                                            contenteditable="false"
+                                            class="notion-text-equation-token"
+                                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                            <span></span>
+                                            <span>
+                                                <span class="katex">
+                                                    <span class="katex-mathml">
+                                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                            <semantics>
+                                                                <mrow>
+                                                                    <mstyle mathsize="0.9em"><mo>∈</mo></mstyle>
+                                                                </mrow>
+                                                                <annotation encoding="application/x-tex">\small \in</annotation>
+                                                            </semantics>
+                                                        </math>
+                                                    </span>
+                                                    <span class="katex-html" aria-hidden="true">
+                                                        <span class="base">
+                                                            <span
+                                                                class="strut"
+                                                                style="height: 0.5203800000000001em; vertical-align: -0.035190000000000006em"></span>
+                                                            <span class="mrel sizing reset-size6 size5">∈</span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span>﻿</span>
+                                        </span>
+                                        A1, z.B. 10
+                                    </p>
+                                    <p>
+                                        x
+                                        <style>
+                                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                        </style>
+                                        <span
+                                            data-token-index="0"
+                                            contenteditable="false"
+                                            class="notion-text-equation-token"
+                                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                            <span></span>
+                                            <span>
+                                                <span class="katex">
+                                                    <span class="katex-mathml">
+                                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                            <semantics>
+                                                                <mrow>
+                                                                    <mstyle mathsize="0.9em"><mo>∈</mo></mstyle>
+                                                                </mrow>
+                                                                <annotation encoding="application/x-tex">\small \in</annotation>
+                                                            </semantics>
+                                                        </math>
+                                                    </span>
+                                                    <span class="katex-html" aria-hidden="true">
+                                                        <span class="base">
+                                                            <span
+                                                                class="strut"
+                                                                style="height: 0.5203800000000001em; vertical-align: -0.035190000000000006em"></span>
+                                                            <span class="mrel sizing reset-size6 size5">∈</span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span>﻿</span>
+                                        </span>
+                                        A2, z.B. 35
+                                    </p>
+                                    <p>
+                                        x
+                                        <style>
+                                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                        </style>
+                                        <span
+                                            data-token-index="0"
+                                            contenteditable="false"
+                                            class="notion-text-equation-token"
+                                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                            <span></span>
+                                            <span>
+                                                <span class="katex">
+                                                    <span class="katex-mathml">
+                                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                            <semantics>
+                                                                <mrow>
+                                                                    <mstyle mathsize="0.9em"><mo>∈</mo></mstyle>
+                                                                </mrow>
+                                                                <annotation encoding="application/x-tex">\small \in</annotation>
+                                                            </semantics>
+                                                        </math>
+                                                    </span>
+                                                    <span class="katex-html" aria-hidden="true">
+                                                        <span class="base">
+                                                            <span
+                                                                class="strut"
+                                                                style="height: 0.5203800000000001em; vertical-align: -0.035190000000000006em"></span>
+                                                            <span class="mrel sizing reset-size6 size5">∈</span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span>﻿</span>
+                                        </span>
+                                        A3, z.B. 70
+                                    </p>
+                                    <p></p>
+                                </div>
+                                <p></p>
+                                <figure class="image">
+                                    <a href="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%203.png">
+                                        <img
+                                            style="width: 240px"
+                                            src="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%203.png" />
+                                    </a>
+                                </figure>
+                                <p></p>
+                                <p><mark class="highlight-blue">Grenzwerte</mark></p>
+                                <div class="indented">
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">18 (ungültig), 19 (gültig), 65 (gültig), 66 (ungültig)</li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">
+                                            Eventuell mehrere Testfälle je Klassengrenze: Alter ≤ 18
+                                            <p>17 (gültig), 18 (gültig), 19 (ungültig)</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Alter + BMI</summary>
+                                <p><mark class="highlight-blue">Äquvalenzklassen</mark></p>
+                                <div class="indented">
+                                    <p>A1: Alter ≤ 40, B1: BMI ≤ 25, z.B. (30, 20)</p>
+                                    <p>A2: Alter &gt; 40, B1: BMI ≤ 25, z.B. (45, 20)</p>
+                                    <p>A1: Alter ≤ 40, B2: BMI &gt; 25, z.B. (35, 27)</p>
+                                    <p>A2: Alter &gt; 40, B2: BMI &gt; 25, z.B. (50, 25)</p>
+                                </div>
+                                <p></p>
+                                <p></p>
+                                <figure class="image">
+                                    <a href="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%204.png">
+                                        <img
+                                            style="width: 240px"
+                                            src="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%204.png" />
+                                    </a>
+                                    <figcaption>Umkreist: häufiger Grenzfall</figcaption>
+                                </figure>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Autoversicherung</summary>
+                                <p><mark class="highlight-blue">Anforderung</mark></p>
+                                <div class="indented">
+                                    <p>Risikoaufschlag von Autoversicherung nach: Alter des Lenkers, PS</p>
+                                    <div class="indented">
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">
+                                                Lenker ≤ 30 Jahre
+                                                <mark class="highlight-gray">
+                                                    <style>
+                                                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                                    </style>
+                                                    <span
+                                                        data-token-index="0"
+                                                        contenteditable="false"
+                                                        class="notion-text-equation-token"
+                                                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                                        <span></span>
+                                                        <span>
+                                                            <span class="katex">
+                                                                <span class="katex-mathml">
+                                                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                                        <semantics>
+                                                                            <mrow><mo>→</mo></mrow>
+                                                                            <annotation encoding="application/x-tex">\rarr</annotation>
+                                                                        </semantics>
+                                                                    </math>
+                                                                </span>
+                                                                <span class="katex-html" aria-hidden="true">
+                                                                    <span class="base">
+                                                                        <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
+                                                                        <span class="mrel">→</span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                        <span>﻿</span>
+                                                    </span>
+                                                </mark>
+                                                10% Risikoaufschlag
+                                            </li>
+                                        </ul>
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">
+                                                &gt; 150 PS
+                                                <mark class="highlight-gray">
+                                                    <style>
+                                                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                                    </style>
+                                                    <span
+                                                        data-token-index="0"
+                                                        contenteditable="false"
+                                                        class="notion-text-equation-token"
+                                                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                                        <span></span>
+                                                        <span>
+                                                            <span class="katex">
+                                                                <span class="katex-mathml">
+                                                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                                        <semantics>
+                                                                            <mrow><mo>→</mo></mrow>
+                                                                            <annotation encoding="application/x-tex">\rarr</annotation>
+                                                                        </semantics>
+                                                                    </math>
+                                                                </span>
+                                                                <span class="katex-html" aria-hidden="true">
+                                                                    <span class="base">
+                                                                        <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
+                                                                        <span class="mrel">→</span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                        <span>﻿</span>
+                                                    </span>
+                                                </mark>
+                                                <mark class="highlight-gray"></mark>
+                                                weitere 10% Risikoaufschlag
+                                            </li>
+                                        </ul>
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">Nur Kunden ≥ 18 Jahre akzeptiert</li>
+                                        </ul>
+                                    </div>
+                                    <p></p>
+                                </div>
+                                <p></p>
+                                <p></p>
+                                <p><mark class="highlight-blue">Äquivalenzklassen</mark></p>
+                                <div class="indented">
+                                    <p>Klasse 1: Alter</p>
+                                    <div class="indented"><p>A1: Alter 0 – 17 A2: Alter 18 – 29 A3: Alter 30+</p></div>
+                                    <p></p>
+                                    <p>Klasse 2: PS</p>
+                                    <div class="indented">
+                                        <p>B1: PS ≤ 150 B2: PS &gt; 150</p>
+                                        <p></p>
+                                    </div>
+                                    <p></p>
+                                </div>
+                                <p></p>
+                                <figure class="image">
+                                    <a href="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%205.png">
+                                        <img
+                                            style="width: 240px"
+                                            src="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%205.png" />
+                                    </a>
+                                </figure>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Beispiel: Porto</summary>
+                                <p><mark class="highlight-blue">Anforderung</mark></p>
+                                <div class="indented">
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">Pakete - 5€</li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">Briefe &lt; 500g - 0,20€</li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">Briefe mit Ziel im Inland - 0,20€</li>
+                                    </ul>
+                                    <ul class="bulleted-list">
+                                        <li style="list-style-type: disc">Alle anderen Briefe - 0,50€</li>
+                                    </ul>
+                                </div>
+                                <p></p>
+                                <p><mark class="highlight-blue">Äquivalenzklassen</mark></p>
+                                <div class="indented">
+                                    <p>Klasse 1: Typ</p>
+                                    <div class="indented">
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">A1: Paket</li>
+                                        </ul>
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">A2: Brief</li>
+                                        </ul>
+                                    </div>
+                                    <p></p>
+                                    <p>Klasse 2: Gewicht</p>
+                                    <div class="indented">
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">B1: Gewicht &lt; 500g</li>
+                                        </ul>
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">B2: Gewicht &gt;= 500g</li>
+                                        </ul>
+                                    </div>
+                                    <p></p>
+                                    <p>Klasse 3: Zustellungsort</p>
+                                    <div class="indented">
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">C1: Inland</li>
+                                        </ul>
+                                        <ul class="bulleted-list">
+                                            <li style="list-style-type: disc">C2: Ausland</li>
+                                        </ul>
+                                        <p></p>
+                                    </div>
+                                    <p></p>
+                                </div>
+                                <p></p>
+                                <figure class="image">
+                                    <a href="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%206.png">
+                                        <img
+                                            style="width: 288px"
+                                            src="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%206.png" />
+                                    </a>
+                                </figure>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Beispiel: String Methode</summary>
+                                <p>
+                                    Beispiel: Eine Methode
+                                    <mark class="highlight-gray"><code>string10(String s)</code></mark>
+                                    <mark class="highlight-gray"></mark>
+                                    retourniert die ersten 10 Zeichen des Strings
+                                    <mark class="highlight-gray"><code>s</code></mark>
+                                    . Ist der String kürzer als 10, so wird der String unverändert zurückgegeben.
+                                </p>
+                                <p>Wie viele Äquivalenzklassen werden mindestens benötigt, um die Methode vollständig zu testen?</p>
+                                <p>Lösung: Tests mit</p>
+                                <div class="indented">
+                                    <p>&lt;10 (zB 9), =10, &gt;10 (zB 11) Zeichen,</p>
+                                    <p>Leerstring,</p>
+                                    <p>null-Parameter.</p>
+                                </div>
+                                <p></p>
+                                <p>3 (+2) Äquivalenzklassen sind notwendig.</p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Test Abdeckung: Kontrollflussorientierte Testverfahren</h1>
+                <p></p>
+                <p><mark class="highlight-blue">Code Coverage</mark></p>
+                <div class="indented">
+                    <p>Test-Abdeckung von zb Zeilen, Funktionen, Klassen, …</p>
+                    <p>sieht man in coverage reports</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Kontrollflussorienterte Verfahren</mark></p>
+                <div class="indented">
+                    <p>= Überdeckungstests (für Code Coverage)</p>
+                    <p>relevant auf Unit Test Ebene (Whitebox Tests)</p>
+                    <p>definieren keine Regeln für Erzeugung von Testdaten</p>
+                    <p>strukturorientiert (basiert auf Kontrollfluss des Programmes)</p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%202.png">
+                        <img
+                            style="width: 192px"
+                            src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%202.png" />
+                    </a>
+                    <figcaption>Kontrollflussgraph</figcaption>
+                </figure>
+                <p></p>
+                <div class="column-list">
+                    <div style="width: 93.75%" class="column">
+                        <p>
+                            <mark class="highlight-blue">
+                                <style>
+                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                </style>
+                                <span
+                                    data-token-index="0"
+                                    contenteditable="false"
+                                    class="notion-text-equation-token"
+                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                    <span></span>
+                                    <span>
+                                        <span class="katex">
+                                            <span class="katex-mathml">
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <semantics>
+                                                        <mrow>
+                                                            <msub>
+                                                                <mi>C</mi>
+                                                                <mn>0</mn>
+                                                            </msub>
+                                                        </mrow>
+                                                        <annotation encoding="application/x-tex">C_0</annotation>
+                                                    </semantics>
+                                                </math>
+                                            </span>
+                                            <span class="katex-html" aria-hidden="true">
+                                                <span class="base">
+                                                    <span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span>
+                                                    <span class="mord">
+                                                        <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
+                                                        <span class="msupsub">
+                                                            <span class="vlist-t vlist-t2">
+                                                                <span class="vlist-r">
+                                                                    <span class="vlist" style="height: 0.30110799999999993em">
+                                                                        <span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em">
+                                                                            <span class="pstrut" style="height: 2.7em"></span>
+                                                                            <span class="sizing reset-size6 size3 mtight">
+                                                                                <span class="mord mtight">0</span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class="vlist-s">​</span>
+                                                                </span>
+                                                                <span class="vlist-r">
+                                                                    <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span>﻿</span>
+                                </span>
+                            </mark>
+                            <mark class="highlight-blue">- Anweisungsüberdeckung / Statement Coverage</mark>
+                        </p>
+                        <div class="indented">
+                            <p>Jede Anweisung min 1x durchlaufen</p>
+                            <div class="indented">
+                                <p>Zeigt ob toter Code existiert (falls sie nie durchlaufen werden können)</p>
+                                <p>Zu schwaches Kriterium für sinnvolle Tests</p>
+                            </div>
+                            <p></p>
+                        </div>
+                        <p></p>
+                    </div>
+                    <div style="width: 6.25%" class="column">
+                        <figure class="image">
+                            <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%203.png">
+                                <img
+                                    style="width: 60px"
+                                    src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%203.png" />
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+                <div class="column-list">
+                    <div style="width: 93.75%" class="column">
+                        <p>
+                            <mark class="highlight-blue">
+                                <style>
+                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                </style>
+                                <span
+                                    data-token-index="0"
+                                    contenteditable="false"
+                                    class="notion-text-equation-token"
+                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                    <span></span>
+                                    <span>
+                                        <span class="katex">
+                                            <span class="katex-mathml">
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <semantics>
+                                                        <mrow>
+                                                            <msub>
+                                                                <mi>C</mi>
+                                                                <mn>1</mn>
+                                                            </msub>
+                                                        </mrow>
+                                                        <annotation encoding="application/x-tex">C_1</annotation>
+                                                    </semantics>
+                                                </math>
+                                            </span>
+                                            <span class="katex-html" aria-hidden="true">
+                                                <span class="base">
+                                                    <span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span>
+                                                    <span class="mord">
+                                                        <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
+                                                        <span class="msupsub">
+                                                            <span class="vlist-t vlist-t2">
+                                                                <span class="vlist-r">
+                                                                    <span class="vlist" style="height: 0.30110799999999993em">
+                                                                        <span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em">
+                                                                            <span class="pstrut" style="height: 2.7em"></span>
+                                                                            <span class="sizing reset-size6 size3 mtight">
+                                                                                <span class="mord mtight">1</span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class="vlist-s">​</span>
+                                                                </span>
+                                                                <span class="vlist-r">
+                                                                    <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span>﻿</span>
+                                </span>
+                            </mark>
+                            <mark class="highlight-blue">- Zweigüberdeckung / Branch Coverage</mark>
+                        </p>
+                        <div class="indented">
+                            <p>Jede Kante min 1x durchlaufen</p>
+                            <div class="indented"><p>Zeigt ob nicht ausführbare Programmzweige existieren</p></div>
+                            <p></p>
+                        </div>
+                        <p></p>
+                    </div>
+                    <div style="width: 6.25%" class="column">
+                        <figure class="image">
+                            <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%204.png">
+                                <img
+                                    style="width: 60px"
+                                    src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%204.png" />
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+                <div class="column-list">
+                    <div style="width: 93.75%" class="column">
+                        <p>
+                            <mark class="highlight-blue">
+                                <style>
+                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                </style>
+                                <span
+                                    data-token-index="0"
+                                    contenteditable="false"
+                                    class="notion-text-equation-token"
+                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                    <span></span>
+                                    <span>
+                                        <span class="katex">
+                                            <span class="katex-mathml">
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <semantics>
+                                                        <mrow>
+                                                            <msub>
+                                                                <mi>C</mi>
+                                                                <mn>2</mn>
+                                                            </msub>
+                                                        </mrow>
+                                                        <annotation encoding="application/x-tex">C_2</annotation>
+                                                    </semantics>
+                                                </math>
+                                            </span>
+                                            <span class="katex-html" aria-hidden="true">
+                                                <span class="base">
+                                                    <span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span>
+                                                    <span class="mord">
+                                                        <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
+                                                        <span class="msupsub">
+                                                            <span class="vlist-t vlist-t2">
+                                                                <span class="vlist-r">
+                                                                    <span class="vlist" style="height: 0.30110799999999993em">
+                                                                        <span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em">
+                                                                            <span class="pstrut" style="height: 2.7em"></span>
+                                                                            <span class="sizing reset-size6 size3 mtight">
+                                                                                <span class="mord mtight">2</span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class="vlist-s">​</span>
+                                                                </span>
+                                                                <span class="vlist-r">
+                                                                    <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span>﻿</span>
+                                </span>
+                            </mark>
+                            <mark class="highlight-blue">- Bedingungsüberdeckung / Condition Coverage</mark>
+                        </p>
+                        <div class="indented">
+                            <p>Ziel: Überprüfung zusammengesetzter Entscheidungen und Teilentscheidungen</p>
+                            <p></p>
+                            <ol type="1" class="numbered-list" start="1">
+                                <li>
+                                    Einfacher Bedingungsüberdeckungstest
+                                    <p>Alle atomaren Teilentscheidungen gleichzeitig true oder false</p>
+                                </li>
+                            </ol>
+                        </div>
+                        <p></p>
+                    </div>
+                    <div style="width: 6.25%" class="column">
+                        <figure class="image">
+                            <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%205.png">
+                                <img
+                                    style="width: 60px"
+                                    src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%205.png" />
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+                <div class="column-list">
+                    <div style="width: 93.75%" class="column">
+                        <p></p>
+                        <div class="indented">
+                            <ol type="1" class="numbered-list" start="2">
+                                <li>
+                                    Mehrfach-Bedingungsüberdeckungstest
+                                    <p>Aller true/false-Kombinationen der atomaren Teilentscheidungen</p>
+                                    <ul class="toggle">
+                                        <li>
+                                            <details open="">
+                                                <summary>Beispiel</summary>
+                                                <p>
+                                                    Entscheidung:
+                                                    <mark class="highlight-gray">
+                                                        <code>(((a == 0) || (b &lt; 5)) &amp;&amp; (x &lt; 6) || (y == 0)))</code>
+                                                    </mark>
+                                                </p>
+                                                <div class="indented">
+                                                    <p>
+                                                        <mark class="highlight-gray"><code>((A || B) &amp;&amp; (C || D))</code></mark>
+                                                    </p>
+                                                </div>
+                                                <p></p>
+                                                <p>
+                                                    sind
+                                                    <mark class="highlight-gray"><code>a</code></mark>
+                                                    ,
+                                                    <mark class="highlight-gray"><code>b</code></mark>
+                                                    ,
+                                                    <mark class="highlight-gray"><code>x</code></mark>
+                                                    ,
+                                                    <mark class="highlight-gray"><code>y</code></mark>
+                                                    <mark class="highlight-gray"></mark>
+                                                    unabhängig können die Teilaussagen
+                                                    <mark class="highlight-gray"><code>A</code></mark>
+                                                    ,
+                                                    <mark class="highlight-gray"><code>B</code></mark>
+                                                    ,
+                                                    <mark class="highlight-gray"><code>C</code></mark>
+                                                    ,
+                                                    <mark class="highlight-gray"><code>D</code></mark>
+                                                    <mark class="highlight-gray"></mark>
+                                                    unabhängig voneinander true oder false sein.
+                                                </p>
+                                                <p>
+                                                    Dadurch
+                                                    <style>
+                                                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                                    </style>
+                                                    <span
+                                                        data-token-index="0"
+                                                        contenteditable="false"
+                                                        class="notion-text-equation-token"
+                                                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                                        <span></span>
+                                                        <span>
+                                                            <span class="katex">
+                                                                <span class="katex-mathml">
+                                                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                                        <semantics>
+                                                                            <mrow>
+                                                                                <mstyle mathsize="0.9em">
+                                                                                    <msup>
+                                                                                        <mn>2</mn>
+                                                                                        <mn>4</mn>
+                                                                                    </msup>
+                                                                                    <mo>=</mo>
+                                                                                    <mn>16</mn>
+                                                                                </mstyle>
+                                                                            </mrow>
+                                                                            <annotation encoding="application/x-tex">\small 2^4 = 16</annotation>
+                                                                        </semantics>
+                                                                    </math>
+                                                                </span>
+                                                                <span class="katex-html" aria-hidden="true">
+                                                                    <span class="base">
+                                                                        <span class="strut" style="height: 0.713364em; vertical-align: 0em"></span>
+                                                                        <span class="mord sizing reset-size6 size5">
+                                                                            <span class="mord">2</span>
+                                                                            <span class="msupsub">
+                                                                                <span class="vlist-t">
+                                                                                    <span class="vlist-r">
+                                                                                        <span class="vlist" style="height: 0.7926266666666666em">
+                                                                                            <span style="top: -2.963em; margin-right: 0.05555555555555556em">
+                                                                                                <span class="pstrut" style="height: 2.6em"></span>
+                                                                                                <span class="sizing reset-size5 size2 mtight">
+                                                                                                    <span class="mord mtight">4</span>
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                                                        <span class="mrel sizing reset-size6 size5">=</span>
+                                                                        <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                                                    </span>
+                                                                    <span class="base">
+                                                                        <span class="strut" style="height: 0.5799960000000001em; vertical-align: 0em"></span>
+                                                                        <span class="mord sizing reset-size6 size5">16</span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                        <span>﻿</span>
+                                                    </span>
+                                                    Kombinationen bzw Testfälle.
+                                                </p>
+                                                <p></p>
+                                            </details>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                        <p></p>
+                    </div>
+                    <div style="width: 6.25%" class="column">
+                        <figure class="image">
+                            <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%206.png">
+                                <img
+                                    style="width: 72px"
+                                    src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%206.png" />
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+                <div class="column-list">
+                    <div style="width: 93.75%" class="column">
+                        <p>
+                            <mark class="highlight-blue">
+                                <style>
+                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                </style>
+                                <span
+                                    data-token-index="0"
+                                    contenteditable="false"
+                                    class="notion-text-equation-token"
+                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                    <span></span>
+                                    <span>
+                                        <span class="katex">
+                                            <span class="katex-mathml">
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <semantics>
+                                                        <mrow>
+                                                            <msub>
+                                                                <mi>C</mi>
+                                                                <mn>3</mn>
+                                                            </msub>
+                                                        </mrow>
+                                                        <annotation encoding="application/x-tex">C_3</annotation>
+                                                    </semantics>
+                                                </math>
+                                            </span>
+                                            <span class="katex-html" aria-hidden="true">
+                                                <span class="base">
+                                                    <span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span>
+                                                    <span class="mord">
+                                                        <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
+                                                        <span class="msupsub">
+                                                            <span class="vlist-t vlist-t2">
+                                                                <span class="vlist-r">
+                                                                    <span class="vlist" style="height: 0.30110799999999993em">
+                                                                        <span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em">
+                                                                            <span class="pstrut" style="height: 2.7em"></span>
+                                                                            <span class="sizing reset-size6 size3 mtight">
+                                                                                <span class="mord mtight">3</span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class="vlist-s">​</span>
+                                                                </span>
+                                                                <span class="vlist-r">
+                                                                    <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span>﻿</span>
+                                </span>
+                            </mark>
+                            <mark class="highlight-blue">- Pfadüberdeckung / Path Coverage</mark>
+                        </p>
+                        <div class="indented">
+                            <p>Abdeckung aller möglichen Pfade (Knotenfolgen)</p>
+                            <p>für komplexe Module nicht geeignet (vor allem wenn Schleifen enthalten)</p>
+                        </div>
+                        <p></p>
+                    </div>
+                    <div style="width: 6.250000000000003%" class="column">
+                        <figure class="image">
+                            <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%207.png">
+                                <img
+                                    style="width: 48px"
+                                    src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%207.png" />
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+                <p></p>
+                <h1>_________________________________________</h1>
+                <p></p>
+                <h1>Unit Tests, JUnit</h1>
+                <p><mark class="highlight-blue">Unit Testing - Best Practices</mark></p>
+                <div class="indented">
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Testfälle sind isoliert
+                            <p><mark class="highlight-gray">keine Abhängigkeiten zueinander: Jeder Testfall bereitet eigene Daten vor, räumt sie auf</mark></p>
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Keine Logik in Tests
+                            <p><mark class="highlight-gray">keine Abfragen, Schleifen, try/catch</mark></p>
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Jeder Testfall testet nur einen Aspekt bzw Zustand
+                            <p><mark class="highlight-gray">Nur ein Testfall per Methode, keine Zufallsdaten sondern Äquivalenzklassen</mark></p>
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Namenskonventionen einhalten
+                            <p><mark class="highlight-gray">Testmethoden einheitlich benannt</mark></p>
+                            <p>
+                                <mark class="highlight-gray"><code>(Test)&lt;UseCase/Method&gt;_should&lt;ExcpectedOutcome&gt;</code></mark>
+                            </p>
+                            <ul class="block-color-gray toggle">
+                                <li>
+                                    <details open="">
+                                        <summary><mark class="highlight-gray">Beispiele</mark></summary>
+                                        <pre class="code"><code>@Test
+public void testAdd_shouldContainAddedWord() {...}
+
+@Test
+public void testAdd_moreThanMax_shouldReplaceFirstWord() {...}
+
+@Test
+public void testRemove_Null_shouldThrowNullPointerException() {...}</code></pre>
+                                    </details>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Verständliche Fehlermeldungen bei Assertions</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Klassen und Testklassen liegen im selben Package</li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p>JUnit</p>
+                <div class="indented">
+                    <p><a href="https://junit.org/junit5/docs/current/user-guide/">https://junit.org/junit5/docs/current/user-guide/</a></p>
+                    <p>Testframework für Unit Tests, Automatische Ausführung von Komponententests</p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary><mark class="highlight-blue">Lifecycle Annotations</mark></summary>
+                                <pre class="code"><code>class StandardTest {
+	
+	@BeforeAll
+	static void initAll() {...}
+	
+	@AfterAll
+	static void tearDownAll() {...}
+	
+	@BeforeEach
+	void init() {...}
+	
+	@AfterEach
+	void tearDown() {...}
+	
+	@Test
+	void testAdd_shouldDoSomething() {...}
+}</code></pre>
+                                <p>
+                                    <mark class="highlight-gray"><code>@BeforeClass</code></mark>
+                                    wird einmal bei der Initialisierung der Klasse ausgeführt.
+                                </p>
+                                <p>
+                                    <mark class="highlight-gray"><code>@AfterClass</code></mark>
+                                    wird einmal vor verlassen der Klasse ausgeführt
+                                </p>
+                                <p>
+                                    <mark class="highlight-gray"><code>@Before</code></mark>
+                                    wird vor jeder Test-Methode ausgeführt
+                                </p>
+                                <p>
+                                    <mark class="highlight-gray"><code>@After</code></mark>
+                                    wird nach jeder Test-Methode ausgefüht
+                                </p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary><mark class="highlight-blue">Assertions in JUnit</mark></summary>
+                                <p>
+                                    Zusicherungen nach
+                                    <mark class="highlight-gray"><code>org.junit.jupiter.api.Assertions;</code></mark>
+                                </p>
+                                <div class="indented">
+                                    <p>Bessere Lesbarkeit wenn statisch importiert:</p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>import static org.junit.jupiter.api.Assertions.assertEquals;</code></mark>
+                                    </p>
+                                </div>
+                                <p></p>
+                                <pre class="code"><code>assertEquals(1, person.getId(), “Person ID not as expected");
+
+org.opentest4j.AssertionFailedError: Person ID not as expected ==&gt;
+Expected :1
+Actual :0</code></pre>
+                                <pre class="code"><code>assertAll(
+	() -&gt; assertTrue(...),
+	() -&gt; assertEquals(...)
+)</code></pre>
+                                <p></p>
+                                <p>
+                                    Für Exceptions:
+                                    <mark class="highlight-gray"><code>assertThrows(Class&lt;T&gt; expectedType, Executable executable)</code></mark>
+                                </p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary><mark class="highlight-blue">Parametrisierte Tests</mark></summary>
+                                <p>
+                                    Eigene dependency:
+                                    <mark class="highlight-gray"><code>juni-jupiter-params</code></mark>
+                                </p>
+                                <p>
+                                    <mark class="highlight-gray"><code>@ParameterizedTest</code></mark>
+                                </p>
+                                <div class="indented">
+                                    <p>
+                                        <mark class="highlight-gray"><code>@ValueSource(ints = { 1, 2, 3 })</code></mark>
+                                    </p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>@EnumSource(TimeUnit.class)</code></mark>
+                                    </p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>@MethodSource("stringProvider")</code></mark>
+                                    </p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>@CsvFileSource(resources = "/data.csv")</code></mark>
+                                    </p>
+                                    <p>...</p>
+                                </div>
+                                <p></p>
+                                <p></p>
+                                <pre class="code"><code>@ParameterizedTest
+@MethodSource ("palindromeData")
+void isPalindrome_shouldReturnTrue(String string) {
+	assertThat(isPalindrome (string) ).isTrue();
+}
+
+private static Stream&lt;String&gt; palindromeData () {
+	return Stream.of("radar", "anna", "otto", "Reittier", "Programmieren");
+}</code></pre>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p>AssertJ</p>
+                <div class="indented">
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary><mark class="highlight-blue">Assertions mit AssertJ</mark></summary>
+                                <p><a href="https://joel-costigliola.github.io/assertj/">https://joel-costigliola.github.io/assertj/</a></p>
+                                <p>Eigenes Assertion-Framework</p>
+                                <p>Bessere Lesbarkeit, Nachvollziehbarkeit indem Methoden aufeinanderfolgend aufgerufen werden können.</p>
+                                <pre class="code"><code>JUnit:   assertEquals(customer.getId(), person.getId());
+AssertJ: assertThat(person.getId()).isEqual(customer.getId());</code></pre>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Test Doubles</h1>
+                <p><mark class="highlight-blue">Test doubles</mark></p>
+                <div class="indented">
+                    <p>= Generischer Begriff für Austausch von echten Komponenten durch eine alternative Implementierung für Testzwecke.</p>
+                    <p>Komponenten mit einfacheren “doubles” ersetzen zum Testen.</p>
+                    <hr />
+                    <p>Komponenten nicht leicht vom restlichen System isolierbar für Komponententests:</p>
+                    <div class="indented">
+                        <p>Abhängigkeiten: sie interagieren miteinadner, rufen andere Schnittstellen auf wie zB die Datenbank</p>
+                        <p>Nicht Determinismus: sie nutzen nicht deterministische Werte wie zB Systemzeit</p>
+                    </div>
+                    <p></p>
+                    <p>Vorteile:</p>
+                    <div class="indented"><p>- Isolation - Keine Abhängigkeiten - geringere Komplexität - Reduktion der Ausführungszeit.</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Dummy Object</mark></p>
+                <div class="indented">
+                    <p>Nicht zum Testen</p>
+                    <p>Nicht zum Verwenden, nicht ausführbar</p>
+                    <hr />
+                    <p>Quasi “leeres” Argument - Platzhalter ohne Funktionalität</p>
+                    <p>
+                        <mark class="highlight-gray">zB</mark>
+                        <mark class="highlight-gray"><code>DummyCustomer</code></mark>
+                        <mark class="highlight-gray">Klasse implementiert</mark>
+                        <mark class="highlight-gray"><code>ICustomer</code></mark>
+                        <mark class="highlight-gray">aber wirft</mark>
+                        <mark class="highlight-gray"><code>NotImplementedException</code></mark>
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Fake Object</mark></p>
+                <div class="indented">
+                    <p>Nicht zum Testen</p>
+                    <p>Zum Verwenden, ausführbare Implementierung</p>
+                    <hr />
+                    <p>Wenn reale Implementierung zu langsam oder nicht verfügbar</p>
+                    <p><mark class="highlight-gray">zB simulierte Datenquelle, In-Memory Datenbank - keine Echtdaten</mark></p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Stub</mark></p>
+                <div class="indented">
+                    <p>Zum Testen</p>
+                    <p>Zum Verwenden, ausführbare Implementierung</p>
+                    <hr />
+                    <p>Liefert vordefinierte Werte, Exceptions, Pfad wird vorbestimmt.</p>
+                    <p>Erlaubt Testen von Pfaden die von außen nicht beeinflusst und durchlaufen werden können.</p>
+                    <ul class="block-color-gray toggle">
+                        <li>
+                            <details open="">
+                                <summary>Beispiel: Asynchrone Abfrage an einem Server</summary>
+                                <p>Original</p>
+                                <div class="indented">
+                                    <figure class="image">
+                                        <a
+                                            href="5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20db245713603b4b508d4922ec76b9cb3f/Untitled.png">
+                                            <img
+                                                style="width: 288px"
+                                                src="5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20db245713603b4b508d4922ec76b9cb3f/Untitled.png" />
+                                        </a>
+                                    </figure>
+                                </div>
+                                <p></p>
+                                <p>Stub</p>
+                                <div class="indented">
+                                    <figure class="image">
+                                        <a
+                                            href="5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20db245713603b4b508d4922ec76b9cb3f/Untitled%201.png">
+                                            <img
+                                                style="width: 288px"
+                                                src="5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20db245713603b4b508d4922ec76b9cb3f/Untitled%201.png" />
+                                        </a>
+                                    </figure>
+                                    <figure class="image">
+                                        <a
+                                            href="5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20db245713603b4b508d4922ec76b9cb3f/Untitled%202.png">
+                                            <img
+                                                style="width: 288px"
+                                                src="5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20db245713603b4b508d4922ec76b9cb3f/Untitled%202.png" />
+                                        </a>
+                                    </figure>
+                                    <p></p>
+                                </div>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Mock</mark></p>
+                <div class="indented">
+                    <p>Zum Testen</p>
+                    <p>Zum Verwenden, ausführbare Implementierung</p>
+                    <hr />
+                    <p>Gleich wie Stub, aber die Parameter die an Mock gegeben werden, werden auch im Test überprüft.</p>
+                    <p>Mock erkennt wenn unerwartete Werte erhalten werden - Assertion und Exception.</p>
+                    <ul class="block-color-gray toggle">
+                        <li>
+                            <details open="">
+                                <summary>Fortsetzung Beispiel: Asynchrone Abfrage an einem Server</summary>
+                                <p>Mock - Version 1: Ohne Assertions</p>
+                                <div class="indented">
+                                    <figure class="image">
+                                        <a
+                                            href="5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20db245713603b4b508d4922ec76b9cb3f/Untitled%203.png">
+                                            <img
+                                                style="width: 288px"
+                                                src="5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20db245713603b4b508d4922ec76b9cb3f/Untitled%203.png" />
+                                        </a>
+                                    </figure>
+                                </div>
+                                <p></p>
+                                <p>Mock - Version 2: Mit Assertions</p>
+                                <div class="indented">
+                                    <figure class="image">
+                                        <a
+                                            href="5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20db245713603b4b508d4922ec76b9cb3f/Untitled%204.png">
+                                            <img
+                                                style="width: 288px"
+                                                src="5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20db245713603b4b508d4922ec76b9cb3f/Untitled%204.png" />
+                                        </a>
+                                    </figure>
+                                </div>
+                                <p></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <hr />
+                    <p><em>Mockito</em></p>
+                    <p><a href="http://site.mockito.org/">http://site.mockito.org</a></p>
+                    <p>
+                        <a href="https://javadoc.io/doc/org.mockito/mockitocore/latest/org/mockito/Mockito.html">
+                            https://javadoc.io/doc/org.mockito/mockitocore/latest/org/mockito/Mockito.html
+                        </a>
+                    </p>
+                    <ul class="block-color-gray toggle">
+                        <li>
+                            <details open="">
+                                <summary>Erzeugung</summary>
+                                <p><mark class="highlight-blue">Erzeugen eines Mocks</mark></p>
+                                <div class="indented">
+                                    <p>
+                                        <mark class="highlight-gray"><code>mock(Class&lt;T&gt; clazz)</code></mark>
+                                    </p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>@Mock</code></mark>
+                                    </p>
+                                    <figure class="image">
+                                        <a href="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%207.png">
+                                            <img
+                                                style="width: 288px"
+                                                src="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%207.png" />
+                                        </a>
+                                    </figure>
+                                </div>
+                                <p></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="block-color-gray toggle">
+                        <li>
+                            <details open="">
+                                <summary>Verhalten definieren</summary>
+                                <p><mark class="highlight-blue">Spezifikation des Verhaltens</mark></p>
+                                <div class="indented">
+                                    <p>
+                                        <mark class="highlight-gray"><code>when(T methodCall)</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        Welche Methode soll gemockt werden?
+                                    </p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>thenReturn(T value)</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        Was soll vom Mock returned werden?
+                                    </p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>thenThrow(Throwable t)</code></mark>
+                                        <mark class="highlight-gray"></mark>
+                                        Welche Exception soll der Mock werfen?
+                                    </p>
+                                    <figure class="image">
+                                        <a href="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%208.png">
+                                            <img
+                                                style="width: 336px"
+                                                src="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%208.png" />
+                                        </a>
+                                    </figure>
+                                </div>
+                                <p></p>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="block-color-gray toggle">
+                        <li>
+                            <details open="">
+                                <summary>Überprüfung der Argumente und Aufrufe</summary>
+                                <p>
+                                    <mark class="highlight-blue">Überprüfung des Argumentes in</mark>
+                                    <code><mark class="highlight-blue">when()</mark></code>
+                                </p>
+                                <div class="indented">
+                                    <p>
+                                        <a href="https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#argument_matchers">
+                                            https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#argument_matchers
+                                        </a>
+                                    </p>
+                                    <p>mit “Argument Matcher”</p>
+                                    <div class="indented">
+                                        <p>
+                                            <mark class="highlight-gray"><code>any(…)</code></mark>
+                                        </p>
+                                        <p>
+                                            <mark class="highlight-gray"><code>anyInt(…)</code></mark>
+                                        </p>
+                                        <p>
+                                            <mark class="highlight-gray"><code>argThat(somestring -&gt; somestring.length() &gt; 10)</code></mark>
+                                        </p>
+                                    </div>
+                                    <p></p>
+                                    <figure class="image">
+                                        <a href="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%209.png">
+                                            <img
+                                                style="width: 240px"
+                                                src="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%209.png" />
+                                        </a>
+                                    </figure>
+                                </div>
+                                <p></p>
+                                <p></p>
+                                <p><mark class="highlight-blue">Überprüfung der Aufrufe</mark></p>
+                                <div class="indented">
+                                    <p>
+                                        <a href="https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#4">
+                                            https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#4
+                                        </a>
+                                    </p>
+                                    <p>Überprüft wie oft Funktion aufgerufen wurde</p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>verify(…)</code></mark>
+                                    </p>
+                                    <p>
+                                        <mark class="highlight-gray"><code>never() / times() / atLeastOnce() …</code></mark>
+                                    </p>
+                                    <figure class="image">
+                                        <a href="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%2010.png">
+                                            <img
+                                                style="width: 240px"
+                                                src="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%2010.png" />
+                                        </a>
+                                    </figure>
+                                    <figure class="image">
+                                        <a href="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%2011.png">
+                                            <img
+                                                style="width: 240px"
+                                                src="Everything%20related%20to%20testing%20caee0ee6eab049d5af316cb7ae2eda05/Untitled%2011.png" />
+                                        </a>
+                                    </figure>
+                                </div>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-gray">Spy</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">Proxy Objekt - Einzelne Methoden durch andere Implementierung ersetzt.</mark></p>
+                </div>
+                <p></p>
+                <p></p>
+                <h1>_________________________________________</h1>
+                <p></p>
+                <p></p>
+                <h1>Statische Code Analyse</h1>
+                <p>Toolgestützte Code Analysen um Coding-Conventions zu überprüfen</p>
+                <p></p>
+                <p><mark class="highlight-blue">Coding Conventions / Code Guidelines</mark></p>
+                <div class="indented">
+                    <p>Einheitlicher Stil im Projekt für jede Programmiersprache</p>
+                    <p>bessere Lesbarkeit, Verständlichkeit</p>
+                    <p>
+                        Eigene Regeln für Dokumentation, Einrückung (space/tab), Max Zeilenlänge, Import Reihenfolge, Methoden/Feld Reihenfolg,
+                        Modifier/Sichtbarkeit, Veränderbarkeit, etc.
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Statische Code Analyse / Fehlermuster</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">Tools: FindBugs/SpotBugs, SonarLint, SonarQube</mark></p>
+                    <p>Verbessert Code Qualität, Wartbarkeit, reduziert Fehler</p>
+                    <p>Häufige Fehlermuster im Code finden</p>
+                    <p>Code guidelines einhalten.</p>
+                    <p>Regeln eingeteilt in:</p>
+                    <div class="indented">
+                        <p>Bug Potenzielle Fehler</p>
+                        <p>Vulnerability Sicherheitslücken</p>
+                        <p>Code Smell Unschöner/unwartbarer Code</p>
+                    </div>
+                    <p></p>
+                    <p></p>
+                    <p><mark class="highlight-blue">Commit messages / commit conventions</mark></p>
+                    <div class="indented">
+                        <p>Gute Messages:</p>
+                        <div class="indented">
+                            <p>Warum wurde diese Änderung gemacht? Was wurde geändert?</p>
+                            <p>nur eine logische Änderung pro Commit</p>
+                            <p>Idempotent (in sich geschlossen)</p>
+                        </div>
+                        <p></p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Refactoring</h1>
+                <p><mark class="highlight-blue">Refactoring</mark></p>
+                <div class="indented">
+                    <p>“Technische Schuld”: Design vernachlässigt um kurz effizienter zu sein</p>
+                    <div class="indented"><p>deshalb “verwahrlost” Design mit der Zeit</p></div>
+                    <p></p>
+                    <p>
+                        <em>Bad Smells</em>
+                        zeigen das Refactoring notwendig ist für bessere:
+                    </p>
+                    <div class="indented"><p>Kapselung, Struktur Lesbarkeit, Verständlichkeit, interne Architektur/Design</p></div>
+                    <p></p>
+                    <p>
+                        Wir wenden
+                        <em>Patterns</em>
+                        an um diese zu entfernen.
+                    </p>
+                    <p>Dadruch:</p>
+                    <div class="indented">
+                        <p>Leichtere Einarbeitung von neuen Entwicklern</p>
+                        <p>Bessere Wartbarkeit, Anpassbarkeit, Erweiterbarkeit</p>
+                        <p>Geringerer Aufwand beim Testen, Leichtere Identifikation von Fehlern</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Refactoring patterns</mark></p>
+                <div class="indented">
+                    <figure>
+                        <div class="source">
+                            <a
+                                href="5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20db245713603b4b508d4922ec76b9cb3f/Refactoring_Beispiele.pdf">
+                                Refactoring_Beispiele.pdf
+                            </a>
+                        </div>
+                    </figure>
+                    <p><a href="https://sourcemaking.com/refactoring">https://sourcemaking.com/refactoring</a></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Schritte</mark></p>
+                <div class="indented">
+                    <p>Funktionalität, Performance, Fehler bleiben gleich</p>
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>Identifikation Stelle im Code manuell oder mit Tool finden</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>Testabdeckung sicherstellen, dass Stelle abgedeckt ist</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>Durchführung patterns anwenden, umbauen, testen (Funktionalität bleibt gleich)</li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <h1>_________________________________________</h1>
+                <p></p>
+                <h1>Anforderungen</h1>
+                <p><mark class="highlight-blue">Klassifikation nach FURPS</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">Zur Laufzeit messbar:</mark></p>
+                    <div class="indented">
+                        <p>Functional (Funktional) Features, Fähigkeiten, Sicherheitsvorrichtungen</p>
+                        <p>Usability (Benutzerfreundlich) Human factors, Nützlichkeit, Dokumentation</p>
+                        <p>Reliability (Zuverlässig) Uptime, Verlässlichkeit, Wiederherstellbarkeit</p>
+                        <p>Performance Antwortzeiten, Durchsatz, Genauigkeit</p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-gray">Nicht zur Laufzeit messbar:</mark></p>
+                    <div class="indented"><p>Supportability (Wartbarkeit) Modifizierbarkeit, Wartung, Konfiguration</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Funktionale Anforderungen</mark></p>
+                <div class="indented">
+                    <p>Beschreiben was das System tut, um Mehrwert für die Stakeholder zu liefern</p>
+                    <p>Bilden ein Anwendungs-Szenario: Meistens in der Form “System kann Funktion X ausführen”</p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Beispiele</summary>
+                                <p>– Das System kann gespeicherte Rechnungen als ausdruckbare Datei exportieren.</p>
+                                <p>– Der Administrator kann Bestellungen stornieren</p>
+                            </details>
+                        </li>
+                    </ul>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Nichtfunktionale Anforderungen (”Qualitätsanforderungen”)</mark></p>
+                <div class="indented">
+                    <p>Charakteristika, nicht-technische Beschreibung, Eigenschaften</p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Beispiele</summary>
+                                <p>
+                                    – Wenn ein Fehler eintritt, informiert das System den Benutzer und arbeitet in einem verschlechterten(degradierten) Zustand
+                                    weiter.
+                                </p>
+                                <p>
+                                    – Falls das System die Anzahl der Bestellungen nicht verarbeiten kann, trennt es einige bestehende Verbindungen zu Clients.
+                                    Die Administratorin wird informiert und das System arbeitet in einem verschlechterten(degradierten) Zustand weiter.
+                                </p>
+                            </details>
+                        </li>
+                    </ul>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Constraints</mark></p>
+                <div class="indented"><p>Einschränkungen des Systems durch Frameworks bzw. Architekturentscheidungen</p></div>
+                <p></p>
+            </div>
+        </article>
+    </body>
+</html>

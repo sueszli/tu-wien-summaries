@@ -1,0 +1,2755 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Scheduling</title>
+        <style>
+            /* cspell:disable-file */
+            /* webkit printing magic: print all background colors */
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            * {
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media only screen {
+                body {
+                    margin: 2em auto;
+                    max-width: 900px;
+                    color: rgb(55, 53, 47);
+                }
+            }
+
+            body {
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            a,
+            a.visited {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .pdf-relative-link-path {
+                font-size: 80%;
+                color: #444;
+            }
+
+            h1,
+            h2,
+            h3 {
+                letter-spacing: -0.01em;
+                line-height: 1.2;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 0;
+                margin-bottom: 0.75em;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+                margin-top: 1.875rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .source {
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 1.5em;
+                word-break: break-all;
+            }
+
+            .callout {
+                border-radius: 3px;
+                padding: 1rem;
+            }
+
+            figure {
+                margin: 1.25em 0;
+                page-break-inside: avoid;
+            }
+
+            figcaption {
+                opacity: 0.5;
+                font-size: 85%;
+                margin-top: 0.5em;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+
+            .indented {
+                padding-left: 1.5em;
+            }
+
+            hr {
+                background: transparent;
+                display: block;
+                width: 100%;
+                height: 1px;
+                visibility: visible;
+                border: none;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            @media only print {
+                img {
+                    max-height: 100vh;
+                    object-fit: contain;
+                }
+            }
+
+            @page {
+                margin: 1in;
+            }
+
+            .collection-content {
+                font-size: 0.875rem;
+            }
+
+            .column-list {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .column {
+                padding: 0 1em;
+            }
+
+            .column:first-child {
+                padding-left: 0;
+            }
+
+            .column:last-child {
+                padding-right: 0;
+            }
+
+            .table_of_contents-item {
+                display: block;
+                font-size: 0.875rem;
+                line-height: 1.3;
+                padding: 0.125rem;
+            }
+
+            .table_of_contents-indent-1 {
+                margin-left: 1.5rem;
+            }
+
+            .table_of_contents-indent-2 {
+                margin-left: 3rem;
+            }
+
+            .table_of_contents-indent-3 {
+                margin-left: 4.5rem;
+            }
+
+            .table_of_contents-link {
+                text-decoration: none;
+                opacity: 0.7;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+            }
+
+            table,
+            th,
+            td {
+                border: 1px solid rgba(55, 53, 47, 0.09);
+                border-collapse: collapse;
+            }
+
+            table {
+                border-left: none;
+                border-right: none;
+            }
+
+            th,
+            td {
+                font-weight: normal;
+                padding: 0.25em 0.5em;
+                line-height: 1.5;
+                min-height: 1.5em;
+                text-align: left;
+            }
+
+            th {
+                color: rgba(55, 53, 47, 0.6);
+            }
+
+            ol,
+            ul {
+                margin: 0;
+                margin-block-start: 0.6em;
+                margin-block-end: 0.6em;
+            }
+
+            li > ol:first-child,
+            li > ul:first-child {
+                margin-block-start: 0.6em;
+            }
+
+            ul > li {
+                list-style: disc;
+            }
+
+            ul.to-do-list {
+                padding-inline-start: 0;
+            }
+
+            ul.to-do-list > li {
+                list-style: none;
+            }
+
+            .to-do-children-checked {
+                text-decoration: line-through;
+                opacity: 0.375;
+            }
+
+            ul.toggle > li {
+                list-style: none;
+            }
+
+            ul {
+                padding-inline-start: 1.7em;
+            }
+
+            ul > li {
+                padding-left: 0.1em;
+            }
+
+            ol {
+                padding-inline-start: 1.6em;
+            }
+
+            ol > li {
+                padding-left: 0.2em;
+            }
+
+            .mono ol {
+                padding-inline-start: 2em;
+            }
+
+            .mono ol > li {
+                text-indent: -0.4em;
+            }
+
+            .toggle {
+                padding-inline-start: 0em;
+                list-style-type: none;
+            }
+
+            /* Indent toggle children */
+            .toggle > li > details {
+                padding-left: 1.7em;
+            }
+
+            .toggle > li > details > summary {
+                margin-left: -1.1em;
+            }
+
+            .selected-value {
+                display: inline-block;
+                padding: 0 0.5em;
+                background: rgba(206, 205, 202, 0.5);
+                border-radius: 3px;
+                margin-right: 0.5em;
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+            }
+
+            .collection-title {
+                display: inline-block;
+                margin-right: 1em;
+            }
+
+            .page-description {
+                margin-bottom: 2em;
+            }
+
+            .simple-table {
+                margin-top: 1em;
+                font-size: 0.875rem;
+                empty-cells: show;
+            }
+            .simple-table td {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table th {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table-header-color {
+                background: rgb(247, 246, 243);
+                color: black;
+            }
+            .simple-table-header {
+                font-weight: 500;
+            }
+
+            time {
+                opacity: 0.5;
+            }
+
+            .icon {
+                display: inline-block;
+                max-width: 1.2em;
+                max-height: 1.2em;
+                text-decoration: none;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            img.icon {
+                border-radius: 3px;
+            }
+
+            .user-icon {
+                width: 1.5em;
+                height: 1.5em;
+                border-radius: 100%;
+                margin-right: 0.5rem;
+            }
+
+            .user-icon-inner {
+                font-size: 0.8em;
+            }
+
+            .text-icon {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+            .page-cover-image {
+                display: block;
+                object-fit: cover;
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            .page-header-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .page-header-icon-with-cover {
+                margin-top: -0.72em;
+                margin-left: 0.07em;
+            }
+
+            .page-header-icon img {
+                border-radius: 3px;
+            }
+
+            .link-to-page {
+                margin: 1em 0;
+                padding: 0;
+                border: none;
+                font-weight: 500;
+            }
+
+            p > .user {
+                opacity: 0.5;
+            }
+
+            td > .user,
+            td > time {
+                white-space: nowrap;
+            }
+
+            input[type="checkbox"] {
+                transform: scale(1.5);
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
+
+            p {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .image {
+                border: none;
+                margin: 1.5em 0;
+                padding: 0;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .code,
+            code {
+                background: rgba(135, 131, 120, 0.15);
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 85%;
+                tab-size: 2;
+            }
+
+            code {
+                color: #eb5757;
+            }
+
+            .code {
+                padding: 1.5em 1em;
+            }
+
+            .code-wrap {
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .code > code {
+                background: none;
+                padding: 0;
+                font-size: 100%;
+                color: inherit;
+            }
+
+            blockquote {
+                font-size: 1.25em;
+                margin: 1em 0;
+                padding-left: 1em;
+                border-left: 3px solid rgb(55, 53, 47);
+            }
+
+            .bookmark {
+                text-decoration: none;
+                max-height: 8em;
+                padding: 0;
+                display: flex;
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .bookmark-title {
+                font-size: 0.85em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 1.75em;
+                white-space: nowrap;
+            }
+
+            .bookmark-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bookmark-info {
+                flex: 4 1 180px;
+                padding: 12px 14px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark-image {
+                width: 33%;
+                flex: 1 1 180px;
+                display: block;
+                position: relative;
+                object-fit: cover;
+                border-radius: 1px;
+            }
+
+            .bookmark-description {
+                color: rgba(55, 53, 47, 0.6);
+                font-size: 0.75em;
+                overflow: hidden;
+                max-height: 4.5em;
+                word-break: break-word;
+            }
+
+            .bookmark-href {
+                font-size: 0.75em;
+                margin-top: 0.25em;
+            }
+
+            .sans {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+                    "Segoe UI Symbol";
+            }
+            .code {
+                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+            }
+            .serif {
+                font-family: Lyon-Text, Georgia, ui-serif, serif;
+            }
+            .mono {
+                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+            }
+            .pdf .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+            }
+            .pdf:lang(zh-CN) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+            }
+            .pdf:lang(zh-TW) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+            }
+            .pdf:lang(ko-KR) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+            }
+            .pdf .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK KR";
+            }
+            .pdf .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+            }
+            .pdf:lang(zh-CN) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+            }
+            .pdf:lang(zh-TW) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+            }
+            .pdf:lang(ko-KR) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+            }
+            .pdf .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+            }
+            .highlight-default {
+                color: rgba(55, 53, 47, 1);
+            }
+            .highlight-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .highlight-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .highlight-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .highlight-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .highlight-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .highlight-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .highlight-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .highlight-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .highlight-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .highlight-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .highlight-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .highlight-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .highlight-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .highlight-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .highlight-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .highlight-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .highlight-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .highlight-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .block-color-default {
+                color: inherit;
+                fill: inherit;
+            }
+            .block-color-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .block-color-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .block-color-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .block-color-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .block-color-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .block-color-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .block-color-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .block-color-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .block-color-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .block-color-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .block-color-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .block-color-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .block-color-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .block-color-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .block-color-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .block-color-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .block-color-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .block-color-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .select-value-color-interactiveBlue {
+                background-color: rgba(35, 131, 226, 0.07);
+            }
+            .select-value-color-pink {
+                background-color: rgba(245, 224, 233, 1);
+            }
+            .select-value-color-purple {
+                background-color: rgba(232, 222, 238, 1);
+            }
+            .select-value-color-green {
+                background-color: rgba(219, 237, 219, 1);
+            }
+            .select-value-color-gray {
+                background-color: rgba(227, 226, 224, 1);
+            }
+            .select-value-color-translucentGray {
+                background-color: rgba(255, 255, 255, 0.0375);
+            }
+            .select-value-color-orange {
+                background-color: rgba(250, 222, 201, 1);
+            }
+            .select-value-color-brown {
+                background-color: rgba(238, 224, 218, 1);
+            }
+            .select-value-color-red {
+                background-color: rgba(255, 226, 221, 1);
+            }
+            .select-value-color-yellow {
+                background-color: rgba(253, 236, 200, 1);
+            }
+            .select-value-color-blue {
+                background-color: rgba(211, 229, 239, 1);
+            }
+            .select-value-color-pageGlass {
+                background-color: undefined;
+            }
+            .select-value-color-washGlass {
+                background-color: undefined;
+            }
+
+            .checkbox {
+                display: inline-flex;
+                vertical-align: text-bottom;
+                width: 16;
+                height: 16;
+                background-size: 16px;
+                margin-left: 2px;
+                margin-right: 5px;
+            }
+
+            .checkbox-on {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            .checkbox-off {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            /* -------- injections from notionBackup -------- */
+
+            body {
+                white-space: normal !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+
+            .code,
+            code {
+                font-size: 100% !important;
+            }
+
+            blockquote {
+                font-size: 100% !important;
+            }
+
+            .callout {
+                white-space: normal !important;
+            }
+            .callout div:has(span.icon) {
+                font-size: 100% !important;
+            }
+
+            .source:not(.bookmark) {
+                font-size: 100% !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+        </style>
+    </head>
+    <body>
+        <article class="page sans">
+            <header>
+                <h1 class="page-title">Scheduling</h1>
+                <p class="page-description"></p>
+            </header>
+            <div class="page-body">
+                <nav class="block-color-gray table_of_contents">
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#d6a08a51-2f35-474d-9aaf-cd668fc52662">Definition</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#dabf958c-37f2-49d6-9e8f-5854bfd5877c">Scheduling Arten</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#dc1354e2-c3a0-48c9-a6b2-083659691e6e">____________</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#7582c8c3-01ac-41b0-ab4a-da0777346a3e">Scheduling Strategien</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#c81ea9ce-3cf3-4644-aed9-3272f1f09d10">Priorisierung von Prozessen</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#05896f2b-004e-4693-ba7d-c711bd23beca">1) First Come First Served FCFC</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#30a16330-7939-4e31-92c2-f3fba34dc1b3">2) Round Robin RR / Time Slicing</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#971b88b1-b096-4f00-82a3-5633bea16952">3) Shortest Process Next SPN</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#895cabe7-0794-4418-8a1d-dbafee4a0aec">4) Shortest Remaining Time SRT</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#13bca652-0eb2-4b54-aee1-71ad4425e212">5) Highest Response Ratio Next HRRN</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#7958d32e-f859-4ba3-8ef0-aacc98325438">6) Feedback Scheduling FS</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#5890596e-cd20-47ed-a968-883811d51429">Echtzeitscheduling / Real-Time Scheduling</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#342b0724-df68-4ab1-af41-8fe07524bad2">7) Earliest Deadline First EDF</a>
+                    </div>
+                </nav>
+                <h1>Definition</h1>
+                <p><mark class="highlight-blue">Scheduling</mark></p>
+                <p>
+                    Abarbeitungsreihenfolge bestimmen
+                    <mark class="highlight-gray">- Zuteilung der CPU-Zeit an Prozesse</mark>
+                </p>
+                <p>Optimierungsziele / Scheduling Kriterien:</p>
+                <div class="column-list">
+                    <div style="width: 50%" class="column">
+                        <p><mark class="highlight-blue">User-Oriented</mark></p>
+                        <p>Response Time</p>
+                        <p>Turnaround Time</p>
+                        <p>Meeting Deadlines</p>
+                        <hr />
+                        <p>Predictability</p>
+                    </div>
+                    <div style="width: 50%" class="column">
+                        <p><mark class="highlight-blue">System-Oriented</mark></p>
+                        <p>Throughput</p>
+                        <p>Procesor Utilization</p>
+                        <p></p>
+                        <hr />
+                        <p>Fairness</p>
+                        <p>Resource Balance</p>
+                        <p>Priorities</p>
+                    </div>
+                </div>
+                <p><mark class="highlight-gray">Alles über der Linie bezieht sich auf Performance.</mark></p>
+                <p><mark class="highlight-gray">Die Ziele können einander widersprechen: zB Fairness und Einhaltung von Deadlines</mark></p>
+                <p></p>
+                <p><mark class="highlight-blue">Begriffe</mark></p>
+                <p>
+                    Response Time Zeit zwischen Eintritt in
+                    <mark class="highlight-gray"><code>ready</code></mark>
+                    <mark class="highlight-gray"></mark>
+                    und erster Instruktion auf CPU
+                </p>
+                <p>
+                    Turnaround Time Zeit zwischen Eintritt in
+                    <mark class="highlight-gray"><code>ready</code></mark>
+                    <mark class="highlight-gray"></mark>
+                    und Abschluss
+                </p>
+                <p>
+                    Normalized Turn.Time Turn around time dividiert durch service time
+                    <mark class="highlight-gray">(= % Wartezeit)</mark>
+                </p>
+                <p>Throughput Duschsatz: Anzahl der abgeschlossenen Prozesse per Zeiteinheit</p>
+                <p>Processor Utilization Prozessorauslastung</p>
+                <p>Fairness Verhältnis von Warte-Zeit zu CPU-Zeit</p>
+                <p></p>
+                <h2>Scheduling Arten</h2>
+                <figure class="image">
+                    <a href="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled.png">
+                        <img style="width: 240px" src="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled.png" />
+                    </a>
+                </figure>
+                <p><mark class="highlight-blue">Long-term-scheduling</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>new</code></mark>
+                        <mark class="highlight-gray"></mark>
+                        <mark class="highlight-gray">
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow>
+                                                        <mo>−</mo>
+                                                        <mtext>&nbsp;</mtext>
+                                                        <mo stretchy="false">?</mo>
+                                                        <mo>→</mo>
+                                                    </mrow>
+                                                    <annotation encoding="application/x-tex">-~?\rarr</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.77777em; vertical-align: -0.08333em"></span>
+                                                <span class="mord">−</span>
+                                                <span class="mspace nobreak">&nbsp;</span>
+                                                <span class="mclose">?</span>
+                                                <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                                <span class="mrel">→</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                        </mark>
+                        <mark class="highlight-gray"></mark>
+                        <mark class="highlight-gray"><code>ready</code></mark>
+                        <mark class="highlight-gray"></mark>
+                    </p>
+                    <p>
+                        Kreierung von Prozessen (hinzufügen zu
+                        <mark class="highlight-gray"><code>new</code></mark>
+                        )
+                    </p>
+                    <p>Grad der Parallelität, CPU-IO-Anteil bestimmen</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Medium-term-scheduling</mark></p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>new</code></mark>
+                        <mark class="highlight-gray">/</mark>
+                        <mark class="highlight-gray"><code>ready</code></mark>
+                        <mark class="highlight-gray">/</mark>
+                        <mark class="highlight-gray"><code>running</code></mark>
+                        <mark class="highlight-gray"></mark>
+                        <mark class="highlight-gray">
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow>
+                                                        <mo>−</mo>
+                                                        <mtext>&nbsp;</mtext>
+                                                        <mo stretchy="false">?</mo>
+                                                        <mo>→</mo>
+                                                    </mrow>
+                                                    <annotation encoding="application/x-tex">-~?\rarr</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.77777em; vertical-align: -0.08333em"></span>
+                                                <span class="mord">−</span>
+                                                <span class="mspace nobreak">&nbsp;</span>
+                                                <span class="mclose">?</span>
+                                                <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                                <span class="mrel">→</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                        </mark>
+                        <mark class="highlight-gray"></mark>
+                        <mark class="highlight-gray"><code>ready-suspend</code></mark>
+                        <mark class="highlight-gray">/</mark>
+                        <code><mark class="highlight-gray">blocked-suspend</mark></code>
+                        <mark class="highlight-gray"></mark>
+                    </p>
+                    <p>Zuständig für Swapping</p>
+                    <p>Welche Prozesse sollen suspendiert / ausgelagert werden wenn die Resourcen knapp werden?</p>
+                </div>
+                <p></p>
+                <p>
+                    <mark class="highlight-blue">Short-term-scheduling</mark>
+                    <mark class="highlight-gray">= Dispatching</mark>
+                </p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray"><code>ready</code></mark>
+                        <mark class="highlight-gray"></mark>
+                        <mark class="highlight-gray">
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow>
+                                                        <mo>−</mo>
+                                                        <mtext>&nbsp;</mtext>
+                                                        <mo stretchy="false">?</mo>
+                                                        <mo>→</mo>
+                                                    </mrow>
+                                                    <annotation encoding="application/x-tex">-~?\rarr</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.77777em; vertical-align: -0.08333em"></span>
+                                                <span class="mord">−</span>
+                                                <span class="mspace nobreak">&nbsp;</span>
+                                                <span class="mclose">?</span>
+                                                <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                                <span class="mrel">→</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                        </mark>
+                        <mark class="highlight-gray"></mark>
+                        <mark class="highlight-gray"><code>running</code></mark>
+                        <mark class="highlight-gray">auf der CPU</mark>
+                    </p>
+                    <p>Wird mit Priorisierung genutzt.</p>
+                    <p>Dispatcher wird bei einem process switch aktiviert:</p>
+                    <div class="indented">
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">System Calls</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Traps</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Interrupt: IO Interrupt, Clock Interrupt (spezieller interrupt)</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Signale</li>
+                        </ul>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <h1>____________</h1>
+                <h1>Scheduling Strategien</h1>
+                <p>In der Praxis werden mehrere Strategien kombiniert und an verschiedenen Zeiten verwendet.</p>
+                <p>Wir behandeln hier short-term-scheduling.</p>
+                <p></p>
+                <p><mark class="highlight-blue">Selection function</mark></p>
+                <p>Funktion zB basierend auf:</p>
+                <div class="indented">
+                    <p>
+                        Arrival Time
+                        <mark class="highlight-gray">/ Ankunftszeit</mark>
+                    </p>
+                    <p>
+                        Elapsed time
+                        <mark class="highlight-gray">/ bisherige Ausführungszeit - wie lang ist Prozess schon im System</mark>
+                    </p>
+                    <p>
+                        Service Time / Burst time / CPU Time /
+                        <mark class="highlight-gray">Gesamte Abarbeitungszeit / Gesamte Ausführungszeit</mark>
+                    </p>
+                    <p>Deadline der Fertigstellung</p>
+                    <p>
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow><mo>…</mo></mrow>
+                                                <annotation encoding="application/x-tex">\dots</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.12em; vertical-align: 0em"></span>
+                                            <span class="minner">…</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                    </p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Decision mode</mark></p>
+                <div class="indented">
+                    <p>Non-preemptive Wie bei traditionellen batch-OS, keine externe Unterbrechung durch OS</p>
+                    <p>Preemptive OS kann Prozess unterbrechen</p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Priorisierung von Prozessen</h2>
+                <p><mark class="highlight-gray">(Allgemeine Implementierung)</mark></p>
+                <div class="column-list">
+                    <div style="width: 75%" class="column">
+                        <p>
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow><mo>↓</mo></mrow>
+                                                    <annotation encoding="application/x-tex">\downarrow</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.8888799999999999em; vertical-align: -0.19444em"></span>
+                                                <span class="mrel">↓</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                            Ready-Queue-Index =
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow><mo>↑</mo></mrow>
+                                                    <annotation encoding="application/x-tex">\uparrow</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.8888799999999999em; vertical-align: -0.19444em"></span>
+                                                <span class="mrel">↑</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                            Priorität.
+                        </p>
+                        <p>2 Wege aus CPU: Prozesse preempten oder vollständig ausführen.</p>
+                        <p>Starvation möglich.</p>
+                        <div class="indented"><p>Lösung: Verweildauer in Queue beschränken.</p></div>
+                        <p></p>
+                    </div>
+                    <div style="width: 25%" class="column">
+                        <figure class="image">
+                            <a href="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%201.png">
+                                <img style="width: 192px" src="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%201.png" />
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+                <p></p>
+                <hr />
+                <h2>1) First Come First Served FCFC</h2>
+                <p>
+                    Selection Function First Arrival Time
+                    <mark class="highlight-gray">/ Ankunftszeit</mark>
+                </p>
+                <p>Decision Mode Non-Preemptive</p>
+                <figure class="image">
+                    <a href="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%202.png">
+                        <img style="width: 288px" src="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%202.png" />
+                    </a>
+                </figure>
+                <figure class="image">
+                    <a href="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%203.png">
+                        <img style="width: 240px" src="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%203.png" />
+                    </a>
+                    <figcaption>Task-Set für Beispiele</figcaption>
+                </figure>
+                <p><mark class="highlight-blue">Problem: Schlechte Auslastung</mark></p>
+                <p>Begünstigt lange Prozesse</p>
+                <div class="indented">
+                    <p>
+                        Durchschnittliche haben kurze und lange Prozesse gleich lange Wartezeiten (normalized turnaround time) in der Queue, aber lange Prozesse
+                        erhalten mehr CPU Zeit, da sie nicht unterbrochen werden.
+                    </p>
+                </div>
+                <p></p>
+                <p>Begünstigt CPU-intensive Prozesse</p>
+                <div class="indented">
+                    <p>Monopolisierung wenn ohne IO</p>
+                    <p>IO-System wird nicht parallel zur CPU benutzt</p>
+                    <p>Schlechte Interaktivität</p>
+                    <p></p>
+                </div>
+                <p></p>
+                <hr />
+                <h2>2) Round Robin RR / Time Slicing</h2>
+                <p>
+                    Selection function First Arrival Time
+                    <mark class="highlight-gray">/ Ankunftszeit</mark>
+                </p>
+                <p>Decision mode Preemptive</p>
+                <figure class="image">
+                    <a href="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%204.png">
+                        <img style="width: 288px" src="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%204.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Implementierung</mark></p>
+                <div class="indented">
+                    <p>Clock interrupt: Gleich lange Zeitscheiben zyklisch an Prozesse vergeben.</p>
+                    <div class="indented"><p>Zyklisch: nach interrupt wieder in die ready-queue gestellt.</p></div>
+                    <p></p>
+                    <p>Clock interrupt darf nicht ins gewicht fallen sonst zu viel Overhead</p>
+                    <div class="indented">
+                        <p>
+                            Zeitscheibenlänge
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow><mo>&gt;</mo></mrow>
+                                                    <annotation encoding="application/x-tex">&gt;</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.5782em; vertical-align: -0.0391em"></span>
+                                                <span class="mrel">&gt;</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                            Clock Interruption time
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow><mo>+</mo></mrow>
+                                                    <annotation encoding="application/x-tex">+</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span>
+                                                <span class="mord">+</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                            scheduling switch time
+                        </p>
+                        <p>und bisschen länger als eine typische Interaktion sein.</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Problem</mark></p>
+                <div class="indented">
+                    <p>Keine gute Response Time bei Interaktiven Prozessen</p>
+                    <p>IO-Intensive Prozesse benachteiligt, da diese die Zeitscheiben nicht voll ausnutzen</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Lösung</mark></p>
+                <div class="indented">
+                    <p>Virtual Round Robin - mit Auxiliary Queue</p>
+                    <p>IO Operationen in Hilfs-Queue werden priorisiert</p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%205.png">
+                        <img style="width: 192px" src="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%205.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <hr />
+                <h2>3) Shortest Process Next SPN</h2>
+                <p>
+                    Selection Function Shortest estimated Service-Time first
+                    <mark class="highlight-gray">/ Gesamte Abarbeitungszeit</mark>
+                </p>
+                <p>Decision Mode Non-Preemptive</p>
+                <figure class="image">
+                    <a href="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%206.png">
+                        <img style="width: 288px" src="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%206.png" />
+                    </a>
+                </figure>
+                <p><mark class="highlight-blue">Vorteil</mark></p>
+                <div class="indented"><p>Mehr fairness als FCFS.</p></div>
+                <p></p>
+                <p><mark class="highlight-blue">Probleme</mark></p>
+                <div class="indented">
+                    <p>Reine Abschätzung der Abarbeitungszeiten (Bevor Prozess überhaupt gestartet ist)</p>
+                    <p>Wenn estimated service time zu lange, kann es zu starvation führen</p>
+                    <p>Response Time kann ganz unterschiedlich sein</p>
+                    <p>Langer Prozess, der früh ankommt wenn es keine kürzeren gibt und keine IO-Interrupts hat kann CPU monopolisieren</p>
+                    <p>Nicht für interaktive Prozesse geeignet</p>
+                </div>
+                <p></p>
+                <p></p>
+                <hr />
+                <h2>4) Shortest Remaining Time SRT</h2>
+                <p>Selection Function Shortest Remaining Time (= Service Time - Elapsed time)</p>
+                <p>Decision Mode Preemptive</p>
+                <p></p>
+                <p><mark class="highlight-blue">Implementierung</mark></p>
+                <div class="indented">
+                    <p>Sobald ein neuer Prozess in queue gestellt wird, wird aktueller Prozess interrupted.</p>
+                    <p>Dann wird Prozess mit shortest remaining time until completion gewählt.</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Vorteil</mark></p>
+                <div class="indented">
+                    <p>Mehr fairness als FCFS.</p>
+                    <p>Weniger Interrupts als RR</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Nachteil</mark></p>
+                <div class="indented">
+                    <p>Overhead: Protokollieren elapsed time notwendig</p>
+                    <p>Benachteiligt lange Prozesse - Starvation möglich</p>
+                    <p></p>
+                </div>
+                <p></p>
+                <hr />
+                <h2>5) Highest Response Ratio Next HRRN</h2>
+                <p>Selection Function</p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">Versucht kurze Prozesse zu priorisieren aber nicht zu starvation bei langen Prozessen zu führen.</mark></p>
+                    <p>
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow>
+                                                    <mi mathvariant="normal">arg max</mi>
+                                                    <mo>⁡</mo>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mfrac>
+                                                        <mtext mathvariant="sans-serif">w+s</mtext>
+                                                        <mtext mathvariant="sans-serif">s</mtext>
+                                                    </mfrac>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo>=</mo>
+                                                    <mi mathvariant="normal">arg max</mi>
+                                                    <mo>⁡</mo>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mfrac>
+                                                        <mtext mathvariant="sans-serif">w</mtext>
+                                                        <mtext mathvariant="sans-serif">s</mtext>
+                                                    </mfrac>
+                                                    <mo>+</mo>
+                                                    <mn>1</mn>
+                                                    <mo stretchy="false">)</mo>
+                                                </mrow>
+                                                <annotation encoding="application/x-tex">
+                                                    \argmax(\frac{\textsf{w+s}}{\textsf{s}}) = \argmax(\frac{\textsf{w}}{\textsf{s}}+1)
+                                                </annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 1.1473309999999999em; vertical-align: -0.345em"></span>
+                                            <span class="mop">
+                                                <span class="mord mathrm" style="margin-right: 0.01389em">arg</span>
+                                                <span class="mspace" style="margin-right: 0.16666666666666666em"></span>
+                                                <span class="mord mathrm">max</span>
+                                            </span>
+                                            <span class="mopen">(</span>
+                                            <span class="mord">
+                                                <span class="mopen nulldelimiter"></span>
+                                                <span class="mfrac">
+                                                    <span class="vlist-t vlist-t2">
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.802331em">
+                                                                <span style="top: -2.6550000000000002em">
+                                                                    <span class="pstrut" style="height: 3em"></span>
+                                                                    <span class="sizing reset-size6 size3 mtight">
+                                                                        <span class="mord mtight">
+                                                                            <span class="mord text mtight"><span class="mord textsf mtight">s</span></span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                                <span style="top: -3.23em">
+                                                                    <span class="pstrut" style="height: 3em"></span>
+                                                                    <span class="frac-line" style="border-bottom-width: 0.04em"></span>
+                                                                </span>
+                                                                <span style="top: -3.394em">
+                                                                    <span class="pstrut" style="height: 3em"></span>
+                                                                    <span class="sizing reset-size6 size3 mtight">
+                                                                        <span class="mord mtight">
+                                                                            <span class="mord text mtight"><span class="mord textsf mtight">w+s</span></span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="vlist-s">​</span>
+                                                        </span>
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.345em"><span></span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                                <span class="mclose nulldelimiter"></span>
+                                            </span>
+                                            <span class="mclose">)</span>
+                                            <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                            <span class="mrel">=</span>
+                                            <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                        </span>
+                                        <span class="base">
+                                            <span class="strut" style="height: 1.095em; vertical-align: -0.345em"></span>
+                                            <span class="mop">
+                                                <span class="mord mathrm" style="margin-right: 0.01389em">arg</span>
+                                                <span class="mspace" style="margin-right: 0.16666666666666666em"></span>
+                                                <span class="mord mathrm">max</span>
+                                            </span>
+                                            <span class="mopen">(</span>
+                                            <span class="mord">
+                                                <span class="mopen nulldelimiter"></span>
+                                                <span class="mfrac">
+                                                    <span class="vlist-t vlist-t2">
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.7051080000000001em">
+                                                                <span style="top: -2.6550000000000002em">
+                                                                    <span class="pstrut" style="height: 3em"></span>
+                                                                    <span class="sizing reset-size6 size3 mtight">
+                                                                        <span class="mord mtight">
+                                                                            <span class="mord text mtight"><span class="mord textsf mtight">s</span></span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                                <span style="top: -3.23em">
+                                                                    <span class="pstrut" style="height: 3em"></span>
+                                                                    <span class="frac-line" style="border-bottom-width: 0.04em"></span>
+                                                                </span>
+                                                                <span style="top: -3.394em">
+                                                                    <span class="pstrut" style="height: 3em"></span>
+                                                                    <span class="sizing reset-size6 size3 mtight">
+                                                                        <span class="mord mtight">
+                                                                            <span class="mord text mtight"><span class="mord textsf mtight">w</span></span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="vlist-s">​</span>
+                                                        </span>
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.345em"><span></span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                                <span class="mclose nulldelimiter"></span>
+                                            </span>
+                                            <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
+                                            <span class="mbin">+</span>
+                                            <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
+                                        </span>
+                                        <span class="base">
+                                            <span class="strut" style="height: 1em; vertical-align: -0.25em"></span>
+                                            <span class="mord">1</span>
+                                            <span class="mclose">)</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                    </p>
+                    <div class="indented">
+                        <p>
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow><mtext mathvariant="sans-serif">w</mtext></mrow>
+                                                    <annotation encoding="application/x-tex">\textsf w</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.44444em; vertical-align: 0em"></span>
+                                                <span class="mord text"><span class="mord textsf">w</span></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                            gesamte bisherige Wartezeit des Prozesses im System
+                        </p>
+                        <p>
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow><mtext mathvariant="sans-serif">s</mtext></mrow>
+                                                    <annotation encoding="application/x-tex">\textsf s</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 0.44444em; vertical-align: 0em"></span>
+                                                <span class="mord text"><span class="mord textsf">s</span></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                            abgeschätzte Abarbeitungszeit (service time)
+                        </p>
+                        <p>
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow>
+                                                        <mfrac>
+                                                            <mrow>
+                                                                <mtext mathvariant="sans-serif">w</mtext>
+                                                                <mo>+</mo>
+                                                                <mtext mathvariant="sans-serif">s</mtext>
+                                                            </mrow>
+                                                            <mtext mathvariant="sans-serif">s</mtext>
+                                                        </mfrac>
+                                                    </mrow>
+                                                    <annotation encoding="application/x-tex">\frac{\textsf w+ \textsf s}{\textsf s}</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 1.1473309999999999em; vertical-align: -0.345em"></span>
+                                                <span class="mord">
+                                                    <span class="mopen nulldelimiter"></span>
+                                                    <span class="mfrac">
+                                                        <span class="vlist-t vlist-t2">
+                                                            <span class="vlist-r">
+                                                                <span class="vlist" style="height: 0.802331em">
+                                                                    <span style="top: -2.6550000000000002em">
+                                                                        <span class="pstrut" style="height: 3em"></span>
+                                                                        <span class="sizing reset-size6 size3 mtight">
+                                                                            <span class="mord mtight">
+                                                                                <span class="mord text mtight"><span class="mord textsf mtight">s</span></span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span style="top: -3.23em">
+                                                                        <span class="pstrut" style="height: 3em"></span>
+                                                                        <span class="frac-line" style="border-bottom-width: 0.04em"></span>
+                                                                    </span>
+                                                                    <span style="top: -3.394em">
+                                                                        <span class="pstrut" style="height: 3em"></span>
+                                                                        <span class="sizing reset-size6 size3 mtight">
+                                                                            <span class="mord mtight">
+                                                                                <span class="mord text mtight"><span class="mord textsf mtight">w</span></span>
+                                                                                <span class="mbin mtight">+</span>
+                                                                                <span class="mord text mtight"><span class="mord textsf mtight">s</span></span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                                <span class="vlist-s">​</span>
+                                                            </span>
+                                                            <span class="vlist-r">
+                                                                <span class="vlist" style="height: 0.345em"><span></span></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="mclose nulldelimiter"></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                            response ratio (RR)
+                        </p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-gray">Das bedeutet:</mark></p>
+                    <div class="indented">
+                        <ul class="block-color-gray bulleted-list">
+                            <li style="list-style-type: disc">
+                                <mark class="highlight-gray">Kurze Prozesse erzeugen eine große Zahl durch kleine Werte im Nenner</mark>
+                            </li>
+                        </ul>
+                        <ul class="block-color-gray bulleted-list">
+                            <li style="list-style-type: disc">
+                                <mark class="highlight-gray">Prozesse die lange genug gewartet haben kommen irgendwann auch dran</mark>
+                                <p>
+                                    <mark class="highlight-gray">
+                                        Es wird jener Prozess ausgewählt, die in Relation zur eingeschätzten Abarbeitungszeit am längsten bisher gewartet hat.
+                                    </mark>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p>Decision Mode</p>
+                <div class="indented"><p>Non-Preemptive</p></div>
+                <p></p>
+                <p></p>
+                <p>
+                    <mark class="highlight-blue">Vorteil</mark>
+                    keine Starvation von langen Prozessen und kürzere Prozesse fair behandelt
+                </p>
+                <p>
+                    <mark class="highlight-blue">Nachteil</mark>
+                    Reine Abschätzung der Abarbeitungszeit
+                </p>
+                <p></p>
+                <hr />
+                <h2>6) Feedback Scheduling FS</h2>
+                <p>Selection Function</p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray">Versucht ohne im Voraus abgeschätze Abarbeitungszeit auszukommen und kurze Prozesse zu bevorzugen.</mark>
+                    </p>
+                    <p>
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow><mo>↑</mo></mrow>
+                                                <annotation encoding="application/x-tex">\uparrow</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.8888799999999999em; vertical-align: -0.19444em"></span>
+                                            <span class="mrel">↑</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        Elapsed Time =
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow><mo>↓</mo></mrow>
+                                                <annotation encoding="application/x-tex">\downarrow</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.8888799999999999em; vertical-align: -0.19444em"></span>
+                                            <span class="mrel">↓</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        Priorität,
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow><mo>↑</mo></mrow>
+                                                <annotation encoding="application/x-tex">\uparrow</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.8888799999999999em; vertical-align: -0.19444em"></span>
+                                            <span class="mrel">↑</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        Zeitscheiben
+                    </p>
+                    <p><mark class="highlight-gray">Wobei Priorität mit queues implementiert</mark></p>
+                    <p>Am Anfang starten alle Prozesse mit hoher Priorität und erhalten kurze Zeitscheiben.</p>
+                    <p>Je mehr von ihnen ausgeführt wird (insgesamt mehr bei längeren Prozessen):</p>
+                    <div class="indented">
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">desto unwichtiger werden sie</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">desto länger werden sie auf einmal ausgeführt</li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <p>Dadurch haben kurze Prozesse höhere Priorität.</p>
+                </div>
+                <p></p>
+                <p>Decision Mode</p>
+                <div class="indented"><p>Preemptive</p></div>
+                <p></p>
+                <figure class="image">
+                    <a href="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%207.png">
+                        <img style="width: 192px" src="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%207.png" />
+                    </a>
+                </figure>
+                <p>
+                    <mark class="highlight-blue">Vorteil</mark>
+                    keine Abschätzung der Abarbeitungszeit im Voraus notwendig
+                </p>
+                <p>
+                    <mark class="highlight-blue">Problem</mark>
+                    Starvation von langen Prozessen möglich
+                </p>
+                <p>
+                    <mark class="highlight-blue">Lösung</mark>
+                    Anheben der Priorität nach bestimmter Zeit
+                </p>
+                <p></p>
+                <hr />
+                <h1>Echtzeitscheduling / Real-Time Scheduling</h1>
+                <p>
+                    Applikation / Anwendung hat Menge an Deadlines
+                    <mark class="highlight-gray">(soft vs. hard / critical)</mark>
+                    .
+                </p>
+                <p>Es geht nicht um Performance / dass alles möglichst schnell abgearbeitet wird sondern Einhalten von critical Deadlines.</p>
+                <ul class="bulleted-list">
+                    <li style="list-style-type: disc">Prozesse oft periodisch</li>
+                </ul>
+                <ul class="bulleted-list">
+                    <li style="list-style-type: disc">Die meisten scheduler sind preemptive</li>
+                </ul>
+                <ul class="bulleted-list">
+                    <li style="list-style-type: disc">statische vs. dynamische Prioritäten</li>
+                </ul>
+                <p></p>
+                <h2>7) Earliest Deadline First EDF</h2>
+                <p>Selection Function Earliest Completion Deadline first</p>
+                <p>Decision Mode Preemptive</p>
+                <p></p>
+                <p><mark class="highlight-blue">Eigenschaften</mark></p>
+                <div class="indented">
+                    <p>Optimaler Scheduler: Beweisbar optimal darin # der deadline misses zu minimieren.</p>
+                    <p>Setzt statische Deadlines und gleichzeitiges Eintreffen von einander unabhängiger Tasks voraus.</p>
+                    <p>Deadlines müssen sortiert werden.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Schedulability Test</mark></p>
+                <p>Statisch vor Nutzung testen ob Tasks rechtzeitig beendet werden können</p>
+                <div class="indented">
+                    <p>
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow>
+                                                    <msub>
+                                                        <mi>T</mi>
+                                                        <mi>i</mi>
+                                                    </msub>
+                                                </mrow>
+                                                <annotation encoding="application/x-tex">T_i</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span>
+                                            <span class="mord">
+                                                <span class="mord mathnormal" style="margin-right: 0.13889em">T</span>
+                                                <span class="msupsub">
+                                                    <span class="vlist-t vlist-t2">
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.31166399999999994em">
+                                                                <span style="top: -2.5500000000000003em; margin-left: -0.13889em; margin-right: 0.05em">
+                                                                    <span class="pstrut" style="height: 2.7em"></span>
+                                                                    <span class="sizing reset-size6 size3 mtight">
+                                                                        <span class="mord mathnormal mtight">i</span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="vlist-s">​</span>
+                                                        </span>
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        Periodendauer
+                        <mark class="highlight-gray">alle unsere Tasks sind periodisch.</mark>
+                    </p>
+                    <p>
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow>
+                                                    <msub>
+                                                        <mi>C</mi>
+                                                        <mi>i</mi>
+                                                    </msub>
+                                                </mrow>
+                                                <annotation encoding="application/x-tex">C_i</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span>
+                                            <span class="mord">
+                                                <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
+                                                <span class="msupsub">
+                                                    <span class="vlist-t vlist-t2">
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.31166399999999994em">
+                                                                <span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em">
+                                                                    <span class="pstrut" style="height: 2.7em"></span>
+                                                                    <span class="sizing reset-size6 size3 mtight">
+                                                                        <span class="mord mathnormal mtight">i</span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="vlist-s">​</span>
+                                                        </span>
+                                                        <span class="vlist-r">
+                                                            <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        Ausführungszeit (müssen wir im Voraus wissen)
+                    </p>
+                    <p>
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow><mi>i</mi></mrow>
+                                                <annotation encoding="application/x-tex">i</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.65952em; vertical-align: 0em"></span>
+                                            <span class="mord mathnormal">i</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        Index für Prozess
+                    </p>
+                </div>
+                <p></p>
+                <p>
+                    Es muss gelten:
+                    <style>
+                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                    </style>
+                    <span
+                        data-token-index="0"
+                        contenteditable="false"
+                        class="notion-text-equation-token"
+                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                        <span></span>
+                        <span>
+                            <span class="katex">
+                                <span class="katex-mathml">
+                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                        <semantics>
+                                            <mrow>
+                                                <msub>
+                                                    <mo>∑</mo>
+                                                    <mi>i</mi>
+                                                </msub>
+                                                <mfrac>
+                                                    <msub>
+                                                        <mi>C</mi>
+                                                        <mi>i</mi>
+                                                    </msub>
+                                                    <msub>
+                                                        <mi>T</mi>
+                                                        <mi>i</mi>
+                                                    </msub>
+                                                </mfrac>
+                                                <mo>≤</mo>
+                                                <mn>1</mn>
+                                            </mrow>
+                                            <annotation encoding="application/x-tex">\sum_i \frac{C_i}{T_i} \leq 1</annotation>
+                                        </semantics>
+                                    </math>
+                                </span>
+                                <span class="katex-html" aria-hidden="true">
+                                    <span class="base">
+                                        <span class="strut" style="height: 1.3335309999999998em; vertical-align: -0.44509999999999994em"></span>
+                                        <span class="mop">
+                                            <span class="mop op-symbol small-op" style="position: relative; top: -0.0000050000000000050004em">∑</span>
+                                            <span class="msupsub">
+                                                <span class="vlist-t vlist-t2">
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.16195399999999993em">
+                                                            <span style="top: -2.40029em; margin-left: 0em; margin-right: 0.05em">
+                                                                <span class="pstrut" style="height: 2.7em"></span>
+                                                                <span class="sizing reset-size6 size3 mtight">
+                                                                    <span class="mord mathnormal mtight">i</span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="vlist-s">​</span>
+                                                    </span>
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.29971000000000003em"><span></span></span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span class="mspace" style="margin-right: 0.16666666666666666em"></span>
+                                        <span class="mord">
+                                            <span class="mopen nulldelimiter"></span>
+                                            <span class="mfrac">
+                                                <span class="vlist-t vlist-t2">
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.8884309999999999em">
+                                                            <span style="top: -2.655em">
+                                                                <span class="pstrut" style="height: 3em"></span>
+                                                                <span class="sizing reset-size6 size3 mtight">
+                                                                    <span class="mord mtight">
+                                                                        <span class="mord mtight">
+                                                                            <span class="mord mathnormal mtight" style="margin-right: 0.13889em">T</span>
+                                                                            <span class="msupsub">
+                                                                                <span class="vlist-t vlist-t2">
+                                                                                    <span class="vlist-r">
+                                                                                        <span class="vlist" style="height: 0.3280857142857143em">
+                                                                                            <span
+                                                                                                style="
+                                                                                                    top: -2.357em;
+                                                                                                    margin-left: -0.13889em;
+                                                                                                    margin-right: 0.07142857142857144em;
+                                                                                                ">
+                                                                                                <span class="pstrut" style="height: 2.5em"></span>
+                                                                                                <span class="sizing reset-size3 size1 mtight">
+                                                                                                    <span class="mord mathnormal mtight">i</span>
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                        <span class="vlist-s">​</span>
+                                                                                    </span>
+                                                                                    <span class="vlist-r">
+                                                                                        <span class="vlist" style="height: 0.143em"><span></span></span>
+                                                                                    </span>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                            <span style="top: -3.23em">
+                                                                <span class="pstrut" style="height: 3em"></span>
+                                                                <span class="frac-line" style="border-bottom-width: 0.04em"></span>
+                                                            </span>
+                                                            <span style="top: -3.4101em">
+                                                                <span class="pstrut" style="height: 3em"></span>
+                                                                <span class="sizing reset-size6 size3 mtight">
+                                                                    <span class="mord mtight">
+                                                                        <span class="mord mtight">
+                                                                            <span class="mord mathnormal mtight" style="margin-right: 0.07153em">C</span>
+                                                                            <span class="msupsub">
+                                                                                <span class="vlist-t vlist-t2">
+                                                                                    <span class="vlist-r">
+                                                                                        <span class="vlist" style="height: 0.3280857142857143em">
+                                                                                            <span
+                                                                                                style="
+                                                                                                    top: -2.357em;
+                                                                                                    margin-left: -0.07153em;
+                                                                                                    margin-right: 0.07142857142857144em;
+                                                                                                ">
+                                                                                                <span class="pstrut" style="height: 2.5em"></span>
+                                                                                                <span class="sizing reset-size3 size1 mtight">
+                                                                                                    <span class="mord mathnormal mtight">i</span>
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                        <span class="vlist-s">​</span>
+                                                                                    </span>
+                                                                                    <span class="vlist-r">
+                                                                                        <span class="vlist" style="height: 0.143em"><span></span></span>
+                                                                                    </span>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="vlist-s">​</span>
+                                                    </span>
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.44509999999999994em"><span></span></span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span class="mclose nulldelimiter"></span>
+                                        </span>
+                                        <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                        <span class="mrel">≤</span>
+                                        <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                    </span>
+                                    <span class="base">
+                                        <span class="strut" style="height: 0.64444em; vertical-align: 0em"></span>
+                                        <span class="mord">1</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                        <span>﻿</span>
+                    </span>
+                </p>
+                <div class="indented">
+                    <p>
+                        <mark class="highlight-gray">
+                            <style>
+                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                            </style>
+                            <span
+                                data-token-index="0"
+                                contenteditable="false"
+                                class="notion-text-equation-token"
+                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                <span></span>
+                                <span>
+                                    <span class="katex">
+                                        <span class="katex-mathml">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <semantics>
+                                                    <mrow>
+                                                        <mfrac>
+                                                            <msub>
+                                                                <mi>C</mi>
+                                                                <mi>i</mi>
+                                                            </msub>
+                                                            <msub>
+                                                                <mi>T</mi>
+                                                                <mi>i</mi>
+                                                            </msub>
+                                                        </mfrac>
+                                                    </mrow>
+                                                    <annotation encoding="application/x-tex">\frac{C_i}{T_i}</annotation>
+                                                </semantics>
+                                            </math>
+                                        </span>
+                                        <span class="katex-html" aria-hidden="true">
+                                            <span class="base">
+                                                <span class="strut" style="height: 1.3335309999999998em; vertical-align: -0.44509999999999994em"></span>
+                                                <span class="mord">
+                                                    <span class="mopen nulldelimiter"></span>
+                                                    <span class="mfrac">
+                                                        <span class="vlist-t vlist-t2">
+                                                            <span class="vlist-r">
+                                                                <span class="vlist" style="height: 0.8884309999999999em">
+                                                                    <span style="top: -2.655em">
+                                                                        <span class="pstrut" style="height: 3em"></span>
+                                                                        <span class="sizing reset-size6 size3 mtight">
+                                                                            <span class="mord mtight">
+                                                                                <span class="mord mtight">
+                                                                                    <span class="mord mathnormal mtight" style="margin-right: 0.13889em">
+                                                                                        T
+                                                                                    </span>
+                                                                                    <span class="msupsub">
+                                                                                        <span class="vlist-t vlist-t2">
+                                                                                            <span class="vlist-r">
+                                                                                                <span class="vlist" style="height: 0.3280857142857143em">
+                                                                                                    <span
+                                                                                                        style="
+                                                                                                            top: -2.357em;
+                                                                                                            margin-left: -0.13889em;
+                                                                                                            margin-right: 0.07142857142857144em;
+                                                                                                        ">
+                                                                                                        <span class="pstrut" style="height: 2.5em"></span>
+                                                                                                        <span class="sizing reset-size3 size1 mtight">
+                                                                                                            <span class="mord mathnormal mtight">i</span>
+                                                                                                        </span>
+                                                                                                    </span>
+                                                                                                </span>
+                                                                                                <span class="vlist-s">​</span>
+                                                                                            </span>
+                                                                                            <span class="vlist-r">
+                                                                                                <span class="vlist" style="height: 0.143em"><span></span></span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span style="top: -3.23em">
+                                                                        <span class="pstrut" style="height: 3em"></span>
+                                                                        <span class="frac-line" style="border-bottom-width: 0.04em"></span>
+                                                                    </span>
+                                                                    <span style="top: -3.4101em">
+                                                                        <span class="pstrut" style="height: 3em"></span>
+                                                                        <span class="sizing reset-size6 size3 mtight">
+                                                                            <span class="mord mtight">
+                                                                                <span class="mord mtight">
+                                                                                    <span class="mord mathnormal mtight" style="margin-right: 0.07153em">
+                                                                                        C
+                                                                                    </span>
+                                                                                    <span class="msupsub">
+                                                                                        <span class="vlist-t vlist-t2">
+                                                                                            <span class="vlist-r">
+                                                                                                <span class="vlist" style="height: 0.3280857142857143em">
+                                                                                                    <span
+                                                                                                        style="
+                                                                                                            top: -2.357em;
+                                                                                                            margin-left: -0.07153em;
+                                                                                                            margin-right: 0.07142857142857144em;
+                                                                                                        ">
+                                                                                                        <span class="pstrut" style="height: 2.5em"></span>
+                                                                                                        <span class="sizing reset-size3 size1 mtight">
+                                                                                                            <span class="mord mathnormal mtight">i</span>
+                                                                                                        </span>
+                                                                                                    </span>
+                                                                                                </span>
+                                                                                                <span class="vlist-s">​</span>
+                                                                                            </span>
+                                                                                            <span class="vlist-r">
+                                                                                                <span class="vlist" style="height: 0.143em"><span></span></span>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                                <span class="vlist-s">​</span>
+                                                            </span>
+                                                            <span class="vlist-r">
+                                                                <span class="vlist" style="height: 0.44509999999999994em"><span></span></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="mclose nulldelimiter"></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span>﻿</span>
+                            </span>
+                        </mark>
+                        <mark class="highlight-gray">CPU-Auslastung durch einen Task (in einer Periode)</mark>
+                    </p>
+                    <p>
+                        Das bedeutet Gesamt-CPU-Auslastung
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow>
+                                                    <mo>≤</mo>
+                                                    <mn>100</mn>
+                                                    <mi mathvariant="normal">%</mi>
+                                                </mrow>
+                                                <annotation encoding="application/x-tex">\leq 100\%</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.7719400000000001em; vertical-align: -0.13597em"></span>
+                                            <span class="mrel">≤</span>
+                                            <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
+                                        </span>
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.80556em; vertical-align: -0.05556em"></span>
+                                            <span class="mord">100%</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        für alle Tasks
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Beispiel mit fixen Prioritäten</mark></p>
+                <p><mark class="highlight-gray">Wichtig: hier vernachlässigen wir scheduling overhead</mark></p>
+                <figure class="image">
+                    <a href="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%208.png">
+                        <img style="width: 384px" src="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%208.png" />
+                    </a>
+                    <figcaption>Arrival and Execution Times + Deadlines</figcaption>
+                </figure>
+                <p>
+                    <style>
+                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                    </style>
+                    <span
+                        data-token-index="0"
+                        contenteditable="false"
+                        class="notion-text-equation-token"
+                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                        <span></span>
+                        <span>
+                            <span class="katex">
+                                <span class="katex-mathml">
+                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                        <semantics>
+                                            <mrow><mi>A</mi></mrow>
+                                            <annotation encoding="application/x-tex">A</annotation>
+                                        </semantics>
+                                    </math>
+                                </span>
+                                <span class="katex-html" aria-hidden="true">
+                                    <span class="base">
+                                        <span class="strut" style="height: 0.68333em; vertical-align: 0em"></span>
+                                        <span class="mord mathnormal">A</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                        <span>﻿</span>
+                    </span>
+                    und
+                    <style>
+                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                    </style>
+                    <span
+                        data-token-index="0"
+                        contenteditable="false"
+                        class="notion-text-equation-token"
+                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                        <span></span>
+                        <span>
+                            <span class="katex">
+                                <span class="katex-mathml">
+                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                        <semantics>
+                                            <mrow><mi>B</mi></mrow>
+                                            <annotation encoding="application/x-tex">B</annotation>
+                                        </semantics>
+                                    </math>
+                                </span>
+                                <span class="katex-html" aria-hidden="true">
+                                    <span class="base">
+                                        <span class="strut" style="height: 0.68333em; vertical-align: 0em"></span>
+                                        <span class="mord mathnormal" style="margin-right: 0.05017em">B</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                        <span>﻿</span>
+                    </span>
+                    sind tasks die periodisch auftreten
+                    <style>
+                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                    </style>
+                    <span
+                        data-token-index="0"
+                        contenteditable="false"
+                        class="notion-text-equation-token"
+                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                        <span></span>
+                        <span>
+                            <span class="katex">
+                                <span class="katex-mathml">
+                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                        <semantics>
+                                            <mrow>
+                                                <mo stretchy="false">(</mo>
+                                                <msub>
+                                                    <mi>A</mi>
+                                                    <mn>1</mn>
+                                                </msub>
+                                                <mo separator="true">,</mo>
+                                                <msub>
+                                                    <mi>A</mi>
+                                                    <mn>2</mn>
+                                                </msub>
+                                                <mo separator="true">,</mo>
+                                                <mo>…</mo>
+                                                <msub>
+                                                    <mi>A</mi>
+                                                    <mi>n</mi>
+                                                </msub>
+                                                <mo stretchy="false">)</mo>
+                                                <mo separator="true">,</mo>
+                                                <mtext>&nbsp;</mtext>
+                                                <mo stretchy="false">(</mo>
+                                                <msub>
+                                                    <mi>B</mi>
+                                                    <mn>1</mn>
+                                                </msub>
+                                                <mo separator="true">,</mo>
+                                                <msub>
+                                                    <mi>B</mi>
+                                                    <mn>2</mn>
+                                                </msub>
+                                                <mo separator="true">,</mo>
+                                                <mo>…</mo>
+                                                <msub>
+                                                    <mi>B</mi>
+                                                    <mi>n</mi>
+                                                </msub>
+                                                <mo stretchy="false">)</mo>
+                                            </mrow>
+                                            <annotation encoding="application/x-tex">(A_1, A_2, \dots A_n),~(B_1, B_2, \dots B_n)</annotation>
+                                        </semantics>
+                                    </math>
+                                </span>
+                                <span class="katex-html" aria-hidden="true">
+                                    <span class="base">
+                                        <span class="strut" style="height: 1em; vertical-align: -0.25em"></span>
+                                        <span class="mopen">(</span>
+                                        <span class="mord">
+                                            <span class="mord mathnormal">A</span>
+                                            <span class="msupsub">
+                                                <span class="vlist-t vlist-t2">
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.30110799999999993em">
+                                                            <span style="top: -2.5500000000000003em; margin-left: 0em; margin-right: 0.05em">
+                                                                <span class="pstrut" style="height: 2.7em"></span>
+                                                                <span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="vlist-s">​</span>
+                                                    </span>
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span class="mpunct">,</span>
+                                        <span class="mspace" style="margin-right: 0.16666666666666666em"></span>
+                                        <span class="mord">
+                                            <span class="mord mathnormal">A</span>
+                                            <span class="msupsub">
+                                                <span class="vlist-t vlist-t2">
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.30110799999999993em">
+                                                            <span style="top: -2.5500000000000003em; margin-left: 0em; margin-right: 0.05em">
+                                                                <span class="pstrut" style="height: 2.7em"></span>
+                                                                <span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="vlist-s">​</span>
+                                                    </span>
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span class="mpunct">,</span>
+                                        <span class="mspace" style="margin-right: 0.16666666666666666em"></span>
+                                        <span class="minner">…</span>
+                                        <span class="mspace" style="margin-right: 0.16666666666666666em"></span>
+                                        <span class="mord">
+                                            <span class="mord mathnormal">A</span>
+                                            <span class="msupsub">
+                                                <span class="vlist-t vlist-t2">
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.151392em">
+                                                            <span style="top: -2.5500000000000003em; margin-left: 0em; margin-right: 0.05em">
+                                                                <span class="pstrut" style="height: 2.7em"></span>
+                                                                <span class="sizing reset-size6 size3 mtight">
+                                                                    <span class="mord mathnormal mtight">n</span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="vlist-s">​</span>
+                                                    </span>
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span class="mclose">)</span>
+                                        <span class="mpunct">,</span>
+                                        <span class="mspace nobreak">&nbsp;</span>
+                                        <span class="mspace" style="margin-right: 0.16666666666666666em"></span>
+                                        <span class="mopen">(</span>
+                                        <span class="mord">
+                                            <span class="mord mathnormal" style="margin-right: 0.05017em">B</span>
+                                            <span class="msupsub">
+                                                <span class="vlist-t vlist-t2">
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.30110799999999993em">
+                                                            <span style="top: -2.5500000000000003em; margin-left: -0.05017em; margin-right: 0.05em">
+                                                                <span class="pstrut" style="height: 2.7em"></span>
+                                                                <span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="vlist-s">​</span>
+                                                    </span>
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span class="mpunct">,</span>
+                                        <span class="mspace" style="margin-right: 0.16666666666666666em"></span>
+                                        <span class="mord">
+                                            <span class="mord mathnormal" style="margin-right: 0.05017em">B</span>
+                                            <span class="msupsub">
+                                                <span class="vlist-t vlist-t2">
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.30110799999999993em">
+                                                            <span style="top: -2.5500000000000003em; margin-left: -0.05017em; margin-right: 0.05em">
+                                                                <span class="pstrut" style="height: 2.7em"></span>
+                                                                <span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="vlist-s">​</span>
+                                                    </span>
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span class="mpunct">,</span>
+                                        <span class="mspace" style="margin-right: 0.16666666666666666em"></span>
+                                        <span class="minner">…</span>
+                                        <span class="mspace" style="margin-right: 0.16666666666666666em"></span>
+                                        <span class="mord">
+                                            <span class="mord mathnormal" style="margin-right: 0.05017em">B</span>
+                                            <span class="msupsub">
+                                                <span class="vlist-t vlist-t2">
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.151392em">
+                                                            <span style="top: -2.5500000000000003em; margin-left: -0.05017em; margin-right: 0.05em">
+                                                                <span class="pstrut" style="height: 2.7em"></span>
+                                                                <span class="sizing reset-size6 size3 mtight">
+                                                                    <span class="mord mathnormal mtight">n</span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="vlist-s">​</span>
+                                                    </span>
+                                                    <span class="vlist-r">
+                                                        <span class="vlist" style="height: 0.15em"><span></span></span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span class="mclose">)</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                        <span>﻿</span>
+                    </span>
+                    und immer dieselbe execution time und arrival time haben.
+                </p>
+                <figure class="image">
+                    <a href="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%209.png">
+                        <img style="width: 384px" src="Scheduling%20e0f07e455d6e4ea89cd298985500629f/Untitled%209.png" />
+                    </a>
+                    <figcaption>Fixed / dynamic priorization</figcaption>
+                </figure>
+                <p>
+                    Statische Prioritätsvergabe priorisierung von
+                    <style>
+                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                    </style>
+                    <span
+                        data-token-index="0"
+                        contenteditable="false"
+                        class="notion-text-equation-token"
+                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                        <span></span>
+                        <span>
+                            <span class="katex">
+                                <span class="katex-mathml">
+                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                        <semantics>
+                                            <mrow><mi>A</mi></mrow>
+                                            <annotation encoding="application/x-tex">A</annotation>
+                                        </semantics>
+                                    </math>
+                                </span>
+                                <span class="katex-html" aria-hidden="true">
+                                    <span class="base">
+                                        <span class="strut" style="height: 0.68333em; vertical-align: 0em"></span>
+                                        <span class="mord mathnormal">A</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                        <span>﻿</span>
+                    </span>
+                    oder
+                    <style>
+                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                    </style>
+                    <span
+                        data-token-index="0"
+                        contenteditable="false"
+                        class="notion-text-equation-token"
+                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                        <span></span>
+                        <span>
+                            <span class="katex">
+                                <span class="katex-mathml">
+                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                        <semantics>
+                                            <mrow><mi>B</mi></mrow>
+                                            <annotation encoding="application/x-tex">B</annotation>
+                                        </semantics>
+                                    </math>
+                                </span>
+                                <span class="katex-html" aria-hidden="true">
+                                    <span class="base">
+                                        <span class="strut" style="height: 0.68333em; vertical-align: 0em"></span>
+                                        <span class="mord mathnormal" style="margin-right: 0.05017em">B</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                        <span>﻿</span>
+                    </span>
+                    - Deadlines nicht eingehalten
+                </p>
+                <p>Dynamische Prioritätsvergabe (EDF) alle Deadlines eingehalten.</p>
+                <p></p>
+            </div>
+        </article>
+    </body>
+</html>

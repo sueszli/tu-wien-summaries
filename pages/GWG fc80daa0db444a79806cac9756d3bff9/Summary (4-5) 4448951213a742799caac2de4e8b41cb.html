@@ -1,0 +1,1702 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Summary (4-5)</title>
+        <style>
+            /* cspell:disable-file */
+            /* webkit printing magic: print all background colors */
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            * {
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media only screen {
+                body {
+                    margin: 2em auto;
+                    max-width: 900px;
+                    color: rgb(55, 53, 47);
+                }
+            }
+
+            body {
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            a,
+            a.visited {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .pdf-relative-link-path {
+                font-size: 80%;
+                color: #444;
+            }
+
+            h1,
+            h2,
+            h3 {
+                letter-spacing: -0.01em;
+                line-height: 1.2;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 0;
+                margin-bottom: 0.75em;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+                margin-top: 1.875rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .source {
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 1.5em;
+                word-break: break-all;
+            }
+
+            .callout {
+                border-radius: 3px;
+                padding: 1rem;
+            }
+
+            figure {
+                margin: 1.25em 0;
+                page-break-inside: avoid;
+            }
+
+            figcaption {
+                opacity: 0.5;
+                font-size: 85%;
+                margin-top: 0.5em;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+
+            .indented {
+                padding-left: 1.5em;
+            }
+
+            hr {
+                background: transparent;
+                display: block;
+                width: 100%;
+                height: 1px;
+                visibility: visible;
+                border: none;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            @media only print {
+                img {
+                    max-height: 100vh;
+                    object-fit: contain;
+                }
+            }
+
+            @page {
+                margin: 1in;
+            }
+
+            .collection-content {
+                font-size: 0.875rem;
+            }
+
+            .column-list {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .column {
+                padding: 0 1em;
+            }
+
+            .column:first-child {
+                padding-left: 0;
+            }
+
+            .column:last-child {
+                padding-right: 0;
+            }
+
+            .table_of_contents-item {
+                display: block;
+                font-size: 0.875rem;
+                line-height: 1.3;
+                padding: 0.125rem;
+            }
+
+            .table_of_contents-indent-1 {
+                margin-left: 1.5rem;
+            }
+
+            .table_of_contents-indent-2 {
+                margin-left: 3rem;
+            }
+
+            .table_of_contents-indent-3 {
+                margin-left: 4.5rem;
+            }
+
+            .table_of_contents-link {
+                text-decoration: none;
+                opacity: 0.7;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+            }
+
+            table,
+            th,
+            td {
+                border: 1px solid rgba(55, 53, 47, 0.09);
+                border-collapse: collapse;
+            }
+
+            table {
+                border-left: none;
+                border-right: none;
+            }
+
+            th,
+            td {
+                font-weight: normal;
+                padding: 0.25em 0.5em;
+                line-height: 1.5;
+                min-height: 1.5em;
+                text-align: left;
+            }
+
+            th {
+                color: rgba(55, 53, 47, 0.6);
+            }
+
+            ol,
+            ul {
+                margin: 0;
+                margin-block-start: 0.6em;
+                margin-block-end: 0.6em;
+            }
+
+            li > ol:first-child,
+            li > ul:first-child {
+                margin-block-start: 0.6em;
+            }
+
+            ul > li {
+                list-style: disc;
+            }
+
+            ul.to-do-list {
+                padding-inline-start: 0;
+            }
+
+            ul.to-do-list > li {
+                list-style: none;
+            }
+
+            .to-do-children-checked {
+                text-decoration: line-through;
+                opacity: 0.375;
+            }
+
+            ul.toggle > li {
+                list-style: none;
+            }
+
+            ul {
+                padding-inline-start: 1.7em;
+            }
+
+            ul > li {
+                padding-left: 0.1em;
+            }
+
+            ol {
+                padding-inline-start: 1.6em;
+            }
+
+            ol > li {
+                padding-left: 0.2em;
+            }
+
+            .mono ol {
+                padding-inline-start: 2em;
+            }
+
+            .mono ol > li {
+                text-indent: -0.4em;
+            }
+
+            .toggle {
+                padding-inline-start: 0em;
+                list-style-type: none;
+            }
+
+            /* Indent toggle children */
+            .toggle > li > details {
+                padding-left: 1.7em;
+            }
+
+            .toggle > li > details > summary {
+                margin-left: -1.1em;
+            }
+
+            .selected-value {
+                display: inline-block;
+                padding: 0 0.5em;
+                background: rgba(206, 205, 202, 0.5);
+                border-radius: 3px;
+                margin-right: 0.5em;
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+            }
+
+            .collection-title {
+                display: inline-block;
+                margin-right: 1em;
+            }
+
+            .page-description {
+                margin-bottom: 2em;
+            }
+
+            .simple-table {
+                margin-top: 1em;
+                font-size: 0.875rem;
+                empty-cells: show;
+            }
+            .simple-table td {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table th {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table-header-color {
+                background: rgb(247, 246, 243);
+                color: black;
+            }
+            .simple-table-header {
+                font-weight: 500;
+            }
+
+            time {
+                opacity: 0.5;
+            }
+
+            .icon {
+                display: inline-block;
+                max-width: 1.2em;
+                max-height: 1.2em;
+                text-decoration: none;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            img.icon {
+                border-radius: 3px;
+            }
+
+            .user-icon {
+                width: 1.5em;
+                height: 1.5em;
+                border-radius: 100%;
+                margin-right: 0.5rem;
+            }
+
+            .user-icon-inner {
+                font-size: 0.8em;
+            }
+
+            .text-icon {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+            .page-cover-image {
+                display: block;
+                object-fit: cover;
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            .page-header-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .page-header-icon-with-cover {
+                margin-top: -0.72em;
+                margin-left: 0.07em;
+            }
+
+            .page-header-icon img {
+                border-radius: 3px;
+            }
+
+            .link-to-page {
+                margin: 1em 0;
+                padding: 0;
+                border: none;
+                font-weight: 500;
+            }
+
+            p > .user {
+                opacity: 0.5;
+            }
+
+            td > .user,
+            td > time {
+                white-space: nowrap;
+            }
+
+            input[type="checkbox"] {
+                transform: scale(1.5);
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
+
+            p {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .image {
+                border: none;
+                margin: 1.5em 0;
+                padding: 0;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .code,
+            code {
+                background: rgba(135, 131, 120, 0.15);
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 85%;
+                tab-size: 2;
+            }
+
+            code {
+                color: #eb5757;
+            }
+
+            .code {
+                padding: 1.5em 1em;
+            }
+
+            .code-wrap {
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .code > code {
+                background: none;
+                padding: 0;
+                font-size: 100%;
+                color: inherit;
+            }
+
+            blockquote {
+                font-size: 1.25em;
+                margin: 1em 0;
+                padding-left: 1em;
+                border-left: 3px solid rgb(55, 53, 47);
+            }
+
+            .bookmark {
+                text-decoration: none;
+                max-height: 8em;
+                padding: 0;
+                display: flex;
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .bookmark-title {
+                font-size: 0.85em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 1.75em;
+                white-space: nowrap;
+            }
+
+            .bookmark-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bookmark-info {
+                flex: 4 1 180px;
+                padding: 12px 14px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark-image {
+                width: 33%;
+                flex: 1 1 180px;
+                display: block;
+                position: relative;
+                object-fit: cover;
+                border-radius: 1px;
+            }
+
+            .bookmark-description {
+                color: rgba(55, 53, 47, 0.6);
+                font-size: 0.75em;
+                overflow: hidden;
+                max-height: 4.5em;
+                word-break: break-word;
+            }
+
+            .bookmark-href {
+                font-size: 0.75em;
+                margin-top: 0.25em;
+            }
+
+            .sans {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+                    "Segoe UI Symbol";
+            }
+            .code {
+                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+            }
+            .serif {
+                font-family: Lyon-Text, Georgia, ui-serif, serif;
+            }
+            .mono {
+                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+            }
+            .pdf .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+            }
+            .pdf:lang(zh-CN) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+            }
+            .pdf:lang(zh-TW) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+            }
+            .pdf:lang(ko-KR) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+            }
+            .pdf .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK KR";
+            }
+            .pdf .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+            }
+            .pdf:lang(zh-CN) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+            }
+            .pdf:lang(zh-TW) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+            }
+            .pdf:lang(ko-KR) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+            }
+            .pdf .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+            }
+            .highlight-default {
+                color: rgba(55, 53, 47, 1);
+            }
+            .highlight-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .highlight-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .highlight-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .highlight-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .highlight-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .highlight-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .highlight-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .highlight-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .highlight-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .highlight-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .highlight-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .highlight-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .highlight-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .highlight-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .highlight-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .highlight-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .highlight-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .highlight-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .block-color-default {
+                color: inherit;
+                fill: inherit;
+            }
+            .block-color-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .block-color-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .block-color-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .block-color-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .block-color-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .block-color-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .block-color-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .block-color-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .block-color-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .block-color-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .block-color-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .block-color-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .block-color-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .block-color-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .block-color-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .block-color-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .block-color-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .block-color-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .select-value-color-interactiveBlue {
+                background-color: rgba(35, 131, 226, 0.07);
+            }
+            .select-value-color-pink {
+                background-color: rgba(245, 224, 233, 1);
+            }
+            .select-value-color-purple {
+                background-color: rgba(232, 222, 238, 1);
+            }
+            .select-value-color-green {
+                background-color: rgba(219, 237, 219, 1);
+            }
+            .select-value-color-gray {
+                background-color: rgba(227, 226, 224, 1);
+            }
+            .select-value-color-translucentGray {
+                background-color: rgba(255, 255, 255, 0.0375);
+            }
+            .select-value-color-orange {
+                background-color: rgba(250, 222, 201, 1);
+            }
+            .select-value-color-brown {
+                background-color: rgba(238, 224, 218, 1);
+            }
+            .select-value-color-red {
+                background-color: rgba(255, 226, 221, 1);
+            }
+            .select-value-color-yellow {
+                background-color: rgba(253, 236, 200, 1);
+            }
+            .select-value-color-blue {
+                background-color: rgba(211, 229, 239, 1);
+            }
+            .select-value-color-pageGlass {
+                background-color: undefined;
+            }
+            .select-value-color-washGlass {
+                background-color: undefined;
+            }
+
+            .checkbox {
+                display: inline-flex;
+                vertical-align: text-bottom;
+                width: 16;
+                height: 16;
+                background-size: 16px;
+                margin-left: 2px;
+                margin-right: 5px;
+            }
+
+            .checkbox-on {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            .checkbox-off {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            /* -------- injections from notionBackup -------- */
+
+            body {
+                white-space: normal !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+
+            .code,
+            code {
+                font-size: 100% !important;
+            }
+
+            blockquote {
+                font-size: 100% !important;
+            }
+
+            .callout {
+                white-space: normal !important;
+            }
+            .callout div:has(span.icon) {
+                font-size: 100% !important;
+            }
+
+            .source:not(.bookmark) {
+                font-size: 100% !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+        </style>
+    </head>
+    <body>
+        <article class="page sans">
+            <header>
+                <h1 class="page-title">Summary (4-5)</h1>
+                <p class="page-description"></p>
+            </header>
+            <div class="page-body">
+                <nav class="block-color-gray table_of_contents">
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#cde3ae89-9638-4c97-beb8-b14d80083e5e">Organizational Informatics</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#ac77cc13-338c-4e1e-8e44-008df300a332">Begriffe</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#c7694ea1-f2e1-4b08-ae72-cb8d95a575bf">Definition</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#e9ccd75f-9ec4-431d-9ec2-59d3dda84030">Entwicklung von STINs</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#bcfdb82d-7d6f-4517-858e-ed3ff300f8b1">🔧 Technikfokussierte Perspektive</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#d13acd47-050a-45ff-9dde-abf6528d8dcb">🫂 Soziotechnische Perspektive</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-2">
+                        <a class="table_of_contents-link" href="#b70757f1-e31a-4b34-9430-0aa9cdf8cc93">Gestaltung von STINs</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-2">
+                        <a class="table_of_contents-link" href="#fa73a02e-e5ef-4677-9dbb-901401a3ea9e">Gestaltung von ICTs</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#1f437685-46c4-4f70-a2d6-c519c5005ebb">Gründe für Gestaltung von STINs</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#5b546372-d25a-456f-a7a3-538c58b4678d">Schritte</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#dec54591-50af-45b7-a740-45ab2a2a5151">Ausmaß an Partizipation</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#8d2b7b0b-bed6-4280-baa7-3d0af49ea19e">Modellierung</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#6e2cd084-ff4c-4d61-a219-ae5e2e1779bc">Informatische Modellierung</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#80c24acb-b760-44d4-aad3-c34a632dd967">Modell-Typen</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#d7330e9c-e861-476b-b848-5aced9faf0ab">Ethik</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#a69f5628-d5cd-48d9-8894-98b588d5646b">Definition</a>
+                    </div>
+                </nav>
+                <p></p>
+                <h1>Organizational Informatics</h1>
+                <p><mark class="highlight-blue">Organizational Informatics - Kling 2000</mark></p>
+                <div class="indented"><p>Funktion von Computerisierung bei Gestaltung von Organisationsstrukturen</p></div>
+                <p></p>
+                <p></p>
+                <h2>Begriffe</h2>
+                <p><mark class="highlight-blue">Institution</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">zB Ehe, Familie</mark></p>
+                    <p>geregeltes Zusammenwirken</p>
+                    <p>soziale Strukturen mit etablierter Ordnung</p>
+                    <p>geleitet von Regeln - standardisierte Handlungsmuster</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Organisation</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">zB Firmen, Kirche, Finanzamt, Sportverein</mark></p>
+                    <p>haben Ziele, Rollen, Hierarchien</p>
+                    <div class="indented">
+                        <p><em>hierarchische Autoritätsstrukturen</em></p>
+                        <p><em>Verteilung von Macht, Rollen, Ressourcen</em></p>
+                        <p><em>Kommunikaitons, Kooperationsstrukturen</em></p>
+                    </div>
+                    <p></p>
+                    <p>Formalisierung von Regeln, Erwartungen, Pflichten</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p class="block-color-gray">Beispiel: Universität</p>
+                <div class="indented">
+                    <p>Institution, da:</p>
+                    <div class="indented">
+                        <p>instutionalisierte Reflexion</p>
+                        <p>gesellschaftliche Einrichtung zur wissenschaftlichen Reflexion</p>
+                    </div>
+                    <p></p>
+                    <p>Organisation, da:</p>
+                    <div class="indented"><p>Ziele, Rollen, Hierarchien</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Information</mark></p>
+                <div class="indented">
+                    <p>
+                        Daten + Interpretation =
+                        <em>Kontextgebundene, kontextabhängige Bedeutung</em>
+                    </p>
+                    <p><em>Zweckgebundene Interpretation</em></p>
+                    <div class="indented">
+                        <p>Interpretation unterschiedlich je nach Intention</p>
+                        <p>Bias</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Definition</h2>
+                <p><mark class="highlight-blue">Systemrationalisierung</mark></p>
+                <div class="indented">
+                    <p>falsches Konzept.</p>
+                    <p>Systeme als rationale Systeme mit formalen Zielen und abläufen</p>
+                    <p>
+                        Prozesse und Ziele sind in Wirklichkeit
+                        <em>vielschichtig, nuanciert, komplex</em>
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Einsatz von ICTs in Organisationen</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-blue">= Soziotechnisches Informationsnetzwerk STIN</mark></p>
+                    <p><mark class="highlight-gray">zB Telearbeit, Professor, System Manager</mark></p>
+                    <p>
+                        braucht aktives
+                        <em>Change Management</em>
+                    </p>
+                    <p>"Systemrationalismus" stimmt nicht</p>
+                    <div class="indented">
+                        <p>Systeme sind nicht rationale Systeme die man formalisieren kann</p>
+                        <p>Das ist eine vereinfachte technische Perspektive</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Organizational Informatics (Sawyer 2008)</mark></p>
+                <div class="indented">
+                    <p>situated / Situertheit = (STIN + Einsatz-Kontext)</p>
+                    <div class="indented">
+                        <p>
+                            ICTs sind
+                            <em>socially embedded</em>
+                            in institutionelle und organisatorischen Kontexten.
+                        </p>
+                        <p>Interpretation von Daten passiert beim Nutzer</p>
+                    </div>
+                    <p></p>
+                    <p>Technikaneigung</p>
+                    <div class="indented"><p>Technik wird für neue ursprünglich nicht vorgesehene Zwecke verwendet.</p></div>
+                    <p></p>
+                    <p>Politische Konsequenzen = Organizational Policy</p>
+                    <div class="indented">
+                        <p>Informationszugang bedeutet Macht</p>
+                        <div class="indented"><p>bedeutet Unterstützung, Widerstand, Sabotage von Entwicklungen</p></div>
+                        <p></p>
+                        <p>Beeinflussung von Struktur und Politik der Organisation (Machtverteilung, Ressourcenverteilung)</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Konsequenzen des Einsatzes von ICTs (Sproull/Kisler)</mark></p>
+                <div class="indented">
+                    <p>Neues Kommunikationsverhalten, soziale Handlungen und Beziehungen</p>
+                    <p>Vorteile</p>
+                    <div class="indented">
+                        <p>Mehr Egalität, Demokratie, Offenheit, Beteiligung</p>
+                        <p>Weniger Statusunterschiede</p>
+                        <p>Erhöhte Transparenz</p>
+                        <p>Neue Arbeitsplätze und Abläufe</p>
+                        <p>Sprachlose Koordinierung, enge Kopplung, Schichtenarbeitsplätze</p>
+                    </div>
+                    <p></p>
+                    <p>Nachteile</p>
+                    <div class="indented">
+                        <p>Ineffizienz, Flaming, Indifferenz, Hate speech, zu viel Auswahl</p>
+                        <p>Intransparente, implizite Regeln und Biases</p>
+                        <p>
+                            <em>Integrierte Sicht</em>
+                            und Dokumentation aller Abläufe kann zu Überwachung führen
+                        </p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p class="block-color-gray">Beispiel: System- und Softwareentwicklung als STINs</p>
+                <div class="indented">
+                    <p>Akteure = Gruppen, Personen, Abteilungen, Organisationen</p>
+                    <p>Technische Artefakte = Software</p>
+                    <p>Praktiken = Handlungen, Kommunikation</p>
+                    <p>Arbeitsaufgaben, Prozesse</p>
+                    <p>Ressourcen</p>
+                    <p>Gesetzliche Rahmenbedingungen, Vorschriften</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Entwicklung von STINs</h1>
+                <h2 class="block-color-gray_background">🔧 Technikfokussierte Perspektive</h2>
+                <p>Entspricht der Produktionssicht</p>
+                <div class="indented">
+                    <p>Vorgegebene Probleme</p>
+                    <p>formalisierte Anwendung</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Eigenschaften</mark></p>
+                <div class="indented">
+                    <p>Systemrationalismus</p>
+                    <p>linearer Workflow</p>
+                    <p>Berücksichtigt nicht genug:</p>
+                    <div class="indented">
+                        <p>Einsatzkontext, Sozialkontext, Userneeds, Folgen, Ethik</p>
+                        <div class="indented"><p>zB Aufgaben, Handlungspraxis bei der Nutzung, organisatorisches Umfeld</p></div>
+                        <p></p>
+                    </div>
+                    <p></p>
+                    <p>Geht dadurch am Bedarf des Users vorbei</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Ablauf</mark></p>
+                <div class="indented">
+                    <p>Auftraggeber → Informatiker → Computerartefakt ohne Kontextbezug, Einbettung</p>
+                    <p>Requirements → Technische Umsetzung → Produkt</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h2 class="block-color-gray_background">🫂 Soziotechnische Perspektive</h2>
+                <p>Man muss die soziotechnische Perspektive einnehmen.</p>
+                <div class="indented">
+                    <p>
+                        Vernachlässigung bedeutet
+                        <em>kognitivistische und rationalistische Sicht auf Design - Systemrationalismus</em>
+                    </p>
+                    <p>Es gibt keinen "besten Weg" in der Umsetzung. → Systemrationalismus vermeiden.</p>
+                </div>
+                <p></p>
+                <p>Die Gestaltung ist ein</p>
+                <div class="indented">
+                    <p><em>wechselseitiger konstruktiver und kommunikativer Prozess in Bezug auf veränderliche Nutzungs- und Einsatzkontexte</em></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Eigenschaften</mark></p>
+                <div class="indented">
+                    <p>Iterativ</p>
+                    <div class="indented"><p>Schrittweise, zirkuläre annäherung</p></div>
+                    <p></p>
+                    <p>Partizipativ</p>
+                    <div class="indented"><p>Berücksichtigung von Einsatz-Kontext, User needs, Folgen</p></div>
+                    <p></p>
+                    <p>Social, Contextual Inquiry</p>
+                    <div class="indented">
+                        <p>Ethische Überlegungen</p>
+                        <p>
+                            Erkundung des Kontexts als
+                            <em>empirisch-soziale Herangehensweise</em>
+                        </p>
+                    </div>
+                    <p></p>
+                    <p>
+                        ICT-Entwickler als
+                        <em>agents of change</em>
+                    </p>
+                    <div class="indented">
+                        <p>
+                            mit
+                            <em>Gestaltungsspielraum</em>
+                        </p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Ablauf</mark></p>
+                <div class="indented">
+                    <p>
+                        Auftraggeber → Informatiker
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow><mo>↻</mo></mrow>
+                                                <annotation encoding="application/x-tex">\circlearrowright</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.6639600000000001em; vertical-align: -0.08198em"></span>
+                                            <span class="mrel amsrm">↻</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        → STINs, keine Computerartefakt
+                    </p>
+                    <p>
+                        Requirements → Iterative Schritte
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow><mo>↻</mo></mrow>
+                                                <annotation encoding="application/x-tex">\circlearrowright</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.6639600000000001em; vertical-align: -0.08198em"></span>
+                                            <span class="mrel amsrm">↻</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        → Ergebnis,
+                        <em>embedded</em>
+                        im Einsatz-Kontext
+                    </p>
+                    <hr />
+                    <p>Iterative Schritte:</p>
+                    <div class="indented">
+                        <p>Problemanalyse und Definition</p>
+                        <p>Technische Umsetzung</p>
+                        <p>Überprüfung</p>
+                        <p>Verbesserung, Verfeinerung</p>
+                    </div>
+                    <p></p>
+                    <hr />
+                    <p>Dabei mit einbezogen:</p>
+                    <div class="indented">
+                        <p><em>dynamischer, kommunikativer Prozess</em></p>
+                        <p>Auftraggeber, User, Experten (interdisziplinär)</p>
+                    </div>
+                    <p></p>
+                    <hr />
+                    <p>
+                        Berücksichtigt und
+                        <em>exploriert</em>
+                        :
+                    </p>
+                    <div class="indented"><p>Einsatzkontext, User Needs, Folgen</p></div>
+                    <p></p>
+                    <hr />
+                    <p>Nicht problem-solving sondern problem-setting</p>
+                    <div class="indented">
+                        <p>Problemstellung und Problemdefinition ist nicht gegeben sondern wird erarbeitet und iterativ überarbietet.</p>
+                        <p>Es wird bestimmt welche Probleme am wichtigsten sind und welche Perspektive eingenommen wird.</p>
+                        <p>Es gibt keine einzige richtige Lösung</p>
+                        <p>Es wird durch informatisches Handeln einer der vielen möglichen Lösungen gewählt</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <h3 class="block-color-gray_background">Gestaltung von STINs</h3>
+                <p>(Sommerville 2008)</p>
+                <p><mark class="highlight-blue">Pragmatische Akzeptanz</mark></p>
+                <div class="indented">
+                    <p>davon dass Menschen irrational sind</p>
+                    <p>von Zielen die im Konflikt zu einander stehen</p>
+                    <p>davon dass es widersprüchliche Meinungen gibt darüber wann ein ICT-System erfolgreich ist</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Vielfalt von Prozessen</mark></p>
+                <div class="indented">
+                    <p>Falsche Ansicht:</p>
+                    <div class="indented">
+                        <p>Alle User sind gleich und müssen sich an technischen Vorgaben und Prozesse orientieren.</p>
+                        <p>Keine Rücksicht auf UX/UI, Nützlichkeit, Unterstützung der User bei Problemlösung</p>
+                    </div>
+                    <p></p>
+                    <p>Richtige Ansicht:</p>
+                    <div class="indented">
+                        <p>
+                            <em>real-world-Prozesse</em>
+                            sind
+                            <em>vielfältig, kontingent, kontextabhängig</em>
+                        </p>
+                        <p>Menschen nutzen ICTs basierend auf ihren eigenen Erfahrungen und Kompetenzen</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <h3 class="block-color-gray_background">Gestaltung von ICTs</h3>
+                <p>Entwicklung, Gestaltung, Designprozess</p>
+                <p><mark class="highlight-blue">Menschen verstehen</mark></p>
+                <div class="indented">
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            <mark class="highlight-blue"><em>contextual inquiries</em></mark>
+                            <p>Einsatz-Kontext verstehen</p>
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            <mark class="highlight-blue"><em>Social inquiries</em></mark>
+                            <p>Bedürfnisse, Präferenzen in STINs erkennen</p>
+                            <ul class="bulleted-list">
+                                <li style="list-style-type: circle">
+                                    <mark class="highlight-blue">Partizipativ</mark>
+                                    <p>Co-Design, Co-Evolution</p>
+                                    <p>
+                                        <em>Fieldwork, Partizipative Methode</em>
+                                        → Einbeziehung der Nutzer
+                                    </p>
+                                    <p>Betroffene Menschen bei Entwicklung mit Einbeziehen → Beteiligte verstehen ihre Domäne</p>
+                                </li>
+                            </ul>
+                            <ul class="bulleted-list">
+                                <li style="list-style-type: circle">
+                                    <mark class="highlight-blue">Tacit Knowledge</mark>
+                                    <p><em>Domain/Prozesskenntnisse als Expertise</em></p>
+                                    <p>Prozesswissen, Fertigungsskills der Betroffenen</p>
+                                    <p>Ist implizit und nicht formalisierbar</p>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <hr />
+                <p><mark class="highlight-blue">Handeln, Arbeitsabläufe verstehen</mark></p>
+                <div class="indented">
+                    <p>Reale Arbeitsabläufe in Organisation beobachten</p>
+                    <div class="indented"><p>Was kann verbessert werden, was sollte so bleiben?</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <hr />
+                <p><mark class="highlight-blue">Ziele berücksichtigen</mark></p>
+                <div class="indented"><p>Userbedürfnisse vs. Ziele der Organisation, soziokulturelle Normen</p></div>
+                <p></p>
+                <hr />
+                <p>
+                    <mark class="highlight-blue"><em>integrierte Technik-Folgenabschätzung</em></mark>
+                </p>
+                <div class="indented">
+                    <p><em>integrierte Technikbewertung</em></p>
+                    <p>Mögliche Konsequenzen nach Einführung voraussagen</p>
+                    <p>Anpassungsmöglichkeit bei Wandel von User und Organisation im Laufe der Zeit</p>
+                    <p>Zukünftiger Einsatz-Kontext</p>
+                    <p>Konsequenzen durch Nutzung der Computerartefakte</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Gründe für Gestaltung von STINs</h1>
+                <p>Dieser Ansatz ist teuer.</p>
+                <p></p>
+                <ol type="1" class="numbered-list" start="1">
+                    <li>
+                        <mark class="highlight-blue">Qualitätssteigerung</mark>
+                        <p>Durch Berücksichtigung von</p>
+                        <div class="indented">
+                            <p>Domain-Prozesskenntnisse und Expertise der Nutzerinnen</p>
+                            <p>zukünftigen Nutzungskontexts</p>
+                            <p>Konsequenzen im Designprozess</p>
+                        </div>
+                        <p></p>
+                        <hr />
+                        <p>Bessere Usability, UX, Effektivität in der Unterstützung bei der Aufgabe die das System erfüllen soll.</p>
+                        <p>Alle Möglichkeiten der Nutzung werden realisiert.</p>
+                    </li>
+                </ol>
+                <ol type="1" class="numbered-list" start="2">
+                    <li>
+                        <mark class="highlight-blue">Erhöhung der Akzeptanz und Zufriedenheit bei Nutzern</mark>
+                        <p>Realistische Erwartungen</p>
+                        <p>Weniger Widerstand gegen Veränderung</p>
+                    </li>
+                </ol>
+                <ol type="1" class="numbered-list" start="3">
+                    <li>
+                        <mark class="highlight-blue">Verbesserte "Time to Value"</mark>
+                        <p><em>Time-to-Value</em></p>
+                        <div class="indented">
+                            <p>Zeit bis effektiver Mehrwert und Nutzen erzeugt wurde.</p>
+                            <p>Abhängig von Beauftragung, Entwicklungszeit, Einsatz und vor allem: Assimilation und Akkomodation</p>
+                        </div>
+                        <p></p>
+                        <hr />
+                        <p>
+                            <em>Assimilations-Periode</em>
+                            (Aufwand von Entwicklern)
+                        </p>
+                        <div class="indented"><p>Anpassung des ICT-Systems bis nützlich</p></div>
+                        <p></p>
+                        <p>
+                            <em>Akkomodations-Periode</em>
+                            (Aufwand von Organisation)
+                        </p>
+                        <div class="indented"><p>Änderung der Organisationsstruktur um ICT-System optimal nutzen zu können</p></div>
+                        <p></p>
+                    </li>
+                </ol>
+                <p></p>
+                <figure class="image">
+                    <a href="Summary%20(4-5)%204448951213a742799caac2de4e8b41cb/Untitled.png">
+                        <img style="width: 480px" src="Summary%20(4-5)%204448951213a742799caac2de4e8b41cb/Untitled.png" />
+                    </a>
+                    <figcaption>
+                        Wenn man Assimilations &amp; Akkomodations Zeit verkürzt:
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow>
+                                                    <mstyle mathsize="0.9em"><mo>↓</mo></mstyle>
+                                                </mrow>
+                                                <annotation encoding="application/x-tex">\small \downarrow</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.799992em; vertical-align: -0.174996em"></span>
+                                            <span class="mrel sizing reset-size6 size5">↓</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                        Time to value aber der Brauchbarkeits-Gap bleibt gleich
+                    </figcaption>
+                </figure>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Schritte</h1>
+                <p>ICT-Entwickler gestalten nicht Technik sondern ein STIN</p>
+                <p>
+                    Partizipative Herangehensweise =
+                    <em>User-Involvement</em>
+                </p>
+                <div class="indented">
+                    <p>participatory design</p>
+                    <p>user-centered design</p>
+                    <p>human-centered design</p>
+                </div>
+                <p></p>
+                <p></p>
+                <ol type="1" class="numbered-list" start="1">
+                    <li>
+                        <mark class="highlight-blue">Fieldwork und Partizipative Methoden</mark>
+                        <p><em>social inquiries, contextual inquiries</em></p>
+                        <p>Einbeziehung der Nutzer</p>
+                        <p>Verstehen vom Status Quo</p>
+                        <p>Exploration der Vielfalt des Feldes, der Tätigkeiten, Abläufe in ihrem Einsatzkontext durch</p>
+                        <div class="indented">
+                            <p>Teilnehmende Beobachtung, Interviews</p>
+                            <p>Unterschiede zwischen Menschen und Gruppen feststellen</p>
+                            <p>Regeln für gutes Beobachten:</p>
+                            <div class="indented">
+                                <p>Vorurteile vermeiden, urteilsfrei Erfahrungen sammeln</p>
+                                <p>Zurückhalten und sich nicht in den Vordergrund drängen</p>
+                                <p>Aufmerksam sein, Details beachten</p>
+                                <p>Offene Fragen stellen</p>
+                                <p>Im Vorab informieren und vorbereiten</p>
+                            </div>
+                            <p></p>
+                            <p>Resultate mit Projektteam teilen</p>
+                        </div>
+                        <p></p>
+                        <p>Vertraut werden mit</p>
+                        <div class="indented">
+                            <p>
+                                Domäne, Tätigkeiten, Aufgaben, Handlungen, Arbeits-Abläufe, Prozesse, benutzte Technologien, Routinen, soziale Interaktionen,
+                                Teamarbeit
+                            </p>
+                        </div>
+                        <p></p>
+                        <hr />
+                    </li>
+                </ol>
+                <ol type="1" class="numbered-list" start="2">
+                    <li>
+                        <mark class="highlight-blue">Discovery Process - Gemeinsamer Erkenntnisprozess</mark>
+                        <p>Werte, Ziele, erwünschte Outcomes</p>
+                        <p>zB durch organizational games, role-playing games, future workshops, storyboarding</p>
+                        <p>Phasen</p>
+                        <div class="indented">
+                            <ol type="i" class="numbered-list" start="1">
+                                <li>
+                                    Critique Phase
+                                    <p>Identifikation von Problemen</p>
+                                </li>
+                            </ol>
+                            <ol type="i" class="numbered-list" start="2">
+                                <li>
+                                    Fantasy Phase
+                                    <p>Utopie entwickeln</p>
+                                    <p>unkonventionelle Lösungsvorschläge</p>
+                                    <p>Gemeinsame Überlegung wo ein ICT unterstützen könnte</p>
+                                    <div class="indented">
+                                        <p>
+                                            <em>ergebnisoffener Rahmen, out-of-the-box-thinking,</em>
+                                            Brainstorming
+                                        </p>
+                                    </div>
+                                    <p></p>
+                                </li>
+                            </ol>
+                            <ol type="i" class="numbered-list" start="3">
+                                <li>
+                                    Realization Phase
+                                    <p>Realisierbarkeit überprüfen und bewerten</p>
+                                    <p>Einigung auf nächsten Schritte</p>
+                                </li>
+                            </ol>
+                        </div>
+                        <p></p>
+                        <hr />
+                    </li>
+                </ol>
+                <ol type="1" class="numbered-list" start="3">
+                    <li>
+                        <mark class="highlight-blue">Prototyping</mark>
+                        <p>Iterativ - Zwischenergebnisse immer diskutieren in einfacher Sprache</p>
+                        <p>Mockups, Paper prototyping</p>
+                    </li>
+                </ol>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Ausmaß an Partizipation</h1>
+                <p>Ziel: Verbesserung der Akzeptanz</p>
+                <p></p>
+                <p><mark class="highlight-blue">Grade</mark></p>
+                <div class="indented">
+                    <p>Keine Partizipation</p>
+                    <div class="indented"><p>Nichts, Information, schriftliche Datenerhebung</p></div>
+                    <p></p>
+                    <p>Fieldwork und Exploration</p>
+                    <p>Consulting, Dialog</p>
+                    <p>Mitwirkung, Mitbestimmung</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Formen</mark></p>
+                <div class="indented">
+                    <p>
+                        Direkte Beteiligung (
+                        <em>User-Involvement</em>
+                        )
+                    </p>
+                    <div class="indented">
+                        <p>Domänenwissen von User, erhöhte Akzeptanz</p>
+                        <p>Kann bei zu viel Beteiligung die ICT-Entwickler irritieren</p>
+                    </div>
+                    <p></p>
+                    <p>Direkte Beteiligung von bestimmten Usern</p>
+                    <div class="indented">
+                        <p>ausgewählte User und Gruppen</p>
+                        <p>Key-User</p>
+                        <p>Repräsentative Beteiligung in Unternehmen</p>
+                        <p>Repräsentative Beteiligung der Gesellschaft</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Methoden</mark></p>
+                <div class="indented">
+                    <p>Interviews</p>
+                    <p>Teilnehmende Beobachtung</p>
+                    <p>Arbeitsanalyse mit den Betroffenen</p>
+                    <p>Future Workshops</p>
+                    <p>Socio-technical Walkthroughs</p>
+                    <p>Dokumentenanalyse (als ergänzende Methode: im Vorfeld der Fieldwork)</p>
+                    <p>Schriftliche Befragungen (nur Notlösung)</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Modellierung</h1>
+                <p>Modell ≠ Wirklichkeit</p>
+                <p>soziale Situationen ≠ formalisierbar</p>
+                <p></p>
+                <p><mark class="highlight-blue">Modell</mark></p>
+                <div class="indented">
+                    <p>Vereinfachte Abbildung eines Teilbereiches der Realität zur Abstraktion</p>
+                    <p>Abbildung von Objekten, Eigenschaften, Relationen</p>
+                    <p><em>Entwicklungsintention, Nutzungskontext</em></p>
+                    <hr />
+                    <p>Eigenschaften</p>
+                    <div class="indented">
+                        <ol type="1" class="numbered-list" start="1">
+                            <li>Abbildungsmerkmal abbilden</li>
+                        </ol>
+                        <ol type="1" class="numbered-list" start="2">
+                            <li>Verkürzungsmerkmal vereinfachen</li>
+                        </ol>
+                        <ol type="1" class="numbered-list" start="3">
+                            <li>
+                                Pragmatisches Merkmal eingeschränkte Ausdrucksstärke
+                                <p>erfüllen bestimmten Zweck für ein Subjekt</p>
+                            </li>
+                        </ol>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">(Daten-)modelle als soziale Realitätskonstruktion</mark></p>
+                <div class="indented">
+                    <p>
+                        <em>Sinnrekonstruktion</em>
+                        durch Modell basierend auf Interpretation des Subjekts
+                    </p>
+                    <p>
+                        <em>kanalisiert</em>
+                        Wahrnehmung
+                    </p>
+                    <p>handlungsanleitend</p>
+                    <p>abhängig von Vorurteilen und politischen Interessen der Modellentwickler</p>
+                    <p>
+                        hält die
+                        <em>sozial konstruierte Realität</em>
+                        aufrecht
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h2>Informatische Modellierung</h2>
+                <p><mark class="highlight-blue">Informatische Modellierung</mark></p>
+                <div class="indented">
+                    <p>Modellierung im Entwicklungsprozess von Computerartefakten</p>
+                    <p>
+                        Modellierung
+                        <em>operationaler Modelle</em>
+                        die Computerprogramme ausführen
+                    </p>
+                    <p>Modell als Übergang, Filter zwischen Wirklichkeit und Formalisierung</p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Summary%20(4-5)%204448951213a742799caac2de4e8b41cb/Untitled%201.png">
+                        <img style="width: 288px" src="Summary%20(4-5)%204448951213a742799caac2de4e8b41cb/Untitled%201.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Computer und Wirklichkeit</mark></p>
+                <div class="indented">
+                    <p>Modell bestimmt wie Computer in Wirklichkeit agiert</p>
+                    <p>Austausches von Umwelt und modellierten Dingen beschränkt.</p>
+                    <p>
+                        Die Umwelt des Computers, mit der er in Austausch tritt ist
+                        <em>artifiziell</em>
+                        - auch wenn es ein natürlicher, sozialer Kontext ist.
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Beispiel: Transrapid - Maglev Zug</mark></p>
+                <div class="indented">
+                    <p>Modellierungssituation ≠ Einsatzsituation</p>
+                    <div class="indented"><p>Zeit vergeht, Gegenstandsbereich ändert sich</p></div>
+                    <p></p>
+                    <p>Ist gegen Wartungsfahrzeug gefahren, weil es für das Kontrollsystem unsichtbar war.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h2>Modell-Typen</h2>
+                <p><mark class="highlight-blue">S(pezifikation)-Programm</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">zB ggt-Algorithmus</mark></p>
+                    <p>technische Perspektive - reine Problemlösung</p>
+                    <p>bereits formal spezifiziert</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">P(roblem)-Programm</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">zB Schach-Algorithmus</mark></p>
+                    <p>Wechselwirkung mit Kontext</p>
+                    <p>Problemsicht aus realen Welt fließt ein</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">E(mbedded)-Programm</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-gray">zB Airbus-Cockpit Steuerung</mark></p>
+                    <p>Wechselwirkung mit Kontext</p>
+                    <p>Nur mit sozialen Gebrauchskontext, Einsatzkontext verständlich</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>Ethik</h1>
+                <p>Ethik und Verantwortung in der Informatik</p>
+                <p></p>
+                <p><mark class="highlight-blue">Ethische Dilemmata von advanced computer systems</mark></p>
+                <div class="indented">
+                    <p>Darf der Computer Menschen hindern?</p>
+                    <p>Wer übernimmt die Verwantwortung von autonomen Systemen?</p>
+                    <p>Kann ein Computer verantwortlich sein?</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Verein Deutscher Ingenieure (VDI) → Ethische Grundsätze</mark></p>
+                <div class="indented">
+                    <p>Ingeneure sind für Folgen ihrere Arbeit verantwortlich</p>
+                    <p>müssen sich über Zusammenhänge und zukünftige Auswirkung im gesellschaftlichen, ökologischen, ökonomischen Kontext bewusst sein</p>
+                </div>
+                <p></p>
+                <p></p>
+                <figure class="image">
+                    <a href="Summary%20(4-5)%204448951213a742799caac2de4e8b41cb/Untitled%202.png">
+                        <img style="width: 480px" src="Summary%20(4-5)%204448951213a742799caac2de4e8b41cb/Untitled%202.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p></p>
+                <h2>Definition</h2>
+                <p><mark class="highlight-blue">Moral</mark></p>
+                <div class="indented">
+                    <p>Menge an Überzeugungen die Handlungsweisen als gut oder schlecht werten</p>
+                    <p>Bezugspunkt: Normen (verbindlich für alle Mitglieder einer Kultur / Gesellschaft)</p>
+                    <p>≠ Benimmstandards und Konventionen</p>
+                    <p>≠ individuelle Vorlieben</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Norm</mark></p>
+                <div class="indented">
+                    <p>Beschreibt soll-Zustand</p>
+                    <p>Regeln für menschliches Handeln</p>
+                    <p>Geltung in Kultur, Gesellschaft usw</p>
+                    <p>Ethische Normen beziehen sich auf moralischen Prinzipien</p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Ethik</mark></p>
+                <div class="indented"><p>Ethische Theorie dient als Begründung für moralische Prinzipien</p></div>
+                <p></p>
+                <p><mark class="highlight-blue">Verantwortung</mark></p>
+                <div class="indented">
+                    <p>
+                        <em>Rechenschaftspflicht</em>
+                        für eigene Verhaltensweisen (und deren Folgen)
+                    </p>
+                </div>
+                <p></p>
+            </div>
+        </article>
+    </body>
+</html>

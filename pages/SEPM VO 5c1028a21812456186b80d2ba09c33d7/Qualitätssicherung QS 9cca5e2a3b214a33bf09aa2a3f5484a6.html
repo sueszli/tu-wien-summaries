@@ -1,0 +1,1869 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Qualitätssicherung QS</title>
+        <style>
+            /* cspell:disable-file */
+            /* webkit printing magic: print all background colors */
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            * {
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media only screen {
+                body {
+                    margin: 2em auto;
+                    max-width: 900px;
+                    color: rgb(55, 53, 47);
+                }
+            }
+
+            body {
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            a,
+            a.visited {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .pdf-relative-link-path {
+                font-size: 80%;
+                color: #444;
+            }
+
+            h1,
+            h2,
+            h3 {
+                letter-spacing: -0.01em;
+                line-height: 1.2;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 0;
+                margin-bottom: 0.75em;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+                margin-top: 1.875rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .source {
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 1.5em;
+                word-break: break-all;
+            }
+
+            .callout {
+                border-radius: 3px;
+                padding: 1rem;
+            }
+
+            figure {
+                margin: 1.25em 0;
+                page-break-inside: avoid;
+            }
+
+            figcaption {
+                opacity: 0.5;
+                font-size: 85%;
+                margin-top: 0.5em;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+
+            .indented {
+                padding-left: 1.5em;
+            }
+
+            hr {
+                background: transparent;
+                display: block;
+                width: 100%;
+                height: 1px;
+                visibility: visible;
+                border: none;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            @media only print {
+                img {
+                    max-height: 100vh;
+                    object-fit: contain;
+                }
+            }
+
+            @page {
+                margin: 1in;
+            }
+
+            .collection-content {
+                font-size: 0.875rem;
+            }
+
+            .column-list {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .column {
+                padding: 0 1em;
+            }
+
+            .column:first-child {
+                padding-left: 0;
+            }
+
+            .column:last-child {
+                padding-right: 0;
+            }
+
+            .table_of_contents-item {
+                display: block;
+                font-size: 0.875rem;
+                line-height: 1.3;
+                padding: 0.125rem;
+            }
+
+            .table_of_contents-indent-1 {
+                margin-left: 1.5rem;
+            }
+
+            .table_of_contents-indent-2 {
+                margin-left: 3rem;
+            }
+
+            .table_of_contents-indent-3 {
+                margin-left: 4.5rem;
+            }
+
+            .table_of_contents-link {
+                text-decoration: none;
+                opacity: 0.7;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+            }
+
+            table,
+            th,
+            td {
+                border: 1px solid rgba(55, 53, 47, 0.09);
+                border-collapse: collapse;
+            }
+
+            table {
+                border-left: none;
+                border-right: none;
+            }
+
+            th,
+            td {
+                font-weight: normal;
+                padding: 0.25em 0.5em;
+                line-height: 1.5;
+                min-height: 1.5em;
+                text-align: left;
+            }
+
+            th {
+                color: rgba(55, 53, 47, 0.6);
+            }
+
+            ol,
+            ul {
+                margin: 0;
+                margin-block-start: 0.6em;
+                margin-block-end: 0.6em;
+            }
+
+            li > ol:first-child,
+            li > ul:first-child {
+                margin-block-start: 0.6em;
+            }
+
+            ul > li {
+                list-style: disc;
+            }
+
+            ul.to-do-list {
+                padding-inline-start: 0;
+            }
+
+            ul.to-do-list > li {
+                list-style: none;
+            }
+
+            .to-do-children-checked {
+                text-decoration: line-through;
+                opacity: 0.375;
+            }
+
+            ul.toggle > li {
+                list-style: none;
+            }
+
+            ul {
+                padding-inline-start: 1.7em;
+            }
+
+            ul > li {
+                padding-left: 0.1em;
+            }
+
+            ol {
+                padding-inline-start: 1.6em;
+            }
+
+            ol > li {
+                padding-left: 0.2em;
+            }
+
+            .mono ol {
+                padding-inline-start: 2em;
+            }
+
+            .mono ol > li {
+                text-indent: -0.4em;
+            }
+
+            .toggle {
+                padding-inline-start: 0em;
+                list-style-type: none;
+            }
+
+            /* Indent toggle children */
+            .toggle > li > details {
+                padding-left: 1.7em;
+            }
+
+            .toggle > li > details > summary {
+                margin-left: -1.1em;
+            }
+
+            .selected-value {
+                display: inline-block;
+                padding: 0 0.5em;
+                background: rgba(206, 205, 202, 0.5);
+                border-radius: 3px;
+                margin-right: 0.5em;
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+            }
+
+            .collection-title {
+                display: inline-block;
+                margin-right: 1em;
+            }
+
+            .page-description {
+                margin-bottom: 2em;
+            }
+
+            .simple-table {
+                margin-top: 1em;
+                font-size: 0.875rem;
+                empty-cells: show;
+            }
+            .simple-table td {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table th {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table-header-color {
+                background: rgb(247, 246, 243);
+                color: black;
+            }
+            .simple-table-header {
+                font-weight: 500;
+            }
+
+            time {
+                opacity: 0.5;
+            }
+
+            .icon {
+                display: inline-block;
+                max-width: 1.2em;
+                max-height: 1.2em;
+                text-decoration: none;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            img.icon {
+                border-radius: 3px;
+            }
+
+            .user-icon {
+                width: 1.5em;
+                height: 1.5em;
+                border-radius: 100%;
+                margin-right: 0.5rem;
+            }
+
+            .user-icon-inner {
+                font-size: 0.8em;
+            }
+
+            .text-icon {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+            .page-cover-image {
+                display: block;
+                object-fit: cover;
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            .page-header-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .page-header-icon-with-cover {
+                margin-top: -0.72em;
+                margin-left: 0.07em;
+            }
+
+            .page-header-icon img {
+                border-radius: 3px;
+            }
+
+            .link-to-page {
+                margin: 1em 0;
+                padding: 0;
+                border: none;
+                font-weight: 500;
+            }
+
+            p > .user {
+                opacity: 0.5;
+            }
+
+            td > .user,
+            td > time {
+                white-space: nowrap;
+            }
+
+            input[type="checkbox"] {
+                transform: scale(1.5);
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
+
+            p {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .image {
+                border: none;
+                margin: 1.5em 0;
+                padding: 0;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .code,
+            code {
+                background: rgba(135, 131, 120, 0.15);
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 85%;
+                tab-size: 2;
+            }
+
+            code {
+                color: #eb5757;
+            }
+
+            .code {
+                padding: 1.5em 1em;
+            }
+
+            .code-wrap {
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .code > code {
+                background: none;
+                padding: 0;
+                font-size: 100%;
+                color: inherit;
+            }
+
+            blockquote {
+                font-size: 1.25em;
+                margin: 1em 0;
+                padding-left: 1em;
+                border-left: 3px solid rgb(55, 53, 47);
+            }
+
+            .bookmark {
+                text-decoration: none;
+                max-height: 8em;
+                padding: 0;
+                display: flex;
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .bookmark-title {
+                font-size: 0.85em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 1.75em;
+                white-space: nowrap;
+            }
+
+            .bookmark-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bookmark-info {
+                flex: 4 1 180px;
+                padding: 12px 14px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark-image {
+                width: 33%;
+                flex: 1 1 180px;
+                display: block;
+                position: relative;
+                object-fit: cover;
+                border-radius: 1px;
+            }
+
+            .bookmark-description {
+                color: rgba(55, 53, 47, 0.6);
+                font-size: 0.75em;
+                overflow: hidden;
+                max-height: 4.5em;
+                word-break: break-word;
+            }
+
+            .bookmark-href {
+                font-size: 0.75em;
+                margin-top: 0.25em;
+            }
+
+            .sans {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+                    "Segoe UI Symbol";
+            }
+            .code {
+                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+            }
+            .serif {
+                font-family: Lyon-Text, Georgia, ui-serif, serif;
+            }
+            .mono {
+                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+            }
+            .pdf .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+            }
+            .pdf:lang(zh-CN) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+            }
+            .pdf:lang(zh-TW) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+            }
+            .pdf:lang(ko-KR) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+            }
+            .pdf .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK KR";
+            }
+            .pdf .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+            }
+            .pdf:lang(zh-CN) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+            }
+            .pdf:lang(zh-TW) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+            }
+            .pdf:lang(ko-KR) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+            }
+            .pdf .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+            }
+            .highlight-default {
+                color: rgba(55, 53, 47, 1);
+            }
+            .highlight-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .highlight-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .highlight-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .highlight-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .highlight-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .highlight-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .highlight-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .highlight-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .highlight-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .highlight-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .highlight-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .highlight-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .highlight-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .highlight-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .highlight-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .highlight-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .highlight-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .highlight-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .block-color-default {
+                color: inherit;
+                fill: inherit;
+            }
+            .block-color-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .block-color-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .block-color-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .block-color-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .block-color-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .block-color-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .block-color-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .block-color-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .block-color-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .block-color-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .block-color-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .block-color-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .block-color-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .block-color-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .block-color-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .block-color-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .block-color-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .block-color-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .select-value-color-interactiveBlue {
+                background-color: rgba(35, 131, 226, 0.07);
+            }
+            .select-value-color-pink {
+                background-color: rgba(245, 224, 233, 1);
+            }
+            .select-value-color-purple {
+                background-color: rgba(232, 222, 238, 1);
+            }
+            .select-value-color-green {
+                background-color: rgba(219, 237, 219, 1);
+            }
+            .select-value-color-gray {
+                background-color: rgba(227, 226, 224, 1);
+            }
+            .select-value-color-translucentGray {
+                background-color: rgba(255, 255, 255, 0.0375);
+            }
+            .select-value-color-orange {
+                background-color: rgba(250, 222, 201, 1);
+            }
+            .select-value-color-brown {
+                background-color: rgba(238, 224, 218, 1);
+            }
+            .select-value-color-red {
+                background-color: rgba(255, 226, 221, 1);
+            }
+            .select-value-color-yellow {
+                background-color: rgba(253, 236, 200, 1);
+            }
+            .select-value-color-blue {
+                background-color: rgba(211, 229, 239, 1);
+            }
+            .select-value-color-pageGlass {
+                background-color: undefined;
+            }
+            .select-value-color-washGlass {
+                background-color: undefined;
+            }
+
+            .checkbox {
+                display: inline-flex;
+                vertical-align: text-bottom;
+                width: 16;
+                height: 16;
+                background-size: 16px;
+                margin-left: 2px;
+                margin-right: 5px;
+            }
+
+            .checkbox-on {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            .checkbox-off {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            /* -------- injections from notionBackup -------- */
+
+            body {
+                white-space: normal !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+
+            .code,
+            code {
+                font-size: 100% !important;
+            }
+
+            blockquote {
+                font-size: 100% !important;
+            }
+
+            .callout {
+                white-space: normal !important;
+            }
+            .callout div:has(span.icon) {
+                font-size: 100% !important;
+            }
+
+            .source:not(.bookmark) {
+                font-size: 100% !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+        </style>
+    </head>
+    <body>
+        <article class="page sans">
+            <header>
+                <h1 class="page-title">Qualitätssicherung QS</h1>
+                <p class="page-description"></p>
+            </header>
+            <div class="page-body">
+                <nav class="block-color-gray table_of_contents">
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#7d68f7d6-94d9-4a38-ae07-39564f1fae64">Qualitätssicherung QS</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#c72f1dc3-5be9-4265-9555-c43b2f4030bc">Qualitätssicherung</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#1d1b7c18-ca35-41c7-afd1-ccd20c9ba96d">Qualitätskriterien</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#c04ed1cf-3475-4201-9ebc-aeca03449b8b">Qualitätsmerkmale</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#b5e78478-8c4c-4677-a05d-a68583481975">Methoden</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#0157f726-0684-43f6-aad4-f155072f931b">Reviewing</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#482be06f-ec4a-4336-afb7-2e115519439e">Review</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#4a2d9e96-4ced-47a8-95dd-cf60d15eac65">Zu Reviews verwandte Tätigkeiten</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#846c6cf3-c063-418f-8c4e-2c98920cffff">Arten von Reviews</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-2">
+                        <a class="table_of_contents-link" href="#41bb98a5-4278-4b93-8e45-b3793d78a33e">Mit Kunde</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-2">
+                        <a class="table_of_contents-link" href="#d1990522-f85c-4650-8bd8-39261f76422a">Ohne Kunde</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#d48c4ac8-6864-4d23-8f35-9396ea199ca2">
+                            Anforderungen Überprüfen: "Software Requirement Review"
+                        </a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#c2225f6d-0cb8-4d6b-be20-721bc8950cb1">Testen</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#7cebe8f8-1ee8-48e8-a984-b7931d9f1771">Traditioneller Testprozess</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#031c15e9-cc69-4a95-a439-fae176326c26">Testarten / Test Methoden (statisch vs dynamisch)</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#a1c31b9d-6b2a-4f87-9a00-fc3c96eab31f">Teststufen</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#52155a39-c29a-457c-8e79-47e8af97e8d3">Unit Testing</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#14750796-0e2c-4c44-ab81-5f1d857e7c1a">Module Testing</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#c8e4e96a-f73a-4600-bce2-dc819bead619">Integration Testing</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#edc1c269-1616-40f0-9cc8-dc546baa6151">Test Driven Development TDD</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#ff8362e6-28b4-4ed5-b119-a92692187929">Automatische Codeprüfung</a>
+                    </div>
+                </nav>
+                <h1>Qualitätssicherung QS</h1>
+                <h2>Qualitätssicherung</h2>
+                <p>Qualitätssicherung = Verifikation und Validierung in jeder Phase</p>
+                <p></p>
+                <p>Je später ein Fehler erkannt wird, desto teurer ist die Korrektur.</p>
+                <ol type="1" class="numbered-list" start="1">
+                    <li>
+                        Maßnahmen in frühen Phasen der Entwicklung
+                        <p class="block-color-gray">Am Anfang sind eher nur Textdokumente und Modelle verfügbar.</p>
+                        <p class="block-color-gray">Werden auch im Laufe des Projekts eingesetzt - jedes mögliche Artefakt kann reviewed werden.</p>
+                    </li>
+                </ol>
+                <ol type="1" class="numbered-list" start="2">
+                    <li>
+                        Maßnahmen in existierenden Teillösungen
+                        <p class="block-color-gray">Traditionelles Software-Testen</p>
+                    </li>
+                </ol>
+                <ol type="1" class="numbered-list" start="3">
+                    <li>
+                        Test-Driven Development
+                        <p class="block-color-gray">Tests vor und gleichzeitig zur Implementierung</p>
+                    </li>
+                </ol>
+                <p></p>
+                <h2>Qualitätskriterien</h2>
+                <ul class="bulleted-list">
+                    <li style="list-style-type: disc">Testbare Anforderungen</li>
+                </ul>
+                <ul class="bulleted-list">
+                    <li style="list-style-type: disc">Verfolgbare Entwicklung der Anforderungen (mit Modellen) in testbare Produkte.</li>
+                </ul>
+                <p></p>
+                <ul class="bulleted-list">
+                    <li style="list-style-type: disc">
+                        Leistung und Performance
+                        <mark class="highlight-gray">(z.B. Optimierung des Informationsflusses)</mark>
+                    </li>
+                </ul>
+                <ul class="bulleted-list">
+                    <li style="list-style-type: disc">
+                        UI, UX
+                        <mark class="highlight-gray">(z.B. Einfachheit der Bedienung, Training)</mark>
+                    </li>
+                </ul>
+                <ul class="bulleted-list">
+                    <li style="list-style-type: disc">
+                        Sicherheit
+                        <mark class="highlight-gray">(z.B. Zugangskontrolle)</mark>
+                    </li>
+                </ul>
+                <ul class="bulleted-list">
+                    <li style="list-style-type: disc">
+                        Wartbarkeit
+                        <mark class="highlight-gray">(Trennung von Anwendung und Daten)</mark>
+                    </li>
+                </ul>
+                <ul class="bulleted-list">
+                    <li style="list-style-type: disc">
+                        Erweiterbarkeit
+                        <mark class="highlight-gray">(z.B. wie Aufwändig ist es ein zusätzliches Modul dem Projekt hinzuzufügen)</mark>
+                    </li>
+                </ul>
+                <p></p>
+                <h2>Qualitätsmerkmale</h2>
+                <p>Eignung für Anforderungen</p>
+                <ol type="1" class="numbered-list" start="1">
+                    <li>Zufriedenheit von Auftraggeber und Anwender</li>
+                </ol>
+                <ol type="1" class="numbered-list" start="2">
+                    <li>Erfüllung von Anforderungen, Attributen, Systemfunktionen</li>
+                </ol>
+                <ol type="1" class="numbered-list" start="3">
+                    <li>Erfüllung von gestzlichen Regelungen und Standards</li>
+                </ol>
+                <p></p>
+                <div class="indented">
+                    <p>Softwareprodukt → Qualitätsprodukt durch Qualitätsmerkmale</p>
+                    <div class="indented">
+                        <p>
+                            Funktionalität
+                            <mark class="highlight-gray">funktionale Anforderungen</mark>
+                        </p>
+                        <p>Zuverlässigkeit</p>
+                        <p>Benutzbarkeit</p>
+                        <p>Effizienz</p>
+                        <p>
+                            Änderbarkeit
+                            <mark class="highlight-gray">Erweiterbarkeit</mark>
+                        </p>
+                        <p>
+                            Übertragbarkeit
+                            <mark class="highlight-gray">möglichkeit auf andere Umgebungen / Plattformen zu übertragen</mark>
+                        </p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled.png">
+                        <img style="width: 672px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <h2>Methoden</h2>
+                <p><span style="border-bottom: 0.05em solid">Konstruktive Methoden</span></p>
+                <div class="indented">
+                    <p>Herstellung der Tests</p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Analytische Methoden</span></p>
+                <div class="indented">
+                    <p>Überpüfung der Produkte</p>
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            Verifikation
+                            <mark class="highlight-gray">Ob Komponenten der (technischen) Spezifikation entsprechen</mark>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            Validierung
+                            <mark class="highlight-gray">Ob Komponenten dem Kundenwunsch entsprechen</mark>
+                        </li>
+                    </ol>
+                    <p></p>
+                    <p>Unterteilt in:</p>
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>statische Methoden Reviews, Inspektionen, UML (kein code compiliert)</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            dynamische Methoden Software testen, UML, IDEFØ (verhalten von code)
+                            <p class="block-color-gray">
+                                Bei
+                                <em>Test-Driven / Test-First-Development</em>
+                            </p>
+                            <div class="indented">
+                                <p>gleichzeitig entwickeln und Testen in agiler Entwicklung.</p>
+                                <p>
+                                    Zuerst die Testfälle (zur Beschreibung der Funktionalität) erstellen und erst danach die eigentliche Funktionalität
+                                    implementieren und testen.
+                                </p>
+                                <p></p>
+                            </div>
+                            <p></p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%201.png">
+                        <img style="width: 384px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%201.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <h1>Reviewing</h1>
+                <h2>Review</h2>
+                <p>Produkt oder Dokument wird kommentiert und abgesegnet (approved).</p>
+                <p>formale Analyse- und qualitative Beurteilung</p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Reviewtypen</span></p>
+                <div class="indented">
+                    <p>Unterschieden durch:</p>
+                    <div class="indented">
+                        <ol type="1" class="numbered-list" start="1">
+                            <li>Vorgehensmodell Wahl</li>
+                        </ol>
+                        <ol type="1" class="numbered-list" start="2">
+                            <li>Einbeziehungs-Grad des Kunden</li>
+                        </ol>
+                    </div>
+                    <p></p>
+                    <p>Hier: Phasenorientierte Vorgehensweise</p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Rollenverteilung</span></p>
+                <div class="indented">
+                    <p>3-6 Personen die beteiligt sind.</p>
+                    <p>&gt; Moderator (keeper of process)</p>
+                    <div class="indented"><p>Leiter, bestimmt Ablauf, Auswertung, Korrektur</p></div>
+                    <p></p>
+                    <p>&gt; Leser (keeper of focus and pace)</p>
+                    <div class="indented"><p>Ausarbeiter, bestimmt wie detailiert es sein sollte</p></div>
+                    <p></p>
+                    <p>&gt; Schreiber (preserver of knowledge)</p>
+                    <div class="indented"><p>Protokolliert Ablauf</p></div>
+                    <p></p>
+                    <p>&gt; Gutachter (Reviewer)</p>
+                    <div class="indented"><p>Erkennt Fehler nach Befehl von Moderator</p></div>
+                    <p></p>
+                    <p>&gt; Autor (author)</p>
+                    <div class="indented"><p>Besitzer des Review-Objekts</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Phasen</span></p>
+                <div class="indented">
+                    <p>Wiederholungen sind möglich.</p>
+                    <p>Oft werden Checklisten verwendet.</p>
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            Planung („planning phase“)
+                            <p><mark class="highlight-gray">Objekt, Prüfziele</mark></p>
+                            <p>Moderator erstellt Arbeitspakete / Checkliste</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            Initialisierung („initialisation phase“)
+                            <p class="block-color-gray">Kontrolle ob Code kompiliert</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>
+                            Vorbereitung („preparation phase“)
+                            <p><mark class="highlight-gray">Einzeldurcharbeitung</mark></p>
+                            <p class="block-color-gray">Bearbeitung, Fehler finden (Vorbereitung für die Sitzung)</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>
+                            Reviewsitzung („review“)
+                            <p><mark class="highlight-gray">Gemeinsam Lesen, Aufzeichnen von Mängeln (nicht Korrektur)</mark></p>
+                            <ol type="1" class="numbered-list" start="1">
+                                <li>
+                                    Reviewsitzungen (2h)
+                                    <p class="block-color-gray">Moderator = Diskussionsleiter</p>
+                                    <p class="block-color-gray">Alle beschließen gemeinsam welche Nacharbeiten notwendig sind.</p>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="2">
+                                <li>
+                                    "Die dritte Stunde"
+                                    <p class="block-color-gray">Feedback an Review selbst</p>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="5">
+                        <li>Sammlung im Team („meeting“)</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="6">
+                        <li>
+                            Reviewbericht („reporting“)
+                            <p class="block-color-gray">Schreiber protokolliert nach Sitzung</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="7">
+                        <li>
+                            Nacharbeit („re-work)
+                            <p><mark class="highlight-gray">Review selbst bewerten</mark></p>
+                            <p class="block-color-gray">Autor bekommt Feedback und muss Fehler ausbessern.</p>
+                            <p class="block-color-gray">Moderator prüft ob ausgebessert wurde</p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <p>Alternativerweise (lt. Folien):</p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>Planung</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>Vorbesprechung</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>Individuelle Vorbereitung</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>Review-Sitzung</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="5">
+                        <li>Nachbearbeitung</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="6">
+                        <li>Bewertung</li>
+                    </ol>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%202.png">
+                        <img style="width: 192px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%202.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <h2>Zu Reviews verwandte Tätigkeiten</h2>
+                <p><span style="border-bottom: 0.05em solid">Inspektion</span></p>
+                <div class="indented">
+                    <p>Behebung von konkreten Mängeln</p>
+                    <p>Leser ≠ Autor</p>
+                    <p>Spezielle Art von Reviews → "Blick durch Mikroskop"</p>
+                    <p>Höhere Formalisierung.</p>
+                    <p>Lesetechniken die die Fehlerfindung verbessern sollen.</p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%203.png">
+                        <img style="width: 480px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%203.png" />
+                    </a>
+                </figure>
+                <p><span style="border-bottom: 0.05em solid">Walkthrough</span></p>
+                <div class="indented"><p>Behebung von konkreten Mängeln Autor = Leser &amp; Moderator</p></div>
+                <p></p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Audit</span></p>
+                <div class="indented"><p>Überblickende Kontrolle durch externe Personen</p></div>
+                <p></p>
+                <p></p>
+                <h2>Arten von Reviews</h2>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%204.png">
+                        <img style="width: 480px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%204.png" />
+                    </a>
+                </figure>
+                <h3>Mit Kunde</h3>
+                <p><span style="border-bottom: 0.05em solid">SRR - Software Requirements Review</span></p>
+                <div class="indented">
+                    <p>Nach Anforderungsphase.</p>
+                    <p>Review der Anforderungen mit Kunden vor Entwurfs und Design-Phase.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p>
+                    <span style="border-bottom: 0.05em solid">PDR -</span>
+                    Preliminary Design Review
+                    <span style="border-bottom: 0.05em solid">(Preliminary Design = Vorentwurfsplanung)</span>
+                </p>
+                <div class="indented">
+                    <p>Während der Entwurfsphase.</p>
+                    <p>Review der Software-Architektur vor Ausarbeitung im Detail und Kontrolle der Übereinstimmung mit Anforderungen.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">CDR - Critical Design Review</span></p>
+                <div class="indented">
+                    <p>Meistens gleichzeitig mit PDR.</p>
+                    <p>Bei besonders kritischen / wichtigen Komponenten, während Entwurf und Design-Phase.</p>
+                    <p class="block-color-gray">
+                        Vor allem in: phasenorientierte, strikt sequenzielle Prozessmodelle → letztmögliche Zeitpunkt, an dem der Kunde das Projekt noch stoppen
+                        kann.
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">IPR - In-Process Reviews</span></p>
+                <div class="indented">
+                    <p>Für sehr große und komplexe Projekte die lange dauern → Kunden Fortschritte in der Implementierung, Prototypen, Testfälle vorlegen.</p>
+                    <p class="block-color-gray">= kontinuierliche Reviews in agilen Prozessen</p>
+                </div>
+                <p></p>
+                <p></p>
+                <h3>Ohne Kunde</h3>
+                <p><span style="border-bottom: 0.05em solid">MR - Management Review</span></p>
+                <div class="indented">
+                    <p>Bewertung des Projekts, aktueller Projektstatus.</p>
+                    <p>Bei Abweichungen / geänderten Projektzielen steuern.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">TR - Technical Review</span></p>
+                <div class="indented">
+                    <p>konkreten Teil der überprüfen und bewerten.</p>
+                    <div class="indented">
+                        <p>Verifikation (vergleich mit Spezifikation oder Standards).</p>
+                        <p>Auch Fehlersuche.</p>
+                    </div>
+                    <p></p>
+                    <p>Kann Bestandteil des Prozesses sein.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Code-Walk-Through</span></p>
+                <div class="indented">
+                    <p>Autor stellt seine Module ablauforientiert vor.</p>
+                    <p>Kontrolle von Implementierungs-Qualität.</p>
+                    <p>Verbesserungsvorschläge einholen.</p>
+                    <p>Neue Mitarbeiter einführen.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Inspektion</span></p>
+                <div class="indented">
+                    <p>formales Review, speziell in frühen Phasen der Entwicklung.</p>
+                    <p>Suche nach schweren Fehlern</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">IRP (integrierter Review-Prozess)</span></p>
+                <div class="indented">
+                    <p>Nach "pull request".</p>
+                    <p>Diskussion zB nach einem request ein commit in die main branch zu pullen.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Anforderungen Überprüfen: "Software Requirement Review"</h2>
+                <p><span style="border-bottom: 0.05em solid">Anforderungen → Überprüfung der Anforderungen → Testfälle</span></p>
+                <div class="indented">
+                    <p>
+                        Test-driven-development: Testfälle
+                        <em>vor</em>
+                        der Implementierung erstellen
+                    </p>
+                    <p>Notwendige Kriterien für Anforderungen</p>
+                    <div class="indented">
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Typ</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Testbarkeit → Erfüllung durch ein System muss testbar sein</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Widerspruchsfreiheit</li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Überprüfung der Datenbankrelation</span></p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>strukturiert darstellen, z.B. als Liste.</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>mit ER-Model und UML reviewen, konsistent machen</li>
+                    </ol>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%205.png">
+                        <img style="width: 480px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%205.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Überprüfung mit Kontrollflussdiagramm</span></p>
+                <p>Daten und Kontrollfluss</p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>strukturiert darstellen als Liste.</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>Anforderungen mit Datenfluss-Modell IDEFØ reviewen und konsistent machen.</li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <h1>Testen</h1>
+                <p>Testen kann nicht dazu genutzt werden Fehlerfreiheit zu beweisen → dafür formale Verifikation notwendig.</p>
+                <div class="indented">
+                    <p>Ziel: Fehler zu finden um Störungen und Ausfälle zu verhindern.</p>
+                    <p>
+                        Testen ist
+                        <em>destruktiv</em>
+                        : Es versucht das System zum Ausfall zu bringen
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p>Alle Teammitglieder sind auch Verantwortlich zum testen.</p>
+                <p>Tests sind Dokumentation ("living documentation")</p>
+                <p>Testplan Artefakt beinhaltet Testfall-Implementierungen</p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Anforderungen → Modelle → Daten/Komponenten → Test-Spezifikationen</span></p>
+                <div class="indented">
+                    <p>Modelle</p>
+                    <p>Reviews</p>
+                    <div class="indented"><p>überprüfen die Korrektheit von Artefakten</p></div>
+                    <p></p>
+                    <p>Systemstruktur</p>
+                    <div class="indented">
+                        <p>Subsysteme, Komponenten, Schnittstellen.</p>
+                        <p>Interaktion zwischen Komponenten.</p>
+                    </div>
+                    <p></p>
+                    <p>Tests</p>
+                    <div class="indented">
+                        <p class="block-color-gray">Vorausgesetzt: Anforderungen, Ein-/Ausgangsparameter des Systems, innere Systemstruktur</p>
+                        <p>überprüfen das Laufzeitverhalten von Systemteilen</p>
+                        <p>Funktionen, Modelle und Qualitätsmerkmale</p>
+                    </div>
+                    <p></p>
+                    <p>Test-Driven Development</p>
+                    <div class="indented"><p>Herstellen von (automatisierten) Testfällen vor der Implementierung</p></div>
+                    <p></p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Fehler Unterscheidung</span></p>
+                <div class="indented">
+                    <p>Nicht an Spezifikation oder Anforderung gehalten</p>
+                    <div class="indented">
+                        <ol type="1" class="numbered-list" start="1">
+                            <li>
+                                Error (Fehler)
+                                <p>Mensch verursacht falsche Ergebnisse</p>
+                                <p><mark class="highlight-gray">zB Tippfehler in Sourcecode</mark></p>
+                            </li>
+                        </ol>
+                        <ol type="1" class="numbered-list" start="2">
+                            <li>
+                                Fault (Störung)
+                                <p><mark class="highlight-gray">Wenn ein Error das System behindert</mark></p>
+                            </li>
+                        </ol>
+                        <ol type="1" class="numbered-list" start="3">
+                            <li>
+                                Failure (Ausfall)
+                                <p><mark class="highlight-gray">Abweichung vom erwarteten Ergebnis</mark></p>
+                            </li>
+                        </ol>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%206.png">
+                        <img style="width: 528px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%206.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Rollen</span></p>
+                <div class="indented">
+                    <p>Meistens Ingenieur und Entwickler dieselbe Person.</p>
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            Testmanager
+                            <p class="block-color-gray">Planung, Arbeitspakete, Tests-Strategie, Fortschritt, Berichte</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            Testingenieur
+                            <p class="block-color-gray">Quasi wie Architekt</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>
+                            Testentwickler
+                            <p class="block-color-gray">Implementierung</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>
+                            Tester
+                            <p class="block-color-gray">Durchführung, Protokollierung</p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Traditioneller Testprozess</h2>
+                <p>Bei Anforderungen Tests erstellen → First Test / Test Driven Development</p>
+                <p>Unterschiedliche Schichten / Sichten → Unterschiedliche Testebenen</p>
+                <div class="indented">
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Implementierung
+                            <p>Komponenten Tests / Unit-Tests / Klassen-Tests</p>
+                            <div class="indented">
+                                <p class="block-color-gray">(Entwickler Tests, werden meistens von Entwicklern selbst geprüft)</p>
+                                <p class="block-color-gray">genaue Lokalisierung</p>
+                            </div>
+                            <p></p>
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Architektur
+                            <p>Integrations Tests</p>
+                            <div class="indented">
+                                <p class="block-color-gray">
+                                    Komponenten zu System oder Subsytem zusammenbauen → Zusammenspiel über Schnittstellen testen, auch externe Systeme die
+                                    benutzt werden.
+                                </p>
+                                <p class="block-color-gray">Manchmal Mock-Objects benötigt um fehlende Komponenten zu simulieren.</p>
+                                <p class="block-color-gray">Automatisiert: Continuous Integration Tests</p>
+                            </div>
+                            <p></p>
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Anwender
+                            <p>Systemtests, Akzeptanztests und Abnahmetests → Verifikation, Validierung</p>
+                            <div class="indented">
+                                <p class="block-color-gray">
+                                    Alles außer Systemtests: In
+                                    <em>Produktivumgebung</em>
+                                    vom Kunden (zb OS vom Kunden)
+                                </p>
+                                <p class="block-color-gray">(keine Abnahmetests bei Produkte für den breiten Markt)</p>
+                            </div>
+                            <p></p>
+                            <p>Installationstest</p>
+                            <div class="indented"><p class="block-color-gray">Identifizieren von Fehlern während der Installation.</p></div>
+                            <p></p>
+                        </li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Regressionstests
+                            <p>Bei Änderungen oder Erweiterungen nach einem Test</p>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%207.png">
+                        <img style="width: 528px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%207.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Äquivalenzklassen-Zerlegung</span></p>
+                <div class="indented">
+                    <p>Mit minimalem Aufwand möglichst hohe case-coverage.</p>
+                    <p>Man wählt Repräsentanten.</p>
+                    <div class="indented">
+                        <pre class="code"><code>18 &lt; Alter &lt;= 65
+
+1.Partition: Alter &lt;= 18 (ungültig)
+2.Partition: 18 &lt; Alter &lt;= 65 (gültig)
+3.Partition: Alter &gt; 65 (ungültig)</code></pre>
+                    </div>
+                    <p></p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Grenzwertanalyse</span></p>
+                <div class="indented"><p>Werte aus Grenzbereich wählen</p></div>
+                <p></p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Testfall-Dokumentation, Testfallbeschreibung</span></p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>ID (laufenede Nummer)</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            Typ
+                            <p>
+                                <style>
+                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                </style>
+                                <span
+                                    data-token-index="0"
+                                    contenteditable="false"
+                                    class="notion-text-equation-token"
+                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                    <span></span>
+                                    <span>
+                                        <span class="katex">
+                                            <span class="katex-mathml">
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <semantics>
+                                                        <mrow><mo>⋅</mo></mrow>
+                                                        <annotation encoding="application/x-tex">\cdot</annotation>
+                                                    </semantics>
+                                                </math>
+                                            </span>
+                                            <span class="katex-html" aria-hidden="true">
+                                                <span class="base">
+                                                    <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
+                                                    <span class="mord">⋅</span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span>﻿</span>
+                                </span>
+                                NF - Normalfall
+                            </p>
+                            <p>
+                                <style>
+                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                </style>
+                                <span
+                                    data-token-index="0"
+                                    contenteditable="false"
+                                    class="notion-text-equation-token"
+                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                    <span></span>
+                                    <span>
+                                        <span class="katex">
+                                            <span class="katex-mathml">
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <semantics>
+                                                        <mrow><mo>⋅</mo></mrow>
+                                                        <annotation encoding="application/x-tex">\cdot</annotation>
+                                                    </semantics>
+                                                </math>
+                                            </span>
+                                            <span class="katex-html" aria-hidden="true">
+                                                <span class="base">
+                                                    <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
+                                                    <span class="mord">⋅</span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span>﻿</span>
+                                </span>
+                                SF - Sonderfall
+                            </p>
+                            <p>
+                                <style>
+                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                </style>
+                                <span
+                                    data-token-index="0"
+                                    contenteditable="false"
+                                    class="notion-text-equation-token"
+                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                    <span></span>
+                                    <span>
+                                        <span class="katex">
+                                            <span class="katex-mathml">
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <semantics>
+                                                        <mrow><mo>⋅</mo></mrow>
+                                                        <annotation encoding="application/x-tex">\cdot</annotation>
+                                                    </semantics>
+                                                </math>
+                                            </span>
+                                            <span class="katex-html" aria-hidden="true">
+                                                <span class="base">
+                                                    <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
+                                                    <span class="mord">⋅</span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span>﻿</span>
+                                </span>
+                                FF - Fehlerfall
+                            </p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>Vorbedingungen</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>Eingabewerte</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="5">
+                        <li>Testfall-Beschreibung</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="6">
+                        <li>Erwartetes Ergebnis ("Testorakel")</li>
+                    </ol>
+                    <p></p>
+                    <p>Beispiel:</p>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%208.png">
+                        <img style="width: 384px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%208.png" />
+                    </a>
+                </figure>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%209.png">
+                        <img style="width: 576px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%209.png" />
+                    </a>
+                </figure>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2010.png">
+                        <img style="width: 576px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2010.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Value based testing</span></p>
+                <div class="indented">
+                    <p>Nicht alle Tests gleich wertvoll.</p>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Value-Based Testing → Priorisierung</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Requirements-Based testing → Max nutzen für Kunden</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Risk-Based testing → Welche Risiken gefährden Kunden</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">Test case selection techniques</li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Testarten / Test Methoden (statisch vs dynamisch)</h2>
+                <ul class="bulleted-list">
+                    <li style="list-style-type: disc">
+                        statische Verfahren → kein Code ausgeführt
+                        <p><mark class="highlight-gray">Reviews, Inspektionen</mark></p>
+                    </li>
+                </ul>
+                <ul class="bulleted-list">
+                    <li style="list-style-type: disc">
+                        dynamische Verfahren → Software Tests
+                        <p><span style="border-bottom: 0.05em solid">White-box</span></p>
+                        <div class="indented">
+                            <p class="block-color-gray">Whiteboxtests sind meist Modul oder Systemtests</p>
+                            <p class="block-color-gray">
+                                – Basiert auf SE-Modellen – Wissen über innere Struktur notwendig – Logik-getrieben → Überdeckung von Knoten, Kanten, Pfaden
+                            </p>
+                        </div>
+                        <p></p>
+                        <p><span style="border-bottom: 0.05em solid">Black-box</span></p>
+                        <div class="indented">
+                            <p class="block-color-gray">innerer aufbau nicht geprüft, nur eingabe - ausgabe (data-driven)</p>
+                            <p class="block-color-gray">
+                                Unit Tests werden meist als Blackbox ausprogrammiert (TDD) – Wissen über innere Struktur wird ignoriert – Daten-getriebene,
+                                Input-Output-getriebene Tests – Anforderungsüberdeckung
+                            </p>
+                            <p></p>
+                        </div>
+                        <p></p>
+                    </li>
+                </ul>
+                <h1>Teststufen</h1>
+                <p>Stufe bestimmt Testframework, System Tests (z.B. GUI Tests - sehr mühsam)</p>
+                <p>Abhängig von Testebene und Anwendungsfall entweder testen auf</p>
+                <div class="indented">
+                    <p><em>Funktion (Funktionstest)</em></p>
+                    <p><em>Last (Lasttest)</em></p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Unit Testing</h2>
+                <p>Ziel: Dokumentation von Klassen, genaue Lokalisierung von fehlern</p>
+                <p>In OOP ist ein Unit eine Klasse oder eine Methode</p>
+                <p>Unit-Tests müssen schnell durchlaufen (Regression-Library), Regressiontest nach Änderungen notwendig</p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2011.png">
+                        <img style="width: 480px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2011.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <h2>Module Testing</h2>
+                <p>Modultests / Komponententests genau wie Unit Tests</p>
+                <p><span style="border-bottom: 0.05em solid">Modul</span></p>
+                <div class="indented">
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">hat eine dokumentierte Spezifikation (API)</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">ist sichtbar und in Gesamtsystem integriert (z.B. mit Interfaces)</li>
+                    </ul>
+                    <ul class="bulleted-list">
+                        <li style="list-style-type: disc">
+                            Es kann kompiliert/interpretiert und getrennt von anderen Modulen getestet werden (z.B. mit Mocking)
+                        </li>
+                    </ul>
+                    <p></p>
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>Komponenten bieten Interfaces an (provides)</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>Komponenten erfordern andere Interfaces (requires)</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>Das macht Komponenten zu abstrakten, austauschbaren Modulen</li>
+                    </ol>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2012.png">
+                        <img style="width: 336px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2012.png" />
+                    </a>
+                </figure>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2013.png">
+                        <img style="width: 336px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2013.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <h2>Integration Testing</h2>
+                <p>Ziel: Test der Interaktion zwischen Modulen (Zusammenführung)</p>
+                <ol type="1" class="numbered-list" start="1">
+                    <li>„Big Bang“</li>
+                </ol>
+                <ol type="1" class="numbered-list" start="2">
+                    <li>Inkrementell: Top-Down / Bottom-Up (besser)</li>
+                </ol>
+                <p>Häufig: Zusammenführung durch Entwickler</p>
+                <div class="indented">
+                    <p class="block-color-gray">
+                        – Weniger Aufwand (weniger Stubs/Treiber nötig) – Frühere Erkennung von Schnittstellenfehlern – Fehler-Lokation besser eingrenzbar
+                        (leichteres Debugging)
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <h1>Test Driven Development TDD</h1>
+                <p>Setzt keine Implementierung voraus.</p>
+                <p>Automatisiert.</p>
+                <p>Fixer Bestandteil von den meisten agilen Vorgehensmodellen.</p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2014.png">
+                        <img style="width: 624px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2014.png" />
+                    </a>
+                </figure>
+                <p><span style="border-bottom: 0.05em solid">Ablauf</span></p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            Think
+                            <p class="block-color-gray">Spezifikation / Definition des Tests</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            Red (Fehlgeschlagen)
+                            <p class="block-color-gray">Ausführung des Tests → zu testende Klasse existiert nicht</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>
+                            Green (Erfolgreich)
+                            <p>Implementierung der zu testenden Klasse oder Komponent.</p>
+                            <p class="block-color-gray">Versuchen status "green" zu erreichen.</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>
+                            Refactor
+                            <p class="block-color-gray">Nach einer Abänderung / Korrektur muss wieder sichergestellt werden dass der status "grün" ist.</p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2015.png">
+                        <img style="width: 528px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2015.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Best-Practices für Testen</span></p>
+                <div class="indented">
+                    <p>Viele Unit Tests machen Integrations-Tests wesentlich einfacher. (bottom-up testing)</p>
+                    <p>
+                        Technische Architekten
+                        <mark class="highlight-gray">kleine Programme und Methoden, einfach zu testen + Diagramme</mark>
+                    </p>
+                    <p>
+                        Tester
+                        <mark class="highlight-gray">Schreibt Tests basierent auf Anforderungen</mark>
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <h1>Automatische Codeprüfung</h1>
+                <p>Mit einem Test-Framework</p>
+                <figure class="image">
+                    <a href="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2016.png">
+                        <img style="width: 432px" src="Qualita%CC%88tssicherung%20QS%209cca5e2a3b214a33bf09aa2a3f5484a6/Untitled%2016.png" />
+                    </a>
+                </figure>
+                <p><span style="border-bottom: 0.05em solid">Bestandteile</span></p>
+                <div class="indented">
+                    <p>Software and System under Test (SUT)</p>
+                    <p>Test Suite</p>
+                    <div class="indented"><p>Testfälle die auch generiert werden können</p></div>
+                    <p></p>
+                    <p>Test Runner</p>
+                    <p>Überprüfungsmechanismus</p>
+                    <p>Test Reporter</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">xUnit - Testing Frameworks</span></p>
+                <div class="indented">
+                    <p>
+                        Framework erlaubt einfache Erstellung, Ausführung und Auswertung der Testfälle → einfach, schnell, Korrekturen nach Änderung möglich
+                        (Regressionstests)
+                    </p>
+                    <p>Testing-Frameworks für verschiedene Sprachen:</p>
+                    <div class="indented">
+                        <p class="block-color-gray">Java JUnit</p>
+                        <p class="block-color-gray">.Net NUnit</p>
+                        <p class="block-color-gray">C++ CppUnit</p>
+                        <p class="block-color-gray">Ruby RUnit</p>
+                        <p class="block-color-gray">... ...</p>
+                    </div>
+                    <p></p>
+                    <p>Wird nicht nur für Unit Tests benutzt.</p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><span style="border-bottom: 0.05em solid">Code Quality Checks</span></p>
+                <div class="indented">
+                    <p>
+                        Automatische Überprüfung der Einhalteung von Namenskonventionen, JavaDoc Kommentaren, Klammersetzung und Einrückungen, Duplicate Code,
+                        Komplexität usw.
+                    </p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+            </div>
+        </article>
+    </body>
+</html>

@@ -1,0 +1,1240 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Previous tests</title>
+        <style>
+            /* cspell:disable-file */
+            /* webkit printing magic: print all background colors */
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            * {
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media only screen {
+                body {
+                    margin: 2em auto;
+                    max-width: 900px;
+                    color: rgb(55, 53, 47);
+                }
+            }
+
+            body {
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            a,
+            a.visited {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .pdf-relative-link-path {
+                font-size: 80%;
+                color: #444;
+            }
+
+            h1,
+            h2,
+            h3 {
+                letter-spacing: -0.01em;
+                line-height: 1.2;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 0;
+                margin-bottom: 0.75em;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+                margin-top: 1.875rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .source {
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 1.5em;
+                word-break: break-all;
+            }
+
+            .callout {
+                border-radius: 3px;
+                padding: 1rem;
+            }
+
+            figure {
+                margin: 1.25em 0;
+                page-break-inside: avoid;
+            }
+
+            figcaption {
+                opacity: 0.5;
+                font-size: 85%;
+                margin-top: 0.5em;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+
+            .indented {
+                padding-left: 1.5em;
+            }
+
+            hr {
+                background: transparent;
+                display: block;
+                width: 100%;
+                height: 1px;
+                visibility: visible;
+                border: none;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            @media only print {
+                img {
+                    max-height: 100vh;
+                    object-fit: contain;
+                }
+            }
+
+            @page {
+                margin: 1in;
+            }
+
+            .collection-content {
+                font-size: 0.875rem;
+            }
+
+            .column-list {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .column {
+                padding: 0 1em;
+            }
+
+            .column:first-child {
+                padding-left: 0;
+            }
+
+            .column:last-child {
+                padding-right: 0;
+            }
+
+            .table_of_contents-item {
+                display: block;
+                font-size: 0.875rem;
+                line-height: 1.3;
+                padding: 0.125rem;
+            }
+
+            .table_of_contents-indent-1 {
+                margin-left: 1.5rem;
+            }
+
+            .table_of_contents-indent-2 {
+                margin-left: 3rem;
+            }
+
+            .table_of_contents-indent-3 {
+                margin-left: 4.5rem;
+            }
+
+            .table_of_contents-link {
+                text-decoration: none;
+                opacity: 0.7;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+            }
+
+            table,
+            th,
+            td {
+                border: 1px solid rgba(55, 53, 47, 0.09);
+                border-collapse: collapse;
+            }
+
+            table {
+                border-left: none;
+                border-right: none;
+            }
+
+            th,
+            td {
+                font-weight: normal;
+                padding: 0.25em 0.5em;
+                line-height: 1.5;
+                min-height: 1.5em;
+                text-align: left;
+            }
+
+            th {
+                color: rgba(55, 53, 47, 0.6);
+            }
+
+            ol,
+            ul {
+                margin: 0;
+                margin-block-start: 0.6em;
+                margin-block-end: 0.6em;
+            }
+
+            li > ol:first-child,
+            li > ul:first-child {
+                margin-block-start: 0.6em;
+            }
+
+            ul > li {
+                list-style: disc;
+            }
+
+            ul.to-do-list {
+                padding-inline-start: 0;
+            }
+
+            ul.to-do-list > li {
+                list-style: none;
+            }
+
+            .to-do-children-checked {
+                text-decoration: line-through;
+                opacity: 0.375;
+            }
+
+            ul.toggle > li {
+                list-style: none;
+            }
+
+            ul {
+                padding-inline-start: 1.7em;
+            }
+
+            ul > li {
+                padding-left: 0.1em;
+            }
+
+            ol {
+                padding-inline-start: 1.6em;
+            }
+
+            ol > li {
+                padding-left: 0.2em;
+            }
+
+            .mono ol {
+                padding-inline-start: 2em;
+            }
+
+            .mono ol > li {
+                text-indent: -0.4em;
+            }
+
+            .toggle {
+                padding-inline-start: 0em;
+                list-style-type: none;
+            }
+
+            /* Indent toggle children */
+            .toggle > li > details {
+                padding-left: 1.7em;
+            }
+
+            .toggle > li > details > summary {
+                margin-left: -1.1em;
+            }
+
+            .selected-value {
+                display: inline-block;
+                padding: 0 0.5em;
+                background: rgba(206, 205, 202, 0.5);
+                border-radius: 3px;
+                margin-right: 0.5em;
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+            }
+
+            .collection-title {
+                display: inline-block;
+                margin-right: 1em;
+            }
+
+            .page-description {
+                margin-bottom: 2em;
+            }
+
+            .simple-table {
+                margin-top: 1em;
+                font-size: 0.875rem;
+                empty-cells: show;
+            }
+            .simple-table td {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table th {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table-header-color {
+                background: rgb(247, 246, 243);
+                color: black;
+            }
+            .simple-table-header {
+                font-weight: 500;
+            }
+
+            time {
+                opacity: 0.5;
+            }
+
+            .icon {
+                display: inline-block;
+                max-width: 1.2em;
+                max-height: 1.2em;
+                text-decoration: none;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            img.icon {
+                border-radius: 3px;
+            }
+
+            .user-icon {
+                width: 1.5em;
+                height: 1.5em;
+                border-radius: 100%;
+                margin-right: 0.5rem;
+            }
+
+            .user-icon-inner {
+                font-size: 0.8em;
+            }
+
+            .text-icon {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+            .page-cover-image {
+                display: block;
+                object-fit: cover;
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            .page-header-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .page-header-icon-with-cover {
+                margin-top: -0.72em;
+                margin-left: 0.07em;
+            }
+
+            .page-header-icon img {
+                border-radius: 3px;
+            }
+
+            .link-to-page {
+                margin: 1em 0;
+                padding: 0;
+                border: none;
+                font-weight: 500;
+            }
+
+            p > .user {
+                opacity: 0.5;
+            }
+
+            td > .user,
+            td > time {
+                white-space: nowrap;
+            }
+
+            input[type="checkbox"] {
+                transform: scale(1.5);
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
+
+            p {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .image {
+                border: none;
+                margin: 1.5em 0;
+                padding: 0;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .code,
+            code {
+                background: rgba(135, 131, 120, 0.15);
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 85%;
+                tab-size: 2;
+            }
+
+            code {
+                color: #eb5757;
+            }
+
+            .code {
+                padding: 1.5em 1em;
+            }
+
+            .code-wrap {
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .code > code {
+                background: none;
+                padding: 0;
+                font-size: 100%;
+                color: inherit;
+            }
+
+            blockquote {
+                font-size: 1.25em;
+                margin: 1em 0;
+                padding-left: 1em;
+                border-left: 3px solid rgb(55, 53, 47);
+            }
+
+            .bookmark {
+                text-decoration: none;
+                max-height: 8em;
+                padding: 0;
+                display: flex;
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .bookmark-title {
+                font-size: 0.85em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 1.75em;
+                white-space: nowrap;
+            }
+
+            .bookmark-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bookmark-info {
+                flex: 4 1 180px;
+                padding: 12px 14px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark-image {
+                width: 33%;
+                flex: 1 1 180px;
+                display: block;
+                position: relative;
+                object-fit: cover;
+                border-radius: 1px;
+            }
+
+            .bookmark-description {
+                color: rgba(55, 53, 47, 0.6);
+                font-size: 0.75em;
+                overflow: hidden;
+                max-height: 4.5em;
+                word-break: break-word;
+            }
+
+            .bookmark-href {
+                font-size: 0.75em;
+                margin-top: 0.25em;
+            }
+
+            .sans {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+                    "Segoe UI Symbol";
+            }
+            .code {
+                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+            }
+            .serif {
+                font-family: Lyon-Text, Georgia, ui-serif, serif;
+            }
+            .mono {
+                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+            }
+            .pdf .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+            }
+            .pdf:lang(zh-CN) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+            }
+            .pdf:lang(zh-TW) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+            }
+            .pdf:lang(ko-KR) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+            }
+            .pdf .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK KR";
+            }
+            .pdf .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+            }
+            .pdf:lang(zh-CN) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+            }
+            .pdf:lang(zh-TW) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+            }
+            .pdf:lang(ko-KR) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+            }
+            .pdf .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+            }
+            .highlight-default {
+                color: rgba(55, 53, 47, 1);
+            }
+            .highlight-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .highlight-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .highlight-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .highlight-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .highlight-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .highlight-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .highlight-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .highlight-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .highlight-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .highlight-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .highlight-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .highlight-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .highlight-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .highlight-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .highlight-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .highlight-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .highlight-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .highlight-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .block-color-default {
+                color: inherit;
+                fill: inherit;
+            }
+            .block-color-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .block-color-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .block-color-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .block-color-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .block-color-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .block-color-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .block-color-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .block-color-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .block-color-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .block-color-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .block-color-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .block-color-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .block-color-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .block-color-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .block-color-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .block-color-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .block-color-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .block-color-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .select-value-color-interactiveBlue {
+                background-color: rgba(35, 131, 226, 0.07);
+            }
+            .select-value-color-pink {
+                background-color: rgba(245, 224, 233, 1);
+            }
+            .select-value-color-purple {
+                background-color: rgba(232, 222, 238, 1);
+            }
+            .select-value-color-green {
+                background-color: rgba(219, 237, 219, 1);
+            }
+            .select-value-color-gray {
+                background-color: rgba(227, 226, 224, 1);
+            }
+            .select-value-color-translucentGray {
+                background-color: rgba(255, 255, 255, 0.0375);
+            }
+            .select-value-color-orange {
+                background-color: rgba(250, 222, 201, 1);
+            }
+            .select-value-color-brown {
+                background-color: rgba(238, 224, 218, 1);
+            }
+            .select-value-color-red {
+                background-color: rgba(255, 226, 221, 1);
+            }
+            .select-value-color-yellow {
+                background-color: rgba(253, 236, 200, 1);
+            }
+            .select-value-color-blue {
+                background-color: rgba(211, 229, 239, 1);
+            }
+            .select-value-color-pageGlass {
+                background-color: undefined;
+            }
+            .select-value-color-washGlass {
+                background-color: undefined;
+            }
+
+            .checkbox {
+                display: inline-flex;
+                vertical-align: text-bottom;
+                width: 16;
+                height: 16;
+                background-size: 16px;
+                margin-left: 2px;
+                margin-right: 5px;
+            }
+
+            .checkbox-on {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            .checkbox-off {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            /* -------- injections from notionBackup -------- */
+
+            body {
+                white-space: normal !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+
+            .code,
+            code {
+                font-size: 100% !important;
+            }
+
+            blockquote {
+                font-size: 100% !important;
+            }
+
+            .callout {
+                white-space: normal !important;
+            }
+            .callout div:has(span.icon) {
+                font-size: 100% !important;
+            }
+
+            .source:not(.bookmark) {
+                font-size: 100% !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+        </style>
+    </head>
+    <body>
+        <article class="page sans">
+            <header>
+                <h1 class="page-title">Previous tests</h1>
+                <p class="page-description"></p>
+            </header>
+            <div class="page-body">
+                <h2><mark class="highlight-blue">Definition</mark></h2>
+                <p>Welchen Kontext bei Qualitätsmetriken kennen Sie? Nennen Sie mindestens drei.</p>
+                <p></p>
+                <p>Nennen Sie die Phasen des SPI-Zyklus nach Deming! (PDCA)</p>
+                <p></p>
+                <p>Welche vier Zielsetzungen, die sich gegenseitig beeinflussen, werden bei Softwareentwicklung sichtbar? (Teufelsquadrat nach Sneed)</p>
+                <p></p>
+                <p>Was sind die 3 Schwerpunkte/Aufgaben des Softwarequalitätsmanagement?</p>
+                <p></p>
+                <p>2 Prozessmodelle in der Softwareentwicklung nennen. Anhand eines Modells erklären, wie darin Qualitätssicherung gewährleistet wird.</p>
+                <p></p>
+                <p>Teufelsquadrat nach Sneed erklären.</p>
+                <p></p>
+                <p>QS in verschiedenen Vorgehensmodellen erklären</p>
+                <p></p>
+                <p>6 Leistungen der QS-Stelle aufzählen</p>
+                <p></p>
+                <p>4 Arten von Messungen nennen und beschreiben</p>
+                <p></p>
+                <p>Was ist Software-Qualität? Welche Möglichkeiten gibt es, Software-Qualität sicherzustellen?</p>
+                <p></p>
+                <p>Welche Aufgaben hat Qualitätsmanagement? Wo liegen die Unterschiede zwischen Qualitätsmanagement und Qualitätssicherung?</p>
+                <p></p>
+                <p>
+                    Charakterisieren Sie den Unterschied zwischen Äquivalenzklassenzerlegung und Grenzwertanalyse und beschreiben sie, wieso diese notwendig
+                    ist. Illustrieren Sie das an einem Beispiel.
+                </p>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Qualitätsmanagement vs. Qualitätssicherung, Prinzipien des Qualitätsmanagements nennen</summary>
+                            <p>
+                                <em>
+                                    Qualitätssicherung: Verfahren, Aktivitäten und Prozesse, welche sicherstellen, dass ein Produkt gegebenen Anforderungen
+                                    (Spezifikation und Kundenanforderungen) gerecht wird.
+                                </em>
+                            </p>
+                            <p>
+                                <em>
+                                    Qualitätsmanagement: Gesamtheit aller Maßnahmen und Aktivitäten, die zur Herstellung und Wahrung von Qualität notwendig
+                                    sind. Dazu zählen unter anderem Qualitätsplanung, -lenkung, -sicherung und insbesondere die Qualitätsverbesserung.
+                                </em>
+                            </p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>
+                                FURPS Functionality, Usability, Reliablity, Performance und Supportability: Worauf muss der Kunde bei einem Akzeptanztest
+                                achten? Zwei Merkmale für jede dieser Anforderungen sind zu nennen.
+                            </summary>
+                            <p>
+                                <em>
+                                    Akzeptanztest: Der Kunde prüft hier die Einhaltung und Umsetzung seiner Anforderungen, welche im Idealfall der
+                                    Projektspezifikation entsprechen (sonst kommt es wohl oder übelst zu Disputen).
+                                </em>
+                            </p>
+                            <p>
+                                <em>
+                                    Functionality: Dabei handelt es sich um Features des Produktes, z.B. die Fähigkeit, eine gegebene Aufgabe zu erfüllen. Grob
+                                    gesagt jede Funktionalität, die explizit eingebaut wurde.
+                                </em>
+                            </p>
+                            <p>
+                                <em>
+                                    Usability: Behandelt die Art und Weise, wie (einfach oder komplex) mit dem System interagiert werden kann. Entsprechende
+                                    Hilfeseiten und Dokumentation zählen auch zu diesem Punkt. Reliability: Befasst sich mit der Verlässlichkeit des Produktes,
+                                    bspw. wie oft das System ausfällt, wie einfach/schnell die Wiederherstellung (Recovery) funktioniert und wie vorhersehbar
+                                    solche Ausfälle sind.
+                                </em>
+                            </p>
+                            <p>
+                                <em>
+                                    Performance: Ist ein wichtiges Merkmal für Betreiber, da bei guter Performance an Hardware gespart werden kann. Beachtet
+                                    werden Durchsatz, Antwortzeiten und ggf. auch die Genauigkeit des Systems.
+                                </em>
+                            </p>
+                            <p><em>Supportability: Bezieht sich auf den Betrieb eines Systems, sprich wie gut es sich warten oder erweitern lässt.</em></p>
+                            <p><em>Auch die Konfiguration zählt hier dazu.</em></p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <p>Integration der Qualitätssicherung (Verifikation und Validierung) im V-Modell (Skizze war dabei) einzuschreiben.</p>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Nennen Sie Vorgehensweisen zu Sicherung/Verbesserung der Qualität von Projekt-Anforderungen?</summary>
+                            <p>
+                                <em>
+                                    Projektanforderungen werden oft im Zuge eines Project Requirement Review überprüft. Grundsätzlich ist es sinnvoll, in dieser
+                                    Phase großzügig zu testen, kontrollieren und prüfen, da frühe Fehler am günstigsten zu beheben sind. Es kann zum Beispiel
+                                    mit Hilfe von Checklisten überprüft werden, ob für alle Use-Cases entsprechende Parameter angegeben sind.
+                                </em>
+                            </p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <p>
+                    3 versch typische Stakeholder eines Projekts nennen und erklären was durch die "typische" Haltung schiefgehen kann (Kunde weiß nicht was
+                    er/sie will..)
+                </p>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>
+                                Nennen Sie 3 Prinzipien des Qualitätsmanagements und erklären Sie diese. Was ist der Unterschied zwischen Qualitätsmanagement
+                                und Qualitätssicherung?
+                            </summary>
+                            <p>
+                                <em>
+                                    Qualitätsmanagement beschreibt die Gesamtheit aller Maßnahmen und Aktivitäten, die zur Herstellung und Wahrung von Qualität
+                                    notwendig sind. Dazu zählen unter anderem Qualitätsplanung, -lenkung, -sicherung und insbesondere die Qualitätsverbesserung.
+                                    Wichtige Prinzipien:
+                                </em>
+                            </p>
+                            <div class="indented">
+                                <p><em>Kontinuierliche Verbesserung durch Bewertung von Maßnahmen und Prozessen.</em></p>
+                                <p><em>Frühzeitige Entdeckung und Behebung von Fehlern</em></p>
+                                <p><em>Unabhängigkeit bei Qualitätsprüfungen (vgl. QS-Abteilung getrennt von Entwicklung)</em></p>
+                                <p><em>Produkt- und projektabhängige Planung von QS-Maßnahmen</em></p>
+                            </div>
+                            <p></p>
+                            <p>
+                                <em>
+                                    Qualitätssicherung hingegen beschreibt Verfahren, Aktivitäten und Prozesse, welche sicherstellen, dass ein Produkt gegebenen
+                                    Anforderungen (Spezifikation und Kundenanforderungen) gerecht wird (kurz: Testen, Reviewen, ...).
+                                </em>
+                            </p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <h2><mark class="highlight-blue">Reviewing</mark></h2>
+                <p>Was ist ein Review - wie ist es aufgebaut?</p>
+                <p></p>
+                <p>Unterschied zwischen Review und Test?</p>
+                <p></p>
+                <p>Vor- und Nachteile von Review und Test?</p>
+                <p></p>
+                <p>Was ist eine Inspektion?</p>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>
+                                Ablauf eines Review beschreiben (Skizze + Stufen kurz erklären) Vorteile eine Reviews gegen den manuellen Test nennen.
+                            </summary>
+                            <ol type="1" class="numbered-list" start="1">
+                                <li>
+                                    <em>
+                                        Planung: In der ersten Phase werden die Teilnehmer für das Review ausgewählt und das zu beurteilende Objekt, sowie die
+                                        Ziele des Reviews festgelegt.
+                                    </em>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="2">
+                                <li>
+                                    <em>
+                                        Vorbereitung: In der zweiten Phase bereiten sich die Teilnehmer des Reviews individuell vor. Dazu behandeln sie den
+                                        Testling ihrer Rolle entsprechend und notieren sich Auffälligkeiten (Fehler, Fragen und Kommentare).
+                                    </em>
+                                </li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="3">
+                                <li><em>Review-Sitzung: In der Hauptsitzung werden die Erkenntnisse dann besprochen und protokolliert.</em></li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="4">
+                                <li><em>Nachbearbeitung: In dieser Phase werden die gefundenen Fehler behoben und zugehörige Dokumente aktualisiert.</em></li>
+                            </ol>
+                            <ol type="1" class="numbered-list" start="5">
+                                <li>
+                                    <em>
+                                        Bewertung: Eine abschließende Bewertungsphase wird dazu genutzt, den Reviewprozess für künftige Reviews zu optimieren.
+                                    </em>
+                                </li>
+                            </ol>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Ziele von technischen Reviews, Inspektionen und Code-Walkthrough.</summary>
+                            <p>
+                                <em>
+                                    Grundsätzlich dienen diese Maßnahmen der Wahrung und Verbesserung der Qualität eines Produktes (d.h. Fehler früh finden und
+                                    beheben). Sie können auch zur Kontrolle von Konsistenzen (vgl. Spezifikation vs. UML Diagramme) herangezogen werden. Die
+                                    Verbesserung des Entwicklungsprozesses ist ebenfalls ein Kernziel.
+                                </em>
+                            </p>
+                            <p>
+                                <em>
+                                    Oftmals werden Reviews und Inspektionen auch als Grundlage zur Beurteilung der Qualität eines Softwareproduktes verwendet.
+                                </em>
+                            </p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <h2><mark class="highlight-blue">Anforderungen</mark></h2>
+                <p>Nennen Sie 3 Elemente einer User Story Card und erklären Sie diese anhand eines Beispiels.</p>
+                <p></p>
+                <p>Ablauf eines Reviews von Anforderungen erklären und skizzieren.</p>
+                <p></p>
+                <h2><mark class="highlight-blue">Refactoring</mark></h2>
+                <p>Was bedeutet Refactoring und wann wird es eingesetzt? Wie wird Refactoring durchgeführt?</p>
+                <p></p>
+                <p>Was bedeutet Refactoring? Ziele? Wie wird es durchgeführt?</p>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Was versteht man unter dem Begriff Refactoring? Wâs wird dadurch erreicht? Wie wird Refactoring durchgeführt?</summary>
+                            <p>
+                                <em>
+                                    Refaktorisierung ist die Umgestaltung (= Umstrukturierung) von Programmcode, ohne die Programmfunktionalität dabei zu
+                                    verändern, mit den Zielen, die Lesbarkeit, Verständlichkeit, Wartbarkeit und Erweiterbarkeit des Codes zu verbessern.
+                                    Refaktorisierung wird auch zur Vermeidung von Redundanzen (z.B. mittels Ersetzung durch generischer Klassen) eingesetzt.
+                                </em>
+                            </p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <h2><mark class="highlight-blue">Testen</mark></h2>
+                <p>Die Phasen im Testprozess beschreiben</p>
+                <p></p>
+                <p>Beschreiben Sie die Teststufen (Komponententest, Integrationtest, Systemtest, Akzeptanztest, Lasttest, Regressionstest)</p>
+                <p></p>
+                <p>Beschreiben Sie Testen in SCRUM sowie 5 Aufgaben von TesterInnen.</p>
+                <p></p>
+                <p>Nennen und beschreiben Sie 4 ISTQB Testprinzipien.</p>
+                <p></p>
+                <p>4 Merkmale/Unterschiede zu BlackBox WhiteBox Tests gegenüberstellen.</p>
+                <p></p>
+                <p>Äquivalenzklassenzerlegung und Grenzwertanalyse anhand eines Beispiels beschreiben.</p>
+                <p></p>
+                <p>Verifikation und Validierung erklären.</p>
+                <p></p>
+                <p>MC-Fragen zu unterschiedlichen Teststufen.</p>
+                <p></p>
+                <p>Nennen Sie die Phasen im Test-driven Development (TDD)!</p>
+                <p></p>
+                <p>Nennen und beschreiben Sie 4 ISTQB Testprinzipien.</p>
+                <p></p>
+                <p>4 Merkmale/Unterschiede zu BlackBox WhiteBox Tests gegenüberstellen.</p>
+                <p></p>
+                <p>Äquivalenzklassenzerlegung und Grenzwertanalyse anhand eines Beispiels beschreiben.</p>
+                <p></p>
+                <p>Verifikation und Validierung erklären.</p>
+                <p></p>
+                <p>MC-Fragen zu unterschiedlichen Teststufen.</p>
+                <p></p>
+                <p>Testmethoden, Testarten, Testklassen nennen und beschreiben</p>
+                <p></p>
+                <p>Aufgaben von Tester in Scrum</p>
+                <p></p>
+                <p>Welche Teststufen (Modul, Integration, Last, Regression, System, Akzeptanz) gibt es? Nennen und beschreiben.</p>
+                <p></p>
+                <p>Was ist Testautomatisierung? Welche Ziele hat sie? In welchen Teststufen kann sie angewendet werden?</p>
+                <p></p>
+                <p>Vorteile von Testautomatisierung</p>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Wozu werden Mock-Objekte eingesetzt? Allgemein und 3 Beispiele nennen.</summary>
+                            <p>
+                                <em>
+                                    Mocking dient nur Isolation von Komponenten, indem abhängige Objekte durch eine Art "Dummy" ersetzt werden. Mock-Objekte
+                                    können dynamisch konfiguriert werden, sodass sie bei gegebener Eingabe (z.B. Aufruf einer Funktion) eine entsprechende
+                                    Antwort liefern. Beispiele:
+                                </em>
+                            </p>
+                            <p><em>Test von Service-Klassen durch Mocking vom darunter liegenden Data-Layer.</em></p>
+                            <p>
+                                <em>
+                                    Test einer Komponente, die auf ein externes System zugreifen muss, das möglicherweise langsam oder kostenpflichtig ist (für
+                                    automatisierte, regelmäßig durchgeführte Tests ungeeignet).
+                                </em>
+                            </p>
+                            <p><em>Als Ersatz für Komponenten, die nur schwer künstlich in einen gewissen Zustand gebracht werden können.</em></p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>
+                                Black-Box Test vs. White-Box Test. Ist es möglich den White Box Test mit JUnit Framework durchzuführen. Wie? Begründung!
+                            </summary>
+                            <p>
+                                <em>
+                                    Black-Box Tests: Der Tester hat keine Kenntnis (oder ignoriert seine Kenntnis) über den Aufbau der zu testende
+                                    Softwarekomponente. Der Test basiert daher rein auf der Spezifikation, sprich welche Ausgabe bei entsprechender Eingabe
+                                    erwartet wird.
+                                </em>
+                            </p>
+                            <p>
+                                <em>
+                                    White-Box Tests: Bei dieser Testart hat der Tester Kenntnis über den Aufbau einer Komponente und nutzt dieses Wissen zum
+                                    Schreiben der Tests aus. Es werden also Code-Teile, wie z.B. Bedinungsanweisungen, mit genau diesem Wissen im Hinterkopf
+                                    überprüft ("Logik getriebene Tests"). Dadurch können verschiedene Codeabdeckungsarten erreicht werden (C0-C3). Es ist
+                                    selbstverständlich möglich, mit JUnit White-Box Tests durchzuführen. Dazu schreibt man Tests, die beispielsweise alle
+                                    Bedingungen oder Kanten in einer Komponente explizit durchlaufen.
+                                </em>
+                            </p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Welche Code-Quality-Checks gibt es? Nennen Sie ein Tool das hierbei Unterstützung bietet.</summary>
+                            <p>
+                                <em>Checkstyle (hinsichtlich Uniformität und Konventionen, z.B. Kommentare, Variablenbenennung, Duplikation von Code, ...)</em>
+                            </p>
+                            <p><em>Code-Coverage Checks (Wie viel Produktionscode wird durch Unit Tests abgedeckt?)</em></p>
+                            <p><em>Find-Bugs (Prüft auf Bug Patterns bzw. Bad Practice)</em></p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <p>4 Arten von Test-Doubles nennen und kurz beschreiben. Welche Vorteile bringen Test-Doubles beim Testen im Bezug auf Qualitätssicherung?</p>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>
+                                Erklären Sie den Begriff "Continuous Integration". Nennen Sie die Aufgaben des CI-Systems. Welche davon können automatisiert
+                                werden?
+                            </summary>
+                            <p>
+                                <em>
+                                    Kontinuierliche Integration beschreibt ein System, das bei Änderungen (= neue Version im Versionsverwaltungssystem)
+                                    automatisch Tests durchführt und ein Softwareprodukt zusammenführt. Dadurch wird gewährleistet, dass Fehler früh erkannt und
+                                    behandelt werden können. Kurzum ist ein CI-System also dafür zuständig, bei Änderungen die Funktionalität einer neuen
+                                    Version sicherzustellen. Im Idealfall übernimmt das CI-System auch entsprechende Dokumentationsarbeiten (Test-Berichte
+                                    u.Ä.).
+                                </em>
+                            </p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <p>Kontrollflussgraph war gegeben. Testfälle bezüglich 100% Anweisungsüberdeckung und 100% Bedingungsüberdeckung waren gefragt.</p>
+                <p></p>
+                <p>Teststufen (Modul, Integration, Lasst, Regression, System, Akzeptance) mit der richtigen Fällen (Erklärungen) verbinden.</p>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Testdoubles nennen und kurz beschreiben. Wie führt man die Isolation beim Testen durch?</summary>
+                            <p>
+                                Dummy-Object: Verfügt über keinerlei Logik, dient lediglich als leerer Methodenparameter. Fake Object: Ist eine ausführbare
+                                Implementierung, die allerdings keine Echtdaten liefert. Wird oft zur zügigeren Testausführung herangezogen.
+                            </p>
+                            <p>Stub: Liefert vordefinierte Resultate bei Funktionsaufrufen.</p>
+                            <p>
+                                Mock: Ist im Prinzip ein konfigurierbares Stub, das auch entsprechende Logik enthalten kann. Prüft beispielsweise die
+                                Eingabeparameter und antwortet entsprechend.
+                            </p>
+                            <p>
+                                Die Isolation wird durch die Injektion von Testdoubles durchgeführt. Dadurch wird sichergestellt, dass etwaige Fehler nicht
+                                durch abhängige (= darunterliegende) Objekte verursacht werden.
+                            </p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Was ist der Unterschied zwischen Testing und Debugging?</summary>
+                            <p>
+                                <em>
+                                    Testing: Wird von einem Tester durchgeführt, um ein System bzw. eine Komponente auf Fehler zu prüfen. Entscheidend ist hier
+                                    nur das Finden von Fehlern, nicht deren genaue Ursache.
+                                </em>
+                            </p>
+                            <p><em>Debugging: Wird vom Entwickler durchgeführt, um die Quelle eines Fehlers zu lokalisieren.</em></p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>Was ist der Unterschied zwischen Äquivalenzklassenzerlegung und Grenzwertanalyse? (4 Punkte)</summary>
+                            <p>
+                                <em>
+                                    Äquivalenzklassenzerlegung: Befasst sich damit, mögliche Eingaben basierend auf dem erwarteten Systemverhalten in Klassen
+                                    gleichen Verhaltens aufzuteilen. Beispiel: Beschränkung eines YouTube-Videos durch Volljährigkeitsprüfung - zwei
+                                    Äquivalenzklassen: &lt;18 und &gt;=18
+                                </em>
+                            </p>
+                            <p>
+                                <em>
+                                    Grenzwertanalyse: Ist eine Vertiefung der Äquivalenzklassenzerlegung, bei der gezielt die Ränder (= Grenzwerte) von den
+                                    einzelnen Klassen überprüft werden, da dort am häufigsten Fehler (vgl. falscher Vergleichsoperator, oder Index one-off
+                                    Fehler) auftreten.
+                                </em>
+                            </p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <ul class="toggle">
+                    <li>
+                        <details open="">
+                            <summary>
+                                Eine Methode string10(String s) retourniert die ersten 10 Zeichen des Strings s. Ist der String kürzer als 10, so wird der
+                                String unverändert zurückgegeben. Wie viele Äquivalenzklassen werden mindestens benötigt, um die Methode vollständig zu testen
+                            </summary>
+                            <p>
+                                <em>
+                                    Es sollten zumindest Tests mit weniger als 10 (bspw. 9), genau 10 und mehr als 10 (bspw. 11) Zeichen durchgeführt werden.
+                                    Idealerweise werden auch noch Tests mit einem leeren String, sowie einem null-Parameter durchgeführt. D.h. 3 (+2)
+                                    Äquivalenzklassen sind notwendig.
+                                </em>
+                            </p>
+                        </details>
+                    </li>
+                </ul>
+                <p></p>
+                <p>
+                    Was ist der Unterschied zwischen Anweisungsüberdeckung und Zweigüberdeckung? Geben Sie je ein Beispiel (hier sollte man je ein Beispiel für
+                    eine Anweisungs- und Zweigüberdeckung geben, z.B. durcheinen Kontrollflussgraphen)
+                </p>
+            </div>
+        </article>
+    </body>
+</html>

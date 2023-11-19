@@ -1,0 +1,2207 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>VO 4,5: Usability Testing</title>
+        <style>
+            /* cspell:disable-file */
+            /* webkit printing magic: print all background colors */
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            * {
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media only screen {
+                body {
+                    margin: 2em auto;
+                    max-width: 900px;
+                    color: rgb(55, 53, 47);
+                }
+            }
+
+            body {
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            a,
+            a.visited {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .pdf-relative-link-path {
+                font-size: 80%;
+                color: #444;
+            }
+
+            h1,
+            h2,
+            h3 {
+                letter-spacing: -0.01em;
+                line-height: 1.2;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 0;
+                margin-bottom: 0.75em;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+                margin-top: 1.875rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .source {
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 1.5em;
+                word-break: break-all;
+            }
+
+            .callout {
+                border-radius: 3px;
+                padding: 1rem;
+            }
+
+            figure {
+                margin: 1.25em 0;
+                page-break-inside: avoid;
+            }
+
+            figcaption {
+                opacity: 0.5;
+                font-size: 85%;
+                margin-top: 0.5em;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+
+            .indented {
+                padding-left: 1.5em;
+            }
+
+            hr {
+                background: transparent;
+                display: block;
+                width: 100%;
+                height: 1px;
+                visibility: visible;
+                border: none;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            @media only print {
+                img {
+                    max-height: 100vh;
+                    object-fit: contain;
+                }
+            }
+
+            @page {
+                margin: 1in;
+            }
+
+            .collection-content {
+                font-size: 0.875rem;
+            }
+
+            .column-list {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .column {
+                padding: 0 1em;
+            }
+
+            .column:first-child {
+                padding-left: 0;
+            }
+
+            .column:last-child {
+                padding-right: 0;
+            }
+
+            .table_of_contents-item {
+                display: block;
+                font-size: 0.875rem;
+                line-height: 1.3;
+                padding: 0.125rem;
+            }
+
+            .table_of_contents-indent-1 {
+                margin-left: 1.5rem;
+            }
+
+            .table_of_contents-indent-2 {
+                margin-left: 3rem;
+            }
+
+            .table_of_contents-indent-3 {
+                margin-left: 4.5rem;
+            }
+
+            .table_of_contents-link {
+                text-decoration: none;
+                opacity: 0.7;
+                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+            }
+
+            table,
+            th,
+            td {
+                border: 1px solid rgba(55, 53, 47, 0.09);
+                border-collapse: collapse;
+            }
+
+            table {
+                border-left: none;
+                border-right: none;
+            }
+
+            th,
+            td {
+                font-weight: normal;
+                padding: 0.25em 0.5em;
+                line-height: 1.5;
+                min-height: 1.5em;
+                text-align: left;
+            }
+
+            th {
+                color: rgba(55, 53, 47, 0.6);
+            }
+
+            ol,
+            ul {
+                margin: 0;
+                margin-block-start: 0.6em;
+                margin-block-end: 0.6em;
+            }
+
+            li > ol:first-child,
+            li > ul:first-child {
+                margin-block-start: 0.6em;
+            }
+
+            ul > li {
+                list-style: disc;
+            }
+
+            ul.to-do-list {
+                padding-inline-start: 0;
+            }
+
+            ul.to-do-list > li {
+                list-style: none;
+            }
+
+            .to-do-children-checked {
+                text-decoration: line-through;
+                opacity: 0.375;
+            }
+
+            ul.toggle > li {
+                list-style: none;
+            }
+
+            ul {
+                padding-inline-start: 1.7em;
+            }
+
+            ul > li {
+                padding-left: 0.1em;
+            }
+
+            ol {
+                padding-inline-start: 1.6em;
+            }
+
+            ol > li {
+                padding-left: 0.2em;
+            }
+
+            .mono ol {
+                padding-inline-start: 2em;
+            }
+
+            .mono ol > li {
+                text-indent: -0.4em;
+            }
+
+            .toggle {
+                padding-inline-start: 0em;
+                list-style-type: none;
+            }
+
+            /* Indent toggle children */
+            .toggle > li > details {
+                padding-left: 1.7em;
+            }
+
+            .toggle > li > details > summary {
+                margin-left: -1.1em;
+            }
+
+            .selected-value {
+                display: inline-block;
+                padding: 0 0.5em;
+                background: rgba(206, 205, 202, 0.5);
+                border-radius: 3px;
+                margin-right: 0.5em;
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+            }
+
+            .collection-title {
+                display: inline-block;
+                margin-right: 1em;
+            }
+
+            .page-description {
+                margin-bottom: 2em;
+            }
+
+            .simple-table {
+                margin-top: 1em;
+                font-size: 0.875rem;
+                empty-cells: show;
+            }
+            .simple-table td {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table th {
+                height: 29px;
+                min-width: 120px;
+            }
+
+            .simple-table-header-color {
+                background: rgb(247, 246, 243);
+                color: black;
+            }
+            .simple-table-header {
+                font-weight: 500;
+            }
+
+            time {
+                opacity: 0.5;
+            }
+
+            .icon {
+                display: inline-block;
+                max-width: 1.2em;
+                max-height: 1.2em;
+                text-decoration: none;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            img.icon {
+                border-radius: 3px;
+            }
+
+            .user-icon {
+                width: 1.5em;
+                height: 1.5em;
+                border-radius: 100%;
+                margin-right: 0.5rem;
+            }
+
+            .user-icon-inner {
+                font-size: 0.8em;
+            }
+
+            .text-icon {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+            .page-cover-image {
+                display: block;
+                object-fit: cover;
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            .page-header-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .page-header-icon-with-cover {
+                margin-top: -0.72em;
+                margin-left: 0.07em;
+            }
+
+            .page-header-icon img {
+                border-radius: 3px;
+            }
+
+            .link-to-page {
+                margin: 1em 0;
+                padding: 0;
+                border: none;
+                font-weight: 500;
+            }
+
+            p > .user {
+                opacity: 0.5;
+            }
+
+            td > .user,
+            td > time {
+                white-space: nowrap;
+            }
+
+            input[type="checkbox"] {
+                transform: scale(1.5);
+                margin-right: 0.6em;
+                vertical-align: middle;
+            }
+
+            p {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .image {
+                border: none;
+                margin: 1.5em 0;
+                padding: 0;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .code,
+            code {
+                background: rgba(135, 131, 120, 0.15);
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                font-size: 85%;
+                tab-size: 2;
+            }
+
+            code {
+                color: #eb5757;
+            }
+
+            .code {
+                padding: 1.5em 1em;
+            }
+
+            .code-wrap {
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .code > code {
+                background: none;
+                padding: 0;
+                font-size: 100%;
+                color: inherit;
+            }
+
+            blockquote {
+                font-size: 1.25em;
+                margin: 1em 0;
+                padding-left: 1em;
+                border-left: 3px solid rgb(55, 53, 47);
+            }
+
+            .bookmark {
+                text-decoration: none;
+                max-height: 8em;
+                padding: 0;
+                display: flex;
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .bookmark-title {
+                font-size: 0.85em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 1.75em;
+                white-space: nowrap;
+            }
+
+            .bookmark-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bookmark-info {
+                flex: 4 1 180px;
+                padding: 12px 14px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark-image {
+                width: 33%;
+                flex: 1 1 180px;
+                display: block;
+                position: relative;
+                object-fit: cover;
+                border-radius: 1px;
+            }
+
+            .bookmark-description {
+                color: rgba(55, 53, 47, 0.6);
+                font-size: 0.75em;
+                overflow: hidden;
+                max-height: 4.5em;
+                word-break: break-word;
+            }
+
+            .bookmark-href {
+                font-size: 0.75em;
+                margin-top: 0.25em;
+            }
+
+            .sans {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+                    "Segoe UI Symbol";
+            }
+            .code {
+                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+            }
+            .serif {
+                font-family: Lyon-Text, Georgia, ui-serif, serif;
+            }
+            .mono {
+                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+            }
+            .pdf .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+            }
+            .pdf:lang(zh-CN) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+            }
+            .pdf:lang(zh-TW) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+            }
+            .pdf:lang(ko-KR) .sans {
+                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+            }
+            .pdf .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .code {
+                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+                    "Noto Sans Mono CJK KR";
+            }
+            .pdf .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+            }
+            .pdf:lang(zh-CN) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+            }
+            .pdf:lang(zh-TW) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+            }
+            .pdf:lang(ko-KR) .serif {
+                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+            }
+            .pdf .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+            }
+            .pdf:lang(zh-CN) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+            }
+            .pdf:lang(zh-TW) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+            }
+            .pdf:lang(ko-KR) .mono {
+                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+            }
+            .highlight-default {
+                color: rgba(55, 53, 47, 1);
+            }
+            .highlight-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .highlight-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .highlight-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .highlight-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .highlight-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .highlight-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .highlight-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .highlight-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .highlight-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .highlight-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .highlight-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .highlight-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .highlight-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .highlight-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .highlight-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .highlight-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .highlight-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .highlight-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .block-color-default {
+                color: inherit;
+                fill: inherit;
+            }
+            .block-color-gray {
+                color: rgba(120, 119, 116, 1);
+                fill: rgba(120, 119, 116, 1);
+            }
+            .block-color-brown {
+                color: rgba(159, 107, 83, 1);
+                fill: rgba(159, 107, 83, 1);
+            }
+            .block-color-orange {
+                color: rgba(217, 115, 13, 1);
+                fill: rgba(217, 115, 13, 1);
+            }
+            .block-color-yellow {
+                color: rgba(203, 145, 47, 1);
+                fill: rgba(203, 145, 47, 1);
+            }
+            .block-color-teal {
+                color: rgba(68, 131, 97, 1);
+                fill: rgba(68, 131, 97, 1);
+            }
+            .block-color-blue {
+                color: rgba(51, 126, 169, 1);
+                fill: rgba(51, 126, 169, 1);
+            }
+            .block-color-purple {
+                color: rgba(144, 101, 176, 1);
+                fill: rgba(144, 101, 176, 1);
+            }
+            .block-color-pink {
+                color: rgba(193, 76, 138, 1);
+                fill: rgba(193, 76, 138, 1);
+            }
+            .block-color-red {
+                color: rgba(212, 76, 71, 1);
+                fill: rgba(212, 76, 71, 1);
+            }
+            .block-color-gray_background {
+                background: rgba(241, 241, 239, 1);
+            }
+            .block-color-brown_background {
+                background: rgba(244, 238, 238, 1);
+            }
+            .block-color-orange_background {
+                background: rgba(251, 236, 221, 1);
+            }
+            .block-color-yellow_background {
+                background: rgba(251, 243, 219, 1);
+            }
+            .block-color-teal_background {
+                background: rgba(237, 243, 236, 1);
+            }
+            .block-color-blue_background {
+                background: rgba(231, 243, 248, 1);
+            }
+            .block-color-purple_background {
+                background: rgba(244, 240, 247, 0.8);
+            }
+            .block-color-pink_background {
+                background: rgba(249, 238, 243, 0.8);
+            }
+            .block-color-red_background {
+                background: rgba(253, 235, 236, 1);
+            }
+            .select-value-color-interactiveBlue {
+                background-color: rgba(35, 131, 226, 0.07);
+            }
+            .select-value-color-pink {
+                background-color: rgba(245, 224, 233, 1);
+            }
+            .select-value-color-purple {
+                background-color: rgba(232, 222, 238, 1);
+            }
+            .select-value-color-green {
+                background-color: rgba(219, 237, 219, 1);
+            }
+            .select-value-color-gray {
+                background-color: rgba(227, 226, 224, 1);
+            }
+            .select-value-color-translucentGray {
+                background-color: rgba(255, 255, 255, 0.0375);
+            }
+            .select-value-color-orange {
+                background-color: rgba(250, 222, 201, 1);
+            }
+            .select-value-color-brown {
+                background-color: rgba(238, 224, 218, 1);
+            }
+            .select-value-color-red {
+                background-color: rgba(255, 226, 221, 1);
+            }
+            .select-value-color-yellow {
+                background-color: rgba(253, 236, 200, 1);
+            }
+            .select-value-color-blue {
+                background-color: rgba(211, 229, 239, 1);
+            }
+            .select-value-color-pageGlass {
+                background-color: undefined;
+            }
+            .select-value-color-washGlass {
+                background-color: undefined;
+            }
+
+            .checkbox {
+                display: inline-flex;
+                vertical-align: text-bottom;
+                width: 16;
+                height: 16;
+                background-size: 16px;
+                margin-left: 2px;
+                margin-right: 5px;
+            }
+
+            .checkbox-on {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            .checkbox-off {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+            }
+
+            /* -------- injections from notionBackup -------- */
+
+            body {
+                white-space: normal !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+
+            .code,
+            code {
+                font-size: 100% !important;
+            }
+
+            blockquote {
+                font-size: 100% !important;
+            }
+
+            .callout {
+                white-space: normal !important;
+            }
+            .callout div:has(span.icon) {
+                font-size: 100% !important;
+            }
+
+            .source:not(.bookmark) {
+                font-size: 100% !important;
+            }
+
+            p {
+                min-height: 1em !important;
+            }
+        </style>
+    </head>
+    <body>
+        <article class="page sans">
+            <header>
+                <h1 class="page-title">VO 4,5: Usability Testing</h1>
+                <p class="page-description"></p>
+            </header>
+            <div class="page-body">
+                <figure>
+                    <div class="source">
+                        <a href="VO%204,5%20Usability%20Testing%20925ad95a15804f749cb352b3f0cb6216/ue_vo4_2022_(1)-merged.pdf">ue_vo4_2022_(1)-merged.pdf</a>
+                    </div>
+                </figure>
+                <p></p>
+                <nav class="block-color-gray table_of_contents">
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#ada58248-0757-4545-b6f5-906ebd0a0ea0">Einleitung</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#573804c0-bd75-4f26-b69d-f2a5313bb1c1">Arten von Usability Tests</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#a003a2be-350f-425f-91c1-448de25288c0">Grober Ablauf</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#ae165763-ffd2-4171-a668-6d1ef15d8b4a">Testbericht</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#723dc943-8876-42e3-a1e6-3e0b22d180cc">1) Vorbereitung, Planung</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#59f82523-b9bc-4c8b-a711-2c90109cf4d9">Lerneffekte vermeiden</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#acd79ba4-4fba-4110-9416-0718da223120">2) Durchführung</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#9e317e69-9981-43af-94ec-79604a7d2b6a">Testmaterial</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#855aa5dc-dfea-4b55-b2c1-2b681b96dcbf">Durchführung der Test-Sessions</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#f31365db-7e13-4b59-a6e6-8cf701605a3f">Thinking-Aloud</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#bfd65ad9-c8a3-4f08-a5b0-71f7fe49a878">Guidelines für Teammitglieder</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-1">
+                        <a class="table_of_contents-link" href="#98ad5ad7-af26-4109-8231-eeaa4553b417">Datenerfassung</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#678c6376-0fe2-4e56-adea-6f09003efe4b">3) Auswertung</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#5ce3e203-1a52-4a23-bd8e-f5734f9f5101">4) Kommunikation der Ergebnisse</a>
+                    </div>
+                    <div class="table_of_contents-item table_of_contents-indent-0">
+                        <a class="table_of_contents-link" href="#41e4aab1-f2eb-4e1d-9617-fc1870c01912">Vertiefende Links</a>
+                    </div>
+                </nav>
+                <p></p>
+                <h1>Einleitung</h1>
+                <p><mark class="highlight-blue">Usability Testing</mark></p>
+                <div class="indented">
+                    <p>Testpersonen (repräsentativ für Enduser) in kontrollierter Umgebung beobachtet</p>
+                    <p>müssen vordefinierte Aufgaben lösen (realistisch, praxisnahe)</p>
+                    <p>Alles was getan und gesagt wird aufgezeichnet, analysiert um Userprobleme und Lösungen zu finden</p>
+                </div>
+                <p></p>
+                <p></p>
+                <div class="column-list">
+                    <div style="width: 50%" class="column">
+                        <p><mark class="highlight-blue">Formative Evaluierung</mark></p>
+                        <div class="indented">
+                            <p>Während Design und Entwicklung</p>
+                            <p>eher quallitative Datenerhebung</p>
+                            <p>Vorausschauend</p>
+                            <div class="indented">
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">Werden Bedürfnisse erfüllt?</li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">Wird es Probleme geben?</li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">Welche alternative ist besser?</li>
+                                </ul>
+                            </div>
+                            <p></p>
+                        </div>
+                        <p></p>
+                        <p></p>
+                        <p>
+                            <mark class="highlight-teal">Informell</mark>
+                            <mark class="highlight-teal"><em>(für formative Evaluierung möglich)</em></mark>
+                        </p>
+                        <div class="indented">
+                            <p>wenige Testpersonen zB am Arbeitsplatz von Entwicklern und sie beobachten mit</p>
+                            <p>kleines Team (oder einzelne Testleiter)</p>
+                            <p>wenig bis keine Protokollierung</p>
+                        </div>
+                        <p></p>
+                    </div>
+                    <div style="width: 50%" class="column">
+                        <p><mark class="highlight-blue">Summative Evaluierung</mark></p>
+                        <div class="indented">
+                            <p>Nach Design und Entwicklung</p>
+                            <p>eher quantitative Datenerhebung</p>
+                            <p>Benchmarking</p>
+                            <p>Überprüfung von Hypothesen, Standards</p>
+                        </div>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p>
+                            <mark class="highlight-teal">Formell</mark>
+                            <mark class="highlight-teal"><em>(für summative Evaluierung nötig)</em></mark>
+                        </p>
+                        <div class="indented">
+                            <p>viele Testpersonen im Labor</p>
+                            <p>großes Team</p>
+                            <p>viel Protokollierung</p>
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+                <p></p>
+                <h2>Arten von Usability Tests</h2>
+                <p><mark class="highlight-blue">1) Exploratory Testing</mark></p>
+                <div class="indented">
+                    <p>Formativ → persönlich, viel Interaktion zwischen Testleiter und Testperson</p>
+                    <p>Früh im Designprozess → wenig Funktionlaität implementiert</p>
+                    <p>Fundamentale high-level Designfragen</p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">2) Assessment Testing</mark></p>
+                <div class="indented">
+                    <p>Formativ und summativ → geringe Interaktion</p>
+                    <p>Mittlere Phase im Designprozess → Konzepte klar definiert</p>
+                    <p>Die ersten qualitativen Datenerfassung (User performance)</p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">3) Validation Testing</mark></p>
+                <div class="indented">
+                    <p>Summativ → keine Interaktion</p>
+                    <p>Fertiges Produkt</p>
+                    <p>Test gegen Standards (intern oder Konkurrenzprodukte)</p>
+                    <p>Benchmarking von Performance-Kriterien</p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Comparison Testing</mark></p>
+                <div class="indented">
+                    <p>In jeder Phase des Design-Prozeses</p>
+                    <p>Basierend auf Haupttesttyp</p>
+                    <p>Vergleich von Designkonzepten oder mit Konkurrenzprodukten</p>
+                </div>
+                <p></p>
+                <p></p>
+                <figure class="image">
+                    <a href="VO%204,5%20Usability%20Testing%20925ad95a15804f749cb352b3f0cb6216/Untitled.png">
+                        <img style="width: 432px" src="VO%204,5%20Usability%20Testing%20925ad95a15804f749cb352b3f0cb6216/Untitled.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <h2>Grober Ablauf</h2>
+                <p><mark class="highlight-blue">Grober Ablauf eines Usability Tests</mark></p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>Vorbereitung und Planung</li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            Durchführung
+                            <p>Test-Sessions mit Testpersonen</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>
+                            Auswertung
+                            <p>Analyse von gesammelten Daten + Entwicklung von Verbesserungsvorschlägen</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>
+                            Kommunikation der Ergebnisse / Reporting
+                            <p>Kunde/Entwickler bekommen Ergebnisse</p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Testbericht</h2>
+                <p>
+                    <mark class="highlight-gray">[Problemstellung, Methode, Anhänge]</mark>
+                    <mark class="highlight-gray">
+                        <style>
+                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                        </style>
+                        <span
+                            data-token-index="0"
+                            contenteditable="false"
+                            class="notion-text-equation-token"
+                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                            <span></span>
+                            <span>
+                                <span class="katex">
+                                    <span class="katex-mathml">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <semantics>
+                                                <mrow><mo>→</mo></mrow>
+                                                <annotation encoding="application/x-tex">\rarr</annotation>
+                                            </semantics>
+                                        </math>
+                                    </span>
+                                    <span class="katex-html" aria-hidden="true">
+                                        <span class="base">
+                                            <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
+                                            <span class="mrel">→</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                            <span>﻿</span>
+                        </span>
+                    </mark>
+                    <mark class="highlight-gray">vor dem Test erstellt</mark>
+                </p>
+                <p></p>
+                <p><mark class="highlight-blue">Aufbau Testbericht</mark></p>
+                <div class="indented">
+                    <p><em>Management Summary</em></p>
+                    <p><em>Problemstellung</em></p>
+                    <div class="indented"><p>Produktbeschreibung, Testziele</p></div>
+                    <p></p>
+                    <p><em>Methode</em></p>
+                    <div class="indented">
+                        <p>Testpersonen, Testszenarien, Testmaterial und Einrichtung, Design, Ablauf</p>
+                        <p>Anweisungen an Testpersonen</p>
+                    </div>
+                    <p></p>
+                    <p><em>Ergebnisse</em></p>
+                    <div class="indented"><p>gruppiert nach Testszenario</p></div>
+                    <p></p>
+                    <p><em>Analyse, Verbesserungsvorschläge</em></p>
+                    <p><em>Conclusio</em></p>
+                    <p><em>Anhänge</em></p>
+                    <div class="indented"><p>Interviewleitfaden, Fragebögen, Testmaterial, ...</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>1) Vorbereitung, Planung</h1>
+                <p>Vorbereitung und Planung: Festlegung von</p>
+                <div class="indented">
+                    <blockquote>
+                        Umfang des Tests
+                        <p>Ziel des Tests</p>
+                        <p>Metriken, gesammelte Daten</p>
+                        <p>Zeitplan</p>
+                        <p>Taskliste, Szenarien</p>
+                        <p>Benutzerprofile definieren, Testpersonen rekrutieren</p>
+                        <p>Testraum, Equipment</p>
+                        <p>Testablauf</p>
+                        <p>Anweisungen für Testteam</p>
+                    </blockquote>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Umfang des Tests</mark></p>
+                <div class="indented">
+                    <p>Was genau soll getestet werden und was nicht?</p>
+                    <div class="indented"><p>Produkt und Produktteile, Plattform/Betriebsumgebung</p></div>
+                    <p></p>
+                    <p>Welche Benutzergruppen nutzen diesen Produktteil?</p>
+                    <p>Welche Aufgaben kann man mit diesem Produktteil erledigen?</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Ziel des Tests</mark></p>
+                <div class="indented">
+                    <p>Am Anfang abstrakte Fragestellungen</p>
+                    <div class="indented">
+                        <ul class="toggle">
+                            <li>
+                                <details open="">
+                                    <summary>Beispiele</summary>
+                                    <p><em>Ist System gut benutzbar?</em></p>
+                                    <p><em>Ist System effizient zu verwenden?</em></p>
+                                </details>
+                            </li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <p>Diese Fragestellungen konkretisieren</p>
+                    <div class="indented">
+                        <ul class="toggle">
+                            <li>
+                                <details open="">
+                                    <summary>Beispiele</summary>
+                                    <p><em>Können BenutzerInnen das System selbständig und ohne Hilfestellung in Betrieb nehmen?</em></p>
+                                    <p><em>Wissen BenutzerInnen, was sie mit dem System machen können?</em></p>
+                                    <p><em>Können BenutzerInnen mit dem System [Aufgabe X] selbständig erfüllen?</em></p>
+                                    <p><em>Ist die Antwortzeit des Systems ausreichend schnell?</em></p>
+                                    <p><em>Sind die Icons verständlich?</em></p>
+                                    <p><em>Sind die vorhandenen Konfigurationsmöglichkeiten verständlich?</em></p>
+                                    <p><em>Sind die vorhandenen Konfigurationsmöglichkeiten ausreichend?</em></p>
+                                    <p><em>Lässt sich das System ausschließlich mit einem Touchscreen bedienen?</em></p>
+                                    <p><em>Verwenden die BenutzerInnen Tastatur-Shortcuts?</em></p>
+                                    <p><em>...</em></p>
+                                </details>
+                            </li>
+                        </ul>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Metriken und gesammelte Daten</mark></p>
+                <div class="indented">
+                    <p>Qualitative Daten</p>
+                    <div class="indented"><p>Beobachtungen des Teams: Aussagen</p></div>
+                    <p></p>
+                    <p>Quantitative Daten</p>
+                    <div class="indented">
+                        <p>Erfolgsrate: Anzahl der erfolgreich abgeschlossenen Tasks</p>
+                        <p>Fehlerrate (kritisch vs. nicht-kritisch): Anzahl der nicht erfolgreich abgeschlossenen Tasks</p>
+                        <p>Hilfestellungen: Anzahl der benötigten Hilfestellungen</p>
+                        <p>Zeit: Zeit benötigt für Tasks</p>
+                        <p>Zufriedenheit: Subjektive Eindrücke via Fragebogen</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Zeitplan</mark></p>
+                <div class="indented">
+                    <p>Zeitpunkte definieren:</p>
+                    <div class="indented">
+                        <p>Produkt bereit zum Testen</p>
+                        <p>Test</p>
+                        <p>Testsessions (Dauer pro Test und Anzahl der Tests pro Tag)</p>
+                        <p>Analyse der Ergebnisse</p>
+                        <p>Präsentation</p>
+                        <p>Ergebnisse benötigt (Deadline)</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Taskliste</mark></p>
+                <div class="indented">
+                    <figure class="block-color-gray_background callout" style="white-space: pre-wrap; display: flex">
+                        <div style="font-size: 1.5em"><span class="icon">👉</span></div>
+                        <div style="width: 100%">Daumenregel: ~10 Tasks in maximal 60min</div>
+                    </figure>
+                    <p><mark class="highlight-teal">Tasks</mark></p>
+                    <div class="indented">
+                        <p>Realistische Szenarien</p>
+                        <p>Vordefinierte Aufgaben für Testpersonen basierend auf Anforderungen der Enduser (keine technischen Anforderungen)</p>
+                        <p>Lenkung auf kritische Aspekte der App</p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-teal">Herausforderung</mark></p>
+                    <div class="indented">
+                        <p>a) offen → eher qualitative Daten</p>
+                        <div class="indented"><p>autonome Lösungsfindung, kein konkreter Fokus</p></div>
+                        <p></p>
+                        <p>b) spezifisch → eher quantitative Daten</p>
+                        <div class="indented"><p>stärkere Lenkung der Testpersonen</p></div>
+                        <p></p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-teal">Zerlegung von Szenarien in Teilkomponenten</mark></p>
+                    <div class="indented">
+                        <p>Einschränkung des Spielraumes für bessere Überprüfbarkeit (keine step-by-step Anweisungen)</p>
+                        <p>Teilkomponenten alleine müssen ein realistisches Anwendungsszenario sein</p>
+                        <ul class="toggle">
+                            <li>
+                                <details open="">
+                                    <summary>Beispiel</summary>
+                                    <p><em>Die Teilkomponenten stehen in eckigen Klammern.</em></p>
+                                    <ol type="1" class="numbered-list" start="1">
+                                        <li>Registrierung eines / einer neuen BenutzerIn [1]</li>
+                                    </ol>
+                                    <ol type="1" class="numbered-list" start="2">
+                                        <li>Login eines / einer bestehenden BenutzerIn [1]</li>
+                                    </ol>
+                                    <ol type="1" class="numbered-list" start="3">
+                                        <li>Produkt bestellen [2, 4, 6]</li>
+                                    </ol>
+                                    <ol type="1" class="numbered-list" start="4">
+                                        <li>Mehrere Produkte miteinander vergleichen [2, 3]</li>
+                                    </ol>
+                                    <ol type="1" class="numbered-list" start="5">
+                                        <li>Versandkosten ermitteln [5]</li>
+                                    </ol>
+                                    <ol type="1" class="numbered-list" start="6">
+                                        <li>...</li>
+                                    </ol>
+                                </details>
+                            </li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <hr />
+                    <p><mark class="highlight-teal">Beispiel-Task</mark></p>
+                    <div class="indented">
+                        <table class="simple-table">
+                            <thead class="simple-table-header">
+                                <tr>
+                                    <th class="simple-table-header-color simple-table-header" style="width: 148px">Task Komponente</th>
+                                    <th class="simple-table-header-color simple-table-header" style="width: 479px">Beschreibung</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th class="simple-table-header-color simple-table-header" style="width: 148px"><strong>Task</strong></th>
+                                    <td style="width: 479px">Produkt bestellen</td>
+                                </tr>
+                                <tr>
+                                    <th class="simple-table-header-color simple-table-header" style="width: 148px">Vorberdingung</th>
+                                    <td style="width: 479px">
+                                        Das Produkt (Batterien) ist im System vorhanden. Die Startseite des Online-Shops ist im Browser geöffnet. Der Benutzer
+                                        ist eingeloggt und sämtliche relevanten Daten (Name, Adresse, Zahlungsinformation) sind bei dem verwendeten Account
+                                        hinterlegt.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="simple-table-header-color simple-table-header" style="width: 148px">Endzustand</th>
+                                    <td style="width: 479px">Die Bestellung wurde erfolgreich abgeschickt.</td>
+                                </tr>
+                                <tr>
+                                    <th class="simple-table-header-color simple-table-header" style="width: 148px">Benchmark</th>
+                                    <td style="width: 479px">10 Minuten</td>
+                                </tr>
+                                <tr>
+                                    <th class="simple-table-header-color simple-table-header" style="width: 148px">Script</th>
+                                    <td style="width: 479px">
+                                        Sie bemerken, dass die Batterien in Ihrer Fernbedienung langsam schwächer werden. Bestellen Sie 4 Stück neue
+                                        AA-Batterien zu sich nach Hause.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>Script ist die Anweisung an die Testperson und ein reales Szenario.</p>
+                        <div class="indented"><p>Sagt was das Endziel ist und nicht wie man es richtig macht.</p></div>
+                        <p></p>
+                        <p>Testperson bekommt nur Script zu sehen (alles andere für das Testteam).</p>
+                    </div>
+                    <p></p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Benutzerprofile definieren und Testpersonen rekrutieren</mark></p>
+                <div class="indented">
+                    <p>Testperson muss repräsentativ für Zielgruppe / Enduser sein (sonst Tests nicht aussagekräftig)</p>
+                    <div class="indented"><p>Screening Fragebögen für Auswahl der Testpersonen</p></div>
+                    <p></p>
+                    <p>Kategorisieren</p>
+                    <div class="indented"><p>zB Anfänger, Experte oder nach Personas Konzept von Cooper, 1999</p></div>
+                    <p></p>
+                    <p>Anzahl</p>
+                    <div class="indented">
+                        <p>Idealerweise 3-5 Testpersonen mit so vielen Tests wie nur leistbar.</p>
+                        <div class="indented">
+                            <p>Für Benchmarking und wissenschaftlichen Experimenten 20+</p>
+                            <ul class="toggle">
+                                <li>
+                                    <details open="">
+                                        <summary>Formel</summary>
+                                        <p>
+                                            <style>
+                                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                            </style>
+                                            <span
+                                                data-token-index="0"
+                                                contenteditable="false"
+                                                class="notion-text-equation-token"
+                                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                                <span></span>
+                                                <span>
+                                                    <span class="katex">
+                                                        <span class="katex-mathml">
+                                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                                <semantics>
+                                                                    <mrow>
+                                                                        <mstyle mathsize="0.9em">
+                                                                            <mi>N</mi>
+                                                                            <mo stretchy="false">(</mo>
+                                                                            <mn>1</mn>
+                                                                            <mo>−</mo>
+                                                                            <mo stretchy="false">(</mo>
+                                                                            <mn>1</mn>
+                                                                            <mo>−</mo>
+                                                                            <mi>L</mi>
+                                                                            <msup>
+                                                                                <mo stretchy="false">)</mo>
+                                                                                <mi>n</mi>
+                                                                            </msup>
+                                                                            <mo stretchy="false">)</mo>
+                                                                        </mstyle>
+                                                                    </mrow>
+                                                                    <annotation encoding="application/x-tex">\small N(1-(1-L)^n)</annotation>
+                                                                </semantics>
+                                                            </math>
+                                                        </span>
+                                                        <span class="katex-html" aria-hidden="true">
+                                                            <span class="base">
+                                                                <span class="strut" style="height: 0.9em; vertical-align: -0.225em"></span>
+                                                                <span class="mord mathnormal sizing reset-size6 size5" style="margin-right: 0.10903em">N</span>
+                                                                <span class="mopen sizing reset-size6 size5">(</span>
+                                                                <span class="mord sizing reset-size6 size5">1</span>
+                                                                <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
+                                                                <span class="mbin sizing reset-size6 size5">−</span>
+                                                                <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
+                                                            </span>
+                                                            <span class="base">
+                                                                <span class="strut" style="height: 0.9em; vertical-align: -0.225em"></span>
+                                                                <span class="mopen sizing reset-size6 size5">(</span>
+                                                                <span class="mord sizing reset-size6 size5">1</span>
+                                                                <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
+                                                                <span class="mbin sizing reset-size6 size5">−</span>
+                                                                <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
+                                                            </span>
+                                                            <span class="base">
+                                                                <span class="strut" style="height: 0.9em; vertical-align: -0.225em"></span>
+                                                                <span class="mord mathnormal sizing reset-size6 size5">L</span>
+                                                                <span class="mclose sizing reset-size6 size5">
+                                                                    <span class="mclose">)</span>
+                                                                    <span class="msupsub">
+                                                                        <span class="vlist-t">
+                                                                            <span class="vlist-r">
+                                                                                <span class="vlist" style="height: 0.65004em">
+                                                                                    <span style="top: -2.963em; margin-right: 0.05555555555555556em">
+                                                                                        <span class="pstrut" style="height: 2.6em"></span>
+                                                                                        <span class="sizing reset-size5 size2 mtight">
+                                                                                            <span class="mord mathnormal mtight">n</span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                                <span class="mclose sizing reset-size6 size5">)</span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                                <span>﻿</span>
+                                            </span>
+                                        </p>
+                                        <div class="indented">
+                                            <p>
+                                                <style>
+                                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                                </style>
+                                                <span
+                                                    data-token-index="0"
+                                                    contenteditable="false"
+                                                    class="notion-text-equation-token"
+                                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                                    <span></span>
+                                                    <span>
+                                                        <span class="katex">
+                                                            <span class="katex-mathml">
+                                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                                    <semantics>
+                                                                        <mrow>
+                                                                            <mstyle mathsize="0.9em"><mi>N</mi></mstyle>
+                                                                        </mrow>
+                                                                        <annotation encoding="application/x-tex">\small N</annotation>
+                                                                    </semantics>
+                                                                </math>
+                                                            </span>
+                                                            <span class="katex-html" aria-hidden="true">
+                                                                <span class="base">
+                                                                    <span class="strut" style="height: 0.614997em; vertical-align: 0em"></span>
+                                                                    <span class="mord mathnormal sizing reset-size6 size5" style="margin-right: 0.10903em">
+                                                                        N
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                    <span>﻿</span>
+                                                </span>
+                                                gesamte Anzahl der usability Probleme
+                                            </p>
+                                            <p>
+                                                <style>
+                                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                                </style>
+                                                <span
+                                                    data-token-index="0"
+                                                    contenteditable="false"
+                                                    class="notion-text-equation-token"
+                                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                                    <span></span>
+                                                    <span>
+                                                        <span class="katex">
+                                                            <span class="katex-mathml">
+                                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                                    <semantics>
+                                                                        <mrow>
+                                                                            <mstyle mathsize="0.9em"><mi>L</mi></mstyle>
+                                                                        </mrow>
+                                                                        <annotation encoding="application/x-tex">\small L</annotation>
+                                                                    </semantics>
+                                                                </math>
+                                                            </span>
+                                                            <span class="katex-html" aria-hidden="true">
+                                                                <span class="base">
+                                                                    <span class="strut" style="height: 0.614997em; vertical-align: 0em"></span>
+                                                                    <span class="mord mathnormal sizing reset-size6 size5">L</span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                    <span>﻿</span>
+                                                </span>
+                                                Anteil (zwischen 0-1) an usability Probleme mit nur einer Person (
+                                                <style>
+                                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+                                                </style>
+                                                <span
+                                                    data-token-index="0"
+                                                    contenteditable="false"
+                                                    class="notion-text-equation-token"
+                                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
+                                                    <span></span>
+                                                    <span>
+                                                        <span class="katex">
+                                                            <span class="katex-mathml">
+                                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                                    <semantics>
+                                                                        <mrow>
+                                                                            <mstyle mathsize="0.8em"><mtext>avg&nbsp;=&nbsp;31%</mtext></mstyle>
+                                                                        </mrow>
+                                                                        <annotation encoding="application/x-tex">\footnotesize \text{avg = 31\%}</annotation>
+                                                                    </semantics>
+                                                                </math>
+                                                            </span>
+                                                            <span class="katex-html" aria-hidden="true">
+                                                                <span class="base">
+                                                                    <span
+                                                                        class="strut"
+                                                                        style="height: 0.7555520000000001em; vertical-align: -0.15555200000000002em"></span>
+                                                                    <span class="mord text sizing reset-size6 size4">
+                                                                        <span class="mord">avg&nbsp;=&nbsp;31%</span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                    <span>﻿</span>
+                                                </span>
+                                                )
+                                            </p>
+                                        </div>
+                                        <p></p>
+                                    </details>
+                                </li>
+                            </ul>
+                        </div>
+                        <p></p>
+                        <p>RITE: Rapid Iterative Testing and Evaluation</p>
+                        <div class="indented"><p>Testen bis man Problem gefunden hat - sofort aufhören und korrigieren, erst dann fortsetzen</p></div>
+                        <p></p>
+                    </div>
+                    <p></p>
+                    <p>Benutzerprofile erstellen</p>
+                    <div class="indented">
+                        <table class="simple-table">
+                            <thead class="simple-table-header">
+                                <tr>
+                                    <th class="simple-table-header-color simple-table-header" style="width: 163px">Charakteristik</th>
+                                    <th class="simple-table-header-color simple-table-header" style="width: 150px">Kriterium</th>
+                                    <th class="simple-table-header-color simple-table-header" style="width: 323px">Teilnehmer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="width: 163px">Android Erfahrung</td>
+                                    <td style="width: 150px">Über ein Jahr</td>
+                                    <td style="width: 323px">45% → 1 - 3 Jahre 35% → 3 - 5 Jahre 20% → 5+ Jahre</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 163px">Alter</td>
+                                    <td style="width: 150px">älter als 18</td>
+                                    <td style="width: 323px">Mittelwert: 26,7, Median: 24, Min: 18, Max: 47</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 163px">Geschlecht</td>
+                                    <td style="width: 150px">ca. gleichverteilt</td>
+                                    <td style="width: 323px">45% Männlich, 55% Weiblich</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 163px">Erfahrung mit Produkt</td>
+                                    <td style="width: 150px">Nicht vorhanden</td>
+                                    <td style="width: 323px">70% → kannten das Produkt nicht 30% → davon gehört aber nie benutzt</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Testumgebung und Equipment</mark></p>
+                <div class="indented">
+                    <p>Hardware, Software, Testumgebung</p>
+                    <p>Equitpment zur Testdurchführung und Datenerfassung</p>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Beispiel</summary>
+                                <p>
+                                    “Die Testumgebung besteht aus einem abgetrennten Büro mit Schreibtisch und zwei Beobachter-Stühlen. Der Computer ist ein
+                                    Laptop mit 13,3” Screen (1280x800 Auflösung), QWERTZ-Keyboard, Touchpad und einer Zwei-Button-Mouse mit Scrollrad.
+                                </p>
+                                <p>
+                                    Als Betriebssystem kommt Mac OS X 10.15 zum Einsatz. TeilnehmerInnen haben die Wahl zwischen der aktuellsten Version von
+                                    Firefox, Chrome oder Safari je nach persönlicher Präferenz und Erfahrung. Der Browser ist zu Testbeginn mit der Startseite
+                                    <a href="http://www.google.com/">www.google.com</a>
+                                    geöffnet.
+                                </p>
+                                <p>
+                                    Audio und Video werden während des Tests mit der im Laptop integrierten Videokamera bzw. Mikrofon aufgezeichnet.
+                                    Bildschirminhalte werden mit Quicktime aufgezeichnet.
+                                </p>
+                                <p>Zeitmessungen werden manuell von einem Beobachter durchgeführt.”</p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Testablauf in Testsessions</mark></p>
+                <div class="indented">
+                    <figure class="block-color-gray_background callout" style="white-space: pre-wrap; display: flex">
+                        <div style="font-size: 1.5em"><span class="icon">👉</span></div>
+                        <div style="width: 100%">Siehe weiter unten - “Durchführung der Test Sessions”</div>
+                    </figure>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Anweisungen für Testteam</mark></p>
+                <div class="indented">
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Anweisungen an Team</summary>
+                                <p>
+                                    „Der/die TestleiterIn sitzt mit dem/der TeilnehmerIn in einem Raum während der Durchführung des Tests. Der/die TestleiterIn
+                                    startet die einzelnen Tasks nach erfolgreicher Vorbereitung und dokumentiert Fehler, Beobachtungen und Zeitmessungen. Der/
+                                    die TestleiterIn leistet keine Hilfestellungen außer der/die TeilnehmerIn weicht gravierend vom Lösungsweg ab und
+                                    beantwortet nur Fragen, die die Testergebnisse nicht beeinflussen. Der/die TestleiterIn steht im Fall von EquipmentFehlern
+                                    und technischen Problemen zur Verfügung. TeilnehmerInnen erhalten die Aufgabenbeschreibung in schriftlicher Form und sind
+                                    angehalten, die Aufgaben selbständig und möglichst rasch mit dem vorhandenen Test-Equipment durchzuführen.”
+                                </p>
+                            </details>
+                        </li>
+                    </ul>
+                    <figure class="block-color-gray_background callout" style="white-space: pre-wrap; display: flex">
+                        <div style="font-size: 1.5em"><span class="icon">👉</span></div>
+                        <div style="width: 100%">Siehe weiter unten - “Guidelines für Teammitglieder”</div>
+                    </figure>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Lerneffekte vermeiden</h2>
+                <p>
+                    <mark class="highlight-blue">Balancing der Testreihenfolge mit</mark>
+                    <em><mark class="highlight-blue">Latin Square Balancing</mark></em>
+                </p>
+                <div class="indented">
+                    <p>Balancieren nicht immer notwendig</p>
+                    <p>Aufbau:</p>
+                    <div class="indented">
+                        <p>Linkeste Spalte: Testperson</p>
+                        <p>Oberste Zeile: Task Reihenfolge</p>
+                        <p>Inhalt: Tasks selbst</p>
+                    </div>
+                    <p></p>
+                    <table class="simple-table">
+                        <thead class="simple-table-header">
+                            <tr>
+                                <th class="simple-table-header-color simple-table-header"></th>
+                                <th class="simple-table-header-color simple-table-header">1</th>
+                                <th class="simple-table-header-color simple-table-header">2</th>
+                                <th class="simple-table-header-color simple-table-header">3</th>
+                                <th class="simple-table-header-color simple-table-header">4</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th class="simple-table-header-color simple-table-header">TP1</th>
+                                <td>A</td>
+                                <td>B</td>
+                                <td>C</td>
+                                <td>D</td>
+                            </tr>
+                            <tr>
+                                <th class="simple-table-header-color simple-table-header">TP2</th>
+                                <td>B</td>
+                                <td>D</td>
+                                <td>A</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <th class="simple-table-header-color simple-table-header">TP3</th>
+                                <td>D</td>
+                                <td>C</td>
+                                <td>B</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <th class="simple-table-header-color simple-table-header">TP4</th>
+                                <td>C</td>
+                                <td>A</td>
+                                <td>D</td>
+                                <td>B</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Comparison Testing: Within-Subject vs. Between-Subject Design</mark></p>
+                <div class="indented">
+                    <p>zB Frage: Kann man mit Maus oder Touchscreen das Interface schneller bedienen?</p>
+                    <div class="indented">
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Unabhängige Variable: Eingabegerät (Maus/Touchscreen)</li>
+                        </ul>
+                        <ul class="bulleted-list">
+                            <li style="list-style-type: disc">Abhängige Variable: Zeit für die Erfüllung</li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-teal">Within subject design</mark></p>
+                    <div class="indented">
+                        <p>Jede Testperson in jeder Bedingung</p>
+                        <div class="indented">
+                            <p>Vorteil: Weniger Testpersonen</p>
+                            <p>Nachteil: Lerneffekte (muss durch Latin Square ausgeglichen werden)</p>
+                        </div>
+                        <p></p>
+                        <figure class="image">
+                            <a href="VO%204,5%20Usability%20Testing%20925ad95a15804f749cb352b3f0cb6216/Untitled%201.png">
+                                <img style="width: 336px" src="VO%204,5%20Usability%20Testing%20925ad95a15804f749cb352b3f0cb6216/Untitled%201.png" />
+                            </a>
+                        </figure>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-teal">Between subject design</mark></p>
+                    <div class="indented">
+                        <p>Jede Testperson in nur einer Bedingung (Gruppen müssen vergleichbar sein)</p>
+                        <figure class="image">
+                            <a href="VO%204,5%20Usability%20Testing%20925ad95a15804f749cb352b3f0cb6216/Untitled%202.png">
+                                <img style="width: 336px" src="VO%204,5%20Usability%20Testing%20925ad95a15804f749cb352b3f0cb6216/Untitled%202.png" />
+                            </a>
+                        </figure>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>2) Durchführung</h1>
+                <p><mark class="highlight-blue">Vor Durchführung des Usability Tests</mark></p>
+                <div class="indented">
+                    <p>Den Test selbst durchführen</p>
+                    <div class="indented"><p>für Zeitplan (Sessions) und Testdesign</p></div>
+                    <p></p>
+                    <p>Pilottest durchführen</p>
+                    <div class="indented"><p>Tasks, Testplan, Material</p></div>
+                    <p></p>
+                    <p>Produkt, Testzubehör, Testumgebung prüfen</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Allgemeine Tipps für die Durchführung</mark></p>
+                <div class="indented">
+                    <p>Eine angenehme Atmosphäre schaffen, respektvoll und neutral sein</p>
+                    <p>Testpersonen nicht sofort helfen</p>
+                    <p>Gute Aufzeichnungen führen</p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Testmaterial</h2>
+                <p><mark class="highlight-blue">Testmaterial</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-teal">Orientierungsscript</mark></p>
+                    <div class="indented">
+                        <p>Vorstellung</p>
+                        <p>Zweck des Tests</p>
+                        <p>Hinweis, dass das Produkt und nicht die Testperson getestet wird</p>
+                        <p>Hinweis, dass das Produkt noch fehlerhaft sein kann</p>
+                        <p>Auf Video- und Audioaufnahmen hinweisen</p>
+                        <p>Testperson aufklären, dass sie jederzeit aufhören oder Fragen stellen kann</p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-teal">Background Fragebogen</mark></p>
+                    <div class="indented">
+                        <p>Demographische Daten</p>
+                        <p>Computererfahrung</p>
+                        <p>...</p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-teal">Pre-Test Fragebogen</mark></p>
+                    <div class="indented">
+                        <p>Eindrücke vor dem eigentlichen Test</p>
+                        <p>Erfahrung mit diesem oder einem ähnlichen Produkt</p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-teal">Task-Liste</mark></p>
+                    <div class="indented">
+                        <p>Realistische Szenarien</p>
+                        <p>Jede Aufgabe auf einem eigenen Blatt</p>
+                        <p>Beschreibung des Ziels, nicht der einzelnen Schritte</p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-teal">Trainingsmaterial (optional)</mark></p>
+                    <div class="indented">
+                        <p>Walk-through von Beispielaufgaben</p>
+                        <p>Demonstration der Oberfläche (GUI)</p>
+                        <p>Demonstration der Interaktionsmöglichkeiten</p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-teal">Non-Discolsure Agreement NDA</mark></p>
+                    <p><mark class="highlight-teal">Einverständniserklärung zur Aufzeichnung</mark></p>
+                    <p><mark class="highlight-teal">Logging Sheets</mark></p>
+                    <p><mark class="highlight-teal">Post-Test Fragebogen</mark></p>
+                    <div class="indented">
+                        <p>Wording</p>
+                        <p>Navigation</p>
+                        <p>Angezeigte Informationen ausreichend</p>
+                        <p>Allgemeiner Eindruck</p>
+                        <p>Standardisierte Fragebögen (SUS, CSUQ, ...)</p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-teal">Debriefing</mark></p>
+                    <div class="indented"><p>Strukturiertes Interview: Themen, die nach dem Test noch geklärt werden sollen</p></div>
+                    <p></p>
+                    <p><mark class="highlight-teal">Checkliste</mark></p>
+                    <div class="indented"><p>Chronologische Liste des Testablaufs (immer gleich)</p></div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Durchführung der Test-Sessions</h2>
+                <p><mark class="highlight-blue">Durchführung der Testsessions (Version 1)</mark></p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            <mark class="highlight-teal">Begrüßung und Background Fragen</mark>
+                            <p>Jeder Teilnehmer persönlich von Testleiter begrüßt und muss Background-Fragebogen (Anhang A) ausfüllen.</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            <mark class="highlight-teal">Orientierung</mark>
+                            <p>
+                                Verbale Einführung mit Orientierungsskript (Anhang B): Zweck, Ziel von Test und Einführung in Test-Equipment. Einwilligung dass
+                                Aufzeichnungen gemacht werden.
+                            </p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>
+                            <mark class="highlight-teal">Durchführung der Test-Session</mark>
+                            <p>Vordefinierte Tasks werden unter Beobachtung durchgeführt.</p>
+                            <p>Ablauf:</p>
+                            <div class="indented">
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">
+                                        Testleiter liest Task vor und übergibt ihn auch auf einem Blatt.
+                                        <p>Danach versucht Testperson den Task auszuführen. (Testleiter dokumentiert Zeit, Fehler, Beobachtungen)</p>
+                                    </li>
+                                </ul>
+                                <ul class="bulleted-list">
+                                    <li style="list-style-type: disc">Nach erledigung wird ein Post-Test-Fragebogen ausgefüllt.</li>
+                                </ul>
+                            </div>
+                            <p></p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>
+                            <mark class="highlight-teal">Teilnehmer Debriefing</mark>
+                            <p>Testleiter stellt Fragen zu:</p>
+                            <div class="indented">
+                                <p>Gesamtzufriedenheit mit UI</p>
+                                <p>Kommentare und Empfehlungen zu UI</p>
+                                <p>Dingen und spezifischen Fehlern und Beobachtungen die während dem Test aufgetreten sind</p>
+                            </div>
+                            <p></p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Durchführung der Testsessions (Version 2)</mark></p>
+                <div class="indented">
+                    <ol type="1" class="numbered-list" start="1">
+                        <li>
+                            <mark class="highlight-teal">Begrüßung</mark>
+                            <p>in angenehmer Umgebung, nicht Testlabor</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="2">
+                        <li>
+                            <mark class="highlight-teal">Ausfüllen von einleitenden Dokumenten</mark>
+                            <p>NDA, Erlaubnis zur Aufzeichnung, Background Fragebogen</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="3">
+                        <li>
+                            <mark class="highlight-teal">Orientierungsskript vorlesen</mark>
+                            <p>Dies dient der Erklärung des Testablaufs und der Betonung von Methoden (z.B. Thinking-Aloud), die verwendet werden.</p>
+                            <p>Hinweis an Person: Es wird das Produkt, nicht die Testperson getestet!</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="4">
+                        <li>
+                            <mark class="highlight-teal">Ausfüllen von Pre-Test Fragebögen</mark>
+                            <p>Wenn sinnvoll mit Background Fragebogen kombinierbar</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="5">
+                        <li>
+                            <mark class="highlight-teal">Vorbereitung im Usability Labor</mark>
+                            <p>Vorstellung der Beobachter, Erklärung der Testeinrichtung</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="6">
+                        <li>
+                            <mark class="highlight-teal">Vorbereitendes Training</mark>
+                            <p>kann notwendig sein um Testperson mit Produkt vertraut zu machen</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="7">
+                        <li>
+                            <mark class="highlight-teal">Ausgeben der Task Szenarien</mark>
+                            <p>Task einzeln, schriftlich, sequentiell ausgegeben.</p>
+                            <p>Nachlesen jederzeit für Testperson möglich.</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="8">
+                        <li>
+                            <mark class="highlight-teal">Startzeit aufnehmen, Testperson beobachten, kritische Daten aufnehmen</mark>
+                            <p>Datensammlungs-Instrumente starten</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="9">
+                        <li>
+                            <mark class="highlight-teal">Ausfüllen der Post-Test Fragebögen</mark>
+                            <p>Vor Diskussion Fragebogen ausfüllen damit Einfluss vermieden wird.</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="10">
+                        <li>
+                            <mark class="highlight-teal">Debriefing</mark>
+                            <p>Fragen die während des Tests aufgetaucht sind beantworten</p>
+                        </li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="11">
+                        <li><mark class="highlight-teal">Bedanken und verabschieden</mark></li>
+                    </ol>
+                    <ol type="1" class="numbered-list" start="12">
+                        <li>
+                            <mark class="highlight-teal">Daten und Logging Sheets sammeln</mark>
+                            <p>Alle Daten, Formulare, Kommentare (auch von Beobachter) sammeln</p>
+                            <p></p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <h2>Thinking-Aloud</h2>
+                <p><mark class="highlight-blue">Thinking-aloud</mark></p>
+                <div class="indented">
+                    <p>
+                        <em>a) Concurrent</em>
+                        lautes Nachdenken während Ausführung von Aufgaben
+                    </p>
+                    <p>
+                        <em>b) Retrospective</em>
+                        lautes Nachdenken nach der Ausführung (zB mit Screenrecordings)
+                    </p>
+                    <hr />
+                    <p>Relevante Aussagen sind über Gedankengänge - nicht über Meinungen, Designvorschlägen, etc.</p>
+                    <div class="indented">
+                        <ul class="toggle">
+                            <li>
+                                <details open="">
+                                    <summary>Beispiele</summary>
+                                    <p>Relevant</p>
+                                    <div class="indented">
+                                        <p>
+                                            ▪ Ich will ... machen. ▪ Ich glaube ... passiert wenn ich hier draufdrücke. ▪ Das ist nicht was ich erwartet habe,
+                                            ich dachte ... ▪ Das hat länger gedauert als erwartet.
+                                        </p>
+                                    </div>
+                                    <p></p>
+                                    <p>Irrelevant</p>
+                                    <div class="indented">
+                                        <p>▪ Ich finde der Button sollte rot sein. ▪ Ich glaube nicht, dass andere Benutzer das so machen würden.</p>
+                                    </div>
+                                    <p></p>
+                                </details>
+                            </li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <p>Vorteil</p>
+                    <div class="indented"><p>Überlegungen lassen sich beobachten und dadurch Usability Probleme finden</p></div>
+                    <p></p>
+                    <p>Nachteile</p>
+                    <div class="indented">
+                        <p>Ungewohnt für Person</p>
+                        <p>Intensiveres Denken und Entschleunigung der Arbeitsgeschwindigkeit (bei Concurrent)</p>
+                        <p>Höherer Zeitaufwand (bei Retrospective)</p>
+                    </div>
+                    <p></p>
+                    <p></p>
+                </div>
+                <p></p>
+                <p><mark class="highlight-blue">Co-Discovery (Variante von Thinking-aloud)</mark></p>
+                <div class="indented">
+                    <p>Zwei Testpersonen führen Test gemeinsam und kommunizieren miteinander</p>
+                    <p>Vorteil: Natürlicher Dialog mit geringerer Hemmschwelle als Thinking-aloud</p>
+                    <p>
+                        Nachteil: Man braucht doppelt so viele Testpersonen und die Ergebnisse sind nicht so valide da der Enduser das Interface alleine nützt
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Guidelines für Teammitglieder</h2>
+                <p><mark class="highlight-blue">Teammitglieder Rollen</mark></p>
+                <div class="indented">
+                    <p>Testleiter (Verantwortlicher)</p>
+                    <p>Moderator (Kommuniziert mit Testpersonen)</p>
+                    <p>Protokollant</p>
+                    <p>Zeitnehmer</p>
+                    <p>Video/Audio Operator</p>
+                    <p>Produktspezialist / technischer Spezialist</p>
+                    <p>Zusätzliche Testrollen</p>
+                    <p>Testbeobachter</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Interaktion mit Testperson</mark></p>
+                <div class="indented">
+                    <p>Jede Interaktion stört den Test und beeinflusst das Ergebnis → Nur so viel Interaktion wie absolut notwendig.</p>
+                    <p>Es müssen Personen bestimmt werden als: Ansprechperson, um Testperson zu unterbrechen, über das Ende der Aufgabe zu entscheiden</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Ansprechperson</mark></p>
+                <div class="indented">
+                    <p>Moderator ist der einzige Ansprechpartner für Testperson.</p>
+                    <p>Kommunikation im Labor zB via Sprechanlage.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Testperson unterbrechen</mark></p>
+                <div class="indented">
+                    <p>Gründe für Unterbrechungen:</p>
+                    <div class="indented">
+                        <p>Erinnerung an “Thinking-Aloud”</p>
+                        <p>Wenn zu schnell (keine Pausen zwischen Aufgaben) oder zu langsam</p>
+                        <p>Technische Probleme</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Entscheidung über das Ende der Aufgabe</mark></p>
+                <div class="indented">
+                    <p>Testperson entscheidet</p>
+                    <p>Es gibt aber 2 weitere Fälle (die zB durch falsche Rückmeldungen auftreten können):</p>
+                    <ol type="a" class="numbered-list" start="1">
+                        <li>false negative: Testperson ist fertig aber weiß es nicht</li>
+                    </ol>
+                    <ol type="a" class="numbered-list" start="2">
+                        <li>
+                            false positive: Testperson sagt sie ist fertig, ist es aber nicht
+                            <p>für vergleichbare Tests oder um mehr zu lernen weitermachen - ansonsten falls genug dokumentiert wurde unterbrachen</p>
+                        </li>
+                    </ol>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Einflussnahme vermeiden</mark></p>
+                <div class="indented">
+                    <p>Einflussquelle: Gestellte Fragen und die gegebenen Antworten</p>
+                    <p>Fragen sollten neutral sein und keine Hinweise geben.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Anforderungen an Protokollanten</mark></p>
+                <div class="indented">
+                    <p>Protokollant muss System und Testaufgaben kennen und zwischen objektiven und subjektiven Daten unterscheiden können.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <h2>Datenerfassung</h2>
+                <p><mark class="highlight-blue">Vor Ort vs. Aufzeichnungen</mark></p>
+                <div class="indented">
+                    <p><mark class="highlight-teal">Beobachtung vor Ort</mark></p>
+                    <div class="indented">
+                        <p>Unmittelbar - dadurch geht nichts beim Aufzeichnen verloren (aber Dinge werden nicht festgehalten)</p>
+                        <p>Man kann Unklarheiten mit Testperson direkt ausdiskutieren</p>
+                    </div>
+                    <p></p>
+                    <p><mark class="highlight-teal">Auswertung von Aufzeichnungen</mark></p>
+                    <div class="indented">
+                        <p>Nützlich für Dokumentation, Reporting</p>
+                        <p>Man spart aber effektiv keine Zeit wenn man die Evaluation verschiebt.</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Logging Sheets, Notizen</mark></p>
+                <div class="indented">
+                    <p>Anfangszeit - Stopzeit</p>
+                    <p>Aussagen von Testpersonen</p>
+                    <p>Fehler und Probleme (Zeitpunkt, Häufigkeit)</p>
+                    <p>Annahmen und Interpretationen zu Beobachtungen</p>
+                    <p>Liste von Personen und Tasks (idealerweise ein eigenes Logging Sheet pro Protokolant, Teilnehmer, Task)</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Standardisierte Fragebögen</mark></p>
+                <div class="indented">
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Usability</summary>
+                                <p>SUS - System Usability Scale</p>
+                                <div class="indented">
+                                    <p>
+                                        <a href="https://www.usability.gov/how-to-and-tools/methods/system-usability-scale.html">
+                                            https://www.usability.gov/how-to-and-tools/methods/system-usability-scale.html
+                                        </a>
+                                    </p>
+                                    <figure class="image">
+                                        <a href="VO%204,5%20Usability%20Testing%20925ad95a15804f749cb352b3f0cb6216/Untitled%203.png">
+                                            <img
+                                                style="width: 336px"
+                                                src="VO%204,5%20Usability%20Testing%20925ad95a15804f749cb352b3f0cb6216/Untitled%203.png" />
+                                        </a>
+                                    </figure>
+                                </div>
+                                <p></p>
+                                <p>CSUQ – Computer System Usability Questionnaire</p>
+                                <div class="indented">
+                                    <p><a href="http://hcibib.org/perlman/question.cgi">http://hcibib.org/perlman/question.cgi</a></p>
+                                </div>
+                                <p></p>
+                                <p>SUMI - Software Usability Measurement Inventory</p>
+                                <div class="indented">
+                                    <p><a href="http://sumi.uxp.ie/">http://sumi.uxp.ie/</a></p>
+                                </div>
+                                <p></p>
+                                <p>QUIS - Questionnaire for User Interaction Satisfaction</p>
+                                <div class="indented">
+                                    <p><a href="http://www.cs.umd.edu/hcil/quis/">http://www.cs.umd.edu/hcil/quis/</a></p>
+                                </div>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Affekt und Emotion (nützlich für UX)</summary>
+                                <p>AttrakDiff</p>
+                                <div class="indented">
+                                    <p><a href="http://attrakdiff.de/">http://attrakdiff.de</a></p>
+                                </div>
+                                <p></p>
+                                <p>I-PANAS-SF - International Positive and Negative Affect Schedule Short Form</p>
+                                <div class="indented">
+                                    <p><a href="http://jcc.sagepub.com/content/38/2/227.abstract">http://jcc.sagepub.com/content/38/2/227.abstract</a></p>
+                                </div>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                    <ul class="toggle">
+                        <li>
+                            <details open="">
+                                <summary>Workload</summary>
+                                <p>NASA Task Load Index (TLX)</p>
+                                <div class="indented">
+                                    <p><a href="https://humansystems.arc.nasa.gov/groups/TLX/">https://humansystems.arc.nasa.gov/groups/TLX/</a></p>
+                                </div>
+                                <p></p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Audioaufnahmen</mark></p>
+                <div class="indented">
+                    <p>Wichtig bei Thinking-Aloud.</p>
+                    <p>Nimmt Arbeit von Protokollanten ab.</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Screenrecording und Videoaufzeichnung</mark></p>
+                <div class="indented">
+                    <p>Spezialisierte Tools: Noldus Observer / Viso</p>
+                    <p>Im OS integriert: Quicktime (Mac OS), Gamebar (Win10)</p>
+                    <p>Opensource: OBS</p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Testumgebung (Usability Labor)</mark></p>
+                <figure class="image">
+                    <a href="VO%204,5%20Usability%20Testing%20925ad95a15804f749cb352b3f0cb6216/Untitled%204.png">
+                        <img style="width: 432px" src="VO%204,5%20Usability%20Testing%20925ad95a15804f749cb352b3f0cb6216/Untitled%204.png" />
+                    </a>
+                </figure>
+                <p></p>
+                <p><mark class="highlight-blue">Mobile Usability Testing</mark></p>
+                <div class="indented">
+                    <p>mehr Einschränkungen als bei Desktop (zB kleinerer Bildschirm etc)</p>
+                    <p>Aufzeichnung</p>
+                    <div class="indented">
+                        <p>Aufzeichnung in OS integriert: Screen recording, screen sharing</p>
+                        <p>Apps: UXCam</p>
+                        <p>Zusätzliche Hardware (beeinflusst Ergebnisse)</p>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h1>3) Auswertung</h1>
+                <h1>4) Kommunikation der Ergebnisse</h1>
+                <p></p>
+                <h1>Vertiefende Links</h1>
+                <p><mark class="highlight-blue">Erste Hälfte (Vorbereitung und Planung)</mark></p>
+                <div class="indented">
+                    <p><a href="https://www.nngroup.com/articles/usability-testing-101/">https://www.nngroup.com/articles/usability-testing-101/</a></p>
+                    <p>
+                        <a href="https://www.usability.gov/how-to-and-tools/methods/planning-usability-testing.html">
+                            https://www.usability.gov/how-to-and-tools/methods/planning-usability-testing.html
+                        </a>
+                    </p>
+                    <p>
+                        <a href="https://www.nngroup.com/articles/test-tasks-quant-qualitative/">
+                            https://www.nngroup.com/articles/test-tasks-quant-qualitative/
+                        </a>
+                    </p>
+                    <p>
+                        <a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/">
+                            https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/
+                        </a>
+                    </p>
+                    <p><a href="https://www.nngroup.com/articles/how-many-test-users/">https://www.nngroup.com/articles/how-many-test-users/</a></p>
+                    <p>Usability Fragebögen</p>
+                    <div class="indented">
+                        <p><a href="https://tuwel.tuwien.ac.at/mod/url/view.php?id=1500544">John Brooke: System Usability ScaleLink/URL</a></p>
+                        <figure>
+                            <div class="source">
+                                <a href="VO%204,5%20Usability%20Testing%20925ad95a15804f749cb352b3f0cb6216/System_Usability_Scale_A4_DE.doc">
+                                    System_Usability_Scale_A4_DE.doc
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                    <p></p>
+                </div>
+                <p></p>
+                <p></p>
+                <p><mark class="highlight-blue">Zweite Hälfte (alles andere)</mark></p>
+                <div class="indented">
+                    <p>
+                        <a href="https://www.usability.gov/how-to-and-tools/methods/running-usability-tests.html">
+                            https://www.usability.gov/how-to-and-tools/methods/running-usability-tests.html
+                        </a>
+                    </p>
+                    <p>
+                        <a href="https://www.usability.gov/get-involved/blog/2013/04/moderating-usability-tests.html">
+                            https://www.usability.gov/get-involved/blog/2013/04/moderating-usability-tests.html
+                        </a>
+                    </p>
+                    <p>
+                        <a href="https://www.uxmatters.com/mt/archives/2012/03/talking-out-loud-is-not-the-same-as-thinking-aloud.php">
+                            https://www.uxmatters.com/mt/archives/2012/03/talking-out-loud-is-not-the-same-as-thinking-aloud.php
+                        </a>
+                    </p>
+                    <p><a href="https://articles.uie.com/usability_testing_mistakes/">https://articles.uie.com/usability_testing_mistakes/</a></p>
+                    <p><a href="https://www.nngroup.com/articles/remote-ux/">https://www.nngroup.com/articles/remote-ux/</a></p>
+                    <p>
+                        <a href="https://www.nngroup.com/articles/moderated-remote-usability-test/">
+                            https://www.nngroup.com/articles/moderated-remote-usability-test/
+                        </a>
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+            </div>
+        </article>
+    </body>
+</html>
