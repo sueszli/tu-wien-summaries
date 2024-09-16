@@ -1,1916 +1,738 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Design Patterns</title>
-        <style>
-            /* cspell:disable-file */
-            /* webkit printing magic: print all background colors */
-            html {
-                -webkit-print-color-adjust: exact;
-            }
-            * {
-                box-sizing: border-box;
-                -webkit-print-color-adjust: exact;
-            }
-
-            html,
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            @media only screen {
-                body {
-                    margin: 2em auto;
-                    max-width: 900px;
-                    color: rgb(55, 53, 47);
-                }
-            }
-
-            body {
-                line-height: 1.5;
-                white-space: pre-wrap;
-            }
-
-            a,
-            a.visited {
-                color: inherit;
-                text-decoration: underline;
-            }
-
-            .pdf-relative-link-path {
-                font-size: 80%;
-                color: #444;
-            }
-
-            h1,
-            h2,
-            h3 {
-                letter-spacing: -0.01em;
-                line-height: 1.2;
-                font-weight: 600;
-                margin-bottom: 0;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-top: 0;
-                margin-bottom: 0.75em;
-            }
-
-            h1 {
-                font-size: 1.875rem;
-                margin-top: 1.875rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-                margin-top: 1.5rem;
-            }
-
-            h3 {
-                font-size: 1.25rem;
-                margin-top: 1.25rem;
-            }
-
-            .source {
-                border: 1px solid #ddd;
-                border-radius: 3px;
-                padding: 1.5em;
-                word-break: break-all;
-            }
-
-            .callout {
-                border-radius: 3px;
-                padding: 1rem;
-            }
-
-            figure {
-                margin: 1.25em 0;
-                page-break-inside: avoid;
-            }
-
-            figcaption {
-                opacity: 0.5;
-                font-size: 85%;
-                margin-top: 0.5em;
-            }
-
-            mark {
-                background-color: transparent;
-            }
-
-            .indented {
-                padding-left: 1.5em;
-            }
-
-            hr {
-                background: transparent;
-                display: block;
-                width: 100%;
-                height: 1px;
-                visibility: visible;
-                border: none;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            @media only print {
-                img {
-                    max-height: 100vh;
-                    object-fit: contain;
-                }
-            }
-
-            @page {
-                margin: 1in;
-            }
-
-            .collection-content {
-                font-size: 0.875rem;
-            }
-
-            .column-list {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .column {
-                padding: 0 1em;
-            }
-
-            .column:first-child {
-                padding-left: 0;
-            }
-
-            .column:last-child {
-                padding-right: 0;
-            }
-
-            .table_of_contents-item {
-                display: block;
-                font-size: 0.875rem;
-                line-height: 1.3;
-                padding: 0.125rem;
-            }
-
-            .table_of_contents-indent-1 {
-                margin-left: 1.5rem;
-            }
-
-            .table_of_contents-indent-2 {
-                margin-left: 3rem;
-            }
-
-            .table_of_contents-indent-3 {
-                margin-left: 4.5rem;
-            }
-
-            .table_of_contents-link {
-                text-decoration: none;
-                opacity: 0.7;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-            }
-
-            table,
-            th,
-            td {
-                border: 1px solid rgba(55, 53, 47, 0.09);
-                border-collapse: collapse;
-            }
-
-            table {
-                border-left: none;
-                border-right: none;
-            }
-
-            th,
-            td {
-                font-weight: normal;
-                padding: 0.25em 0.5em;
-                line-height: 1.5;
-                min-height: 1.5em;
-                text-align: left;
-            }
-
-            th {
-                color: rgba(55, 53, 47, 0.6);
-            }
-
-            ol,
-            ul {
-                margin: 0;
-                margin-block-start: 0.6em;
-                margin-block-end: 0.6em;
-            }
-
-            li > ol:first-child,
-            li > ul:first-child {
-                margin-block-start: 0.6em;
-            }
-
-            ul > li {
-                list-style: disc;
-            }
-
-            ul.to-do-list {
-                padding-inline-start: 0;
-            }
-
-            ul.to-do-list > li {
-                list-style: none;
-            }
-
-            .to-do-children-checked {
-                text-decoration: line-through;
-                opacity: 0.375;
-            }
-
-            ul.toggle > li {
-                list-style: none;
-            }
-
-            ul {
-                padding-inline-start: 1.7em;
-            }
-
-            ul > li {
-                padding-left: 0.1em;
-            }
-
-            ol {
-                padding-inline-start: 1.6em;
-            }
-
-            ol > li {
-                padding-left: 0.2em;
-            }
-
-            .mono ol {
-                padding-inline-start: 2em;
-            }
-
-            .mono ol > li {
-                text-indent: -0.4em;
-            }
-
-            .toggle {
-                padding-inline-start: 0em;
-                list-style-type: none;
-            }
-
-            /* Indent toggle children */
-            .toggle > li > details {
-                padding-left: 1.7em;
-            }
-
-            .toggle > li > details > summary {
-                margin-left: -1.1em;
-            }
-
-            .selected-value {
-                display: inline-block;
-                padding: 0 0.5em;
-                background: rgba(206, 205, 202, 0.5);
-                border-radius: 3px;
-                margin-right: 0.5em;
-                margin-top: 0.3em;
-                margin-bottom: 0.3em;
-                white-space: nowrap;
-            }
-
-            .collection-title {
-                display: inline-block;
-                margin-right: 1em;
-            }
-
-            .page-description {
-                margin-bottom: 2em;
-            }
-
-            .simple-table {
-                margin-top: 1em;
-                font-size: 0.875rem;
-                empty-cells: show;
-            }
-            .simple-table td {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table th {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table-header-color {
-                background: rgb(247, 246, 243);
-                color: black;
-            }
-            .simple-table-header {
-                font-weight: 500;
-            }
-
-            time {
-                opacity: 0.5;
-            }
-
-            .icon {
-                display: inline-block;
-                max-width: 1.2em;
-                max-height: 1.2em;
-                text-decoration: none;
-                vertical-align: text-bottom;
-                margin-right: 0.5em;
-            }
-
-            img.icon {
-                border-radius: 3px;
-            }
-
-            .user-icon {
-                width: 1.5em;
-                height: 1.5em;
-                border-radius: 100%;
-                margin-right: 0.5rem;
-            }
-
-            .user-icon-inner {
-                font-size: 0.8em;
-            }
-
-            .text-icon {
-                border: 1px solid #000;
-                text-align: center;
-            }
-
-            .page-cover-image {
-                display: block;
-                object-fit: cover;
-                width: 100%;
-                max-height: 30vh;
-            }
-
-            .page-header-icon {
-                font-size: 3rem;
-                margin-bottom: 1rem;
-            }
-
-            .page-header-icon-with-cover {
-                margin-top: -0.72em;
-                margin-left: 0.07em;
-            }
-
-            .page-header-icon img {
-                border-radius: 3px;
-            }
-
-            .link-to-page {
-                margin: 1em 0;
-                padding: 0;
-                border: none;
-                font-weight: 500;
-            }
-
-            p > .user {
-                opacity: 0.5;
-            }
-
-            td > .user,
-            td > time {
-                white-space: nowrap;
-            }
-
-            input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 0.6em;
-                vertical-align: middle;
-            }
-
-            p {
-                margin-top: 0.5em;
-                margin-bottom: 0.5em;
-            }
-
-            .image {
-                border: none;
-                margin: 1.5em 0;
-                padding: 0;
-                border-radius: 0;
-                text-align: center;
-            }
-
-            .code,
-            code {
-                background: rgba(135, 131, 120, 0.15);
-                border-radius: 3px;
-                padding: 0.2em 0.4em;
-                border-radius: 3px;
-                font-size: 85%;
-                tab-size: 2;
-            }
-
-            code {
-                color: #eb5757;
-            }
-
-            .code {
-                padding: 1.5em 1em;
-            }
-
-            .code-wrap {
-                white-space: pre-wrap;
-                word-break: break-all;
-            }
-
-            .code > code {
-                background: none;
-                padding: 0;
-                font-size: 100%;
-                color: inherit;
-            }
-
-            blockquote {
-                font-size: 1.25em;
-                margin: 1em 0;
-                padding-left: 1em;
-                border-left: 3px solid rgb(55, 53, 47);
-            }
-
-            .bookmark {
-                text-decoration: none;
-                max-height: 8em;
-                padding: 0;
-                display: flex;
-                width: 100%;
-                align-items: stretch;
-            }
-
-            .bookmark-title {
-                font-size: 0.85em;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                height: 1.75em;
-                white-space: nowrap;
-            }
-
-            .bookmark-text {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .bookmark-info {
-                flex: 4 1 180px;
-                padding: 12px 14px 14px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-
-            .bookmark-image {
-                width: 33%;
-                flex: 1 1 180px;
-                display: block;
-                position: relative;
-                object-fit: cover;
-                border-radius: 1px;
-            }
-
-            .bookmark-description {
-                color: rgba(55, 53, 47, 0.6);
-                font-size: 0.75em;
-                overflow: hidden;
-                max-height: 4.5em;
-                word-break: break-word;
-            }
-
-            .bookmark-href {
-                font-size: 0.75em;
-                margin-top: 0.25em;
-            }
-
-            .sans {
-                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-                    "Segoe UI Symbol";
-            }
-            .code {
-                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
-            }
-            .serif {
-                font-family: Lyon-Text, Georgia, ui-serif, serif;
-            }
-            .mono {
-                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-            }
-            .pdf .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
-            }
-            .pdf:lang(zh-CN) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
-            }
-            .pdf:lang(zh-TW) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
-            }
-            .pdf:lang(ko-KR) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
-            }
-            .pdf .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK KR";
-            }
-            .pdf .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
-            }
-            .pdf:lang(zh-CN) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
-            }
-            .pdf:lang(zh-TW) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
-            }
-            .pdf:lang(ko-KR) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
-            }
-            .pdf .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
-            }
-            .highlight-default {
-                color: rgba(55, 53, 47, 1);
-            }
-            .highlight-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .highlight-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .highlight-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .highlight-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .highlight-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .highlight-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .highlight-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .highlight-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .highlight-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .highlight-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .highlight-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .highlight-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .highlight-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .highlight-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .highlight-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .highlight-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .highlight-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .highlight-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .block-color-default {
-                color: inherit;
-                fill: inherit;
-            }
-            .block-color-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .block-color-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .block-color-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .block-color-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .block-color-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .block-color-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .block-color-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .block-color-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .block-color-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .block-color-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .block-color-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .block-color-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .block-color-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .block-color-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .block-color-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .block-color-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .block-color-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .block-color-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .select-value-color-interactiveBlue {
-                background-color: rgba(35, 131, 226, 0.07);
-            }
-            .select-value-color-pink {
-                background-color: rgba(245, 224, 233, 1);
-            }
-            .select-value-color-purple {
-                background-color: rgba(232, 222, 238, 1);
-            }
-            .select-value-color-green {
-                background-color: rgba(219, 237, 219, 1);
-            }
-            .select-value-color-gray {
-                background-color: rgba(227, 226, 224, 1);
-            }
-            .select-value-color-translucentGray {
-                background-color: rgba(255, 255, 255, 0.0375);
-            }
-            .select-value-color-orange {
-                background-color: rgba(250, 222, 201, 1);
-            }
-            .select-value-color-brown {
-                background-color: rgba(238, 224, 218, 1);
-            }
-            .select-value-color-red {
-                background-color: rgba(255, 226, 221, 1);
-            }
-            .select-value-color-yellow {
-                background-color: rgba(253, 236, 200, 1);
-            }
-            .select-value-color-blue {
-                background-color: rgba(211, 229, 239, 1);
-            }
-            .select-value-color-pageGlass {
-                background-color: undefined;
-            }
-            .select-value-color-washGlass {
-                background-color: undefined;
-            }
-
-            .checkbox {
-                display: inline-flex;
-                vertical-align: text-bottom;
-                width: 16;
-                height: 16;
-                background-size: 16px;
-                margin-left: 2px;
-                margin-right: 5px;
-            }
-
-            .checkbox-on {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            .checkbox-off {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            /* -------- injections from notionBackup -------- */
-
-            body {
-                white-space: normal !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-
-            .code,
-            code {
-                font-size: 100% !important;
-            }
-
-            blockquote {
-                font-size: 100% !important;
-            }
-
-            .callout {
-                white-space: normal !important;
-            }
-            .callout div:has(span.icon) {
-                font-size: 100% !important;
-            }
-
-            .source:not(.bookmark) {
-                font-size: 100% !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-        </style>
-    </head>
-    <body>
-        <article class="page sans">
-            <header>
-                <h1 class="page-title">Design Patterns</h1>
-                <p class="page-description"></p>
-            </header>
-            <div class="page-body">
-                <p></p>
-                <nav class="block-color-gray table_of_contents">
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#ab4eb18a-8130-4be4-94de-12d9a40ff76d">Motivation, Best Practice</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#668ce2a7-22fa-4a34-b00d-fa5fa1c0f90c">About Patterns</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#16a41899-ffc8-4092-a2ba-4374528b2465">Usage in Software Development</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#a41ab94a-2707-4022-8fb9-18135cca218c">Pattern Types: Architectural Patterns (Overview)</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#20645c18-dc14-4d0a-a217-0b4ff44be74e">Fundamental Patterns</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#51a11752-a4b9-4386-8d0f-9b56a169422f">○ Interface</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#8a4ca97a-54f1-4fed-87c3-f85beb74a312">○ Delegation</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#a0c82c0e-84e7-4eae-a5e7-5614e395156f">○ Immutable</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#0f498c3a-e9c3-431d-9f38-e0ab3f8aa4bf">Creational Patterns</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#2a24497b-5caf-4333-8ca2-24a4e50fd627">○ Singleton</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#12ad5970-1641-4a45-829d-a08476c120f3">○ Factory</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#f1026175-3cce-4ab0-8ee1-8778af5e24ac">○ Abstract Factory</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#8f3fe532-7887-487d-9f77-cc86dc7e4408">Structural Patterns</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#d84ab93b-1d62-4aad-b00f-828023abb556">○ Facade / Facet</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#7104cf2c-7101-4099-836c-ca9290c06b4e">○ Adapter / Translator</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#5e3d0d2b-fc9c-4823-9cfb-6baa6c03efcf">○ Proxy</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#c7218f2d-688e-46bf-93e5-e89b34e85005">○ Inversion of Control IoC</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#36298d4d-4f45-46cb-83ce-557a567efabf">Behavioral Patterns</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#42340a8c-c3ae-490f-8f40-39021f9aac97">○ Observer</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#ffd770ce-f8d9-40a3-9fcf-1b68e5b87ce7">○ Decorator / Wrapper</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#bedd4dcc-64a6-417e-90b3-baa888901e23">○ State</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#f625bcec-bdbc-4a62-a302-f8dac713abe9">○ Strategy</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#4386ce02-a1f8-44c5-bf42-3860431de4fb">○ Chain of Responsibility</a>
-                    </div>
-                </nav>
-                <h1>Motivation, Best Practice</h1>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Patterns in an industrial scenario</summary>
-                            <p><span style="border-bottom: 0.05em solid">Goal</span></p>
-                            <div class="indented">
-                                <p>cooperation of engineers from different diciplines with different vocabularies and tools</p>
-                                <p>managing complex systems</p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Complex system</span></p>
-                            <div class="indented">
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>
-                                        Magnitude
-                                        <p>
-                                            <style>
-                                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                            </style>
-                                            <span
-                                                data-token-index="0"
-                                                contenteditable="false"
-                                                class="notion-text-equation-token"
-                                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                                <span></span>
-                                                <span>
-                                                    <span class="katex">
-                                                        <span class="katex-mathml">
-                                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                                <semantics>
-                                                                    <mrow><mo>⋅</mo></mrow>
-                                                                    <annotation encoding="application/x-tex">\cdot</annotation>
-                                                                </semantics>
-                                                            </math>
-                                                        </span>
-                                                        <span class="katex-html" aria-hidden="true">
-                                                            <span class="base">
-                                                                <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                                <span class="mord">⋅</span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                                <span>﻿</span>
-                                            </span>
-                                            Num of Elements, possible states in the system
-                                        </p>
-                                        <p>
-                                            <style>
-                                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                            </style>
-                                            <span
-                                                data-token-index="0"
-                                                contenteditable="false"
-                                                class="notion-text-equation-token"
-                                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                                <span></span>
-                                                <span>
-                                                    <span class="katex">
-                                                        <span class="katex-mathml">
-                                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                                <semantics>
-                                                                    <mrow><mo>⋅</mo></mrow>
-                                                                    <annotation encoding="application/x-tex">\cdot</annotation>
-                                                                </semantics>
-                                                            </math>
-                                                        </span>
-                                                        <span class="katex-html" aria-hidden="true">
-                                                            <span class="base">
-                                                                <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                                <span class="mord">⋅</span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                                <span>﻿</span>
-                                            </span>
-                                            num of possible - num of useful solutions
-                                        </p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        Diversity
-                                        <p>
-                                            <style>
-                                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                            </style>
-                                            <span
-                                                data-token-index="0"
-                                                contenteditable="false"
-                                                class="notion-text-equation-token"
-                                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                                <span></span>
-                                                <span>
-                                                    <span class="katex">
-                                                        <span class="katex-mathml">
-                                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                                <semantics>
-                                                                    <mrow><mo>⋅</mo></mrow>
-                                                                    <annotation encoding="application/x-tex">\cdot</annotation>
-                                                                </semantics>
-                                                            </math>
-                                                        </span>
-                                                        <span class="katex-html" aria-hidden="true">
-                                                            <span class="base">
-                                                                <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                                <span class="mord">⋅</span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                                <span>﻿</span>
-                                            </span>
-                                            heterogeneity of elements, Connectivity, structural complexity
-                                        </p>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Managing complexity</span></p>
-                            <div class="indented">
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>
-                                        Abstraction
-                                        <mark class="highlight-gray">– simplification</mark>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        Decoupling
-                                        <mark class="highlight-gray">– separation of components that should not depend on each other</mark>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="3">
-                                    <li>
-                                        Decomposition
-                                        <mark class="highlight-gray">– focus on components that are easier to understand</mark>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="4">
-                                    <li>
-                                        Classification
-                                        <mark class="highlight-gray">– similar parts</mark>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="5">
-                                    <li>Standardization</li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="6">
-                                    <li>Modeling</li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="7">
-                                    <li>
-                                        Transformation
-                                        <mark class="highlight-gray">– transformation of the given problem to a domain with proven solution approach</mark>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="8">
-                                    <li>
-                                        Experience
-                                        <mark class="highlight-gray">– use documented experiences from experienced contributors</mark>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Complexity-drivers in industrial scenario</span></p>
-                            <div class="indented">
-                                <p>Types of heterogenity</p>
-                                <div class="indented">
-                                    <p>
-                                        – Technical
-                                        <mark class="highlight-gray">"Engineering Polynesia"</mark>
-                                        – Semantic
-                                        <mark class="highlight-gray">"Engineering Babylon"</mark>
-                                        – Process
-                                        <mark class="highlight-gray">"Engineering Chaos"</mark>
-                                    </p>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <h2>About Patterns</h2>
-                <p><span style="border-bottom: 0.05em solid">Definition</span></p>
-                <div class="indented">
-                    <p>„Pattern“ has been defined as „an idea that has been useful in one practical context and will probably be useful in others.“</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Elements of a pattern</span></p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>Name - Aliases, classifications</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>Motivation and problem statement</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>Context</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li>
-                            Solution
-                            <p>
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow><mo>−</mo></mrow>
-                                                        <annotation encoding="application/x-tex">-</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span>
-                                                    <span class="mord">−</span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                                Structure
-                            </p>
-                            <p>
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow><mo>−</mo></mrow>
-                                                        <annotation encoding="application/x-tex">-</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span>
-                                                    <span class="mord">−</span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                                Participants
-                            </p>
-                            <p>
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow><mo>−</mo></mrow>
-                                                        <annotation encoding="application/x-tex">-</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span>
-                                                    <span class="mord">−</span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                                Collaboration
-                            </p>
-                            <p>
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow><mo>−</mo></mrow>
-                                                        <annotation encoding="application/x-tex">-</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span>
-                                                    <span class="mord">−</span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                                Consequences
-                            </p>
-                            <p>
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow><mo>−</mo></mrow>
-                                                        <annotation encoding="application/x-tex">-</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span>
-                                                    <span class="mord">−</span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                                Implementation
-                            </p>
-                            <p>
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow><mo>−</mo></mrow>
-                                                        <annotation encoding="application/x-tex">-</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span>
-                                                    <span class="mord">−</span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                                Examples
-                            </p>
-                        </li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>Usage in Software Development</h2>
-                <p><span style="border-bottom: 0.05em solid">Advantages</span></p>
-                <div class="indented">
-                    <p>Common vocabulary → helps manage complex systems, better communication</p>
-                    <div class="indented"><p>Improves documentation</p></div>
-                    <p></p>
-                    <p>Capture knowledge and make it more widely available</p>
-                    <p>Combination of patterns</p>
-                    <p>Reusability, adaptability, extendability → Minimizes development time and costs</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Disadvantages</span></p>
-                <div class="indented">
-                    <p>Patterns need to be adapted to the code context</p>
-                    <p>Only indirect code reuse</p>
-                    <p>deceptively simple</p>
-                    <p>Teams may suffer from pattern overload</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Classification of Patterns</span></p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>
-                            Architectural Patterns
-                            <p class="block-color-gray">– Structure of software systems – Subsystems, dependencies, communication</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>
-                            Design Patterns
-                            <p class="block-color-gray">
-                                – level of classes –
-                                <em>Snippets</em>
-                                focus on low-level details, Programming language specific
-                            </p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>
-                            ProtoPatterns
-                            <p class="block-color-gray">– Particular case</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li>
-                            Antipatterns
-                            <p class="block-color-gray">– Commonly used but should be avoided</p>
-                        </li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">When to use</span></p>
-                <div class="indented">
-                    <p>Similar problems that recur with variations in different contexts</p>
-                    <p>Patterns can be an overkill if solution is simple linear set of instructions</p>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>Pattern Types: Architectural Patterns (Overview)</h2>
-                <ol type="1" class="numbered-list" start="1">
-                    <li>
-                        <mark class="highlight-yellow_background">Fundamental Patterns</mark>
-                        <p><mark class="highlight-gray">essential concepts of software architecture</mark></p>
-                        <div class="indented">
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Interface Pattern</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Delegation Pattern</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Immutable Pattern</li>
-                            </ul>
-                        </div>
-                        <p></p>
-                    </li>
-                </ol>
-                <ol type="1" class="numbered-list" start="2">
-                    <li>
-                        <mark class="highlight-yellow_background">Creational Patterns</mark>
-                        <p><mark class="highlight-gray">initializing and configuring classes and objects</mark></p>
-                        <div class="indented">
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Singleton</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Factory</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Abstract Factory</li>
-                            </ul>
-                            <ul class="block-color-gray bulleted-list">
-                                <li style="list-style-type: disc">Builder (Factory for building complex objects in different variants)</li>
-                            </ul>
-                            <ul class="block-color-gray bulleted-list">
-                                <li style="list-style-type: disc">Prototype (Factory for cloning new instances from a prototypical instance)</li>
-                            </ul>
-                        </div>
-                        <p></p>
-                    </li>
-                </ol>
-                <ol type="1" class="numbered-list" start="3">
-                    <li>
-                        <mark class="highlight-yellow_background">Structural Patterns</mark>
-                        <p>
-                            <mark class="highlight-gray">decoupling "interface</mark>
-                            <mark class="highlight-gray">
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow><mo>↔</mo></mrow>
-                                                        <annotation encoding="application/x-tex">\lrarr</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                                    <span class="mrel">↔</span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                            </mark>
-                            <mark class="highlight-gray">implementation" of classes and objects</mark>
-                        </p>
-                        <div class="indented">
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Facade / Facet</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Adapter</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Proxy</li>
-                            </ul>
-                            <ul class="block-color-gray bulleted-list">
-                                <li style="list-style-type: disc">Bridge (Abstraction for dynamically binding one of many implementations)</li>
-                            </ul>
-                            <ul class="block-color-gray bulleted-list">
-                                <li style="list-style-type: disc">Composite (Treats objects and compositions uniformly)</li>
-                            </ul>
-                            <ul class="block-color-gray bulleted-list">
-                                <li style="list-style-type: disc">Flyweight (Many fine-grained objects shared efficiently)</li>
-                            </ul>
-                        </div>
-                        <p></p>
-                    </li>
-                </ol>
-                <ol type="1" class="numbered-list" start="4">
-                    <li>
-                        <mark class="highlight-yellow_background">Behavioral Patterns</mark>
-                        <p><mark class="highlight-gray">dynamic interactions among objects</mark></p>
-                        <div class="indented">
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Observer</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Decorator</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">State</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Strategy</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Chain of Responsibility</li>
-                            </ul>
-                            <ul class="block-color-gray bulleted-list">
-                                <li style="list-style-type: disc">Iterator (Aggregate elements are accessed sequentially)</li>
-                            </ul>
-                            <ul class="block-color-gray bulleted-list">
-                                <li style="list-style-type: disc">Command (Object represents all the information needed to call a method at a later time)</li>
-                            </ul>
-                            <ul class="block-color-gray bulleted-list">
-                                <li style="list-style-type: disc">Mediator (Mediator coordinates interactions between its associates)</li>
-                            </ul>
-                            <ul class="block-color-gray bulleted-list">
-                                <li style="list-style-type: disc">Memento (Snapshot captures and restores object states)</li>
-                            </ul>
-                        </div>
-                        <p></p>
-                        <p></p>
-                    </li>
-                </ol>
-                <h1>Fundamental Patterns</h1>
-                <h2>○ Interface</h2>
-                <p>Seperating description and implementation</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented">
-                    <p>Separate description and concrete implementation</p>
-                    <p>defines the signature operations of an entity</p>
-                    <p>implementations can be added / changed easily afterwards</p>
-                    <p>should be stable - in comparison to implementation</p>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>○ Delegation</h2>
-                <p>Extension of functionality without inheritance</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented"><p>Class needs additional functionality</p></div>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <div class="indented">
-                    <p>Outsource functionality into third class and use its instance via delegation</p>
-                    <ul class="toggle">
-                        <li>
-                            <details open="">
-                                <summary><span style="border-bottom: 0.05em solid">Example 1</span></summary>
-                                <figure class="image">
-                                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled.png">
-                                        <img style="width: 240px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled.png" />
-                                    </a>
-                                </figure>
-                                <p>Solution without inheritance:</p>
-                                <div class="indented"><p>Notification-Service gets an instance of the object that should get called.</p></div>
-                                <p></p>
-                                <figure class="image">
-                                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%201.png">
-                                        <img style="width: 192px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%201.png" />
-                                    </a>
-                                </figure>
-                            </details>
-                        </li>
-                    </ul>
-                    <ul class="toggle">
-                        <li>
-                            <details open="">
-                                <summary><span style="border-bottom: 0.05em solid">Example 2</span></summary>
-                                <pre class="code"><code>class A {
-  void foo() {
-    print("a.foo");
-  }
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>Design Patterns</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+-webkit-print-color-adjust: exact;
 }
-
-class B {
-  private delegate A a; // delegation link
-
-  public B(A a) {
-    this.a = a;
-  }
-
-  void foo() {
-    a.foo(); // call foo() on the a-instance
-  }
-}</code></pre>
-                                <pre class="code"><code>a = new A();
-b = new B(a); // establish delegation between two objects</code></pre>
-                            </details>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>○ Immutable</h2>
-                <p>Providing unchangeable object after initialization</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented">
-                    <p>Object instance should be immutable</p>
-                    <p>Because several threads are accessing same object but object properties should be configurable</p>
-                </div>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>Initialize variables in constructor</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>
-                            Provide only read access with Getter-Methods
-                            <code>getName(), getDate()</code>
-                        </li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <h1>Creational Patterns</h1>
-                <h2>○ Singleton</h2>
-                <p>Provision of a single instance only</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented">
-                    <p>Only one object instance should exist:</p>
-                    <div class="indented">
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">Database access</li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">Id generator</li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">Logger</li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">Communication with hardware</li>
-                        </ul>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <div class="indented">
-                    <ul class="toggle">
-                        <li>
-                            <details open="">
-                                <summary>Example</summary>
-                                <pre class="code"><code>public class Person {
-	private final Logger LOG = LoggerFactory.getLogger(Person.class);
-	
-	Logger getLogger() {
-		return LOG;
-	}
-}</code></pre>
-                                <p>
-                                    In this case
-                                    <code>LOG</code>
-                                    is the same object even without static due to the way the LoggerFactory works.
-                                </p>
-                            </details>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>○ Factory</h2>
-                <p>Method in a derived class creates associates</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented">
-                    <p>Object creation &amp; configuration is complex</p>
-                    <p>Initialization of additional sub-instances required</p>
-                </div>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <div class="indented">
-                    <ul class="toggle">
-                        <li>
-                            <details open="">
-                                <summary>Example</summary>
-                                <pre class="code"><code>interface Product { float getPrice(); }
-
-public class Milk implements Product {
-	final float price;
-	public Milk(final float price) { this.price = price; } //constructor
-	public float getPrice() { return price; } //getter
+* {
+box-sizing: border-box;
+-webkit-print-color-adjust: exact;
+}html,
+body {
+margin: 0;
+padding: 0;
 }
-
-public class Sugar implements Product {
-	final float price;
-	public Sugar(final float price) { this.price = price; } //constructor
-	public float getPrice () { return price; } //getter
+@media only screen {
+body {
+margin: 2em auto;
+max-width: 900px;
+color: rgb(55, 53, 47);
 }
-
-public class Product Factory {
-	public static Product createProduct(String what){
-		//When sugar is requested, we return sugar:
-		if (what.equals("Sugar")) { return new Sugar(1.49F) ; }
-		// When milk is needed, we return milk:
-		else if (what.equals("Milk")) { return new Milk(0.99F); }
-		// Otherwise return at least sugar
-		else { return new Sugar(1.49F); }
-	}
-}</code></pre>
-                                <figure class="image">
-                                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%202.png">
-                                        <img style="width: 240px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%202.png" />
-                                    </a>
-                                </figure>
-                            </details>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>○ Abstract Factory</h2>
-                <p>Factory for building related objects without specifying their concrete classes</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented"><p>Achieving higher abstraction by grouping individual factories with a common theme</p></div>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <div class="indented">
-                    <p>A group of individual factories that have a common theme</p>
-                    <p>Two hierarchies → abstract AbstractFactory class provides interface</p>
-                    <p>Client only knows abstract interface → Family may grow independently of the client</p>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%203.png">
-                        <img style="width: 432px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%203.png" />
-                    </a>
-                </figure>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%204.png">
-                        <img style="width: 384px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%204.png" />
-                    </a>
-                </figure>
-                <h1>Structural Patterns</h1>
-                <h2>○ Facade / Facet</h2>
-                <p>Simplifies the interface for a subsystem</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented">
-                    <p>Need simplified access to a complex subsystem</p>
-                    <p>Provides an abstracted interface of a subsystem</p>
-                </div>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <div class="indented">
-                    <ul class="toggle">
-                        <li>
-                            <details open="">
-                                <summary>Example</summary>
-                                <pre class="code"><code>public class SimpleMail {
-	public static int sendMail(String address, String subject, String body) {
-		int status = 0;
-		... //Complex mail sending operation
-		return status;
-	}
-}</code></pre>
-                            </details>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%205.png">
-                        <img style="width: 336px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%205.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <h2>○ Adapter / Translator</h2>
-                <p>Adapts a server interface for a client</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented"><p>Need to integrate incompatible external functionality</p></div>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <div class="indented"><p>Translates (data transformation) into a compatible interface</p></div>
-                <p></p>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%206.png">
-                        <img style="width: 336px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%206.png" />
-                    </a>
-                </figure>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%207.png">
-                        <img style="width: 336px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%207.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <h2>○ Proxy</h2>
-                <p>One object approximates another</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented"><p>Need to integrate further actions before intended method call</p></div>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <div class="indented">
-                    <p>Extends concept of the delegation pattern</p>
-                    <p>Implements interface and acts as a representative of the „original“ implementation</p>
-                    <p>Used in: security, logging, caching</p>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%208.png">
-                        <img style="width: 384px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%208.png" />
-                    </a>
-                </figure>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%209.png">
-                        <img style="width: 384px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%209.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <h2>○ Inversion of Control IoC</h2>
-                <p>Die Verantwortung für das Erzeugen und Initialisieren von Objekten wird an eine zentrale Stelle (z.B. eine Klasse) delegiert.</p>
-                <p>Von der zentralen Stelle kann man die Abhängigkeiten zwischen den Objekten leichter überblicken und steuern.</p>
-                <p></p>
-                <p>Detailierter: Siehe Block 3 - Werkzeuge</p>
-                <p></p>
-                <h1>Behavioral Patterns</h1>
-                <h2>○ Observer</h2>
-                <p>Dependents update automatically when a subject changes</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented"><p>Need to react to state changes in an object</p></div>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <div class="indented">
-                    <p>in case of changes of the instance‘s state execute specific action(s) – e.g., notification of instances interested in change</p>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2010.png">
-                        <img style="width: 528px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2010.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <h2>○ Decorator / Wrapper</h2>
-                <p>extends an object</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented"><p>Need to extend object functionality during runtime (inheritance not possible during runtime)</p></div>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <div class="indented">
-                    <p>Dynamically add new functionality to an existing object</p>
-                    <ul class="toggle">
-                        <li>
-                            <details open="">
-                                <summary>Example</summary>
-                                <pre class="code"><code>Cake cake = new ChocolateCake();
-
-NutsInCake nic = new NutsInCake(cake) ;
+}body {
+line-height: 1.5;
+white-space: pre-wrap;
+}a,
+a.visited {
+color: inherit;
+text-decoration: underline;
+}.pdf-relative-link-path {
+font-size: 80%;
+color: #444;
+}h1,
+h2,
+h3 {
+letter-spacing: -0.01em;
+line-height: 1.2;
+font-weight: 600;
+margin-bottom: 0;
+}.page-title {
+font-size: 2.5rem;
+font-weight: 700;
+margin-top: 0;
+margin-bottom: 0.75em;
+}h1 {
+font-size: 1.875rem;
+margin-top: 1.875rem;
+}h2 {
+font-size: 1.5rem;
+margin-top: 1.5rem;
+}h3 {
+font-size: 1.25rem;
+margin-top: 1.25rem;
+}.source {
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 1.5em;
+word-break: break-all;
+}.callout {
+border-radius: 3px;
+padding: 1rem;
+}figure {
+margin: 1.25em 0;
+page-break-inside: avoid;
+}figcaption {
+opacity: 0.5;
+font-size: 85%;
+margin-top: 0.5em;
+}mark {
+background-color: transparent;
+}.indented {
+padding-left: 1.5em;
+}hr {
+background: transparent;
+display: block;
+width: 100%;
+height: 1px;
+visibility: visible;
+border: none;
+border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}img {
+max-width: 100%;
+}@media only print {
+img {
+max-height: 100vh;
+object-fit: contain;
+}
+}@page {
+margin: 1in;
+}.collection-content {
+font-size: 0.875rem;
+}.column-list {
+display: flex;
+justify-content: space-between;
+}.column {
+padding: 0 1em;
+}.column:first-child {
+padding-left: 0;
+}.column:last-child {
+padding-right: 0;
+}.table_of_contents-item {
+display: block;
+font-size: 0.875rem;
+line-height: 1.3;
+padding: 0.125rem;
+}.table_of_contents-indent-1 {
+margin-left: 1.5rem;
+}.table_of_contents-indent-2 {
+margin-left: 3rem;
+}.table_of_contents-indent-3 {
+margin-left: 4.5rem;
+}.table_of_contents-link {
+text-decoration: none;
+opacity: 0.7;
+border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}table,
+th,
+td {
+border: 1px solid rgba(55, 53, 47, 0.09);
+border-collapse: collapse;
+}table {
+border-left: none;
+border-right: none;
+}th,
+td {
+font-weight: normal;
+padding: 0.25em 0.5em;
+line-height: 1.5;
+min-height: 1.5em;
+text-align: left;
+}th {
+color: rgba(55, 53, 47, 0.6);
+}ol,
+ul {
+margin: 0;
+margin-block-start: 0.6em;
+margin-block-end: 0.6em;
+}li > ol:first-child,
+li > ul:first-child {
+margin-block-start: 0.6em;
+}ul > li {
+list-style: disc;
+}ul.to-do-list {
+padding-inline-start: 0;
+}ul.to-do-list > li {
+list-style: none;
+}.to-do-children-checked {
+text-decoration: line-through;
+opacity: 0.375;
+}ul.toggle > li {
+list-style: none;
+}ul {
+padding-inline-start: 1.7em;
+}ul > li {
+padding-left: 0.1em;
+}ol {
+padding-inline-start: 1.6em;
+}ol > li {
+padding-left: 0.2em;
+}.mono ol {
+padding-inline-start: 2em;
+}.mono ol > li {
+text-indent: -0.4em;
+}.toggle {
+padding-inline-start: 0em;
+list-style-type: none;
+}/* Indent toggle children */
+.toggle > li > details {
+padding-left: 1.7em;
+}.toggle > li > details > summary {
+margin-left: -1.1em;
+}.selected-value {
+display: inline-block;
+padding: 0 0.5em;
+background: rgba(206, 205, 202, 0.5);
+border-radius: 3px;
+margin-right: 0.5em;
+margin-top: 0.3em;
+margin-bottom: 0.3em;
+white-space: nowrap;
+}.collection-title {
+display: inline-block;
+margin-right: 1em;
+}.page-description {
+margin-bottom: 2em;
+}.simple-table {
+margin-top: 1em;
+font-size: 0.875rem;
+empty-cells: show;
+}
+.simple-table td {
+height: 29px;
+min-width: 120px;
+}.simple-table th {
+height: 29px;
+min-width: 120px;
+}.simple-table-header-color {
+background: rgb(247, 246, 243);
+color: black;
+}
+.simple-table-header {
+font-weight: 500;
+}time {
+opacity: 0.5;
+}.icon {
+display: inline-block;
+max-width: 1.2em;
+max-height: 1.2em;
+text-decoration: none;
+vertical-align: text-bottom;
+margin-right: 0.5em;
+}img.icon {
+border-radius: 3px;
+}.user-icon {
+width: 1.5em;
+height: 1.5em;
+border-radius: 100%;
+margin-right: 0.5rem;
+}.user-icon-inner {
+font-size: 0.8em;
+}.text-icon {
+border: 1px solid #000;
+text-align: center;
+}.page-cover-image {
+display: block;
+object-fit: cover;
+width: 100%;
+max-height: 30vh;
+}.page-header-icon {
+font-size: 3rem;
+margin-bottom: 1rem;
+}.page-header-icon-with-cover {
+margin-top: -0.72em;
+margin-left: 0.07em;
+}.page-header-icon img {
+border-radius: 3px;
+}.link-to-page {
+margin: 1em 0;
+padding: 0;
+border: none;
+font-weight: 500;
+}p > .user {
+opacity: 0.5;
+}td > .user,
+td > time {
+white-space: nowrap;
+}input[type="checkbox"] {
+transform: scale(1.5);
+margin-right: 0.6em;
+vertical-align: middle;
+}p {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}.image {
+border: none;
+margin: 1.5em 0;
+padding: 0;
+border-radius: 0;
+text-align: center;
+}.code,
+code {
+background: rgba(135, 131, 120, 0.15);
+border-radius: 3px;
+padding: 0.2em 0.4em;
+border-radius: 3px;
+font-size: 85%;
+tab-size: 2;
+}code {
+color: #eb5757;
+}.code {
+padding: 1.5em 1em;
+}.code-wrap {
+white-space: pre-wrap;
+word-break: break-all;
+}.code > code {
+background: none;
+padding: 0;
+font-size: 100%;
+color: inherit;
+}blockquote {
+font-size: 1.25em;
+margin: 1em 0;
+padding-left: 1em;
+border-left: 3px solid rgb(55, 53, 47);
+}.bookmark {
+text-decoration: none;
+max-height: 8em;
+padding: 0;
+display: flex;
+width: 100%;
+align-items: stretch;
+}.bookmark-title {
+font-size: 0.85em;
+overflow: hidden;
+text-overflow: ellipsis;
+height: 1.75em;
+white-space: nowrap;
+}.bookmark-text {
+display: flex;
+flex-direction: column;
+}.bookmark-info {
+flex: 4 1 180px;
+padding: 12px 14px 14px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}.bookmark-image {
+width: 33%;
+flex: 1 1 180px;
+display: block;
+position: relative;
+object-fit: cover;
+border-radius: 1px;
+}.bookmark-description {
+color: rgba(55, 53, 47, 0.6);
+font-size: 0.75em;
+overflow: hidden;
+max-height: 4.5em;
+word-break: break-word;
+}.bookmark-href {
+font-size: 0.75em;
+margin-top: 0.25em;
+}.sans {
+font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+"Segoe UI Symbol";
+}
+.code {
+font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+}
+.serif {
+font-family: Lyon-Text, Georgia, ui-serif, serif;
+}
+.mono {
+font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+}
+.pdf .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+}
+.pdf:lang(zh-CN) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+}
+.pdf:lang(zh-TW) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+}
+.pdf:lang(ko-KR) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+}
+.pdf .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK KR";
+}
+.pdf .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+}
+.pdf:lang(zh-CN) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+}
+.pdf:lang(zh-TW) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+}
+.pdf:lang(ko-KR) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+}
+.pdf .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+}
+.highlight-default {
+color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+color: inherit;
+fill: inherit;
+}
+.block-color-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue {
+background-color: rgba(35, 131, 226, 0.07);
+}
+.select-value-color-pink {
+background-color: rgba(245, 224, 233, 1);
+}
+.select-value-color-purple {
+background-color: rgba(232, 222, 238, 1);
+}
+.select-value-color-green {
+background-color: rgba(219, 237, 219, 1);
+}
+.select-value-color-gray {
+background-color: rgba(227, 226, 224, 1);
+}
+.select-value-color-translucentGray {
+background-color: rgba(255, 255, 255, 0.0375);
+}
+.select-value-color-orange {
+background-color: rgba(250, 222, 201, 1);
+}
+.select-value-color-brown {
+background-color: rgba(238, 224, 218, 1);
+}
+.select-value-color-red {
+background-color: rgba(255, 226, 221, 1);
+}
+.select-value-color-yellow {
+background-color: rgba(253, 236, 200, 1);
+}
+.select-value-color-blue {
+background-color: rgba(211, 229, 239, 1);
+}
+.select-value-color-pageGlass {
+background-color: undefined;
+}
+.select-value-color-washGlass {
+background-color: undefined;
+}.checkbox {
+display: inline-flex;
+vertical-align: text-bottom;
+width: 16;
+height: 16;
+background-size: 16px;
+margin-left: 2px;
+margin-right: 5px;
+}.checkbox-on {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}.checkbox-off {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}/* -------- injections from notionBackup -------- */body {
+white-space: normal !important;
+}p {
+min-height: 1em !important;
+}.code,
+code {
+font-size: 100% !important;
+}blockquote {
+font-size: 100% !important;
+}.callout {
+white-space: normal !important;
+}
+.callout div:has(span.icon) {
+font-size: 100% !important;
+}.source:not(.bookmark) {
+font-size: 100% !important;
+}p {
+min-height: 1em !important;
+}
+</style></head><body><article class="page sans"><header><h1 class="page-title">Design Patterns</h1><p class="page-description"></p></header><div class="page-body"><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ab4eb18a-8130-4be4-94de-12d9a40ff76d">Motivation, Best Practice</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#668ce2a7-22fa-4a34-b00d-fa5fa1c0f90c">About Patterns</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#16a41899-ffc8-4092-a2ba-4374528b2465">Usage in Software Development</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a41ab94a-2707-4022-8fb9-18135cca218c">Pattern Types: Architectural Patterns (Overview)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#20645c18-dc14-4d0a-a217-0b4ff44be74e">Fundamental Patterns</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#51a11752-a4b9-4386-8d0f-9b56a169422f">○ Interface</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8a4ca97a-54f1-4fed-87c3-f85beb74a312">○ Delegation</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a0c82c0e-84e7-4eae-a5e7-5614e395156f">○ Immutable</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0f498c3a-e9c3-431d-9f38-e0ab3f8aa4bf">Creational Patterns</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2a24497b-5caf-4333-8ca2-24a4e50fd627">○ Singleton</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#12ad5970-1641-4a45-829d-a08476c120f3">○ Factory</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f1026175-3cce-4ab0-8ee1-8778af5e24ac">○ Abstract Factory</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8f3fe532-7887-487d-9f77-cc86dc7e4408">Structural Patterns</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d84ab93b-1d62-4aad-b00f-828023abb556">○ Facade / Facet</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7104cf2c-7101-4099-836c-ca9290c06b4e">○ Adapter / Translator</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5e3d0d2b-fc9c-4823-9cfb-6baa6c03efcf">○ Proxy</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c7218f2d-688e-46bf-93e5-e89b34e85005">○ Inversion of Control IoC</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#36298d4d-4f45-46cb-83ce-557a567efabf">Behavioral Patterns</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#42340a8c-c3ae-490f-8f40-39021f9aac97">○ Observer</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ffd770ce-f8d9-40a3-9fcf-1b68e5b87ce7">○ Decorator / Wrapper</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bedd4dcc-64a6-417e-90b3-baa888901e23">○ State</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f625bcec-bdbc-4a62-a302-f8dac713abe9">○ Strategy</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4386ce02-a1f8-44c5-bf42-3860431de4fb">○ Chain of Responsibility</a></div></nav><h1>Motivation, Best Practice</h1><ul class="toggle"><li><details open=""><summary>Patterns in an industrial scenario</summary><p><span style="border-bottom: 0.05em solid">Goal</span></p><div class="indented"><p>cooperation of engineers from different diciplines with different vocabularies and tools</p><p>managing complex systems</p></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Complex system</span></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Magnitude
+<p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+Num of Elements, possible states in the system
+</p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+num of possible - num of useful solutions
+</p></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Diversity
+<p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+heterogeneity of elements, Connectivity, structural complexity
+</p></li></ol></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Managing complexity</span></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Abstraction
+<mark class="highlight-gray">– simplification</mark></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Decoupling
+<mark class="highlight-gray">– separation of components that should not depend on each other</mark></li></ol><ol class="numbered-list" start="3" type="1"><li>
+Decomposition
+<mark class="highlight-gray">– focus on components that are easier to understand</mark></li></ol><ol class="numbered-list" start="4" type="1"><li>
+Classification
+<mark class="highlight-gray">– similar parts</mark></li></ol><ol class="numbered-list" start="5" type="1"><li>Standardization</li></ol><ol class="numbered-list" start="6" type="1"><li>Modeling</li></ol><ol class="numbered-list" start="7" type="1"><li>
+Transformation
+<mark class="highlight-gray">– transformation of the given problem to a domain with proven solution approach</mark></li></ol><ol class="numbered-list" start="8" type="1"><li>
+Experience
+<mark class="highlight-gray">– use documented experiences from experienced contributors</mark></li></ol></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Complexity-drivers in industrial scenario</span></p><div class="indented"><p>Types of heterogenity</p><div class="indented"><p>
+– Technical
+<mark class="highlight-gray">"Engineering Polynesia"</mark>
+– Semantic
+<mark class="highlight-gray">"Engineering Babylon"</mark>
+– Process
+<mark class="highlight-gray">"Engineering Chaos"</mark></p></div><p></p></div><p></p></details></li></ul><p></p><h2>About Patterns</h2><p><span style="border-bottom: 0.05em solid">Definition</span></p><div class="indented"><p>„Pattern“ has been defined as „an idea that has been useful in one practical context and will probably be useful in others.“</p></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Elements of a pattern</span></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Name - Aliases, classifications</li></ol><ol class="numbered-list" start="2" type="1"><li>Motivation and problem statement</li></ol><ol class="numbered-list" start="3" type="1"><li>Context</li></ol><ol class="numbered-list" start="4" type="1"><li>
+Solution
+<p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span>
+Structure
+</p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span>
+Participants
+</p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span>
+Collaboration
+</p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span>
+Consequences
+</p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span>
+Implementation
+</p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.66666em; vertical-align: -0.08333em"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span>
+Examples
+</p></li></ol></div><p></p><p></p><h2>Usage in Software Development</h2><p><span style="border-bottom: 0.05em solid">Advantages</span></p><div class="indented"><p>Common vocabulary → helps manage complex systems, better communication</p><div class="indented"><p>Improves documentation</p></div><p></p><p>Capture knowledge and make it more widely available</p><p>Combination of patterns</p><p>Reusability, adaptability, extendability → Minimizes development time and costs</p></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Disadvantages</span></p><div class="indented"><p>Patterns need to be adapted to the code context</p><p>Only indirect code reuse</p><p>deceptively simple</p><p>Teams may suffer from pattern overload</p></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Classification of Patterns</span></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Architectural Patterns
+<p class="block-color-gray">– Structure of software systems – Subsystems, dependencies, communication</p></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Design Patterns
+<p class="block-color-gray">
+– level of classes –
+<em>Snippets</em>
+focus on low-level details, Programming language specific
+</p></li></ol><ol class="numbered-list" start="3" type="1"><li>
+ProtoPatterns
+<p class="block-color-gray">– Particular case</p></li></ol><ol class="numbered-list" start="4" type="1"><li>
+Antipatterns
+<p class="block-color-gray">– Commonly used but should be avoided</p></li></ol></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">When to use</span></p><div class="indented"><p>Similar problems that recur with variations in different contexts</p><p>Patterns can be an overkill if solution is simple linear set of instructions</p></div><p></p><p></p><h2>Pattern Types: Architectural Patterns (Overview)</h2><ol class="numbered-list" start="1" type="1"><li><mark class="highlight-yellow_background">Fundamental Patterns</mark><p><mark class="highlight-gray">essential concepts of software architecture</mark></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Interface Pattern</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Delegation Pattern</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Immutable Pattern</li></ul></div><p></p></li></ol><ol class="numbered-list" start="2" type="1"><li><mark class="highlight-yellow_background">Creational Patterns</mark><p><mark class="highlight-gray">initializing and configuring classes and objects</mark></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Singleton</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Factory</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Abstract Factory</li></ul><ul class="block-color-gray bulleted-list"><li style="list-style-type: disc">Builder (Factory for building complex objects in different variants)</li></ul><ul class="block-color-gray bulleted-list"><li style="list-style-type: disc">Prototype (Factory for cloning new instances from a prototypical instance)</li></ul></div><p></p></li></ol><ol class="numbered-list" start="3" type="1"><li><mark class="highlight-yellow_background">Structural Patterns</mark><p><mark class="highlight-gray">decoupling "interface</mark><mark class="highlight-gray"><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↔</mo></mrow><annotation encoding="application/x-tex">\lrarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">↔</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray">implementation" of classes and objects</mark></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Facade / Facet</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Adapter</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Proxy</li></ul><ul class="block-color-gray bulleted-list"><li style="list-style-type: disc">Bridge (Abstraction for dynamically binding one of many implementations)</li></ul><ul class="block-color-gray bulleted-list"><li style="list-style-type: disc">Composite (Treats objects and compositions uniformly)</li></ul><ul class="block-color-gray bulleted-list"><li style="list-style-type: disc">Flyweight (Many fine-grained objects shared efficiently)</li></ul></div><p></p></li></ol><ol class="numbered-list" start="4" type="1"><li><mark class="highlight-yellow_background">Behavioral Patterns</mark><p><mark class="highlight-gray">dynamic interactions among objects</mark></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Observer</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Decorator</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">State</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Strategy</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Chain of Responsibility</li></ul><ul class="block-color-gray bulleted-list"><li style="list-style-type: disc">Iterator (Aggregate elements are accessed sequentially)</li></ul><ul class="block-color-gray bulleted-list"><li style="list-style-type: disc">Command (Object represents all the information needed to call a method at a later time)</li></ul><ul class="block-color-gray bulleted-list"><li style="list-style-type: disc">Mediator (Mediator coordinates interactions between its associates)</li></ul><ul class="block-color-gray bulleted-list"><li style="list-style-type: disc">Memento (Snapshot captures and restores object states)</li></ul></div><p></p><p></p></li></ol><h1>Fundamental Patterns</h1><h2>○ Interface</h2><p>Seperating description and implementation</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Separate description and concrete implementation</p><p>defines the signature operations of an entity</p><p>implementations can be added / changed easily afterwards</p><p>should be stable - in comparison to implementation</p></div><p></p><p></p><h2>○ Delegation</h2><p>Extension of functionality without inheritance</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Class needs additional functionality</p></div><p></p><p><span style="border-bottom: 0.05em solid">Solution</span></p><div class="indented"><p>Outsource functionality into third class and use its instance via delegation</p><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">Example 1</span></summary><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled.png" style="width: 240px"/></a></figure><p>Solution without inheritance:</p><div class="indented"><p>Notification-Service gets an instance of the object that should get called.</p></div><p></p><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%201.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%201.png" style="width: 192px"/></a></figure></details></li></ul><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">Example 2</span></summary><pre class="code"><code>class A {
+void foo() {
+print("a.foo");
+}
+}class B {
+private delegate A a; // delegation linkpublic B(A a) {
+this.a = a;
+}void foo() {
+a.foo(); // call foo() on the a-instance
+}
+}</code></pre><pre class="code"><code>a = new A();
+b = new B(a); // establish delegation between two objects</code></pre></details></li></ul></div><p></p><p></p><h2>○ Immutable</h2><p>Providing unchangeable object after initialization</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Object instance should be immutable</p><p>Because several threads are accessing same object but object properties should be configurable</p></div><p></p><p><span style="border-bottom: 0.05em solid">Solution</span></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Initialize variables in constructor</li></ol><ol class="numbered-list" start="2" type="1"><li>
+Provide only read access with Getter-Methods
+<code>getName(), getDate()</code></li></ol></div><p></p><p></p><h1>Creational Patterns</h1><h2>○ Singleton</h2><p>Provision of a single instance only</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Only one object instance should exist:</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Database access</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Id generator</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Logger</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Communication with hardware</li></ul></div><p></p></div><p></p><p><span style="border-bottom: 0.05em solid">Solution</span></p><div class="indented"><ul class="toggle"><li><details open=""><summary>Example</summary><pre class="code"><code>public class Person {
+private final Logger LOG = LoggerFactory.getLogger(Person.class);
+Logger getLogger() {
+return LOG;
+}
+}</code></pre><p>
+In this case
+<code>LOG</code>
+is the same object even without static due to the way the LoggerFactory works.
+</p></details></li></ul></div><p></p><p></p><h2>○ Factory</h2><p>Method in a derived class creates associates</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Object creation &amp; configuration is complex</p><p>Initialization of additional sub-instances required</p></div><p></p><p><span style="border-bottom: 0.05em solid">Solution</span></p><div class="indented"><ul class="toggle"><li><details open=""><summary>Example</summary><pre class="code"><code>interface Product { float getPrice(); }public class Milk implements Product {
+final float price;
+public Milk(final float price) { this.price = price; } //constructor
+public float getPrice() { return price; } //getter
+}public class Sugar implements Product {
+final float price;
+public Sugar(final float price) { this.price = price; } //constructor
+public float getPrice () { return price; } //getter
+}public class Product Factory {
+public static Product createProduct(String what){
+//When sugar is requested, we return sugar:
+if (what.equals("Sugar")) { return new Sugar(1.49F) ; }
+// When milk is needed, we return milk:
+else if (what.equals("Milk")) { return new Milk(0.99F); }
+// Otherwise return at least sugar
+else { return new Sugar(1.49F); }
+}
+}</code></pre><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%202.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%202.png" style="width: 240px"/></a></figure></details></li></ul></div><p></p><p></p><h2>○ Abstract Factory</h2><p>Factory for building related objects without specifying their concrete classes</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Achieving higher abstraction by grouping individual factories with a common theme</p></div><p></p><p><span style="border-bottom: 0.05em solid">Solution</span></p><div class="indented"><p>A group of individual factories that have a common theme</p><p>Two hierarchies → abstract AbstractFactory class provides interface</p><p>Client only knows abstract interface → Family may grow independently of the client</p></div><p></p><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%203.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%203.png" style="width: 432px"/></a></figure><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%204.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%204.png" style="width: 384px"/></a></figure><h1>Structural Patterns</h1><h2>○ Facade / Facet</h2><p>Simplifies the interface for a subsystem</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Need simplified access to a complex subsystem</p><p>Provides an abstracted interface of a subsystem</p></div><p></p><p><span style="border-bottom: 0.05em solid">Solution</span></p><div class="indented"><ul class="toggle"><li><details open=""><summary>Example</summary><pre class="code"><code>public class SimpleMail {
+public static int sendMail(String address, String subject, String body) {
+int status = 0;
+... //Complex mail sending operation
+return status;
+}
+}</code></pre></details></li></ul></div><p></p><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%205.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%205.png" style="width: 336px"/></a></figure><p></p><h2>○ Adapter / Translator</h2><p>Adapts a server interface for a client</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Need to integrate incompatible external functionality</p></div><p></p><p><span style="border-bottom: 0.05em solid">Solution</span></p><div class="indented"><p>Translates (data transformation) into a compatible interface</p></div><p></p><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%206.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%206.png" style="width: 336px"/></a></figure><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%207.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%207.png" style="width: 336px"/></a></figure><p></p><h2>○ Proxy</h2><p>One object approximates another</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Need to integrate further actions before intended method call</p></div><p></p><p><span style="border-bottom: 0.05em solid">Solution</span></p><div class="indented"><p>Extends concept of the delegation pattern</p><p>Implements interface and acts as a representative of the „original“ implementation</p><p>Used in: security, logging, caching</p></div><p></p><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%208.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%208.png" style="width: 384px"/></a></figure><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%209.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%209.png" style="width: 384px"/></a></figure><p></p><h2>○ Inversion of Control IoC</h2><p>Die Verantwortung für das Erzeugen und Initialisieren von Objekten wird an eine zentrale Stelle (z.B. eine Klasse) delegiert.</p><p>Von der zentralen Stelle kann man die Abhängigkeiten zwischen den Objekten leichter überblicken und steuern.</p><p></p><p>Detailierter: Siehe Block 3 - Werkzeuge</p><p></p><h1>Behavioral Patterns</h1><h2>○ Observer</h2><p>Dependents update automatically when a subject changes</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Need to react to state changes in an object</p></div><p></p><p><span style="border-bottom: 0.05em solid">Solution</span></p><div class="indented"><p>in case of changes of the instance‘s state execute specific action(s) – e.g., notification of instances interested in change</p></div><p></p><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2010.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2010.png" style="width: 528px"/></a></figure><p></p><h2>○ Decorator / Wrapper</h2><p>extends an object</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Need to extend object functionality during runtime (inheritance not possible during runtime)</p></div><p></p><p><span style="border-bottom: 0.05em solid">Solution</span></p><div class="indented"><p>Dynamically add new functionality to an existing object</p><ul class="toggle"><li><details open=""><summary>Example</summary><pre class="code"><code>Cake cake = new ChocolateCake();NutsInCake nic = new NutsInCake(cake) ;
 nic.setAmount(15) ;
-nic.setType("hazelnut") ;
-
-CandleCake cc = new CandleCake (nic) ;
+nic.setType("hazelnut") ;CandleCake cc = new CandleCake (nic) ;
 cc.setCandles(13);
 cake = (Cake) cc;
-cake.bake();</code></pre>
-                                <pre class="code"><code>VisualComponent vc = new ScrollBar( new Border( new TextEditor() ));
-vc.draw();</code></pre>
-                                <pre class="code"><code>Stream s = new FileStream(filename);
-Stream s = new CompressingStream( new BufferedStream(new FileStream(filename) ));</code></pre>
-                            </details>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2011.png">
-                        <img style="width: 288px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2011.png" />
-                    </a>
-                </figure>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2012.png">
-                        <img style="width: 336px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2012.png" />
-                    </a>
-                </figure>
-                <h2>○ State</h2>
-                <p>Object whose behavior depends on its state</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented"><p>Need to change object behavior based on current state</p></div>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <div class="indented">
-                    <p>Allow an object to update its behavior when its internal state changes</p>
-                    <p>
-                        (internal state gets changed with a
-                        <code>setState()</code>
-                        method)
-                    </p>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2013.png">
-                        <img style="width: 336px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2013.png" />
-                    </a>
-                </figure>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2014.png">
-                        <img style="width: 384px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2014.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <h2>○ Strategy</h2>
-                <p>Vary algorithms independently</p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <div class="indented">
-                    <p>Dynamically add new algorithms → context chooses algorithm to use</p>
-                    <ul class="toggle">
-                        <li>
-                            <details open="">
-                                <summary>Example</summary>
-                                <pre class="code"><code>class NotificationManager {
-	public enum NotificationMethod {SMS, EMAIL};
-	private List&lt;Person&gt; members;
-	
-	public void addMember(Person person, NotificationMethod notificationPref){
-		members.add(person);
-		INotification notification;
-		if (notificationPref == NotificationMethod.SMS)
-			notification = new Sms();
-		else
-			notification = new Email();
-		
-		notification.setPerson(person) ;
-		person.setNotificationPreference(notification);
-	}
-
-	public void sendNotifications (String message)
-		for (Person p : members)
-			p.sendMessage(message);
-	}
-}</code></pre>
-                                <figure class="image">
-                                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2015.png">
-                                        <img style="width: 288px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2015.png" />
-                                    </a>
-                                </figure>
-                            </details>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2016.png">
-                        <img style="width: 384px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2016.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <h2>○ Chain of Responsibility</h2>
-                <p>Request delegated to the responsible service provider</p>
-                <p><span style="border-bottom: 0.05em solid">Issue</span></p>
-                <div class="indented"><p>Improve loose coupling between a series of processing logic</p></div>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Solution</span></p>
-                <figure class="image">
-                    <a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2017.png">
-                        <img style="width: 480px" src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2017.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <p></p>
-                <p></p>
-            </div>
-        </article>
-    </body>
-</html>
+cake.bake();</code></pre><pre class="code"><code>VisualComponent vc = new ScrollBar( new Border( new TextEditor() ));
+vc.draw();</code></pre><pre class="code"><code>Stream s = new FileStream(filename);
+Stream s = new CompressingStream( new BufferedStream(new FileStream(filename) ));</code></pre></details></li></ul></div><p></p><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2011.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2011.png" style="width: 288px"/></a></figure><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2012.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2012.png" style="width: 336px"/></a></figure><h2>○ State</h2><p>Object whose behavior depends on its state</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Need to change object behavior based on current state</p></div><p></p><p><span style="border-bottom: 0.05em solid">Solution</span></p><div class="indented"><p>Allow an object to update its behavior when its internal state changes</p><p>
+(internal state gets changed with a
+<code>setState()</code>
+method)
+</p></div><p></p><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2013.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2013.png" style="width: 336px"/></a></figure><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2014.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2014.png" style="width: 384px"/></a></figure><p></p><h2>○ Strategy</h2><p>Vary algorithms independently</p><p><span style="border-bottom: 0.05em solid">Solution</span></p><div class="indented"><p>Dynamically add new algorithms → context chooses algorithm to use</p><ul class="toggle"><li><details open=""><summary>Example</summary><pre class="code"><code>class NotificationManager {
+public enum NotificationMethod {SMS, EMAIL};
+private List&lt;Person&gt; members;
+public void addMember(Person person, NotificationMethod notificationPref){
+members.add(person);
+INotification notification;
+if (notificationPref == NotificationMethod.SMS)
+notification = new Sms();
+else
+notification = new Email();
+notification.setPerson(person) ;
+person.setNotificationPreference(notification);
+}public void sendNotifications (String message)
+for (Person p : members)
+p.sendMessage(message);
+}
+}</code></pre><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2015.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2015.png" style="width: 288px"/></a></figure></details></li></ul></div><p></p><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2016.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2016.png" style="width: 384px"/></a></figure><p></p><h2>○ Chain of Responsibility</h2><p>Request delegated to the responsible service provider</p><p><span style="border-bottom: 0.05em solid">Issue</span></p><div class="indented"><p>Improve loose coupling between a series of processing logic</p></div><p></p><p><span style="border-bottom: 0.05em solid">Solution</span></p><figure class="image"><a href="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2017.png"><img src="Design%20Patterns%204b9b5103b6fd4bd5815582be952a932a/Untitled%2017.png" style="width: 480px"/></a></figure><p></p><p></p><p></p></div></article></body></html>

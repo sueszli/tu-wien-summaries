@@ -1,2338 +1,885 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Handl Fragensammlung</title>
-        <style>
-            /* cspell:disable-file */
-            /* webkit printing magic: print all background colors */
-            html {
-                -webkit-print-color-adjust: exact;
-            }
-            * {
-                box-sizing: border-box;
-                -webkit-print-color-adjust: exact;
-            }
-
-            html,
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            @media only screen {
-                body {
-                    margin: 2em auto;
-                    max-width: 900px;
-                    color: rgb(55, 53, 47);
-                }
-            }
-
-            body {
-                line-height: 1.5;
-                white-space: pre-wrap;
-            }
-
-            a,
-            a.visited {
-                color: inherit;
-                text-decoration: underline;
-            }
-
-            .pdf-relative-link-path {
-                font-size: 80%;
-                color: #444;
-            }
-
-            h1,
-            h2,
-            h3 {
-                letter-spacing: -0.01em;
-                line-height: 1.2;
-                font-weight: 600;
-                margin-bottom: 0;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-top: 0;
-                margin-bottom: 0.75em;
-            }
-
-            h1 {
-                font-size: 1.875rem;
-                margin-top: 1.875rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-                margin-top: 1.5rem;
-            }
-
-            h3 {
-                font-size: 1.25rem;
-                margin-top: 1.25rem;
-            }
-
-            .source {
-                border: 1px solid #ddd;
-                border-radius: 3px;
-                padding: 1.5em;
-                word-break: break-all;
-            }
-
-            .callout {
-                border-radius: 3px;
-                padding: 1rem;
-            }
-
-            figure {
-                margin: 1.25em 0;
-                page-break-inside: avoid;
-            }
-
-            figcaption {
-                opacity: 0.5;
-                font-size: 85%;
-                margin-top: 0.5em;
-            }
-
-            mark {
-                background-color: transparent;
-            }
-
-            .indented {
-                padding-left: 1.5em;
-            }
-
-            hr {
-                background: transparent;
-                display: block;
-                width: 100%;
-                height: 1px;
-                visibility: visible;
-                border: none;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            @media only print {
-                img {
-                    max-height: 100vh;
-                    object-fit: contain;
-                }
-            }
-
-            @page {
-                margin: 1in;
-            }
-
-            .collection-content {
-                font-size: 0.875rem;
-            }
-
-            .column-list {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .column {
-                padding: 0 1em;
-            }
-
-            .column:first-child {
-                padding-left: 0;
-            }
-
-            .column:last-child {
-                padding-right: 0;
-            }
-
-            .table_of_contents-item {
-                display: block;
-                font-size: 0.875rem;
-                line-height: 1.3;
-                padding: 0.125rem;
-            }
-
-            .table_of_contents-indent-1 {
-                margin-left: 1.5rem;
-            }
-
-            .table_of_contents-indent-2 {
-                margin-left: 3rem;
-            }
-
-            .table_of_contents-indent-3 {
-                margin-left: 4.5rem;
-            }
-
-            .table_of_contents-link {
-                text-decoration: none;
-                opacity: 0.7;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-            }
-
-            table,
-            th,
-            td {
-                border: 1px solid rgba(55, 53, 47, 0.09);
-                border-collapse: collapse;
-            }
-
-            table {
-                border-left: none;
-                border-right: none;
-            }
-
-            th,
-            td {
-                font-weight: normal;
-                padding: 0.25em 0.5em;
-                line-height: 1.5;
-                min-height: 1.5em;
-                text-align: left;
-            }
-
-            th {
-                color: rgba(55, 53, 47, 0.6);
-            }
-
-            ol,
-            ul {
-                margin: 0;
-                margin-block-start: 0.6em;
-                margin-block-end: 0.6em;
-            }
-
-            li > ol:first-child,
-            li > ul:first-child {
-                margin-block-start: 0.6em;
-            }
-
-            ul > li {
-                list-style: disc;
-            }
-
-            ul.to-do-list {
-                padding-inline-start: 0;
-            }
-
-            ul.to-do-list > li {
-                list-style: none;
-            }
-
-            .to-do-children-checked {
-                text-decoration: line-through;
-                opacity: 0.375;
-            }
-
-            ul.toggle > li {
-                list-style: none;
-            }
-
-            ul {
-                padding-inline-start: 1.7em;
-            }
-
-            ul > li {
-                padding-left: 0.1em;
-            }
-
-            ol {
-                padding-inline-start: 1.6em;
-            }
-
-            ol > li {
-                padding-left: 0.2em;
-            }
-
-            .mono ol {
-                padding-inline-start: 2em;
-            }
-
-            .mono ol > li {
-                text-indent: -0.4em;
-            }
-
-            .toggle {
-                padding-inline-start: 0em;
-                list-style-type: none;
-            }
-
-            /* Indent toggle children */
-            .toggle > li > details {
-                padding-left: 1.7em;
-            }
-
-            .toggle > li > details > summary {
-                margin-left: -1.1em;
-            }
-
-            .selected-value {
-                display: inline-block;
-                padding: 0 0.5em;
-                background: rgba(206, 205, 202, 0.5);
-                border-radius: 3px;
-                margin-right: 0.5em;
-                margin-top: 0.3em;
-                margin-bottom: 0.3em;
-                white-space: nowrap;
-            }
-
-            .collection-title {
-                display: inline-block;
-                margin-right: 1em;
-            }
-
-            .page-description {
-                margin-bottom: 2em;
-            }
-
-            .simple-table {
-                margin-top: 1em;
-                font-size: 0.875rem;
-                empty-cells: show;
-            }
-            .simple-table td {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table th {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table-header-color {
-                background: rgb(247, 246, 243);
-                color: black;
-            }
-            .simple-table-header {
-                font-weight: 500;
-            }
-
-            time {
-                opacity: 0.5;
-            }
-
-            .icon {
-                display: inline-block;
-                max-width: 1.2em;
-                max-height: 1.2em;
-                text-decoration: none;
-                vertical-align: text-bottom;
-                margin-right: 0.5em;
-            }
-
-            img.icon {
-                border-radius: 3px;
-            }
-
-            .user-icon {
-                width: 1.5em;
-                height: 1.5em;
-                border-radius: 100%;
-                margin-right: 0.5rem;
-            }
-
-            .user-icon-inner {
-                font-size: 0.8em;
-            }
-
-            .text-icon {
-                border: 1px solid #000;
-                text-align: center;
-            }
-
-            .page-cover-image {
-                display: block;
-                object-fit: cover;
-                width: 100%;
-                max-height: 30vh;
-            }
-
-            .page-header-icon {
-                font-size: 3rem;
-                margin-bottom: 1rem;
-            }
-
-            .page-header-icon-with-cover {
-                margin-top: -0.72em;
-                margin-left: 0.07em;
-            }
-
-            .page-header-icon img {
-                border-radius: 3px;
-            }
-
-            .link-to-page {
-                margin: 1em 0;
-                padding: 0;
-                border: none;
-                font-weight: 500;
-            }
-
-            p > .user {
-                opacity: 0.5;
-            }
-
-            td > .user,
-            td > time {
-                white-space: nowrap;
-            }
-
-            input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 0.6em;
-                vertical-align: middle;
-            }
-
-            p {
-                margin-top: 0.5em;
-                margin-bottom: 0.5em;
-            }
-
-            .image {
-                border: none;
-                margin: 1.5em 0;
-                padding: 0;
-                border-radius: 0;
-                text-align: center;
-            }
-
-            .code,
-            code {
-                background: rgba(135, 131, 120, 0.15);
-                border-radius: 3px;
-                padding: 0.2em 0.4em;
-                border-radius: 3px;
-                font-size: 85%;
-                tab-size: 2;
-            }
-
-            code {
-                color: #eb5757;
-            }
-
-            .code {
-                padding: 1.5em 1em;
-            }
-
-            .code-wrap {
-                white-space: pre-wrap;
-                word-break: break-all;
-            }
-
-            .code > code {
-                background: none;
-                padding: 0;
-                font-size: 100%;
-                color: inherit;
-            }
-
-            blockquote {
-                font-size: 1.25em;
-                margin: 1em 0;
-                padding-left: 1em;
-                border-left: 3px solid rgb(55, 53, 47);
-            }
-
-            .bookmark {
-                text-decoration: none;
-                max-height: 8em;
-                padding: 0;
-                display: flex;
-                width: 100%;
-                align-items: stretch;
-            }
-
-            .bookmark-title {
-                font-size: 0.85em;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                height: 1.75em;
-                white-space: nowrap;
-            }
-
-            .bookmark-text {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .bookmark-info {
-                flex: 4 1 180px;
-                padding: 12px 14px 14px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-
-            .bookmark-image {
-                width: 33%;
-                flex: 1 1 180px;
-                display: block;
-                position: relative;
-                object-fit: cover;
-                border-radius: 1px;
-            }
-
-            .bookmark-description {
-                color: rgba(55, 53, 47, 0.6);
-                font-size: 0.75em;
-                overflow: hidden;
-                max-height: 4.5em;
-                word-break: break-word;
-            }
-
-            .bookmark-href {
-                font-size: 0.75em;
-                margin-top: 0.25em;
-            }
-
-            .sans {
-                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-                    "Segoe UI Symbol";
-            }
-            .code {
-                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
-            }
-            .serif {
-                font-family: Lyon-Text, Georgia, ui-serif, serif;
-            }
-            .mono {
-                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-            }
-            .pdf .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
-            }
-            .pdf:lang(zh-CN) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
-            }
-            .pdf:lang(zh-TW) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
-            }
-            .pdf:lang(ko-KR) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
-            }
-            .pdf .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK KR";
-            }
-            .pdf .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
-            }
-            .pdf:lang(zh-CN) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
-            }
-            .pdf:lang(zh-TW) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
-            }
-            .pdf:lang(ko-KR) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
-            }
-            .pdf .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
-            }
-            .highlight-default {
-                color: rgba(55, 53, 47, 1);
-            }
-            .highlight-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .highlight-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .highlight-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .highlight-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .highlight-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .highlight-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .highlight-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .highlight-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .highlight-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .highlight-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .highlight-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .highlight-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .highlight-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .highlight-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .highlight-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .highlight-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .highlight-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .highlight-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .block-color-default {
-                color: inherit;
-                fill: inherit;
-            }
-            .block-color-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .block-color-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .block-color-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .block-color-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .block-color-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .block-color-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .block-color-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .block-color-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .block-color-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .block-color-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .block-color-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .block-color-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .block-color-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .block-color-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .block-color-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .block-color-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .block-color-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .block-color-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .select-value-color-interactiveBlue {
-                background-color: rgba(35, 131, 226, 0.07);
-            }
-            .select-value-color-pink {
-                background-color: rgba(245, 224, 233, 1);
-            }
-            .select-value-color-purple {
-                background-color: rgba(232, 222, 238, 1);
-            }
-            .select-value-color-green {
-                background-color: rgba(219, 237, 219, 1);
-            }
-            .select-value-color-gray {
-                background-color: rgba(227, 226, 224, 1);
-            }
-            .select-value-color-translucentGray {
-                background-color: rgba(255, 255, 255, 0.0375);
-            }
-            .select-value-color-orange {
-                background-color: rgba(250, 222, 201, 1);
-            }
-            .select-value-color-brown {
-                background-color: rgba(238, 224, 218, 1);
-            }
-            .select-value-color-red {
-                background-color: rgba(255, 226, 221, 1);
-            }
-            .select-value-color-yellow {
-                background-color: rgba(253, 236, 200, 1);
-            }
-            .select-value-color-blue {
-                background-color: rgba(211, 229, 239, 1);
-            }
-            .select-value-color-pageGlass {
-                background-color: undefined;
-            }
-            .select-value-color-washGlass {
-                background-color: undefined;
-            }
-
-            .checkbox {
-                display: inline-flex;
-                vertical-align: text-bottom;
-                width: 16;
-                height: 16;
-                background-size: 16px;
-                margin-left: 2px;
-                margin-right: 5px;
-            }
-
-            .checkbox-on {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            .checkbox-off {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            /* -------- injections from notionBackup -------- */
-
-            body {
-                white-space: normal !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-
-            .code,
-            code {
-                font-size: 100% !important;
-            }
-
-            blockquote {
-                font-size: 100% !important;
-            }
-
-            .callout {
-                white-space: normal !important;
-            }
-            .callout div:has(span.icon) {
-                font-size: 100% !important;
-            }
-
-            .source:not(.bookmark) {
-                font-size: 100% !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-        </style>
-    </head>
-    <body>
-        <article class="page sans">
-            <header>
-                <h1 class="page-title">Handl Fragensammlung</h1>
-                <p class="page-description"></p>
-            </header>
-            <div class="page-body">
-                <h1>Block 1 (Biffl)</h1>
-                <p>Was ist Qualität?</p>
-                <div class="indented">
-                    <blockquote><em>Hierzu gibt es keine eindeutige Definition. Jedoch sind</em></blockquote>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc"><em>Kundenzufriedenheit</em></li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc"><em>Erfüllung der Anforderungen</em></li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc"><em>Erfüllung von Vorgaben und Richtlinien</em></li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc"><em>Erfüllung von gesetzlichen Regelungen Kennzeichnend für Qualität.</em></li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Eigenschaften hat eine qualitativ hochwertige Software?</p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li><em>Termingerecht und im Rahmen des Budgets erstellt</em></li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li><em>Für den Anwender verwendbar</em></li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li><em>Für den Professionisten verständlich und änderbar</em></li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li><em>Für den Betreiber effizient und administrierbar</em></li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was ist der Unterschied von Verifikation und Validierung?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <em>
-                                Verifikation: Unter Verifikation versteht man die Prüfung eines Produkts im Hinblick auf die Spezifikation(Pflichtenheft, etc.)
-                            </em>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Sollte nach jeder Phase durchgeführt werden</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <em>
-                                Validierung: Im Rahmen der Validierung wird die Frage beantwortet ob ein Produkt richtig entwickelt wurde. (negative Validierung
-                                wäre somit eine Themenverfehlung). Sollte zu Beginn und am Ende durchgeführt werden
-                            </em>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Am Beginn: Validierung des Pflichtenheftes/der Spezifikation</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Am Ende : Validierung der erstellten Software</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Erkläre das V-Model unter besonderer Berücksichtigung der Qualitätsicherungsmaßnahmen.</p>
-                <div class="indented">
-                    <blockquote>
-                        <em>
-                            Modul – Test, Integrationstests, Systemtest sind hierbei die Testdurchführung auf Synthetischer Seiten der einzelnen Ebenen die auf
-                            der Analytischen Seite im Testplan erstellt worden sind.
-                        </em>
-                    </blockquote>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Handl%20Fragensammlung%20bd8197a3d72142948c3e8fe1a72cbcfb/image1.jpeg">
-                        <img style="width: 384px" src="Handl%20Fragensammlung%20bd8197a3d72142948c3e8fe1a72cbcfb/image1.jpeg" />
-                    </a>
-                </figure>
-                <p></p>
-                <p>Nenne 5 Qualitätsfaktoren</p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>Korrektheit</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>Zuverlässigkeit</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>Wartbarkeit</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li>Testbarkeit</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="5">
-                        <li>Effizient</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="6">
-                        <li>Integrität</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="7">
-                        <li>Verwendbar</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="8">
-                        <li>Wiederverwendbarkeit</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="9">
-                        <li>Portabilität</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="10">
-                        <li>Verknüpfbarkeit</li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Wie kann man die Wahrscheinlichkeit steigern ein hoch qualitatives Produkt zu erstellen?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Angemessener
-                            <strong>Softwareprozess</strong>
-                            (z.B.: Livecyclemodel)
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Angemessene
-                            <strong>Vorgehensmodel</strong>
-                            (V-Model, RUP, Spiral-Model, agile Ansätze)
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Wirkungsvolle Methode zur Produkt
-                            <strong>erstellung</strong>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Wirkungsvolle Methode zur Produkt-, Prozess
-                            <strong>verbesserung</strong>
-                            (Review, Inspektion, Testen)
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was bedeutet PDCA, welche Ebenen gibt es in PDCA?</p>
-                <div class="indented">
-                    <blockquote>
-                        Dieses Prinzip sagt aus, dass die Erkenntnisse aus der Qualitätssicherung nicht nur im aktuellen Projekt genutzt werden sollten, sondern
-                        auch in der gesamten Arbeitsgruppe und im gesamten Unternehmen.
-                        <p>
-                            Nach dem Planen (Plan) und der Implementierung (Do) werden analytische Qualitätssicherungs- Maßnahmen (siehe unten) angewandt
-                            (Check). Die Erkenntnisse werden rückgekoppelt (Act).
-                        </p>
-                        <p>Man unterscheidet 3 Ebenen: Unternehmens-, Projekt- und Arbeitspaketebene.</p>
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Auf was sollte Qualitäts-Management besonders achten?</p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>Hygienefaktoren: Sind solche die unbedingt umgesetzt werden müssen da ansonsten das gesamte System keinen Sinn mehr ergibt.</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>Faktoren die für die Entwickler keine direkten Auswirkungen haben</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>Faktoren die für die Entwickler nicht besonders wichtig sind</li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Qualitäts-Maßnahmen sind besonders zu unterstützen?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Hygienefaktoren</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Maßnahmen die vorbeugend wirken sollen</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Qualitäts-Maßnahmen sind besonders wirksam?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Maßnahmen die das richtige machen möglichst einfach und das falsche möglichst schwer machen.</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Rasches Feedback an die Entwickler</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Beschreibe Qualitätsmodel nach McCall.</p>
-                <div class="indented">
-                    <blockquote>Dieses Modell sieht eine stufenweise Verfeinerung von Qualitätsfaktoren vor.</blockquote>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>Qualitätsfaktoren</strong>
-                            : beschreibt das Verhalten des Systems; Qualitätsfaktoren sind bestimmte die Qualität betreffende Forderungen
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>Qualitätskriterien</strong>
-                            : Eigenschaften von Qualitätsfaktoren in Bezug auf Softwareentwicklung
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>Qualitätsmetriken</strong>
-                            : sind Messungen die Definierte Aspekte der Qualitätsfaktoren beschreiben
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche 4 wesentlichen Einflussfaktoren sind in der Softwareentwicklung zu finden?</p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>Qualität (Anzahl der Fehler in einem Projekt)</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>Quantität (Anzahl der Programmierten Funktionen)</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>Entwicklungsdauer/Aufwand (kleine/große Projekte)</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li>Kosten</li>
-                    </ol>
-                    <blockquote>Diese 4 Einflussfaktoren wirken wechselseitig auf die Produktivität. (Teufelsquadrat nach Sneech)</blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p>Welche Analytischen Qualitätsmaßnahmen können ergriffen werden?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>S</strong>
-                            tatische Prüfung (Review, Inspektion, Audits)
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>D</strong>
-                            ynamische Prüfung (Softwaretests)
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Konstruktiven Qualitätsmaßnahmen können ergriffen werden?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>T</strong>
-                            echnische Maßnahmen (Verwendung von Prinzipien in der Softwareentwicklung)
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>O</strong>
-                            rganisatorische Maßnahmen (Verwendung von Vorgehensmodellen)
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>M</strong>
-                            enschliche Maßnahmen (Schulung der Mitarbeiter)
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Wie können QS in den Einzelnen Vorgehensmodellen integriert werden?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            V-Modell
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Analytische Seite: Testplanerstellung in jeder Phase und nach jeder Phase ein Review</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Synthetische Seite: nach jeder Ebene die Tests des Testplans durchführen</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            V-Model-XT
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">QS ist hier ein eigener nicht optionaler Vorgehensbaustein</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            RUP
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Review bei allen Meilensteinen</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">QS ist ständiger Begleiter</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            SCRUM
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Review und Test sind fixer Bestandteil eines Sprints</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Testdriven Development</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Erkläre Qualitätssicherung</p>
-                <div class="indented">
-                    <blockquote>
-                        Qualitätssicherung besteht in der Durchführung von Verifikation und Validierung in jeder Phase der Softwareherstellung.
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Erkläre Qualitätsmanagement</p>
-                <div class="indented">
-                    <blockquote>
-                        Merke: Menge von Aktive HiTech Vorgehensweise
-                        <p>
-                            Qualitätsmanagement ist die Menge aller
-                            <strong>Aktiv</strong>
-                            itäten,
-                            <strong>Vorgehensweise</strong>
-                            n,
-                            <strong>Tech</strong>
-                            niken und
-                            <strong>Hi</strong>
-                            lfsmittel, die sicherstellen, dass ein Software-Produkt vordefinierte Standards erreicht oder übertrifft.
-                        </p>
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Nennen Sie 3 Prinzipen des Qualitätsmanagements und erklären Sie diese.</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Mehraugenkontrolle: Andere Personen andere Herangehensweise</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Unabhängigkeit bei Qualitätsprüfung</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Produkt und Projektabhängige Qualitätsprüfung</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Frühzeitiges Entdecken und Beheben von Fehlern</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Bewertung der eingesetzten Qualitätsmaßnahmen</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Pair-Programmierung: 2 sehen und wissen mehr.</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Paar wichtige Sätze</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Es gibt keine einheitliche Definition für "Qualität" aber verschiedene Ansätze, um "Qualität" begrifflich zu fassen.
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Überprüfung, Beurteilung und Verbesserung der Produkt- und Prozessqualität erfordert messbare Attribute.
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Qualität, Quantität, Kosten und Entwicklungsdauer bilden ein Spannungsfeld in der Softwareentwicklung.
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            QS ist integraler Bestandteil von Vorgehensmodellen (z.B. V-Modell (XT), Rational Unified Process, Agile Ansätze usw.)
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Das Prinzip der ständigen Verbesserung von Produkten und Prozessen ist ein integraler Bestandteil von Qualitätsmanagementsystemen
-                            und ist auf allen Ebenen (Arbeitspaket, Projekt, Unternehmen) anwendbar.
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Produkte und Prozesse können immer verbessert werden!</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <h1>Block 2 – Review und Inspektion</h1>
-                <p>Wozu verwendet man Reviews?</p>
-                <div class="indented">
-                    <blockquote>
-                        Reviews dienen zur qualitativen Beurteilung von Produkten und Prozessen, die Quantitativ nur sehr schwer bis gar nicht beurteilt werden
-                        können.
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Arten von Review kann man unterscheiden?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Mit Kunde
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">
-                                    SRR: Software Requirement Review. eines der Wichtigsten Reviews, hier wird besprochen ob die Anforderungen klar und richtig
-                                    verstanden wurden. Wird in der Systemspezifikationsphase verwendet
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">PDR: Primary Design Review: Vergleich momentanes Design mit Software Designbeschreibung</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">
-                                    CDR: Critical Design Review: der Kunde soll bei kritischen Entscheidungen informiert werden und soll auch die Entscheidung
-                                    mitunterschreiben.
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">IPR: In Prozess Review</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Ohne Kunde
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle"><strong>MR: Management Review</strong></li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">
-                                    <strong>Code Walkthrough:</strong>
-                                    Der Autor stellt seine Module ablauforientiert vor. Das eignet sich um gemeinsam mit den Reviewern die Qualität der
-                                    Implementierung zu begutachten und Verbesserungsvorschläge einzuholen. Weiters können neue Mitarbeiter dabei zusehen und
-                                    sich so mit dem Projekt vertraut machen. Letztendlich entscheidet hier der Autor selbst ob bzw. was überarbeitet wird.
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">
-                                    <strong>Technical Review:</strong>
-                                    Dies ist bereits ein formaleres Review, bei dem auch noch ein Moderator sowie ein Protokollführer anwesend sind. Das Produkt
-                                    wird mit dem Ziel begutachtet, die Stärken und Schwächen zu finden. Das Review-Team gibt eine Empfehlung an das Management,
-                                    das letztendlich entscheidet.
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">
-                                    <strong>Inspektion:</strong>
-                                    Eine Inspektion ist ein formales Review das speziell in frühen Phasen der Entwicklung durchgeführt wird. Dabei wird das zu
-                                    reviewende Produkt von einem Leser Schritt für Schritt vorgetragen. Das Review-Team versucht schwere Fehler zu finden und
-                                    ein Protokollführer macht Notizen dazu. Schließlich entscheidet der Moderator wie weiter verfahren wird.
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Rollen gibt es bei Review Sitzungen?</p>
-                <div class="indented"><blockquote>Moderator, Leser, Schreiber, Gutachter, Autor</blockquote></div>
-                <p></p>
-                <p></p>
-                <p>Welche Richtlinien sind für technische Review zu beachten?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Produkt nicht der Autor soll Reviewed werden</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Verwendung eines Arbeitsplan</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Diskussion sachlich und Kurz</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Keine Lösungen suchen nur Fehler</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Schriftliche Aufzeichnung führen</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Anzahl der Teilnehmer begrenzen</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Teilnehmer sollen gut vorbereitet sein</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Auch Review beurteilen</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Wie ist der Ablauf/Aufbau eines Reviews?</p>
-                <div class="indented">
-                    <blockquote>
-                        Was sind Inspektionen?
-                        <p>
-                            Eine Inspektion ist eine formale und wirtschaftliche Methode um Fehler zu finden. Sie sind somit eine spezielle Form der Reviews.
-                            Sie können sehr gut in frühen Phasen der Fehlerfindung eingesetzt werden.
-                        </p>
-                    </blockquote>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Handl%20Fragensammlung%20bd8197a3d72142948c3e8fe1a72cbcfb/image2.png">
-                        <img style="width: 120px" src="Handl%20Fragensammlung%20bd8197a3d72142948c3e8fe1a72cbcfb/image2.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <p></p>
-                <p>Welche Dimensionen hat eine Inspektion?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Prozess
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">
-                                    Planung =&gt; Übersicht =&gt; Fehlersuche =&gt; Fehlersammlung =&gt; Fehlerbehebung =&gt; Follow up
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Produkt
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Anforderung, Design, Code,</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Rollen
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Moderator, Leser, Schreiber, Autor, Gutachter</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Lesetechniken
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Ad-hoc, Checklisten, Szenario-Basiert, Perspektiven-Basiert, Fehlerbasiert</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Nenne 5 Lesetechniken und beschreibe sie Kurz.</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Ad-hoc
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Unstrukturiertes Lesen des Dokuments</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Erfordert hohe Kenntnisse des Gutachters</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Eher schlecht da kein strukturiertes Vorgehen</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Checklistenbasiert
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Durcharbeitung des Dokuments mithilfe einer Checkliste</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Checkliste ist meist eine generische und eine Projektspezifische</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Vorteil: Strukturiertes Vorgehen das heißt es ist gut wiederholbar</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Perspektivenbasiert
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Hierbei nehmen die einzelnen Gutachter unterschiedliche Rollen ein</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">
-                                    Idee ist das durch die Unterschiedlichen Sichten unterschiedliche Fehler gefunden werden
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Szenario basiert – Usage-Based-Reading =&gt; Best Practice
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Einteilung des Projektes in Use Cases (sollte sowieso vorliegen)</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Jeder Use-Case wird nach Wichtigkeit Beurteilt</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">
-                                    Starte mit dem Wichtigsten =&gt; Überprüfung der relevanten Teile =&gt; Reporting von Fehlern =&gt; Auswahl des nächsten
-                                    Use-Case
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Idee ist das Fehler in wichtigen Use-Case größere Priorität haben</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Fehlerbasiert
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Spezielle Form der Checklistenbasierten Lesetechnik</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Fehler werden in Fehlerkategorien eingeteilt damit sie besser gefunden werden können</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Wie können Anforderungen Klassifiziert werden?</p>
-                <div class="indented">
-                    <blockquote>Stichwort: FURPS deutsch: FBZPW</blockquote>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>F</strong>
-                            unctional (Funktional)
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Features, Fähigkeiten</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>U</strong>
-                            sability (Benutzerfreundlichkeit)
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Menschliche Faktoren, Hilfe</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>R</strong>
-                            eliability (Zuverlässigkeit)
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Häufigkeit eines Ausfalls, Wiederherstellbarkeit</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>P</strong>
-                            erformance
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Durchsatz, Antwortzeiten</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>S</strong>
-                            upportability (Wartbarkeit)
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Änderbarkeit, Modularität, Wartung</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Typen von Anforderungen gibt es?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Funktionale Anforderungen
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">
-                                    Beschreibt
-                                    <strong>was</strong>
-                                    das System tut
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Typisch hierfür ist: Das System kann Funktion x ausführen</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Nicht Funktionale Anforderungen
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Erwünschte Charakteristika</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">
-                                    Qualitätsanforderungen, Frage nach
-                                    <strong>wie gut</strong>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Constrains
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Einschränkungen des Systems</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Klassifizierungen
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Stichwort FURPS</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Wie können Anforderungen Kategorisiert werden?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Testbare Aussagen</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Funktionen oder</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Qualitative Anforderungen
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Definition von Qualität</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Wie ist Qualität messbar?</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Wieviel Qualität ist genug</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was ist ein Anwendung-Szenario?</p>
-                <div class="indented"><blockquote>Funktionale Anforderungen bilden ein Anwendungs-Szenario.</blockquote></div>
-                <p></p>
-                <p></p>
-                <p>Nennen Sie Vorgehensweisen zu Sicherung/Verbesserung der Qualität von Projekt- Anforderungen?</p>
-                <div class="indented">
-                    <blockquote>Welche Kriterien sollten brauchbare Anforderungen erfüllen?</blockquote>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Notwendige Kriterien
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Typ(Funktional, nicht Funktional)</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Rückverfolgbarkeit: Ist die Anforderung in der Projektbeschreibung auffindbar</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Überprüfbar: Ist die Anforderung testbar</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Erstrebenswerte Kriterien
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Knapp verständliche Beschreibung</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Umsetzbar</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Konsistent</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Wie ist ein Anwendungsfall aufgebaut?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Allgemein
-                            <ol type="1" class="numbered-list" start="1">
-                                <li>Titel</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="2">
-                                <li>Kurzbeschreibung</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="3">
-                                <li>Welche Aktoren sind beteiligt</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="4">
-                                <li>Vorbedingung</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="5">
-                                <li>Nachbedingung</li>
-                            </ol>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Flow of events</li>
-                    </ul>
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>Hauptszenario</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>Alternativszenario</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>Fehlerszenario</li>
-                    </ol>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Nichtfunktionale Anforderungen</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <h1>Block 3 – Testen</h1>
-                <p>Was ist das Ziel der Softwareentwicklung und durch was kann dies erreicht werden?</p>
-                <div class="indented">
-                    <blockquote>Ziel der SE ist es hoch qualitative und testbare Software zu erstellen. Dies kann erreicht werden durch:</blockquote>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Anwendung von Software-Vorgehensmodel(V-Model, SCRUM,…)</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Konstruktive Methoden (Model-Driven, Test-Driven)</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Analytische Methoden (Review, Inspektion, Testen)</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Phasen hat man im Testprozess?</p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>Planung &amp; Steuerung</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>Analyse/Design</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>Durchführung</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li>Auswertung und Berichterstellung</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="5">
-                        <li>Abschluss</li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was ist der Unterschied zwischen Reviews und Testen?</p>
-                <div class="indented">
-                    <blockquote>
-                        Review werden verwendet um Fehler in frühen Phasen der Entwicklung zu erkennen.
-                        <p>
-                            Testen dient der Verifikation(Testen gegen die Spezifikation) bzw. der Validierung(Testen gegen Kundenanforderungen) von bereits
-                            implementierter Software.
-                        </p>
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Schritte gibt es bei Test –Driven-Development?</p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>
-                            Think
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Auswahl der zu implementierenden Anforderung</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Spezifikation der Testfälle</li>
-                            </ul>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>
-                            Red
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Implementierung und Ausführung der Testfälle</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Alle Tests müssen fehlschlagen</li>
-                            </ul>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>
-                            Green
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Implementierung der Komponenten und Klassen</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Wenn alle Tests grün sind weiter zu 4 sonst auf 3 bleiben</li>
-                            </ul>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li>
-                            Refactor
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Änderung und Optimierung der Implementierung ohne Änderung der Funktionalität</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Testfälle dürfen nicht fehlschlagen =&gt; weiter bei Schritt 1.</li>
-                            </ul>
-                        </li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was versteht man unter Refactoring? Was wird dadurch erreicht?</p>
-                <div class="indented">
-                    <blockquote>
-                        Refactoring bezeichnet in der Software-Entwicklung die manuelle oder automatisierte Strukturverbesserung von Quelltexten unter
-                        Beibehaltung des beobachtbaren Programmverhaltens. Dabei sollen die
-                    </blockquote>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Lesbarkeit</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Verständlichkeit</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Wartbarkeit</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Erweiterbarkeit</li>
-                    </ul>
-                    <blockquote>
-                        verbessert werden, mit dem Ziel, den jeweiligen Aufwand für Fehleranalyse und funktionale Erweiterungen deutlich zu senken.
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Erkläre der Begriff Testsuit und wann ist ein Test erfolgreich?</p>
-                <div class="indented">
-                    <blockquote>
-                        Tests bestehen aus einer Menge von Testfällen dieses Set nennt man Testsuit.
-                        <p>Ein Test ist erfolgreich wenn man damit einen Fehler findet</p>
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Aus was besteht ein Testfall?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>V:</strong>
-                            Vorbedingung
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>E:</strong>
-                            Eingabewert
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>A:</strong>
-                            Aktion zur Eingabe
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            <strong>R:</strong>
-                            erwartetes Ergebnis (Rückgabewert/Resultate)
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Fälle von Testfällen gibt es?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Normalfall: sollte bei korrekter Implementierung funktionieren</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Fehlerfall: sollte bei korrekter Implementierung zu einer Fehlermeldung/Exception führen</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Sonderfall: an der Grenze zwischen Normalfall und Fehlerfall</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Abdeckungsarten gibt es bei der Testabdeckung?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Abdeckung aller Funktionen
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">jede Funktion wird mindesten einmal ausgeführt</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Abdeckung aller Eingabeklassen
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Für jede Funktion wird jede Eingabeklasse mindestens einmal verwendet</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Abdeckung aller Ausgabeklassen
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Für jede Funktion wird jede Ausgabeklasse mindestens einmal erzeugt.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was ist eine Äquivalenzklasse und wie findet man diese?</p>
-                <div class="indented">
-                    <blockquote>
-                        Zerlegung einer Menge von Daten (Ein-,Ausgabewerte) in Untermengen(Klasse) welche äquivalente Ergebnis oder Auswirkungen liefern.
-                        <p>Vorgehensweise:</p>
-                    </blockquote>
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>Finden eines Eingabevektors (A,B,C,…)</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>Finde für jede Komponente des Vektors seine ungültige und gültige Äquivalenzklasse und</li>
-                    </ol>
-                    <p>wähle einen Wert davon aus. (A1,A2,… ; B1,B2,… ; ….)</p>
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>Kombination dieser Werte bestimmt die Intensität. [(A1,B1), (A1,B2), …..]</li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was versteht man unter Grenzwertanalyse?</p>
-                <div class="indented">
-                    <blockquote>
-                        Bei der Grenzwertanalyse werden die Testdaten ebenfalls in Äquivalenzklassen unterteilt, jedoch wird hier nicht ein beliebiger Wert aus
-                        der Klasse verwendet sondern der beziehungsweise die Grenzwerte der Klasse.
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was ist Value-Based-Testing wie kann man es Unterteilen?</p>
-                <div class="indented">
-                    <blockquote>
-                        Value-Based-Testing beruht darauf dass nicht alle Testfälle bzw. alle Fehler gleich viel Wert sind. Man unterteilt dies in
-                    </blockquote>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Requirements-Based-Testing
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Welche Anforderungen bringen den Kunden am meisten</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Risk-Based-Testing
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Welche Risiken gefährden diesen Nutzen. (Auf einer Anwendung bauen 10 weitere auf)</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Test Case Selection
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Testfälle welche all diese Risiken , Nutzen abdecken</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was sind Test-Stufen was Test-Typen und wie hängen diese zusammen?</p>
-                <div class="indented">
-                    <blockquote>
-                        Teststufen stellen unterschiedliche Tests auf unterschiedlichen Ebenen des Softwareentwicklungsprozesses dar. Test-Typen sind spezielle
-                        Ausprägungen von Tests. Eine Teststufe besteht aus einem oder mehreren Test-Typen.
-                        <p>Beispiele:</p>
-                        <p>Test-Stufen:</p>
-                    </blockquote>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Privater-Test, Unit-Test, Integrationstest, System-Test, Regressionstest, Akzeptanztest Test-Typen:
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Review, Funktionaler-Test, Massentest, Stresstest, Performancetest</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Erkläre kurz die einzelnen Test-Stufen.</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Privater Test
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Vom Entwickler vor der Freigabe durchgeführter meist undokumentierter Test.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Unit-Test
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Test des Moduls bzw. Klasse gegen die Spezifikation.</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Einzelne externe Komponenten können mittels Stubs oder Mocks simuliert werden.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Integrationstest
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Test der Interaktion zwischen den einzelnen Modulen.</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Es können mehrere Integrationsstufen eingeführt werden.</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Bottom-up, Top-Down, Big-Bang Strategien werden verwendet.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Systemtest
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Test des Systems gegen die Kundenanforderung (Validierung)</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Basiert auf: Anforderungsspezifikation, Use-Cases, Geschäftsprozesse</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Akzeptanztest
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Wie Systemtest jedoch mit bzw. beim Kunden</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Erkläre Integrationstest und die Vorgehensweisen Bottom-Up und Top-Down?</p>
-                <div class="indented">
-                    <blockquote>
-                        Bottom-Up:
-                        <p>
-                            Hier wird zuerst die Basis ausprogrammiert. Um diese zu Testen werden sogenannte Treiber Objekte erstellt die diese Objekte erzeugen
-                            und Testen. Nach jeder Integrationsstufe wird der Treiber verändert und eine Ebene höher angesiedelt.
-                        </p>
-                        <p>Top-Down:</p>
-                        <p>
-                            Hier werden zuerst die obersten Module entwickelt auf welchen der Testtreiber aufsetzt. Alle darunterliegenden Module werden
-                            mithilfe von Stubs simuliert. Diese Stubs werden je nach Integrationsstufe im echten Code befüllt. Vorteil das es nur einen
-                            Testtreiber gibt.
-                        </p>
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <h1>Block 4 - Softwaretesten</h1>
-                <p>Was ist die Grobstruktur eines Unit-Tests?</p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>Set-Up (Vorbereitung)</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>Exercise (Ausführung)</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>Verify (Auswertung)</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li>Tear-Down (Nachbearbeitung / zerstören)</li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Aus welchen Bestandteilen besteht das xUnit Framework?</p>
-                <div class="indented"><blockquote>Test Fixture: Definierter Status der Software/des Systems</blockquote></div>
-                <p></p>
-                <figure class="image">
-                    <a href="Handl%20Fragensammlung%20bd8197a3d72142948c3e8fe1a72cbcfb/image3.jpeg">
-                        <img style="width: 192px" src="Handl%20Fragensammlung%20bd8197a3d72142948c3e8fe1a72cbcfb/image3.jpeg" />
-                    </a>
-                </figure>
-                <p></p>
-                <p>Was ist der wesentliche Unterschied zwischen JUnit 3 und 4?</p>
-                <div class="indented">
-                    <blockquote>
-                        In Version 3 mussten die Klassen noch expliziert von der Testklasse abgeleitet werden, weiters musste auch eine spezielle
-                        Namenskonvention eingehalten werden. In Version 4 geschieht dies alles über Annotationen.
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Livecycle Methoden gibt es in JUnit 4, erkläre diese kurz?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">@BeforeClass: wird einmal bei der Initialisierung der Klasse ausgeführt.</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">@AfterClass: wird einmal vor verlassen der Klasse ausgeführt</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">@Before: wird vor jeder Test-Methode ausgeführt</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">@After: wird nach jeder Test-Methode ausgefüht</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was sind Assertions?</p>
-                <div class="indented">
-                    <blockquote>
-                        Assertions sind Zusicherungen. Sie bestehen aus einem überprüfenden Teil und einem Fehlertext
-                        <p>welcher ausgegeben wird falls der überprüfende Teil „false“ liefert.</p>
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Wieso teilt man Tests in unterschiedliche Kategorien ein?</p>
-                <div class="indented">
-                    <blockquote>Wenn man Test Kategorien zuweist kann man den Test auf eine spezielle Kategorie beschränken.</blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was sollte bei Unit-Test beachtet werden?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Tests sollten prinzipiell unabhängig voneinander laufen, Reihenfolge egal.</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Pro Test sollte nur eine Funktion überprüft werden</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Klassen und Tests liegen in verschiedenen Verzeichnisstrukturen aber im selben Packet</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Definition und Einhaltung der Namenskonvention</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Welche Test-Doubles gibt es, erkläre diese kurz?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Dummy Objekt: keinerlei Funktionalität besitzt nur Methodenköpfe</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Fake Objekt: Ausführbare Implementierung liefert jedoch keine Echtdaten</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Stub: Liefert vordefinierte Werte an den Aufrufer</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Mock: Liefert vordefinierte Werte an den Aufrufer überprüft jedoch die Übergabeparameter und wird somit Teil des Tests
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Spy: Proxy-Objekt. Einzelne Methoden werden durch eigene Implementierungen ersetzt.</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <h1>Block 4 – Code Coverage</h1>
-                <p>Welche Arten von Überdeckungstests kann man unterscheiden?</p>
-                <div class="indented">
-                    <blockquote>Merke: die Anweisung an einen Zweig, Bedingt einen Pfad</blockquote>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            C0 – Anweisungsüberdeckung
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Jeder Knoten des Kontrollflussgraphen wird durchlaufen</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Spürt nicht ausführbaren Code auf</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            C1 – Zweigüberdeckung
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Jede Kante wird mindestens durchlaufen</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Spürt nicht ausführbare Programmzweige auf</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Jede Entscheidung muss zumindest einmal true und einmal false liefern</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            C2 – Bedingungsüberdeckung
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">
-                                    Behandelt die Überprüfung von Entscheidungen. Zwei Varianten:
-                                    <ul class="bulleted-list">
-                                        <li style="list-style-type: square">
-                                            einfache Bedingungsüberdeckung: Alle atomaren Entscheidungen (True oder False) müssen einmal durchlaufen werden.
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <blockquote>Bsp.: (x||y) → 1.Test x=true, y=true ; 2.Test x=false, y=false</blockquote>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            mehrfache Bedingungsüberdeckung: Alle möglichen Kombinationen von atomaren Entscheidungen müssen einmal durchlaufen werden
-                        </li>
-                    </ul>
-                    <blockquote>Bsp.: (x||y) → alle 2^n möglichen Kombinationen (hier 4).</blockquote>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            C3 – Pfadüberdeckung
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Alle möglichen Pfade (Knotenfolgen) vom Anfang bis zum Endknoten.</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Meist nicht durchführbar da die Anzahl der Kombinationen zu hoch.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <h1>Block 5 – Automatische Qualitätssicherung</h1>
-                <p>Welchen Fokus kann ein Test haben?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Funktionale Anforderungen
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Features</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Integration
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">In ein spezifisches Umfeld</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            User Interface
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Bedienbarkeit, WAI</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Nicht Funktionale Anforderungen
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">Performance, Wiederhochlaufzeit</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            User Akzeptanz
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: circle">UI-Design</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was sind die Probleme von Unittest mit Datenbanken wie kann man das lösen?</p>
-                <div class="indented">
-                    <blockquote>
-                        Unittest auf Datenbanken haben das Problem das man immer von einem bestimmten Datenbankzustand ausgehen muss dieser aber oft nicht
-                        einfach hergestellt werden kann z.B.: weil das System schon in Betrieb ist.
-                        <p>Lösung hierbei ist die Verwendung von DBUnit welches genau dieses Problem löst.</p>
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>JUnit</p>
-                <div class="indented"><blockquote>Ermöglicht das Schreiben von Unit-Testfällen in Java.</blockquote></div>
-                <p></p>
-                <p></p>
-                <p>HTTP/HTML-Unit</p>
-                <div class="indented">
-                    <blockquote>
-                        Simulieren eines HTTP- bzw. HTML-Client. Man kann dadurch von der Testumgebung auf Websites zugreifen daraus folgt es können Befehle an
-                        den Webserver gesendet werden und die Rückgabe überprüft werden. Vor allem dienen diese Bibliotheken dem Test von Webapplikationen.
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>JMeter</p>
-                <div class="indented">
-                    <blockquote>
-                        Diese Bibliothek kann verwendet werden um Performancetests durchzuführen. Es kann damit beispielsweise ein Webserver mit vielen Anfragen
-                        konfrontiert und das Verhalten beobachtet und gemessen werden.
-                        <p>Diese Tools muss man aber verstehen bevor man sie einsetzt! Bei falscher Anwendung haben die Ergebnisse keine Aussagekraft.</p>
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Automatisierte Code-Quality-Checks</p>
-                <div class="indented">
-                    <blockquote>
-                        Auch die Qualität des Quelltextes selbst kann überprüft werden. Quellcode-Qualität zeichnet sich durch Aspekte wie ausreichende
-                        Dokumentation, Einhaltung von Namens und Formatierungskonventionen, Vermeidung von dupliziertem Code und ähnlichem aus. Natürlich kann
-                        man solche Messungen stören indem man einfach ”Dummy-Kommentare“ einfügt. Es ist daher nicht sinnvoll von den Mitarbeitern einen
-                        bestimmten Prozentsatz und Dokumentation zu fordern, da es stark auf den Kontext ankommt ob das sinnvoll ist oder nicht.
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was kann man Code-Quality-Checks überprüft werden?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Kommentare</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Imports (*)</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Duplizierter Code</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Namenskonvention</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Modifier</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Profiling</p>
-                <div class="indented">
-                    <blockquote>
-                        Bei lauffähigen Anwendungen lässt sich ein Profil erstellen. Das sind Berichte darüber wie oft eine Funktion aufgerufen wird, wie lange
-                        ein Durchlauf dauert, etc. . Entsprechende Tools hängen sich dazu in die Java-VM ein. Man kann diese Informationen nutzen um etwa die
-                        Performance zu verbessern (um gute Ergebnisse erzielen zu können muss man wissen wo die meiste Zeit verbraucht wird).
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Continuous Integration</p>
-                <div class="indented">
-                    <blockquote>
-                        Darunter versteht man die Zusammenschaltung vieler Entwicklungstools zu einem ganzen Entwicklungssystem, das Routineaufgaben periodisch
-                        und automatisiert durchführen kann. Damit werden tägliche Builds erstellt, automatische Testläufe durchgeführt (Unit-Tests) und
-                        Benachrichtigung an die Teammitglieder versendet.
-                        <p>
-                            Wichtig dabei ist, dass auch das Repository, in das der Sourcecode eingecheckt wird, gekoppelt ist. Nach einem Check-In sollte
-                            automatisch ein Build erzeugt werden. Wenn man Maven manuell anstoßen muss, dann ist das noch nicht ”Continuous Integration“.
-                            ”Cruise Control“ und ”Apache Continuum“ sind entsprechende Tools, die den ganzen Vorgang unterstützen. Auch Bug-Tracking- Tools (mit
-                            denen alle Stakeholder gefundene Bugs bekanntgeben können) sollten berücksichtigt werden.
-                        </p>
-                    </blockquote>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Was sind Kennzeichen für Probleme oder schlechte Designs?</p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Lange Klassen</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Doppelter Code</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Lange Parameterlisten</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Langsame Klassen</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Breite Schnittstelle der Klasse</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Öffentliche Objektvariablen</li>
-                    </ul>
-                </div>
-                <p></p>
-            </div>
-        </article>
-    </body>
-</html>
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>Handl Fragensammlung</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+-webkit-print-color-adjust: exact;
+}
+* {
+box-sizing: border-box;
+-webkit-print-color-adjust: exact;
+}html,
+body {
+margin: 0;
+padding: 0;
+}
+@media only screen {
+body {
+margin: 2em auto;
+max-width: 900px;
+color: rgb(55, 53, 47);
+}
+}body {
+line-height: 1.5;
+white-space: pre-wrap;
+}a,
+a.visited {
+color: inherit;
+text-decoration: underline;
+}.pdf-relative-link-path {
+font-size: 80%;
+color: #444;
+}h1,
+h2,
+h3 {
+letter-spacing: -0.01em;
+line-height: 1.2;
+font-weight: 600;
+margin-bottom: 0;
+}.page-title {
+font-size: 2.5rem;
+font-weight: 700;
+margin-top: 0;
+margin-bottom: 0.75em;
+}h1 {
+font-size: 1.875rem;
+margin-top: 1.875rem;
+}h2 {
+font-size: 1.5rem;
+margin-top: 1.5rem;
+}h3 {
+font-size: 1.25rem;
+margin-top: 1.25rem;
+}.source {
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 1.5em;
+word-break: break-all;
+}.callout {
+border-radius: 3px;
+padding: 1rem;
+}figure {
+margin: 1.25em 0;
+page-break-inside: avoid;
+}figcaption {
+opacity: 0.5;
+font-size: 85%;
+margin-top: 0.5em;
+}mark {
+background-color: transparent;
+}.indented {
+padding-left: 1.5em;
+}hr {
+background: transparent;
+display: block;
+width: 100%;
+height: 1px;
+visibility: visible;
+border: none;
+border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}img {
+max-width: 100%;
+}@media only print {
+img {
+max-height: 100vh;
+object-fit: contain;
+}
+}@page {
+margin: 1in;
+}.collection-content {
+font-size: 0.875rem;
+}.column-list {
+display: flex;
+justify-content: space-between;
+}.column {
+padding: 0 1em;
+}.column:first-child {
+padding-left: 0;
+}.column:last-child {
+padding-right: 0;
+}.table_of_contents-item {
+display: block;
+font-size: 0.875rem;
+line-height: 1.3;
+padding: 0.125rem;
+}.table_of_contents-indent-1 {
+margin-left: 1.5rem;
+}.table_of_contents-indent-2 {
+margin-left: 3rem;
+}.table_of_contents-indent-3 {
+margin-left: 4.5rem;
+}.table_of_contents-link {
+text-decoration: none;
+opacity: 0.7;
+border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}table,
+th,
+td {
+border: 1px solid rgba(55, 53, 47, 0.09);
+border-collapse: collapse;
+}table {
+border-left: none;
+border-right: none;
+}th,
+td {
+font-weight: normal;
+padding: 0.25em 0.5em;
+line-height: 1.5;
+min-height: 1.5em;
+text-align: left;
+}th {
+color: rgba(55, 53, 47, 0.6);
+}ol,
+ul {
+margin: 0;
+margin-block-start: 0.6em;
+margin-block-end: 0.6em;
+}li > ol:first-child,
+li > ul:first-child {
+margin-block-start: 0.6em;
+}ul > li {
+list-style: disc;
+}ul.to-do-list {
+padding-inline-start: 0;
+}ul.to-do-list > li {
+list-style: none;
+}.to-do-children-checked {
+text-decoration: line-through;
+opacity: 0.375;
+}ul.toggle > li {
+list-style: none;
+}ul {
+padding-inline-start: 1.7em;
+}ul > li {
+padding-left: 0.1em;
+}ol {
+padding-inline-start: 1.6em;
+}ol > li {
+padding-left: 0.2em;
+}.mono ol {
+padding-inline-start: 2em;
+}.mono ol > li {
+text-indent: -0.4em;
+}.toggle {
+padding-inline-start: 0em;
+list-style-type: none;
+}/* Indent toggle children */
+.toggle > li > details {
+padding-left: 1.7em;
+}.toggle > li > details > summary {
+margin-left: -1.1em;
+}.selected-value {
+display: inline-block;
+padding: 0 0.5em;
+background: rgba(206, 205, 202, 0.5);
+border-radius: 3px;
+margin-right: 0.5em;
+margin-top: 0.3em;
+margin-bottom: 0.3em;
+white-space: nowrap;
+}.collection-title {
+display: inline-block;
+margin-right: 1em;
+}.page-description {
+margin-bottom: 2em;
+}.simple-table {
+margin-top: 1em;
+font-size: 0.875rem;
+empty-cells: show;
+}
+.simple-table td {
+height: 29px;
+min-width: 120px;
+}.simple-table th {
+height: 29px;
+min-width: 120px;
+}.simple-table-header-color {
+background: rgb(247, 246, 243);
+color: black;
+}
+.simple-table-header {
+font-weight: 500;
+}time {
+opacity: 0.5;
+}.icon {
+display: inline-block;
+max-width: 1.2em;
+max-height: 1.2em;
+text-decoration: none;
+vertical-align: text-bottom;
+margin-right: 0.5em;
+}img.icon {
+border-radius: 3px;
+}.user-icon {
+width: 1.5em;
+height: 1.5em;
+border-radius: 100%;
+margin-right: 0.5rem;
+}.user-icon-inner {
+font-size: 0.8em;
+}.text-icon {
+border: 1px solid #000;
+text-align: center;
+}.page-cover-image {
+display: block;
+object-fit: cover;
+width: 100%;
+max-height: 30vh;
+}.page-header-icon {
+font-size: 3rem;
+margin-bottom: 1rem;
+}.page-header-icon-with-cover {
+margin-top: -0.72em;
+margin-left: 0.07em;
+}.page-header-icon img {
+border-radius: 3px;
+}.link-to-page {
+margin: 1em 0;
+padding: 0;
+border: none;
+font-weight: 500;
+}p > .user {
+opacity: 0.5;
+}td > .user,
+td > time {
+white-space: nowrap;
+}input[type="checkbox"] {
+transform: scale(1.5);
+margin-right: 0.6em;
+vertical-align: middle;
+}p {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}.image {
+border: none;
+margin: 1.5em 0;
+padding: 0;
+border-radius: 0;
+text-align: center;
+}.code,
+code {
+background: rgba(135, 131, 120, 0.15);
+border-radius: 3px;
+padding: 0.2em 0.4em;
+border-radius: 3px;
+font-size: 85%;
+tab-size: 2;
+}code {
+color: #eb5757;
+}.code {
+padding: 1.5em 1em;
+}.code-wrap {
+white-space: pre-wrap;
+word-break: break-all;
+}.code > code {
+background: none;
+padding: 0;
+font-size: 100%;
+color: inherit;
+}blockquote {
+font-size: 1.25em;
+margin: 1em 0;
+padding-left: 1em;
+border-left: 3px solid rgb(55, 53, 47);
+}.bookmark {
+text-decoration: none;
+max-height: 8em;
+padding: 0;
+display: flex;
+width: 100%;
+align-items: stretch;
+}.bookmark-title {
+font-size: 0.85em;
+overflow: hidden;
+text-overflow: ellipsis;
+height: 1.75em;
+white-space: nowrap;
+}.bookmark-text {
+display: flex;
+flex-direction: column;
+}.bookmark-info {
+flex: 4 1 180px;
+padding: 12px 14px 14px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}.bookmark-image {
+width: 33%;
+flex: 1 1 180px;
+display: block;
+position: relative;
+object-fit: cover;
+border-radius: 1px;
+}.bookmark-description {
+color: rgba(55, 53, 47, 0.6);
+font-size: 0.75em;
+overflow: hidden;
+max-height: 4.5em;
+word-break: break-word;
+}.bookmark-href {
+font-size: 0.75em;
+margin-top: 0.25em;
+}.sans {
+font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+"Segoe UI Symbol";
+}
+.code {
+font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+}
+.serif {
+font-family: Lyon-Text, Georgia, ui-serif, serif;
+}
+.mono {
+font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+}
+.pdf .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+}
+.pdf:lang(zh-CN) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+}
+.pdf:lang(zh-TW) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+}
+.pdf:lang(ko-KR) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+}
+.pdf .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK KR";
+}
+.pdf .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+}
+.pdf:lang(zh-CN) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+}
+.pdf:lang(zh-TW) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+}
+.pdf:lang(ko-KR) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+}
+.pdf .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+}
+.highlight-default {
+color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+color: inherit;
+fill: inherit;
+}
+.block-color-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue {
+background-color: rgba(35, 131, 226, 0.07);
+}
+.select-value-color-pink {
+background-color: rgba(245, 224, 233, 1);
+}
+.select-value-color-purple {
+background-color: rgba(232, 222, 238, 1);
+}
+.select-value-color-green {
+background-color: rgba(219, 237, 219, 1);
+}
+.select-value-color-gray {
+background-color: rgba(227, 226, 224, 1);
+}
+.select-value-color-translucentGray {
+background-color: rgba(255, 255, 255, 0.0375);
+}
+.select-value-color-orange {
+background-color: rgba(250, 222, 201, 1);
+}
+.select-value-color-brown {
+background-color: rgba(238, 224, 218, 1);
+}
+.select-value-color-red {
+background-color: rgba(255, 226, 221, 1);
+}
+.select-value-color-yellow {
+background-color: rgba(253, 236, 200, 1);
+}
+.select-value-color-blue {
+background-color: rgba(211, 229, 239, 1);
+}
+.select-value-color-pageGlass {
+background-color: undefined;
+}
+.select-value-color-washGlass {
+background-color: undefined;
+}.checkbox {
+display: inline-flex;
+vertical-align: text-bottom;
+width: 16;
+height: 16;
+background-size: 16px;
+margin-left: 2px;
+margin-right: 5px;
+}.checkbox-on {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}.checkbox-off {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}/* -------- injections from notionBackup -------- */body {
+white-space: normal !important;
+}p {
+min-height: 1em !important;
+}.code,
+code {
+font-size: 100% !important;
+}blockquote {
+font-size: 100% !important;
+}.callout {
+white-space: normal !important;
+}
+.callout div:has(span.icon) {
+font-size: 100% !important;
+}.source:not(.bookmark) {
+font-size: 100% !important;
+}p {
+min-height: 1em !important;
+}
+</style></head><body><article class="page sans"><header><h1 class="page-title">Handl Fragensammlung</h1><p class="page-description"></p></header><div class="page-body"><h1>Block 1 (Biffl)</h1><p>Was ist Qualität?</p><div class="indented"><blockquote><em>Hierzu gibt es keine eindeutige Definition. Jedoch sind</em></blockquote><ul class="bulleted-list"><li style="list-style-type: disc"><em>Kundenzufriedenheit</em></li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><em>Erfüllung der Anforderungen</em></li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><em>Erfüllung von Vorgaben und Richtlinien</em></li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><em>Erfüllung von gesetzlichen Regelungen Kennzeichnend für Qualität.</em></li></ul></div><p></p><p></p><p>Welche Eigenschaften hat eine qualitativ hochwertige Software?</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li><em>Termingerecht und im Rahmen des Budgets erstellt</em></li></ol><ol class="numbered-list" start="2" type="1"><li><em>Für den Anwender verwendbar</em></li></ol><ol class="numbered-list" start="3" type="1"><li><em>Für den Professionisten verständlich und änderbar</em></li></ol><ol class="numbered-list" start="4" type="1"><li><em>Für den Betreiber effizient und administrierbar</em></li></ol></div><p></p><p></p><p>Was ist der Unterschied von Verifikation und Validierung?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc"><em>
+Verifikation: Unter Verifikation versteht man die Prüfung eines Produkts im Hinblick auf die Spezifikation(Pflichtenheft, etc.)
+</em><ul class="bulleted-list"><li style="list-style-type: circle">Sollte nach jeder Phase durchgeführt werden</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><em>
+Validierung: Im Rahmen der Validierung wird die Frage beantwortet ob ein Produkt richtig entwickelt wurde. (negative Validierung
+wäre somit eine Themenverfehlung). Sollte zu Beginn und am Ende durchgeführt werden
+</em><ul class="bulleted-list"><li style="list-style-type: circle">Am Beginn: Validierung des Pflichtenheftes/der Spezifikation</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Am Ende : Validierung der erstellten Software</li></ul></li></ul></div><p></p><p></p><p>Erkläre das V-Model unter besonderer Berücksichtigung der Qualitätsicherungsmaßnahmen.</p><div class="indented"><blockquote><em>
+Modul – Test, Integrationstests, Systemtest sind hierbei die Testdurchführung auf Synthetischer Seiten der einzelnen Ebenen die auf
+der Analytischen Seite im Testplan erstellt worden sind.
+</em></blockquote></div><p></p><figure class="image"><a href="Handl%20Fragensammlung%20bd8197a3d72142948c3e8fe1a72cbcfb/image1.jpeg"><img src="Handl%20Fragensammlung%20bd8197a3d72142948c3e8fe1a72cbcfb/image1.jpeg" style="width: 384px"/></a></figure><p></p><p>Nenne 5 Qualitätsfaktoren</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Korrektheit</li></ol><ol class="numbered-list" start="2" type="1"><li>Zuverlässigkeit</li></ol><ol class="numbered-list" start="3" type="1"><li>Wartbarkeit</li></ol><ol class="numbered-list" start="4" type="1"><li>Testbarkeit</li></ol><ol class="numbered-list" start="5" type="1"><li>Effizient</li></ol><ol class="numbered-list" start="6" type="1"><li>Integrität</li></ol><ol class="numbered-list" start="7" type="1"><li>Verwendbar</li></ol><ol class="numbered-list" start="8" type="1"><li>Wiederverwendbarkeit</li></ol><ol class="numbered-list" start="9" type="1"><li>Portabilität</li></ol><ol class="numbered-list" start="10" type="1"><li>Verknüpfbarkeit</li></ol></div><p></p><p></p><p>Wie kann man die Wahrscheinlichkeit steigern ein hoch qualitatives Produkt zu erstellen?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Angemessener
+<strong>Softwareprozess</strong>
+(z.B.: Livecyclemodel)
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Angemessene
+<strong>Vorgehensmodel</strong>
+(V-Model, RUP, Spiral-Model, agile Ansätze)
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Wirkungsvolle Methode zur Produkt
+<strong>erstellung</strong></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Wirkungsvolle Methode zur Produkt-, Prozess
+<strong>verbesserung</strong>
+(Review, Inspektion, Testen)
+</li></ul></div><p></p><p></p><p>Was bedeutet PDCA, welche Ebenen gibt es in PDCA?</p><div class="indented"><blockquote>
+Dieses Prinzip sagt aus, dass die Erkenntnisse aus der Qualitätssicherung nicht nur im aktuellen Projekt genutzt werden sollten, sondern
+auch in der gesamten Arbeitsgruppe und im gesamten Unternehmen.
+<p>
+Nach dem Planen (Plan) und der Implementierung (Do) werden analytische Qualitätssicherungs- Maßnahmen (siehe unten) angewandt
+(Check). Die Erkenntnisse werden rückgekoppelt (Act).
+</p><p>Man unterscheidet 3 Ebenen: Unternehmens-, Projekt- und Arbeitspaketebene.</p></blockquote></div><p></p><p></p><p>Auf was sollte Qualitäts-Management besonders achten?</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Hygienefaktoren: Sind solche die unbedingt umgesetzt werden müssen da ansonsten das gesamte System keinen Sinn mehr ergibt.</li></ol><ol class="numbered-list" start="2" type="1"><li>Faktoren die für die Entwickler keine direkten Auswirkungen haben</li></ol><ol class="numbered-list" start="3" type="1"><li>Faktoren die für die Entwickler nicht besonders wichtig sind</li></ol></div><p></p><p></p><p>Welche Qualitäts-Maßnahmen sind besonders zu unterstützen?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Hygienefaktoren</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Maßnahmen die vorbeugend wirken sollen</li></ul></div><p></p><p></p><p>Welche Qualitäts-Maßnahmen sind besonders wirksam?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Maßnahmen die das richtige machen möglichst einfach und das falsche möglichst schwer machen.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Rasches Feedback an die Entwickler</li></ul></div><p></p><p></p><p>Beschreibe Qualitätsmodel nach McCall.</p><div class="indented"><blockquote>Dieses Modell sieht eine stufenweise Verfeinerung von Qualitätsfaktoren vor.</blockquote><ul class="bulleted-list"><li style="list-style-type: disc"><strong>Qualitätsfaktoren</strong>
+: beschreibt das Verhalten des Systems; Qualitätsfaktoren sind bestimmte die Qualität betreffende Forderungen
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><strong>Qualitätskriterien</strong>
+: Eigenschaften von Qualitätsfaktoren in Bezug auf Softwareentwicklung
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><strong>Qualitätsmetriken</strong>
+: sind Messungen die Definierte Aspekte der Qualitätsfaktoren beschreiben
+</li></ul></div><p></p><p></p><p>Welche 4 wesentlichen Einflussfaktoren sind in der Softwareentwicklung zu finden?</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Qualität (Anzahl der Fehler in einem Projekt)</li></ol><ol class="numbered-list" start="2" type="1"><li>Quantität (Anzahl der Programmierten Funktionen)</li></ol><ol class="numbered-list" start="3" type="1"><li>Entwicklungsdauer/Aufwand (kleine/große Projekte)</li></ol><ol class="numbered-list" start="4" type="1"><li>Kosten</li></ol><blockquote>Diese 4 Einflussfaktoren wirken wechselseitig auf die Produktivität. (Teufelsquadrat nach Sneech)</blockquote></div><p></p><p></p><p></p><p>Welche Analytischen Qualitätsmaßnahmen können ergriffen werden?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc"><strong>S</strong>
+tatische Prüfung (Review, Inspektion, Audits)
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><strong>D</strong>
+ynamische Prüfung (Softwaretests)
+</li></ul></div><p></p><p></p><p>Welche Konstruktiven Qualitätsmaßnahmen können ergriffen werden?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc"><strong>T</strong>
+echnische Maßnahmen (Verwendung von Prinzipien in der Softwareentwicklung)
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><strong>O</strong>
+rganisatorische Maßnahmen (Verwendung von Vorgehensmodellen)
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><strong>M</strong>
+enschliche Maßnahmen (Schulung der Mitarbeiter)
+</li></ul></div><p></p><p></p><p>Wie können QS in den Einzelnen Vorgehensmodellen integriert werden?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+V-Modell
+<ul class="bulleted-list"><li style="list-style-type: circle">Analytische Seite: Testplanerstellung in jeder Phase und nach jeder Phase ein Review</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Synthetische Seite: nach jeder Ebene die Tests des Testplans durchführen</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+V-Model-XT
+<ul class="bulleted-list"><li style="list-style-type: circle">QS ist hier ein eigener nicht optionaler Vorgehensbaustein</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+RUP
+<ul class="bulleted-list"><li style="list-style-type: circle">Review bei allen Meilensteinen</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">QS ist ständiger Begleiter</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+SCRUM
+<ul class="bulleted-list"><li style="list-style-type: circle">Review und Test sind fixer Bestandteil eines Sprints</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Testdriven Development</li></ul></li></ul></div><p></p><p></p><p>Erkläre Qualitätssicherung</p><div class="indented"><blockquote>
+Qualitätssicherung besteht in der Durchführung von Verifikation und Validierung in jeder Phase der Softwareherstellung.
+</blockquote></div><p></p><p></p><p>Erkläre Qualitätsmanagement</p><div class="indented"><blockquote>
+Merke: Menge von Aktive HiTech Vorgehensweise
+<p>
+Qualitätsmanagement ist die Menge aller
+<strong>Aktiv</strong>
+itäten,
+<strong>Vorgehensweise</strong>
+n,
+<strong>Tech</strong>
+niken und
+<strong>Hi</strong>
+lfsmittel, die sicherstellen, dass ein Software-Produkt vordefinierte Standards erreicht oder übertrifft.
+</p></blockquote></div><p></p><p></p><p>Nennen Sie 3 Prinzipen des Qualitätsmanagements und erklären Sie diese.</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Mehraugenkontrolle: Andere Personen andere Herangehensweise</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Unabhängigkeit bei Qualitätsprüfung</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Produkt und Projektabhängige Qualitätsprüfung</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Frühzeitiges Entdecken und Beheben von Fehlern</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Bewertung der eingesetzten Qualitätsmaßnahmen</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Pair-Programmierung: 2 sehen und wissen mehr.</li></ul></div><p></p><p></p><p>Paar wichtige Sätze</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Es gibt keine einheitliche Definition für "Qualität" aber verschiedene Ansätze, um "Qualität" begrifflich zu fassen.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Überprüfung, Beurteilung und Verbesserung der Produkt- und Prozessqualität erfordert messbare Attribute.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Qualität, Quantität, Kosten und Entwicklungsdauer bilden ein Spannungsfeld in der Softwareentwicklung.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+QS ist integraler Bestandteil von Vorgehensmodellen (z.B. V-Modell (XT), Rational Unified Process, Agile Ansätze usw.)
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Das Prinzip der ständigen Verbesserung von Produkten und Prozessen ist ein integraler Bestandteil von Qualitätsmanagementsystemen
+und ist auf allen Ebenen (Arbeitspaket, Projekt, Unternehmen) anwendbar.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Produkte und Prozesse können immer verbessert werden!</li></ul></div><p></p><p></p><h1>Block 2 – Review und Inspektion</h1><p>Wozu verwendet man Reviews?</p><div class="indented"><blockquote>
+Reviews dienen zur qualitativen Beurteilung von Produkten und Prozessen, die Quantitativ nur sehr schwer bis gar nicht beurteilt werden
+können.
+</blockquote></div><p></p><p></p><p>Welche Arten von Review kann man unterscheiden?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Mit Kunde
+<ul class="bulleted-list"><li style="list-style-type: circle">
+SRR: Software Requirement Review. eines der Wichtigsten Reviews, hier wird besprochen ob die Anforderungen klar und richtig
+verstanden wurden. Wird in der Systemspezifikationsphase verwendet
+</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">PDR: Primary Design Review: Vergleich momentanes Design mit Software Designbeschreibung</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">
+CDR: Critical Design Review: der Kunde soll bei kritischen Entscheidungen informiert werden und soll auch die Entscheidung
+mitunterschreiben.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">IPR: In Prozess Review</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Ohne Kunde
+<ul class="bulleted-list"><li style="list-style-type: circle"><strong>MR: Management Review</strong></li></ul><ul class="bulleted-list"><li style="list-style-type: circle"><strong>Code Walkthrough:</strong>
+Der Autor stellt seine Module ablauforientiert vor. Das eignet sich um gemeinsam mit den Reviewern die Qualität der
+Implementierung zu begutachten und Verbesserungsvorschläge einzuholen. Weiters können neue Mitarbeiter dabei zusehen und
+sich so mit dem Projekt vertraut machen. Letztendlich entscheidet hier der Autor selbst ob bzw. was überarbeitet wird.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: circle"><strong>Technical Review:</strong>
+Dies ist bereits ein formaleres Review, bei dem auch noch ein Moderator sowie ein Protokollführer anwesend sind. Das Produkt
+wird mit dem Ziel begutachtet, die Stärken und Schwächen zu finden. Das Review-Team gibt eine Empfehlung an das Management,
+das letztendlich entscheidet.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: circle"><strong>Inspektion:</strong>
+Eine Inspektion ist ein formales Review das speziell in frühen Phasen der Entwicklung durchgeführt wird. Dabei wird das zu
+reviewende Produkt von einem Leser Schritt für Schritt vorgetragen. Das Review-Team versucht schwere Fehler zu finden und
+ein Protokollführer macht Notizen dazu. Schließlich entscheidet der Moderator wie weiter verfahren wird.
+</li></ul></li></ul></div><p></p><p></p><p>Welche Rollen gibt es bei Review Sitzungen?</p><div class="indented"><blockquote>Moderator, Leser, Schreiber, Gutachter, Autor</blockquote></div><p></p><p></p><p>Welche Richtlinien sind für technische Review zu beachten?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Produkt nicht der Autor soll Reviewed werden</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Verwendung eines Arbeitsplan</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Diskussion sachlich und Kurz</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Keine Lösungen suchen nur Fehler</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Schriftliche Aufzeichnung führen</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Anzahl der Teilnehmer begrenzen</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Teilnehmer sollen gut vorbereitet sein</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Auch Review beurteilen</li></ul></div><p></p><p></p><p>Wie ist der Ablauf/Aufbau eines Reviews?</p><div class="indented"><blockquote>
+Was sind Inspektionen?
+<p>
+Eine Inspektion ist eine formale und wirtschaftliche Methode um Fehler zu finden. Sie sind somit eine spezielle Form der Reviews.
+Sie können sehr gut in frühen Phasen der Fehlerfindung eingesetzt werden.
+</p></blockquote></div><p></p><figure class="image"><a href="Handl%20Fragensammlung%20bd8197a3d72142948c3e8fe1a72cbcfb/image2.png"><img src="Handl%20Fragensammlung%20bd8197a3d72142948c3e8fe1a72cbcfb/image2.png" style="width: 120px"/></a></figure><p></p><p></p><p>Welche Dimensionen hat eine Inspektion?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Prozess
+<ul class="bulleted-list"><li style="list-style-type: circle">
+Planung =&gt; Übersicht =&gt; Fehlersuche =&gt; Fehlersammlung =&gt; Fehlerbehebung =&gt; Follow up
+</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Produkt
+<ul class="bulleted-list"><li style="list-style-type: circle">Anforderung, Design, Code,</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Rollen
+<ul class="bulleted-list"><li style="list-style-type: circle">Moderator, Leser, Schreiber, Autor, Gutachter</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Lesetechniken
+<ul class="bulleted-list"><li style="list-style-type: circle">Ad-hoc, Checklisten, Szenario-Basiert, Perspektiven-Basiert, Fehlerbasiert</li></ul></li></ul></div><p></p><p></p><p>Nenne 5 Lesetechniken und beschreibe sie Kurz.</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Ad-hoc
+<ul class="bulleted-list"><li style="list-style-type: circle">Unstrukturiertes Lesen des Dokuments</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Erfordert hohe Kenntnisse des Gutachters</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Eher schlecht da kein strukturiertes Vorgehen</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Checklistenbasiert
+<ul class="bulleted-list"><li style="list-style-type: circle">Durcharbeitung des Dokuments mithilfe einer Checkliste</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Checkliste ist meist eine generische und eine Projektspezifische</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Vorteil: Strukturiertes Vorgehen das heißt es ist gut wiederholbar</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Perspektivenbasiert
+<ul class="bulleted-list"><li style="list-style-type: circle">Hierbei nehmen die einzelnen Gutachter unterschiedliche Rollen ein</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">
+Idee ist das durch die Unterschiedlichen Sichten unterschiedliche Fehler gefunden werden
+</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Szenario basiert – Usage-Based-Reading =&gt; Best Practice
+<ul class="bulleted-list"><li style="list-style-type: circle">Einteilung des Projektes in Use Cases (sollte sowieso vorliegen)</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Jeder Use-Case wird nach Wichtigkeit Beurteilt</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">
+Starte mit dem Wichtigsten =&gt; Überprüfung der relevanten Teile =&gt; Reporting von Fehlern =&gt; Auswahl des nächsten
+Use-Case
+</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Idee ist das Fehler in wichtigen Use-Case größere Priorität haben</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Fehlerbasiert
+<ul class="bulleted-list"><li style="list-style-type: circle">Spezielle Form der Checklistenbasierten Lesetechnik</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Fehler werden in Fehlerkategorien eingeteilt damit sie besser gefunden werden können</li></ul></li></ul></div><p></p><p></p><p>Wie können Anforderungen Klassifiziert werden?</p><div class="indented"><blockquote>Stichwort: FURPS deutsch: FBZPW</blockquote><ul class="bulleted-list"><li style="list-style-type: disc"><strong>F</strong>
+unctional (Funktional)
+<ul class="bulleted-list"><li style="list-style-type: circle">Features, Fähigkeiten</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><strong>U</strong>
+sability (Benutzerfreundlichkeit)
+<ul class="bulleted-list"><li style="list-style-type: circle">Menschliche Faktoren, Hilfe</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><strong>R</strong>
+eliability (Zuverlässigkeit)
+<ul class="bulleted-list"><li style="list-style-type: circle">Häufigkeit eines Ausfalls, Wiederherstellbarkeit</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><strong>P</strong>
+erformance
+<ul class="bulleted-list"><li style="list-style-type: circle">Durchsatz, Antwortzeiten</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><strong>S</strong>
+upportability (Wartbarkeit)
+<ul class="bulleted-list"><li style="list-style-type: circle">Änderbarkeit, Modularität, Wartung</li></ul></li></ul></div><p></p><p></p><p>Welche Typen von Anforderungen gibt es?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Funktionale Anforderungen
+<ul class="bulleted-list"><li style="list-style-type: circle">
+Beschreibt
+<strong>was</strong>
+das System tut
+</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Typisch hierfür ist: Das System kann Funktion x ausführen</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Nicht Funktionale Anforderungen
+<ul class="bulleted-list"><li style="list-style-type: circle">Erwünschte Charakteristika</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">
+Qualitätsanforderungen, Frage nach
+<strong>wie gut</strong></li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Constrains
+<ul class="bulleted-list"><li style="list-style-type: circle">Einschränkungen des Systems</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Klassifizierungen
+<ul class="bulleted-list"><li style="list-style-type: circle">Stichwort FURPS</li></ul></li></ul></div><p></p><p></p><p>Wie können Anforderungen Kategorisiert werden?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Testbare Aussagen</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Funktionen oder</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Qualitative Anforderungen
+<ul class="bulleted-list"><li style="list-style-type: circle">Definition von Qualität</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Wie ist Qualität messbar?</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Wieviel Qualität ist genug</li></ul></li></ul></div><p></p><p></p><p>Was ist ein Anwendung-Szenario?</p><div class="indented"><blockquote>Funktionale Anforderungen bilden ein Anwendungs-Szenario.</blockquote></div><p></p><p></p><p>Nennen Sie Vorgehensweisen zu Sicherung/Verbesserung der Qualität von Projekt- Anforderungen?</p><div class="indented"><blockquote>Welche Kriterien sollten brauchbare Anforderungen erfüllen?</blockquote><ul class="bulleted-list"><li style="list-style-type: disc">
+Notwendige Kriterien
+<ul class="bulleted-list"><li style="list-style-type: circle">Typ(Funktional, nicht Funktional)</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Rückverfolgbarkeit: Ist die Anforderung in der Projektbeschreibung auffindbar</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Überprüfbar: Ist die Anforderung testbar</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Erstrebenswerte Kriterien
+<ul class="bulleted-list"><li style="list-style-type: circle">Knapp verständliche Beschreibung</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Umsetzbar</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Konsistent</li></ul></li></ul></div><p></p><p></p><p>Wie ist ein Anwendungsfall aufgebaut?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Allgemein
+<ol class="numbered-list" start="1" type="1"><li>Titel</li></ol><ol class="numbered-list" start="2" type="1"><li>Kurzbeschreibung</li></ol><ol class="numbered-list" start="3" type="1"><li>Welche Aktoren sind beteiligt</li></ol><ol class="numbered-list" start="4" type="1"><li>Vorbedingung</li></ol><ol class="numbered-list" start="5" type="1"><li>Nachbedingung</li></ol></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Flow of events</li></ul><ol class="numbered-list" start="1" type="1"><li>Hauptszenario</li></ol><ol class="numbered-list" start="2" type="1"><li>Alternativszenario</li></ol><ol class="numbered-list" start="3" type="1"><li>Fehlerszenario</li></ol><ul class="bulleted-list"><li style="list-style-type: disc">Nichtfunktionale Anforderungen</li></ul></div><p></p><p></p><h1>Block 3 – Testen</h1><p>Was ist das Ziel der Softwareentwicklung und durch was kann dies erreicht werden?</p><div class="indented"><blockquote>Ziel der SE ist es hoch qualitative und testbare Software zu erstellen. Dies kann erreicht werden durch:</blockquote><ul class="bulleted-list"><li style="list-style-type: disc">Anwendung von Software-Vorgehensmodel(V-Model, SCRUM,…)</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Konstruktive Methoden (Model-Driven, Test-Driven)</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Analytische Methoden (Review, Inspektion, Testen)</li></ul></div><p></p><p></p><p>Welche Phasen hat man im Testprozess?</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Planung &amp; Steuerung</li></ol><ol class="numbered-list" start="2" type="1"><li>Analyse/Design</li></ol><ol class="numbered-list" start="3" type="1"><li>Durchführung</li></ol><ol class="numbered-list" start="4" type="1"><li>Auswertung und Berichterstellung</li></ol><ol class="numbered-list" start="5" type="1"><li>Abschluss</li></ol></div><p></p><p></p><p>Was ist der Unterschied zwischen Reviews und Testen?</p><div class="indented"><blockquote>
+Review werden verwendet um Fehler in frühen Phasen der Entwicklung zu erkennen.
+<p>
+Testen dient der Verifikation(Testen gegen die Spezifikation) bzw. der Validierung(Testen gegen Kundenanforderungen) von bereits
+implementierter Software.
+</p></blockquote></div><p></p><p></p><p>Welche Schritte gibt es bei Test –Driven-Development?</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Think
+<ul class="bulleted-list"><li style="list-style-type: disc">Auswahl der zu implementierenden Anforderung</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Spezifikation der Testfälle</li></ul></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Red
+<ul class="bulleted-list"><li style="list-style-type: disc">Implementierung und Ausführung der Testfälle</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Alle Tests müssen fehlschlagen</li></ul></li></ol><ol class="numbered-list" start="3" type="1"><li>
+Green
+<ul class="bulleted-list"><li style="list-style-type: disc">Implementierung der Komponenten und Klassen</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Wenn alle Tests grün sind weiter zu 4 sonst auf 3 bleiben</li></ul></li></ol><ol class="numbered-list" start="4" type="1"><li>
+Refactor
+<ul class="bulleted-list"><li style="list-style-type: disc">Änderung und Optimierung der Implementierung ohne Änderung der Funktionalität</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Testfälle dürfen nicht fehlschlagen =&gt; weiter bei Schritt 1.</li></ul></li></ol></div><p></p><p></p><p>Was versteht man unter Refactoring? Was wird dadurch erreicht?</p><div class="indented"><blockquote>
+Refactoring bezeichnet in der Software-Entwicklung die manuelle oder automatisierte Strukturverbesserung von Quelltexten unter
+Beibehaltung des beobachtbaren Programmverhaltens. Dabei sollen die
+</blockquote><ul class="bulleted-list"><li style="list-style-type: disc">Lesbarkeit</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Verständlichkeit</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Wartbarkeit</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Erweiterbarkeit</li></ul><blockquote>
+verbessert werden, mit dem Ziel, den jeweiligen Aufwand für Fehleranalyse und funktionale Erweiterungen deutlich zu senken.
+</blockquote></div><p></p><p></p><p>Erkläre der Begriff Testsuit und wann ist ein Test erfolgreich?</p><div class="indented"><blockquote>
+Tests bestehen aus einer Menge von Testfällen dieses Set nennt man Testsuit.
+<p>Ein Test ist erfolgreich wenn man damit einen Fehler findet</p></blockquote></div><p></p><p></p><p>Aus was besteht ein Testfall?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc"><strong>V:</strong>
+Vorbedingung
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><strong>E:</strong>
+Eingabewert
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><strong>A:</strong>
+Aktion zur Eingabe
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><strong>R:</strong>
+erwartetes Ergebnis (Rückgabewert/Resultate)
+</li></ul></div><p></p><p></p><p>Welche Fälle von Testfällen gibt es?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Normalfall: sollte bei korrekter Implementierung funktionieren</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Fehlerfall: sollte bei korrekter Implementierung zu einer Fehlermeldung/Exception führen</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Sonderfall: an der Grenze zwischen Normalfall und Fehlerfall</li></ul></div><p></p><p></p><p>Welche Abdeckungsarten gibt es bei der Testabdeckung?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Abdeckung aller Funktionen
+<ul class="bulleted-list"><li style="list-style-type: circle">jede Funktion wird mindesten einmal ausgeführt</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Abdeckung aller Eingabeklassen
+<ul class="bulleted-list"><li style="list-style-type: circle">Für jede Funktion wird jede Eingabeklasse mindestens einmal verwendet</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Abdeckung aller Ausgabeklassen
+<ul class="bulleted-list"><li style="list-style-type: circle">Für jede Funktion wird jede Ausgabeklasse mindestens einmal erzeugt.</li></ul></li></ul></div><p></p><p></p><p>Was ist eine Äquivalenzklasse und wie findet man diese?</p><div class="indented"><blockquote>
+Zerlegung einer Menge von Daten (Ein-,Ausgabewerte) in Untermengen(Klasse) welche äquivalente Ergebnis oder Auswirkungen liefern.
+<p>Vorgehensweise:</p></blockquote><ol class="numbered-list" start="1" type="1"><li>Finden eines Eingabevektors (A,B,C,…)</li></ol><ol class="numbered-list" start="2" type="1"><li>Finde für jede Komponente des Vektors seine ungültige und gültige Äquivalenzklasse und</li></ol><p>wähle einen Wert davon aus. (A1,A2,… ; B1,B2,… ; ….)</p><ol class="numbered-list" start="1" type="1"><li>Kombination dieser Werte bestimmt die Intensität. [(A1,B1), (A1,B2), …..]</li></ol></div><p></p><p></p><p>Was versteht man unter Grenzwertanalyse?</p><div class="indented"><blockquote>
+Bei der Grenzwertanalyse werden die Testdaten ebenfalls in Äquivalenzklassen unterteilt, jedoch wird hier nicht ein beliebiger Wert aus
+der Klasse verwendet sondern der beziehungsweise die Grenzwerte der Klasse.
+</blockquote></div><p></p><p></p><p>Was ist Value-Based-Testing wie kann man es Unterteilen?</p><div class="indented"><blockquote>
+Value-Based-Testing beruht darauf dass nicht alle Testfälle bzw. alle Fehler gleich viel Wert sind. Man unterteilt dies in
+</blockquote><ul class="bulleted-list"><li style="list-style-type: disc">
+Requirements-Based-Testing
+<ul class="bulleted-list"><li style="list-style-type: circle">Welche Anforderungen bringen den Kunden am meisten</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Risk-Based-Testing
+<ul class="bulleted-list"><li style="list-style-type: circle">Welche Risiken gefährden diesen Nutzen. (Auf einer Anwendung bauen 10 weitere auf)</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Test Case Selection
+<ul class="bulleted-list"><li style="list-style-type: circle">Testfälle welche all diese Risiken , Nutzen abdecken</li></ul></li></ul></div><p></p><p></p><p>Was sind Test-Stufen was Test-Typen und wie hängen diese zusammen?</p><div class="indented"><blockquote>
+Teststufen stellen unterschiedliche Tests auf unterschiedlichen Ebenen des Softwareentwicklungsprozesses dar. Test-Typen sind spezielle
+Ausprägungen von Tests. Eine Teststufe besteht aus einem oder mehreren Test-Typen.
+<p>Beispiele:</p><p>Test-Stufen:</p></blockquote><ul class="bulleted-list"><li style="list-style-type: disc">
+Privater-Test, Unit-Test, Integrationstest, System-Test, Regressionstest, Akzeptanztest Test-Typen:
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Review, Funktionaler-Test, Massentest, Stresstest, Performancetest</li></ul></div><p></p><p></p><p>Erkläre kurz die einzelnen Test-Stufen.</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Privater Test
+<ul class="bulleted-list"><li style="list-style-type: circle">Vom Entwickler vor der Freigabe durchgeführter meist undokumentierter Test.</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Unit-Test
+<ul class="bulleted-list"><li style="list-style-type: circle">Test des Moduls bzw. Klasse gegen die Spezifikation.</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Einzelne externe Komponenten können mittels Stubs oder Mocks simuliert werden.</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Integrationstest
+<ul class="bulleted-list"><li style="list-style-type: circle">Test der Interaktion zwischen den einzelnen Modulen.</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Es können mehrere Integrationsstufen eingeführt werden.</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Bottom-up, Top-Down, Big-Bang Strategien werden verwendet.</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Systemtest
+<ul class="bulleted-list"><li style="list-style-type: circle">Test des Systems gegen die Kundenanforderung (Validierung)</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Basiert auf: Anforderungsspezifikation, Use-Cases, Geschäftsprozesse</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Akzeptanztest
+<ul class="bulleted-list"><li style="list-style-type: circle">Wie Systemtest jedoch mit bzw. beim Kunden</li></ul></li></ul></div><p></p><p></p><p>Erkläre Integrationstest und die Vorgehensweisen Bottom-Up und Top-Down?</p><div class="indented"><blockquote>
+Bottom-Up:
+<p>
+Hier wird zuerst die Basis ausprogrammiert. Um diese zu Testen werden sogenannte Treiber Objekte erstellt die diese Objekte erzeugen
+und Testen. Nach jeder Integrationsstufe wird der Treiber verändert und eine Ebene höher angesiedelt.
+</p><p>Top-Down:</p><p>
+Hier werden zuerst die obersten Module entwickelt auf welchen der Testtreiber aufsetzt. Alle darunterliegenden Module werden
+mithilfe von Stubs simuliert. Diese Stubs werden je nach Integrationsstufe im echten Code befüllt. Vorteil das es nur einen
+Testtreiber gibt.
+</p></blockquote></div><p></p><p></p><h1>Block 4 - Softwaretesten</h1><p>Was ist die Grobstruktur eines Unit-Tests?</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Set-Up (Vorbereitung)</li></ol><ol class="numbered-list" start="2" type="1"><li>Exercise (Ausführung)</li></ol><ol class="numbered-list" start="3" type="1"><li>Verify (Auswertung)</li></ol><ol class="numbered-list" start="4" type="1"><li>Tear-Down (Nachbearbeitung / zerstören)</li></ol></div><p></p><p></p><p>Aus welchen Bestandteilen besteht das xUnit Framework?</p><div class="indented"><blockquote>Test Fixture: Definierter Status der Software/des Systems</blockquote></div><p></p><figure class="image"><a href="Handl%20Fragensammlung%20bd8197a3d72142948c3e8fe1a72cbcfb/image3.jpeg"><img src="Handl%20Fragensammlung%20bd8197a3d72142948c3e8fe1a72cbcfb/image3.jpeg" style="width: 192px"/></a></figure><p></p><p>Was ist der wesentliche Unterschied zwischen JUnit 3 und 4?</p><div class="indented"><blockquote>
+In Version 3 mussten die Klassen noch expliziert von der Testklasse abgeleitet werden, weiters musste auch eine spezielle
+Namenskonvention eingehalten werden. In Version 4 geschieht dies alles über Annotationen.
+</blockquote></div><p></p><p></p><p>Welche Livecycle Methoden gibt es in JUnit 4, erkläre diese kurz?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">@BeforeClass: wird einmal bei der Initialisierung der Klasse ausgeführt.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">@AfterClass: wird einmal vor verlassen der Klasse ausgeführt</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">@Before: wird vor jeder Test-Methode ausgeführt</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">@After: wird nach jeder Test-Methode ausgefüht</li></ul></div><p></p><p></p><p>Was sind Assertions?</p><div class="indented"><blockquote>
+Assertions sind Zusicherungen. Sie bestehen aus einem überprüfenden Teil und einem Fehlertext
+<p>welcher ausgegeben wird falls der überprüfende Teil „false“ liefert.</p></blockquote></div><p></p><p></p><p>Wieso teilt man Tests in unterschiedliche Kategorien ein?</p><div class="indented"><blockquote>Wenn man Test Kategorien zuweist kann man den Test auf eine spezielle Kategorie beschränken.</blockquote></div><p></p><p></p><p>Was sollte bei Unit-Test beachtet werden?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Tests sollten prinzipiell unabhängig voneinander laufen, Reihenfolge egal.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Pro Test sollte nur eine Funktion überprüft werden</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Klassen und Tests liegen in verschiedenen Verzeichnisstrukturen aber im selben Packet</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Definition und Einhaltung der Namenskonvention</li></ul></div><p></p><p></p><p>Welche Test-Doubles gibt es, erkläre diese kurz?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Dummy Objekt: keinerlei Funktionalität besitzt nur Methodenköpfe</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Fake Objekt: Ausführbare Implementierung liefert jedoch keine Echtdaten</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Stub: Liefert vordefinierte Werte an den Aufrufer</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Mock: Liefert vordefinierte Werte an den Aufrufer überprüft jedoch die Übergabeparameter und wird somit Teil des Tests
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Spy: Proxy-Objekt. Einzelne Methoden werden durch eigene Implementierungen ersetzt.</li></ul></div><p></p><p></p><h1>Block 4 – Code Coverage</h1><p>Welche Arten von Überdeckungstests kann man unterscheiden?</p><div class="indented"><blockquote>Merke: die Anweisung an einen Zweig, Bedingt einen Pfad</blockquote><ul class="bulleted-list"><li style="list-style-type: disc">
+C0 – Anweisungsüberdeckung
+<ul class="bulleted-list"><li style="list-style-type: circle">Jeder Knoten des Kontrollflussgraphen wird durchlaufen</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Spürt nicht ausführbaren Code auf</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+C1 – Zweigüberdeckung
+<ul class="bulleted-list"><li style="list-style-type: circle">Jede Kante wird mindestens durchlaufen</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Spürt nicht ausführbare Programmzweige auf</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Jede Entscheidung muss zumindest einmal true und einmal false liefern</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+C2 – Bedingungsüberdeckung
+<ul class="bulleted-list"><li style="list-style-type: circle">
+Behandelt die Überprüfung von Entscheidungen. Zwei Varianten:
+<ul class="bulleted-list"><li style="list-style-type: square">
+einfache Bedingungsüberdeckung: Alle atomaren Entscheidungen (True oder False) müssen einmal durchlaufen werden.
+</li></ul></li></ul></li></ul><blockquote>Bsp.: (x||y) → 1.Test x=true, y=true ; 2.Test x=false, y=false</blockquote><ul class="bulleted-list"><li style="list-style-type: disc">
+mehrfache Bedingungsüberdeckung: Alle möglichen Kombinationen von atomaren Entscheidungen müssen einmal durchlaufen werden
+</li></ul><blockquote>Bsp.: (x||y) → alle 2^n möglichen Kombinationen (hier 4).</blockquote><ul class="bulleted-list"><li style="list-style-type: disc">
+C3 – Pfadüberdeckung
+<ul class="bulleted-list"><li style="list-style-type: circle">Alle möglichen Pfade (Knotenfolgen) vom Anfang bis zum Endknoten.</li></ul><ul class="bulleted-list"><li style="list-style-type: circle">Meist nicht durchführbar da die Anzahl der Kombinationen zu hoch.</li></ul></li></ul></div><p></p><p></p><h1>Block 5 – Automatische Qualitätssicherung</h1><p>Welchen Fokus kann ein Test haben?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Funktionale Anforderungen
+<ul class="bulleted-list"><li style="list-style-type: circle">Features</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Integration
+<ul class="bulleted-list"><li style="list-style-type: circle">In ein spezifisches Umfeld</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+User Interface
+<ul class="bulleted-list"><li style="list-style-type: circle">Bedienbarkeit, WAI</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Nicht Funktionale Anforderungen
+<ul class="bulleted-list"><li style="list-style-type: circle">Performance, Wiederhochlaufzeit</li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+User Akzeptanz
+<ul class="bulleted-list"><li style="list-style-type: circle">UI-Design</li></ul></li></ul></div><p></p><p></p><p>Was sind die Probleme von Unittest mit Datenbanken wie kann man das lösen?</p><div class="indented"><blockquote>
+Unittest auf Datenbanken haben das Problem das man immer von einem bestimmten Datenbankzustand ausgehen muss dieser aber oft nicht
+einfach hergestellt werden kann z.B.: weil das System schon in Betrieb ist.
+<p>Lösung hierbei ist die Verwendung von DBUnit welches genau dieses Problem löst.</p></blockquote></div><p></p><p></p><p>JUnit</p><div class="indented"><blockquote>Ermöglicht das Schreiben von Unit-Testfällen in Java.</blockquote></div><p></p><p></p><p>HTTP/HTML-Unit</p><div class="indented"><blockquote>
+Simulieren eines HTTP- bzw. HTML-Client. Man kann dadurch von der Testumgebung auf Websites zugreifen daraus folgt es können Befehle an
+den Webserver gesendet werden und die Rückgabe überprüft werden. Vor allem dienen diese Bibliotheken dem Test von Webapplikationen.
+</blockquote></div><p></p><p></p><p>JMeter</p><div class="indented"><blockquote>
+Diese Bibliothek kann verwendet werden um Performancetests durchzuführen. Es kann damit beispielsweise ein Webserver mit vielen Anfragen
+konfrontiert und das Verhalten beobachtet und gemessen werden.
+<p>Diese Tools muss man aber verstehen bevor man sie einsetzt! Bei falscher Anwendung haben die Ergebnisse keine Aussagekraft.</p></blockquote></div><p></p><p></p><p>Automatisierte Code-Quality-Checks</p><div class="indented"><blockquote>
+Auch die Qualität des Quelltextes selbst kann überprüft werden. Quellcode-Qualität zeichnet sich durch Aspekte wie ausreichende
+Dokumentation, Einhaltung von Namens und Formatierungskonventionen, Vermeidung von dupliziertem Code und ähnlichem aus. Natürlich kann
+man solche Messungen stören indem man einfach ”Dummy-Kommentare“ einfügt. Es ist daher nicht sinnvoll von den Mitarbeitern einen
+bestimmten Prozentsatz und Dokumentation zu fordern, da es stark auf den Kontext ankommt ob das sinnvoll ist oder nicht.
+</blockquote></div><p></p><p></p><p>Was kann man Code-Quality-Checks überprüft werden?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Kommentare</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Imports (*)</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Duplizierter Code</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Namenskonvention</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Modifier</li></ul></div><p></p><p></p><p>Profiling</p><div class="indented"><blockquote>
+Bei lauffähigen Anwendungen lässt sich ein Profil erstellen. Das sind Berichte darüber wie oft eine Funktion aufgerufen wird, wie lange
+ein Durchlauf dauert, etc. . Entsprechende Tools hängen sich dazu in die Java-VM ein. Man kann diese Informationen nutzen um etwa die
+Performance zu verbessern (um gute Ergebnisse erzielen zu können muss man wissen wo die meiste Zeit verbraucht wird).
+</blockquote></div><p></p><p></p><p>Continuous Integration</p><div class="indented"><blockquote>
+Darunter versteht man die Zusammenschaltung vieler Entwicklungstools zu einem ganzen Entwicklungssystem, das Routineaufgaben periodisch
+und automatisiert durchführen kann. Damit werden tägliche Builds erstellt, automatische Testläufe durchgeführt (Unit-Tests) und
+Benachrichtigung an die Teammitglieder versendet.
+<p>
+Wichtig dabei ist, dass auch das Repository, in das der Sourcecode eingecheckt wird, gekoppelt ist. Nach einem Check-In sollte
+automatisch ein Build erzeugt werden. Wenn man Maven manuell anstoßen muss, dann ist das noch nicht ”Continuous Integration“.
+”Cruise Control“ und ”Apache Continuum“ sind entsprechende Tools, die den ganzen Vorgang unterstützen. Auch Bug-Tracking- Tools (mit
+denen alle Stakeholder gefundene Bugs bekanntgeben können) sollten berücksichtigt werden.
+</p></blockquote></div><p></p><p></p><p>Was sind Kennzeichen für Probleme oder schlechte Designs?</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Lange Klassen</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Doppelter Code</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Lange Parameterlisten</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Langsame Klassen</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Breite Schnittstelle der Klasse</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Öffentliche Objektvariablen</li></ul></div><p></p></div></article></body></html>

@@ -1,1112 +1,673 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Assigment 2</title>
-        <style>
-            /* cspell:disable-file */
-            /* webkit printing magic: print all background colors */
-            html {
-                -webkit-print-color-adjust: exact;
-            }
-            * {
-                box-sizing: border-box;
-                -webkit-print-color-adjust: exact;
-            }
-
-            html,
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            @media only screen {
-                body {
-                    margin: 2em auto;
-                    max-width: 900px;
-                    color: rgb(55, 53, 47);
-                }
-            }
-
-            body {
-                line-height: 1.5;
-                white-space: pre-wrap;
-            }
-
-            a,
-            a.visited {
-                color: inherit;
-                text-decoration: underline;
-            }
-
-            .pdf-relative-link-path {
-                font-size: 80%;
-                color: #444;
-            }
-
-            h1,
-            h2,
-            h3 {
-                letter-spacing: -0.01em;
-                line-height: 1.2;
-                font-weight: 600;
-                margin-bottom: 0;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-top: 0;
-                margin-bottom: 0.75em;
-            }
-
-            h1 {
-                font-size: 1.875rem;
-                margin-top: 1.875rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-                margin-top: 1.5rem;
-            }
-
-            h3 {
-                font-size: 1.25rem;
-                margin-top: 1.25rem;
-            }
-
-            .source {
-                border: 1px solid #ddd;
-                border-radius: 3px;
-                padding: 1.5em;
-                word-break: break-all;
-            }
-
-            .callout {
-                border-radius: 3px;
-                padding: 1rem;
-            }
-
-            figure {
-                margin: 1.25em 0;
-                page-break-inside: avoid;
-            }
-
-            figcaption {
-                opacity: 0.5;
-                font-size: 85%;
-                margin-top: 0.5em;
-            }
-
-            mark {
-                background-color: transparent;
-            }
-
-            .indented {
-                padding-left: 1.5em;
-            }
-
-            hr {
-                background: transparent;
-                display: block;
-                width: 100%;
-                height: 1px;
-                visibility: visible;
-                border: none;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            @media only print {
-                img {
-                    max-height: 100vh;
-                    object-fit: contain;
-                }
-            }
-
-            @page {
-                margin: 1in;
-            }
-
-            .collection-content {
-                font-size: 0.875rem;
-            }
-
-            .column-list {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .column {
-                padding: 0 1em;
-            }
-
-            .column:first-child {
-                padding-left: 0;
-            }
-
-            .column:last-child {
-                padding-right: 0;
-            }
-
-            .table_of_contents-item {
-                display: block;
-                font-size: 0.875rem;
-                line-height: 1.3;
-                padding: 0.125rem;
-            }
-
-            .table_of_contents-indent-1 {
-                margin-left: 1.5rem;
-            }
-
-            .table_of_contents-indent-2 {
-                margin-left: 3rem;
-            }
-
-            .table_of_contents-indent-3 {
-                margin-left: 4.5rem;
-            }
-
-            .table_of_contents-link {
-                text-decoration: none;
-                opacity: 0.7;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-            }
-
-            table,
-            th,
-            td {
-                border: 1px solid rgba(55, 53, 47, 0.09);
-                border-collapse: collapse;
-            }
-
-            table {
-                border-left: none;
-                border-right: none;
-            }
-
-            th,
-            td {
-                font-weight: normal;
-                padding: 0.25em 0.5em;
-                line-height: 1.5;
-                min-height: 1.5em;
-                text-align: left;
-            }
-
-            th {
-                color: rgba(55, 53, 47, 0.6);
-            }
-
-            ol,
-            ul {
-                margin: 0;
-                margin-block-start: 0.6em;
-                margin-block-end: 0.6em;
-            }
-
-            li > ol:first-child,
-            li > ul:first-child {
-                margin-block-start: 0.6em;
-            }
-
-            ul > li {
-                list-style: disc;
-            }
-
-            ul.to-do-list {
-                padding-inline-start: 0;
-            }
-
-            ul.to-do-list > li {
-                list-style: none;
-            }
-
-            .to-do-children-checked {
-                text-decoration: line-through;
-                opacity: 0.375;
-            }
-
-            ul.toggle > li {
-                list-style: none;
-            }
-
-            ul {
-                padding-inline-start: 1.7em;
-            }
-
-            ul > li {
-                padding-left: 0.1em;
-            }
-
-            ol {
-                padding-inline-start: 1.6em;
-            }
-
-            ol > li {
-                padding-left: 0.2em;
-            }
-
-            .mono ol {
-                padding-inline-start: 2em;
-            }
-
-            .mono ol > li {
-                text-indent: -0.4em;
-            }
-
-            .toggle {
-                padding-inline-start: 0em;
-                list-style-type: none;
-            }
-
-            /* Indent toggle children */
-            .toggle > li > details {
-                padding-left: 1.7em;
-            }
-
-            .toggle > li > details > summary {
-                margin-left: -1.1em;
-            }
-
-            .selected-value {
-                display: inline-block;
-                padding: 0 0.5em;
-                background: rgba(206, 205, 202, 0.5);
-                border-radius: 3px;
-                margin-right: 0.5em;
-                margin-top: 0.3em;
-                margin-bottom: 0.3em;
-                white-space: nowrap;
-            }
-
-            .collection-title {
-                display: inline-block;
-                margin-right: 1em;
-            }
-
-            .page-description {
-                margin-bottom: 2em;
-            }
-
-            .simple-table {
-                margin-top: 1em;
-                font-size: 0.875rem;
-                empty-cells: show;
-            }
-            .simple-table td {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table th {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table-header-color {
-                background: rgb(247, 246, 243);
-                color: black;
-            }
-            .simple-table-header {
-                font-weight: 500;
-            }
-
-            time {
-                opacity: 0.5;
-            }
-
-            .icon {
-                display: inline-block;
-                max-width: 1.2em;
-                max-height: 1.2em;
-                text-decoration: none;
-                vertical-align: text-bottom;
-                margin-right: 0.5em;
-            }
-
-            img.icon {
-                border-radius: 3px;
-            }
-
-            .user-icon {
-                width: 1.5em;
-                height: 1.5em;
-                border-radius: 100%;
-                margin-right: 0.5rem;
-            }
-
-            .user-icon-inner {
-                font-size: 0.8em;
-            }
-
-            .text-icon {
-                border: 1px solid #000;
-                text-align: center;
-            }
-
-            .page-cover-image {
-                display: block;
-                object-fit: cover;
-                width: 100%;
-                max-height: 30vh;
-            }
-
-            .page-header-icon {
-                font-size: 3rem;
-                margin-bottom: 1rem;
-            }
-
-            .page-header-icon-with-cover {
-                margin-top: -0.72em;
-                margin-left: 0.07em;
-            }
-
-            .page-header-icon img {
-                border-radius: 3px;
-            }
-
-            .link-to-page {
-                margin: 1em 0;
-                padding: 0;
-                border: none;
-                font-weight: 500;
-            }
-
-            p > .user {
-                opacity: 0.5;
-            }
-
-            td > .user,
-            td > time {
-                white-space: nowrap;
-            }
-
-            input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 0.6em;
-                vertical-align: middle;
-            }
-
-            p {
-                margin-top: 0.5em;
-                margin-bottom: 0.5em;
-            }
-
-            .image {
-                border: none;
-                margin: 1.5em 0;
-                padding: 0;
-                border-radius: 0;
-                text-align: center;
-            }
-
-            .code,
-            code {
-                background: rgba(135, 131, 120, 0.15);
-                border-radius: 3px;
-                padding: 0.2em 0.4em;
-                border-radius: 3px;
-                font-size: 85%;
-                tab-size: 2;
-            }
-
-            code {
-                color: #eb5757;
-            }
-
-            .code {
-                padding: 1.5em 1em;
-            }
-
-            .code-wrap {
-                white-space: pre-wrap;
-                word-break: break-all;
-            }
-
-            .code > code {
-                background: none;
-                padding: 0;
-                font-size: 100%;
-                color: inherit;
-            }
-
-            blockquote {
-                font-size: 1.25em;
-                margin: 1em 0;
-                padding-left: 1em;
-                border-left: 3px solid rgb(55, 53, 47);
-            }
-
-            .bookmark {
-                text-decoration: none;
-                max-height: 8em;
-                padding: 0;
-                display: flex;
-                width: 100%;
-                align-items: stretch;
-            }
-
-            .bookmark-title {
-                font-size: 0.85em;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                height: 1.75em;
-                white-space: nowrap;
-            }
-
-            .bookmark-text {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .bookmark-info {
-                flex: 4 1 180px;
-                padding: 12px 14px 14px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-
-            .bookmark-image {
-                width: 33%;
-                flex: 1 1 180px;
-                display: block;
-                position: relative;
-                object-fit: cover;
-                border-radius: 1px;
-            }
-
-            .bookmark-description {
-                color: rgba(55, 53, 47, 0.6);
-                font-size: 0.75em;
-                overflow: hidden;
-                max-height: 4.5em;
-                word-break: break-word;
-            }
-
-            .bookmark-href {
-                font-size: 0.75em;
-                margin-top: 0.25em;
-            }
-
-            .sans {
-                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-                    "Segoe UI Symbol";
-            }
-            .code {
-                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
-            }
-            .serif {
-                font-family: Lyon-Text, Georgia, ui-serif, serif;
-            }
-            .mono {
-                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-            }
-            .pdf .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
-            }
-            .pdf:lang(zh-CN) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
-            }
-            .pdf:lang(zh-TW) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
-            }
-            .pdf:lang(ko-KR) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
-            }
-            .pdf .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK KR";
-            }
-            .pdf .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
-            }
-            .pdf:lang(zh-CN) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
-            }
-            .pdf:lang(zh-TW) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
-            }
-            .pdf:lang(ko-KR) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
-            }
-            .pdf .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
-            }
-            .highlight-default {
-                color: rgba(55, 53, 47, 1);
-            }
-            .highlight-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .highlight-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .highlight-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .highlight-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .highlight-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .highlight-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .highlight-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .highlight-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .highlight-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .highlight-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .highlight-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .highlight-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .highlight-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .highlight-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .highlight-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .highlight-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .highlight-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .highlight-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .block-color-default {
-                color: inherit;
-                fill: inherit;
-            }
-            .block-color-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .block-color-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .block-color-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .block-color-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .block-color-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .block-color-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .block-color-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .block-color-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .block-color-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .block-color-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .block-color-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .block-color-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .block-color-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .block-color-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .block-color-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .block-color-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .block-color-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .block-color-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .select-value-color-interactiveBlue {
-                background-color: rgba(35, 131, 226, 0.07);
-            }
-            .select-value-color-pink {
-                background-color: rgba(245, 224, 233, 1);
-            }
-            .select-value-color-purple {
-                background-color: rgba(232, 222, 238, 1);
-            }
-            .select-value-color-green {
-                background-color: rgba(219, 237, 219, 1);
-            }
-            .select-value-color-gray {
-                background-color: rgba(227, 226, 224, 1);
-            }
-            .select-value-color-translucentGray {
-                background-color: rgba(255, 255, 255, 0.0375);
-            }
-            .select-value-color-orange {
-                background-color: rgba(250, 222, 201, 1);
-            }
-            .select-value-color-brown {
-                background-color: rgba(238, 224, 218, 1);
-            }
-            .select-value-color-red {
-                background-color: rgba(255, 226, 221, 1);
-            }
-            .select-value-color-yellow {
-                background-color: rgba(253, 236, 200, 1);
-            }
-            .select-value-color-blue {
-                background-color: rgba(211, 229, 239, 1);
-            }
-            .select-value-color-pageGlass {
-                background-color: undefined;
-            }
-            .select-value-color-washGlass {
-                background-color: undefined;
-            }
-
-            .checkbox {
-                display: inline-flex;
-                vertical-align: text-bottom;
-                width: 16;
-                height: 16;
-                background-size: 16px;
-                margin-left: 2px;
-                margin-right: 5px;
-            }
-
-            .checkbox-on {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            .checkbox-off {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            /* -------- injections from notionBackup -------- */
-
-            body {
-                white-space: normal !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-
-            .code,
-            code {
-                font-size: 100% !important;
-            }
-
-            blockquote {
-                font-size: 100% !important;
-            }
-
-            .callout {
-                white-space: normal !important;
-            }
-            .callout div:has(span.icon) {
-                font-size: 100% !important;
-            }
-
-            .source:not(.bookmark) {
-                font-size: 100% !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-        </style>
-    </head>
-    <body>
-        <article class="page sans">
-            <header>
-                <h1 class="page-title">Assigment 2</h1>
-                <p class="page-description"></p>
-            </header>
-            <div class="page-body">
-                <nav class="block-color-gray table_of_contents">
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#1c81ac8b-fec5-4d4f-a3aa-d1a39307b68c">Angabe</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#d6d81e3d-190a-4f17-bd2d-7cb5120d251a">Decentralized naming space</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#1e824637-3eec-4768-aadb-d40943e29620">Secure DMAP channel</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#7b2af4d6-0c30-4039-afa1-52ab15e6fad6">Message integrity verification</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#f22f1f29-77dc-4c5b-a9f5-c6c35519ec51">Message client</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#f1b6ad6a-e329-4e6a-b387-808f216d6e26">Protocol Extensions</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#a27eff4a-826c-44c8-afbf-6d97c9536296">Abgabe</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#050bdfb8-cc86-4b1f-bf98-25f6af74e23d">Nameserver</a>
-                    </div>
-                </nav>
-                <p></p>
-                <h1>Angabe</h1>
-                <p>This lesson</p>
-                <div class="indented">
-                    <p>
-                        Java Remote Method Invocation -
-                        <em>RMI</em>
-                    </p>
-                    <p>
-                        Secure handshakes with Java Cryptography API -
-                        <em>JCA</em>
-                    </p>
-                    <p>
-                        Hash based message authentication -
-                        <em>HMAC</em>
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Extension of Assignment 1 by</p>
-                <div class="indented">
-                    <p>Decentralized naming service</p>
-                    <p>“opportunistic encryption” for secure DMAP channels</p>
-                    <p>allowing users the validation of integrity of messages</p>
-                    <p>Message client for users (so that using the mail service gets easier)</p>
-                    <p>Version 2.0 of DMAP and DMTP protocols</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h2>Decentralized naming space</h2>
-                <p><mark class="highlight-blue">Decentralized naming space</mark></p>
-                <div class="indented">
-                    <p>Previously: looking up in config file.</p>
-                    <p>Now a network that must be queried by transferservers.</p>
-                    <div class="indented">
-                        <p>
-                            Top level domain hosted by
-                            <em>root nameserver</em>
-                            .
-                        </p>
-                        <p>Each subdomain / zone is hosted by exactly one nameserver.</p>
-                    </div>
-                    <p></p>
-                    <p>
-                        We use the
-                        <em>RMI registry</em>
-                        for bootstrapping that provides a
-                        <em>remote object</em>
-                        that is known and can be called by new nameservers via RMI.
-                    </p>
-                    <div class="indented">
-                        <p>To connect to a network, a peer needs to know the address of at least one other peer already connected to the network.</p>
-                        <p>The RMI registry has a well-known IP address and can thus be accessed by any peer.</p>
-                    </div>
-                    <p></p>
-                    <p>
-                        Below we have
-                        <code>vienna.earth.planet</code>
-                        and
-                        <code>earth.planet</code>
-                        ,
-                        <code>mars.planet</code>
-                        .
-                    </p>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled.png">
-                        <img style="width: 288px" src="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <p><mark class="highlight-blue">Registration of nameservers (and mailbox servers)</mark></p>
-                <div class="indented">
-                    <p>Done recursively.</p>
-                    <p>Registration request is sent to root and then is forwarded to the parent server.</p>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%201.png">
-                        <img style="width: 288px" src="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%201.png" />
-                    </a>
-                </figure>
-                <figure class="image">
-                    <a href="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%202.png">
-                        <img style="width: 288px" src="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%202.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <p><mark class="highlight-blue">Domain lookup</mark></p>
-                <div class="indented">
-                    <p>Done iteratively.</p>
-                    <p>Transfer server looks up mailbox server IP.</p>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%203.png">
-                        <img style="width: 336px" src="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%203.png" />
-                    </a>
-                    <figcaption>Here we want the IP of @vienna.earth.planet</figcaption>
-                </figure>
-                <p></p>
-                <p><mark class="highlight-blue">Command-line interface</mark></p>
-                <div class="indented">
-                    <p>
-                        <code>nameservers</code>
-                        prints list of nameservers (zones as child nodes)
-                    </p>
-                    <p>
-                        <code>addresses</code>
-                        prints stored mailbox servers
-                    </p>
-                    <p><code>shutdown</code></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h2>Secure DMAP channel</h2>
-                <p>
-                    Currently: TCP without encryption (even when sending passwords via
-                    <code>login</code>
-                    )
-                </p>
-                <p>Opportunistic encryption for DMAP channels by optionally allowing to encrypt.</p>
-                <p><a href="https://en.m.wikipedia.org/wiki/Opportunistic_TLS">https://en.m.wikipedia.org/wiki/Opportunistic_TLS</a></p>
-                <p></p>
-                <p><mark class="highlight-blue">Handshake protocol</mark></p>
-                <div class="indented">
-                    <pre class="code"><code>client establishes connection to DMAP server.
-
-C (plain): startsecure
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>Assigment 2</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+-webkit-print-color-adjust: exact;
+}
+* {
+box-sizing: border-box;
+-webkit-print-color-adjust: exact;
+}html,
+body {
+margin: 0;
+padding: 0;
+}
+@media only screen {
+body {
+margin: 2em auto;
+max-width: 900px;
+color: rgb(55, 53, 47);
+}
+}body {
+line-height: 1.5;
+white-space: pre-wrap;
+}a,
+a.visited {
+color: inherit;
+text-decoration: underline;
+}.pdf-relative-link-path {
+font-size: 80%;
+color: #444;
+}h1,
+h2,
+h3 {
+letter-spacing: -0.01em;
+line-height: 1.2;
+font-weight: 600;
+margin-bottom: 0;
+}.page-title {
+font-size: 2.5rem;
+font-weight: 700;
+margin-top: 0;
+margin-bottom: 0.75em;
+}h1 {
+font-size: 1.875rem;
+margin-top: 1.875rem;
+}h2 {
+font-size: 1.5rem;
+margin-top: 1.5rem;
+}h3 {
+font-size: 1.25rem;
+margin-top: 1.25rem;
+}.source {
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 1.5em;
+word-break: break-all;
+}.callout {
+border-radius: 3px;
+padding: 1rem;
+}figure {
+margin: 1.25em 0;
+page-break-inside: avoid;
+}figcaption {
+opacity: 0.5;
+font-size: 85%;
+margin-top: 0.5em;
+}mark {
+background-color: transparent;
+}.indented {
+padding-left: 1.5em;
+}hr {
+background: transparent;
+display: block;
+width: 100%;
+height: 1px;
+visibility: visible;
+border: none;
+border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}img {
+max-width: 100%;
+}@media only print {
+img {
+max-height: 100vh;
+object-fit: contain;
+}
+}@page {
+margin: 1in;
+}.collection-content {
+font-size: 0.875rem;
+}.column-list {
+display: flex;
+justify-content: space-between;
+}.column {
+padding: 0 1em;
+}.column:first-child {
+padding-left: 0;
+}.column:last-child {
+padding-right: 0;
+}.table_of_contents-item {
+display: block;
+font-size: 0.875rem;
+line-height: 1.3;
+padding: 0.125rem;
+}.table_of_contents-indent-1 {
+margin-left: 1.5rem;
+}.table_of_contents-indent-2 {
+margin-left: 3rem;
+}.table_of_contents-indent-3 {
+margin-left: 4.5rem;
+}.table_of_contents-link {
+text-decoration: none;
+opacity: 0.7;
+border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}table,
+th,
+td {
+border: 1px solid rgba(55, 53, 47, 0.09);
+border-collapse: collapse;
+}table {
+border-left: none;
+border-right: none;
+}th,
+td {
+font-weight: normal;
+padding: 0.25em 0.5em;
+line-height: 1.5;
+min-height: 1.5em;
+text-align: left;
+}th {
+color: rgba(55, 53, 47, 0.6);
+}ol,
+ul {
+margin: 0;
+margin-block-start: 0.6em;
+margin-block-end: 0.6em;
+}li > ol:first-child,
+li > ul:first-child {
+margin-block-start: 0.6em;
+}ul > li {
+list-style: disc;
+}ul.to-do-list {
+padding-inline-start: 0;
+}ul.to-do-list > li {
+list-style: none;
+}.to-do-children-checked {
+text-decoration: line-through;
+opacity: 0.375;
+}ul.toggle > li {
+list-style: none;
+}ul {
+padding-inline-start: 1.7em;
+}ul > li {
+padding-left: 0.1em;
+}ol {
+padding-inline-start: 1.6em;
+}ol > li {
+padding-left: 0.2em;
+}.mono ol {
+padding-inline-start: 2em;
+}.mono ol > li {
+text-indent: -0.4em;
+}.toggle {
+padding-inline-start: 0em;
+list-style-type: none;
+}/* Indent toggle children */
+.toggle > li > details {
+padding-left: 1.7em;
+}.toggle > li > details > summary {
+margin-left: -1.1em;
+}.selected-value {
+display: inline-block;
+padding: 0 0.5em;
+background: rgba(206, 205, 202, 0.5);
+border-radius: 3px;
+margin-right: 0.5em;
+margin-top: 0.3em;
+margin-bottom: 0.3em;
+white-space: nowrap;
+}.collection-title {
+display: inline-block;
+margin-right: 1em;
+}.page-description {
+margin-bottom: 2em;
+}.simple-table {
+margin-top: 1em;
+font-size: 0.875rem;
+empty-cells: show;
+}
+.simple-table td {
+height: 29px;
+min-width: 120px;
+}.simple-table th {
+height: 29px;
+min-width: 120px;
+}.simple-table-header-color {
+background: rgb(247, 246, 243);
+color: black;
+}
+.simple-table-header {
+font-weight: 500;
+}time {
+opacity: 0.5;
+}.icon {
+display: inline-block;
+max-width: 1.2em;
+max-height: 1.2em;
+text-decoration: none;
+vertical-align: text-bottom;
+margin-right: 0.5em;
+}img.icon {
+border-radius: 3px;
+}.user-icon {
+width: 1.5em;
+height: 1.5em;
+border-radius: 100%;
+margin-right: 0.5rem;
+}.user-icon-inner {
+font-size: 0.8em;
+}.text-icon {
+border: 1px solid #000;
+text-align: center;
+}.page-cover-image {
+display: block;
+object-fit: cover;
+width: 100%;
+max-height: 30vh;
+}.page-header-icon {
+font-size: 3rem;
+margin-bottom: 1rem;
+}.page-header-icon-with-cover {
+margin-top: -0.72em;
+margin-left: 0.07em;
+}.page-header-icon img {
+border-radius: 3px;
+}.link-to-page {
+margin: 1em 0;
+padding: 0;
+border: none;
+font-weight: 500;
+}p > .user {
+opacity: 0.5;
+}td > .user,
+td > time {
+white-space: nowrap;
+}input[type="checkbox"] {
+transform: scale(1.5);
+margin-right: 0.6em;
+vertical-align: middle;
+}p {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}.image {
+border: none;
+margin: 1.5em 0;
+padding: 0;
+border-radius: 0;
+text-align: center;
+}.code,
+code {
+background: rgba(135, 131, 120, 0.15);
+border-radius: 3px;
+padding: 0.2em 0.4em;
+border-radius: 3px;
+font-size: 85%;
+tab-size: 2;
+}code {
+color: #eb5757;
+}.code {
+padding: 1.5em 1em;
+}.code-wrap {
+white-space: pre-wrap;
+word-break: break-all;
+}.code > code {
+background: none;
+padding: 0;
+font-size: 100%;
+color: inherit;
+}blockquote {
+font-size: 1.25em;
+margin: 1em 0;
+padding-left: 1em;
+border-left: 3px solid rgb(55, 53, 47);
+}.bookmark {
+text-decoration: none;
+max-height: 8em;
+padding: 0;
+display: flex;
+width: 100%;
+align-items: stretch;
+}.bookmark-title {
+font-size: 0.85em;
+overflow: hidden;
+text-overflow: ellipsis;
+height: 1.75em;
+white-space: nowrap;
+}.bookmark-text {
+display: flex;
+flex-direction: column;
+}.bookmark-info {
+flex: 4 1 180px;
+padding: 12px 14px 14px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}.bookmark-image {
+width: 33%;
+flex: 1 1 180px;
+display: block;
+position: relative;
+object-fit: cover;
+border-radius: 1px;
+}.bookmark-description {
+color: rgba(55, 53, 47, 0.6);
+font-size: 0.75em;
+overflow: hidden;
+max-height: 4.5em;
+word-break: break-word;
+}.bookmark-href {
+font-size: 0.75em;
+margin-top: 0.25em;
+}.sans {
+font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+"Segoe UI Symbol";
+}
+.code {
+font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+}
+.serif {
+font-family: Lyon-Text, Georgia, ui-serif, serif;
+}
+.mono {
+font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+}
+.pdf .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+}
+.pdf:lang(zh-CN) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+}
+.pdf:lang(zh-TW) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+}
+.pdf:lang(ko-KR) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+}
+.pdf .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK KR";
+}
+.pdf .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+}
+.pdf:lang(zh-CN) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+}
+.pdf:lang(zh-TW) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+}
+.pdf:lang(ko-KR) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+}
+.pdf .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+}
+.highlight-default {
+color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+color: inherit;
+fill: inherit;
+}
+.block-color-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue {
+background-color: rgba(35, 131, 226, 0.07);
+}
+.select-value-color-pink {
+background-color: rgba(245, 224, 233, 1);
+}
+.select-value-color-purple {
+background-color: rgba(232, 222, 238, 1);
+}
+.select-value-color-green {
+background-color: rgba(219, 237, 219, 1);
+}
+.select-value-color-gray {
+background-color: rgba(227, 226, 224, 1);
+}
+.select-value-color-translucentGray {
+background-color: rgba(255, 255, 255, 0.0375);
+}
+.select-value-color-orange {
+background-color: rgba(250, 222, 201, 1);
+}
+.select-value-color-brown {
+background-color: rgba(238, 224, 218, 1);
+}
+.select-value-color-red {
+background-color: rgba(255, 226, 221, 1);
+}
+.select-value-color-yellow {
+background-color: rgba(253, 236, 200, 1);
+}
+.select-value-color-blue {
+background-color: rgba(211, 229, 239, 1);
+}
+.select-value-color-pageGlass {
+background-color: undefined;
+}
+.select-value-color-washGlass {
+background-color: undefined;
+}.checkbox {
+display: inline-flex;
+vertical-align: text-bottom;
+width: 16;
+height: 16;
+background-size: 16px;
+margin-left: 2px;
+margin-right: 5px;
+}.checkbox-on {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}.checkbox-off {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}/* -------- injections from notionBackup -------- */body {
+white-space: normal !important;
+}p {
+min-height: 1em !important;
+}.code,
+code {
+font-size: 100% !important;
+}blockquote {
+font-size: 100% !important;
+}.callout {
+white-space: normal !important;
+}
+.callout div:has(span.icon) {
+font-size: 100% !important;
+}.source:not(.bookmark) {
+font-size: 100% !important;
+}p {
+min-height: 1em !important;
+}
+</style></head><body><article class="page sans"><header><h1 class="page-title">Assigment 2</h1><p class="page-description"></p></header><div class="page-body"><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1c81ac8b-fec5-4d4f-a3aa-d1a39307b68c">Angabe</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d6d81e3d-190a-4f17-bd2d-7cb5120d251a">Decentralized naming space</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1e824637-3eec-4768-aadb-d40943e29620">Secure DMAP channel</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7b2af4d6-0c30-4039-afa1-52ab15e6fad6">Message integrity verification</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f22f1f29-77dc-4c5b-a9f5-c6c35519ec51">Message client</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f1b6ad6a-e329-4e6a-b387-808f216d6e26">Protocol Extensions</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a27eff4a-826c-44c8-afbf-6d97c9536296">Abgabe</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#050bdfb8-cc86-4b1f-bf98-25f6af74e23d">Nameserver</a></div></nav><p></p><h1>Angabe</h1><p>This lesson</p><div class="indented"><p>
+Java Remote Method Invocation -
+<em>RMI</em></p><p>
+Secure handshakes with Java Cryptography API -
+<em>JCA</em></p><p>
+Hash based message authentication -
+<em>HMAC</em></p></div><p></p><p></p><p>Extension of Assignment 1 by</p><div class="indented"><p>Decentralized naming service</p><p>“opportunistic encryption” for secure DMAP channels</p><p>allowing users the validation of integrity of messages</p><p>Message client for users (so that using the mail service gets easier)</p><p>Version 2.0 of DMAP and DMTP protocols</p></div><p></p><p></p><p></p><h2>Decentralized naming space</h2><p><mark class="highlight-blue">Decentralized naming space</mark></p><div class="indented"><p>Previously: looking up in config file.</p><p>Now a network that must be queried by transferservers.</p><div class="indented"><p>
+Top level domain hosted by
+<em>root nameserver</em>
+.
+</p><p>Each subdomain / zone is hosted by exactly one nameserver.</p></div><p></p><p>
+We use the
+<em>RMI registry</em>
+for bootstrapping that provides a
+<em>remote object</em>
+that is known and can be called by new nameservers via RMI.
+</p><div class="indented"><p>To connect to a network, a peer needs to know the address of at least one other peer already connected to the network.</p><p>The RMI registry has a well-known IP address and can thus be accessed by any peer.</p></div><p></p><p>
+Below we have
+<code>vienna.earth.planet</code>
+and
+<code>earth.planet</code>
+,
+<code>mars.planet</code>
+.
+</p></div><p></p><figure class="image"><a href="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled.png"><img src="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled.png" style="width: 288px"/></a></figure><p></p><p><mark class="highlight-blue">Registration of nameservers (and mailbox servers)</mark></p><div class="indented"><p>Done recursively.</p><p>Registration request is sent to root and then is forwarded to the parent server.</p></div><p></p><figure class="image"><a href="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%201.png"><img src="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%201.png" style="width: 288px"/></a></figure><figure class="image"><a href="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%202.png"><img src="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%202.png" style="width: 288px"/></a></figure><p></p><p><mark class="highlight-blue">Domain lookup</mark></p><div class="indented"><p>Done iteratively.</p><p>Transfer server looks up mailbox server IP.</p></div><p></p><figure class="image"><a href="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%203.png"><img src="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%203.png" style="width: 336px"/></a><figcaption>Here we want the IP of @vienna.earth.planet</figcaption></figure><p></p><p><mark class="highlight-blue">Command-line interface</mark></p><div class="indented"><p><code>nameservers</code>
+prints list of nameservers (zones as child nodes)
+</p><p><code>addresses</code>
+prints stored mailbox servers
+</p><p><code>shutdown</code></p></div><p></p><p></p><p></p><h2>Secure DMAP channel</h2><p>
+Currently: TCP without encryption (even when sending passwords via
+<code>login</code>
+)
+</p><p>Opportunistic encryption for DMAP channels by optionally allowing to encrypt.</p><p><a href="https://en.m.wikipedia.org/wiki/Opportunistic_TLS">https://en.m.wikipedia.org/wiki/Opportunistic_TLS</a></p><p></p><p><mark class="highlight-blue">Handshake protocol</mark></p><div class="indented"><pre class="code"><code>client establishes connection to DMAP server.C (plain): startsecure
 S (plain): ok &lt;component-id of server&gt;
-client then looks up servers public key via its component-id.
-
-C (RSA): ok &lt;client-challenge&gt; &lt;secret-key&gt; &lt;iv&gt;
+client then looks up servers public key via its component-id.C (RSA): ok &lt;client-challenge&gt; &lt;secret-key&gt; &lt;iv&gt;
 client wants server to prove its identity
 (eveything encrypted with the servers public key)
 - challenge: random 32 byte number
 - secret-key: for AES (symmetrical is faster than asymmetrical)
-- initialization-vector: for AES
-
-S (AES): ok &lt;client-challenge&gt;
+- initialization-vector: for AESS (AES): ok &lt;client-challenge&gt;
 server returns decrypted challenge from client
-C (AES): ok</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h2>Message integrity verification</h2>
-                <p>Client side application allows sigining and verifying messages</p>
-                <div class="indented"><p>using encryped hash message authentication codes HMAC.</p></div>
-                <p></p>
-                <p></p>
-                <p>The sender and recipient of a message share a common-secret-key (inserted by message client).</p>
-                <div class="indented">
-                    <p>
-                        Sender: creates 32-byte hash from message, sent via
-                        <code>hash</code>
-                        command.
-                    </p>
-                    <p>
-                        Recipient: calculates hash with common-secret-key and and compares it with the passed of the
-                        <code>hash</code>
-                        command.
-                    </p>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>Message client</h2>
-                <p>Standalone command-line application configured for a specific user.</p>
-                <p>Stores the user username, password, email address, transfer and mailbox server details in a property file.</p>
-                <p>Allows:</p>
-                <div class="indented">
-                    <p>encryption, decryption</p>
-                    <p>signing, verifying messages</p>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%204.png">
-                        <img style="width: 384px" src="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%204.png" />
-                    </a>
-                </figure>
-                <p><mark class="highlight-blue">Commands</mark></p>
-                <div class="indented">
-                    <p>
-                        <code>inbox</code>
-                        Composition of DMAP
-                        <code>list</code>
-                        and
-                        <code>show &lt;id&gt;</code>
-                    </p>
-                    <p>
-                        <code>delete &lt;message-id&gt;</code>
-                        deletes
-                    </p>
-                    <p>
-                        <code>verify &lt;message-id&gt;</code>
-                        verifies
-                    </p>
-                    <p>
-                        <code>msg &lt;to&gt; "&lt;subject&gt;" "&lt;data&gt;"</code>
-                        establishes DMTP connection, sends message
-                    </p>
-                    <p>
-                        <code>shutdown</code>
-                        logs client out from DMAP session
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h2>Protocol Extensions</h2>
-                <p><mark class="highlight-blue">DMAP 2.0</mark></p>
-                <div class="indented">
-                    <p>All output lists end with an “ok” so that client-application knows when lines end.</p>
-                    <p>
-                        <code>startsecure</code>
-                        secure connection
-                    </p>
-                    <p>
-                        <code>show</code>
-                        must now also show hash fields
-                    </p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">DMTP 2.0</mark></p>
-                <div class="indented">
-                    <p>
-                        <code>hash &lt;message-hash&gt;</code>
-                        attaches hash to a message (calculated by client)
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h1>Abgabe</h1>
-                <h2>Nameserver</h2>
-                <p>Each nameserver is represented by a remote object that can be called via the network.</p>
-                <div class="indented">
-                    <p>
-                        <em>root-server</em>
-                        bound to RMI registry, hosted by the server itself (known IP)
-                    </p>
-                    <p>accessible by every other server.</p>
-                    <p>
-                        <em>zone-server</em>
-                        stored in-memory by parents.
-                    </p>
-                    <p></p>
-                </div>
-                <p></p>
-                <p>Nameservers are</p>
-                <div class="indented">
-                    <p>called by mailbox-servers to register mail domains</p>
-                    <p>called by transfer-servers to lookup domains</p>
-                    <p>called by other nameservers to register new zones</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Parameters</mark></p>
-                <div class="indented">
-                    <p>
-                        <code>root_id</code>
-                        name that the remote object is bound to
-                    </p>
-                    <p>
-                        <code>registry.host</code>
-                        host name or IP address of RMI registry
-                    </p>
-                    <p>
-                        <code>registry.port</code>
-                        port of RMI registry
-                    </p>
-                    <p>
-                        <code>domain</code>
-                        domain managed by this nameserver → the
-                        <em>root</em>
-                        does not have this
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-            </div>
-        </article>
-    </body>
-</html>
+C (AES): ok</code></pre></div><p></p><p></p><p></p><h2>Message integrity verification</h2><p>Client side application allows sigining and verifying messages</p><div class="indented"><p>using encryped hash message authentication codes HMAC.</p></div><p></p><p></p><p>The sender and recipient of a message share a common-secret-key (inserted by message client).</p><div class="indented"><p>
+Sender: creates 32-byte hash from message, sent via
+<code>hash</code>
+command.
+</p><p>
+Recipient: calculates hash with common-secret-key and and compares it with the passed of the
+<code>hash</code>
+command.
+</p><p></p></div><p></p><p></p><h2>Message client</h2><p>Standalone command-line application configured for a specific user.</p><p>Stores the user username, password, email address, transfer and mailbox server details in a property file.</p><p>Allows:</p><div class="indented"><p>encryption, decryption</p><p>signing, verifying messages</p></div><p></p><figure class="image"><a href="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%204.png"><img src="Assigment%202%20dd8815a7e0534916ad5730826ba9e7ab/Untitled%204.png" style="width: 384px"/></a></figure><p><mark class="highlight-blue">Commands</mark></p><div class="indented"><p><code>inbox</code>
+Composition of DMAP
+<code>list</code>
+and
+<code>show &lt;id&gt;</code></p><p><code>delete &lt;message-id&gt;</code>
+deletes
+</p><p><code>verify &lt;message-id&gt;</code>
+verifies
+</p><p><code>msg &lt;to&gt; "&lt;subject&gt;" "&lt;data&gt;"</code>
+establishes DMTP connection, sends message
+</p><p><code>shutdown</code>
+logs client out from DMAP session
+</p></div><p></p><p></p><p></p><h2>Protocol Extensions</h2><p><mark class="highlight-blue">DMAP 2.0</mark></p><div class="indented"><p>All output lists end with an “ok” so that client-application knows when lines end.</p><p><code>startsecure</code>
+secure connection
+</p><p><code>show</code>
+must now also show hash fields
+</p></div><p></p><p><mark class="highlight-blue">DMTP 2.0</mark></p><div class="indented"><p><code>hash &lt;message-hash&gt;</code>
+attaches hash to a message (calculated by client)
+</p></div><p></p><p></p><p></p><p></p><h1>Abgabe</h1><h2>Nameserver</h2><p>Each nameserver is represented by a remote object that can be called via the network.</p><div class="indented"><p><em>root-server</em>
+bound to RMI registry, hosted by the server itself (known IP)
+</p><p>accessible by every other server.</p><p><em>zone-server</em>
+stored in-memory by parents.
+</p><p></p></div><p></p><p>Nameservers are</p><div class="indented"><p>called by mailbox-servers to register mail domains</p><p>called by transfer-servers to lookup domains</p><p>called by other nameservers to register new zones</p></div><p></p><p></p><p><mark class="highlight-blue">Parameters</mark></p><div class="indented"><p><code>root_id</code>
+name that the remote object is bound to
+</p><p><code>registry.host</code>
+host name or IP address of RMI registry
+</p><p><code>registry.port</code>
+port of RMI registry
+</p><p><code>domain</code>
+domain managed by this nameserver → the
+<em>root</em>
+does not have this
+</p></div><p></p><p></p><p></p></div></article></body></html>

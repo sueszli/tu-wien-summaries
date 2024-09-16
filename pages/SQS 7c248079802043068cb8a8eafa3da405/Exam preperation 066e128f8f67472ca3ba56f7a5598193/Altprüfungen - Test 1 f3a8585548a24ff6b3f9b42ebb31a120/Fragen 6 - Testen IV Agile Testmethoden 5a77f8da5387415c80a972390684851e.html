@@ -1,1680 +1,727 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Fragen 6 - Testen IV: Agile Testmethoden</title>
-        <style>
-            /* cspell:disable-file */
-            /* webkit printing magic: print all background colors */
-            html {
-                -webkit-print-color-adjust: exact;
-            }
-            * {
-                box-sizing: border-box;
-                -webkit-print-color-adjust: exact;
-            }
-
-            html,
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            @media only screen {
-                body {
-                    margin: 2em auto;
-                    max-width: 900px;
-                    color: rgb(55, 53, 47);
-                }
-            }
-
-            body {
-                line-height: 1.5;
-                white-space: pre-wrap;
-            }
-
-            a,
-            a.visited {
-                color: inherit;
-                text-decoration: underline;
-            }
-
-            .pdf-relative-link-path {
-                font-size: 80%;
-                color: #444;
-            }
-
-            h1,
-            h2,
-            h3 {
-                letter-spacing: -0.01em;
-                line-height: 1.2;
-                font-weight: 600;
-                margin-bottom: 0;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-top: 0;
-                margin-bottom: 0.75em;
-            }
-
-            h1 {
-                font-size: 1.875rem;
-                margin-top: 1.875rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-                margin-top: 1.5rem;
-            }
-
-            h3 {
-                font-size: 1.25rem;
-                margin-top: 1.25rem;
-            }
-
-            .source {
-                border: 1px solid #ddd;
-                border-radius: 3px;
-                padding: 1.5em;
-                word-break: break-all;
-            }
-
-            .callout {
-                border-radius: 3px;
-                padding: 1rem;
-            }
-
-            figure {
-                margin: 1.25em 0;
-                page-break-inside: avoid;
-            }
-
-            figcaption {
-                opacity: 0.5;
-                font-size: 85%;
-                margin-top: 0.5em;
-            }
-
-            mark {
-                background-color: transparent;
-            }
-
-            .indented {
-                padding-left: 1.5em;
-            }
-
-            hr {
-                background: transparent;
-                display: block;
-                width: 100%;
-                height: 1px;
-                visibility: visible;
-                border: none;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            @media only print {
-                img {
-                    max-height: 100vh;
-                    object-fit: contain;
-                }
-            }
-
-            @page {
-                margin: 1in;
-            }
-
-            .collection-content {
-                font-size: 0.875rem;
-            }
-
-            .column-list {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .column {
-                padding: 0 1em;
-            }
-
-            .column:first-child {
-                padding-left: 0;
-            }
-
-            .column:last-child {
-                padding-right: 0;
-            }
-
-            .table_of_contents-item {
-                display: block;
-                font-size: 0.875rem;
-                line-height: 1.3;
-                padding: 0.125rem;
-            }
-
-            .table_of_contents-indent-1 {
-                margin-left: 1.5rem;
-            }
-
-            .table_of_contents-indent-2 {
-                margin-left: 3rem;
-            }
-
-            .table_of_contents-indent-3 {
-                margin-left: 4.5rem;
-            }
-
-            .table_of_contents-link {
-                text-decoration: none;
-                opacity: 0.7;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-            }
-
-            table,
-            th,
-            td {
-                border: 1px solid rgba(55, 53, 47, 0.09);
-                border-collapse: collapse;
-            }
-
-            table {
-                border-left: none;
-                border-right: none;
-            }
-
-            th,
-            td {
-                font-weight: normal;
-                padding: 0.25em 0.5em;
-                line-height: 1.5;
-                min-height: 1.5em;
-                text-align: left;
-            }
-
-            th {
-                color: rgba(55, 53, 47, 0.6);
-            }
-
-            ol,
-            ul {
-                margin: 0;
-                margin-block-start: 0.6em;
-                margin-block-end: 0.6em;
-            }
-
-            li > ol:first-child,
-            li > ul:first-child {
-                margin-block-start: 0.6em;
-            }
-
-            ul > li {
-                list-style: disc;
-            }
-
-            ul.to-do-list {
-                padding-inline-start: 0;
-            }
-
-            ul.to-do-list > li {
-                list-style: none;
-            }
-
-            .to-do-children-checked {
-                text-decoration: line-through;
-                opacity: 0.375;
-            }
-
-            ul.toggle > li {
-                list-style: none;
-            }
-
-            ul {
-                padding-inline-start: 1.7em;
-            }
-
-            ul > li {
-                padding-left: 0.1em;
-            }
-
-            ol {
-                padding-inline-start: 1.6em;
-            }
-
-            ol > li {
-                padding-left: 0.2em;
-            }
-
-            .mono ol {
-                padding-inline-start: 2em;
-            }
-
-            .mono ol > li {
-                text-indent: -0.4em;
-            }
-
-            .toggle {
-                padding-inline-start: 0em;
-                list-style-type: none;
-            }
-
-            /* Indent toggle children */
-            .toggle > li > details {
-                padding-left: 1.7em;
-            }
-
-            .toggle > li > details > summary {
-                margin-left: -1.1em;
-            }
-
-            .selected-value {
-                display: inline-block;
-                padding: 0 0.5em;
-                background: rgba(206, 205, 202, 0.5);
-                border-radius: 3px;
-                margin-right: 0.5em;
-                margin-top: 0.3em;
-                margin-bottom: 0.3em;
-                white-space: nowrap;
-            }
-
-            .collection-title {
-                display: inline-block;
-                margin-right: 1em;
-            }
-
-            .page-description {
-                margin-bottom: 2em;
-            }
-
-            .simple-table {
-                margin-top: 1em;
-                font-size: 0.875rem;
-                empty-cells: show;
-            }
-            .simple-table td {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table th {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table-header-color {
-                background: rgb(247, 246, 243);
-                color: black;
-            }
-            .simple-table-header {
-                font-weight: 500;
-            }
-
-            time {
-                opacity: 0.5;
-            }
-
-            .icon {
-                display: inline-block;
-                max-width: 1.2em;
-                max-height: 1.2em;
-                text-decoration: none;
-                vertical-align: text-bottom;
-                margin-right: 0.5em;
-            }
-
-            img.icon {
-                border-radius: 3px;
-            }
-
-            .user-icon {
-                width: 1.5em;
-                height: 1.5em;
-                border-radius: 100%;
-                margin-right: 0.5rem;
-            }
-
-            .user-icon-inner {
-                font-size: 0.8em;
-            }
-
-            .text-icon {
-                border: 1px solid #000;
-                text-align: center;
-            }
-
-            .page-cover-image {
-                display: block;
-                object-fit: cover;
-                width: 100%;
-                max-height: 30vh;
-            }
-
-            .page-header-icon {
-                font-size: 3rem;
-                margin-bottom: 1rem;
-            }
-
-            .page-header-icon-with-cover {
-                margin-top: -0.72em;
-                margin-left: 0.07em;
-            }
-
-            .page-header-icon img {
-                border-radius: 3px;
-            }
-
-            .link-to-page {
-                margin: 1em 0;
-                padding: 0;
-                border: none;
-                font-weight: 500;
-            }
-
-            p > .user {
-                opacity: 0.5;
-            }
-
-            td > .user,
-            td > time {
-                white-space: nowrap;
-            }
-
-            input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 0.6em;
-                vertical-align: middle;
-            }
-
-            p {
-                margin-top: 0.5em;
-                margin-bottom: 0.5em;
-            }
-
-            .image {
-                border: none;
-                margin: 1.5em 0;
-                padding: 0;
-                border-radius: 0;
-                text-align: center;
-            }
-
-            .code,
-            code {
-                background: rgba(135, 131, 120, 0.15);
-                border-radius: 3px;
-                padding: 0.2em 0.4em;
-                border-radius: 3px;
-                font-size: 85%;
-                tab-size: 2;
-            }
-
-            code {
-                color: #eb5757;
-            }
-
-            .code {
-                padding: 1.5em 1em;
-            }
-
-            .code-wrap {
-                white-space: pre-wrap;
-                word-break: break-all;
-            }
-
-            .code > code {
-                background: none;
-                padding: 0;
-                font-size: 100%;
-                color: inherit;
-            }
-
-            blockquote {
-                font-size: 1.25em;
-                margin: 1em 0;
-                padding-left: 1em;
-                border-left: 3px solid rgb(55, 53, 47);
-            }
-
-            .bookmark {
-                text-decoration: none;
-                max-height: 8em;
-                padding: 0;
-                display: flex;
-                width: 100%;
-                align-items: stretch;
-            }
-
-            .bookmark-title {
-                font-size: 0.85em;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                height: 1.75em;
-                white-space: nowrap;
-            }
-
-            .bookmark-text {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .bookmark-info {
-                flex: 4 1 180px;
-                padding: 12px 14px 14px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-
-            .bookmark-image {
-                width: 33%;
-                flex: 1 1 180px;
-                display: block;
-                position: relative;
-                object-fit: cover;
-                border-radius: 1px;
-            }
-
-            .bookmark-description {
-                color: rgba(55, 53, 47, 0.6);
-                font-size: 0.75em;
-                overflow: hidden;
-                max-height: 4.5em;
-                word-break: break-word;
-            }
-
-            .bookmark-href {
-                font-size: 0.75em;
-                margin-top: 0.25em;
-            }
-
-            .sans {
-                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-                    "Segoe UI Symbol";
-            }
-            .code {
-                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
-            }
-            .serif {
-                font-family: Lyon-Text, Georgia, ui-serif, serif;
-            }
-            .mono {
-                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-            }
-            .pdf .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
-            }
-            .pdf:lang(zh-CN) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
-            }
-            .pdf:lang(zh-TW) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
-            }
-            .pdf:lang(ko-KR) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
-            }
-            .pdf .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK KR";
-            }
-            .pdf .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
-            }
-            .pdf:lang(zh-CN) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
-            }
-            .pdf:lang(zh-TW) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
-            }
-            .pdf:lang(ko-KR) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
-            }
-            .pdf .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
-            }
-            .highlight-default {
-                color: rgba(55, 53, 47, 1);
-            }
-            .highlight-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .highlight-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .highlight-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .highlight-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .highlight-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .highlight-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .highlight-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .highlight-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .highlight-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .highlight-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .highlight-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .highlight-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .highlight-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .highlight-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .highlight-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .highlight-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .highlight-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .highlight-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .block-color-default {
-                color: inherit;
-                fill: inherit;
-            }
-            .block-color-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .block-color-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .block-color-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .block-color-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .block-color-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .block-color-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .block-color-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .block-color-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .block-color-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .block-color-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .block-color-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .block-color-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .block-color-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .block-color-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .block-color-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .block-color-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .block-color-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .block-color-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .select-value-color-interactiveBlue {
-                background-color: rgba(35, 131, 226, 0.07);
-            }
-            .select-value-color-pink {
-                background-color: rgba(245, 224, 233, 1);
-            }
-            .select-value-color-purple {
-                background-color: rgba(232, 222, 238, 1);
-            }
-            .select-value-color-green {
-                background-color: rgba(219, 237, 219, 1);
-            }
-            .select-value-color-gray {
-                background-color: rgba(227, 226, 224, 1);
-            }
-            .select-value-color-translucentGray {
-                background-color: rgba(255, 255, 255, 0.0375);
-            }
-            .select-value-color-orange {
-                background-color: rgba(250, 222, 201, 1);
-            }
-            .select-value-color-brown {
-                background-color: rgba(238, 224, 218, 1);
-            }
-            .select-value-color-red {
-                background-color: rgba(255, 226, 221, 1);
-            }
-            .select-value-color-yellow {
-                background-color: rgba(253, 236, 200, 1);
-            }
-            .select-value-color-blue {
-                background-color: rgba(211, 229, 239, 1);
-            }
-            .select-value-color-pageGlass {
-                background-color: undefined;
-            }
-            .select-value-color-washGlass {
-                background-color: undefined;
-            }
-
-            .checkbox {
-                display: inline-flex;
-                vertical-align: text-bottom;
-                width: 16;
-                height: 16;
-                background-size: 16px;
-                margin-left: 2px;
-                margin-right: 5px;
-            }
-
-            .checkbox-on {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            .checkbox-off {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            /* -------- injections from notionBackup -------- */
-
-            body {
-                white-space: normal !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-
-            .code,
-            code {
-                font-size: 100% !important;
-            }
-
-            blockquote {
-                font-size: 100% !important;
-            }
-
-            .callout {
-                white-space: normal !important;
-            }
-            .callout div:has(span.icon) {
-                font-size: 100% !important;
-            }
-
-            .source:not(.bookmark) {
-                font-size: 100% !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-        </style>
-    </head>
-    <body>
-        <article class="page sans">
-            <header>
-                <h1 class="page-title">Fragen 6 - Testen IV: Agile Testmethoden</h1>
-                <p class="page-description"></p>
-            </header>
-            <div class="page-body">
-                <p></p>
-                <p><mark class="highlight-blue">Agile Softwareentwicklung (allgemein)</mark></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><del>Agile Softwareentwicklung (allgemein)</del></summary>
-                            <p><mark class="highlight-blue">Whole-Team approach</mark></p>
-                            <div class="indented"><p>Tester werden wie Entwickler behandelt</p></div>
-                            <p></p>
-                            <p></p>
-                            <p><mark class="highlight-blue">Agile Manifesto 2001 (zusammengefasst)</mark></p>
-                            <div class="indented">
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Individuen und Interaktionen &gt; Prozesse und Werkzeuge</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Funktionierende Software &gt; Dokumentation</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Zusammenarbeit mit Kunden &gt; Vertragsverhandlungen</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Reagieren auf Veränderungen &gt; Befolgen von Plänen</li>
-                                </ul>
-                                <ul class="toggle">
-                                    <li>
-                                        <details open="">
-                                            <summary>
-                                                <mark class="highlight-teal"><em>Ausführliches Manifesto</em></mark>
-                                            </summary>
-                                            <ul class="bulleted-list">
-                                                <li style="list-style-type: disc">
-                                                    Höchste Priorität: Kunden früh und kontinuierlich gute Software ausliefern und zufriedenzustellen.
-                                                </li>
-                                            </ul>
-                                            <ul class="bulleted-list">
-                                                <li style="list-style-type: disc">
-                                                    Anforderungsänderungen auch in später Entwicklung in Ordnung.
-                                                    <p>Veränderungen = Wettbewerbsvorteil des Kunden.</p>
-                                                </li>
-                                            </ul>
-                                            <ul class="bulleted-list">
-                                                <li style="list-style-type: disc">
-                                                    Funktionierende Software regelmäßig innerhalb wenigen Wochen / Monate liefern.
-                                                </li>
-                                            </ul>
-                                            <ul class="bulleted-list">
-                                                <li style="list-style-type: disc">
-                                                    Fachexperten und Entwickler müssen während des Projektes täglich zusammenarbeiten.
-                                                </li>
-                                            </ul>
-                                            <ul class="bulleted-list">
-                                                <li style="list-style-type: disc">
-                                                    Entwicklern wird benötigte Unterstützung und Umfeld gegeben und darauf vertraut, dass sie die Aufgabe
-                                                    erledigen.
-                                                    <p>Die besten Architekturen, Anforderungen und Entwürfe entstehen durch selbstorganisierte Teams.</p>
-                                                </li>
-                                            </ul>
-                                            <ul class="bulleted-list">
-                                                <li style="list-style-type: disc">
-                                                    Informationen an und innerhalb eines Entwicklungsteams von Angesicht zu Angesicht.
-                                                </li>
-                                            </ul>
-                                            <ul class="bulleted-list">
-                                                <li style="list-style-type: disc">Funktionierende Software ist das wichtigste Fortschrittsmaß.</li>
-                                            </ul>
-                                            <ul class="bulleted-list">
-                                                <li style="list-style-type: disc">
-                                                    Nachhaltige Entwicklung fördern - gleichmäßiges Tempo dauerhaft halten können.
-                                                </li>
-                                            </ul>
-                                            <ul class="bulleted-list">
-                                                <li style="list-style-type: disc">Technische Exzellenz und gutes Design fördert Agilität.</li>
-                                            </ul>
-                                            <ul class="bulleted-list">
-                                                <li style="list-style-type: disc">Einfachheit: Menge nicht getaner Arbeit nicht maximieren.</li>
-                                            </ul>
-                                            <ul class="bulleted-list">
-                                                <li style="list-style-type: disc">
-                                                    In regelmäßigen Abständen reflektiert das Team, wie es effektiver werden kann und passt sein Verhalten
-                                                    entsprechend an.
-                                                </li>
-                                            </ul>
-                                        </details>
-                                    </li>
-                                </ul>
-                            </div>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <p><mark class="highlight-blue">Scrum</mark></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><del>Scrum Begriffe</del></summary>
-                            <p>
-                                <mark class="highlight-blue">Sprint</mark>
-                                kurze, gleich lange Iterationen des Projekts - 2 bis 4 Wochen
-                            </p>
-                            <p>
-                                <mark class="highlight-blue">Inkrement</mark>
-                                Jeder Sprint soll auslieferbares Produkt erzeugen, dass pro Sprint wächst
-                            </p>
-                            <p>= Produkterweiterung</p>
-                            <p>
-                                <mark class="highlight-blue">Product Backlog</mark>
-                                priorisierte Liste von Feature die sich ändern kann (geführt von Product Owner)
-                            </p>
-                            <p><em>Die Änderung nennt man Backlog Refinement.</em></p>
-                            <p>
-                                <mark class="highlight-blue">Sprint Backlog</mark>
-                                Dinge aus Product Backlog für den aktuellen Sprint ausgewählt wurden
-                            </p>
-                            <p>
-                                <mark class="highlight-blue">Definition of Done</mark>
-                                Kriterien anhand denen entschieden wird, ob Inkrement abgeschlossen
-                            </p>
-                            <p>
-                                <mark class="highlight-blue">Timeboxing</mark>
-                                Nur so viel in Sprint-Backlog aufnehmen wie realistisch umsetzbar
-                            </p>
-                            <p>
-                                <mark class="highlight-blue">Transparenz</mark>
-                                Sprint Status im Daily Scrum / Stand-up Meeting aktualisieren
-                            </p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><del>Scrum Rollen</del></summary>
-                            <p><mark class="highlight-blue">Scrum Master</mark></p>
-                            <div class="indented">
-                                <p>Verantwortlich für Umsetzung und Verfolgung, Auflösung von Fragen, Hindernissen (Impediments)</p>
-                                <p>Keine Teamleitung sondern Coach</p>
-                            </div>
-                            <p></p>
-                            <p><mark class="highlight-blue">Product Owner</mark></p>
-                            <div class="indented">
-                                <p>Person verantwortlich für Backlog, Vertritt Kunden für Team</p>
-                                <p>verantwortlich für Produkteigenschaften</p>
-                            </div>
-                            <p></p>
-                            <p><mark class="highlight-blue">Entwicklungsteam</mark></p>
-                            <div class="indented">
-                                <p>Entwicklung und Testen des Produkts</p>
-                                <p>Selbstorganisiert: Keine Teamleitung, Entscheidungen gemeinsam getroffen, funktionsübergreifende Zusammenarbeit</p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><del>Scrum Prozess</del></summary>
-                            <figure class="image">
-                                <a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled.png">
-                                    <img
-                                        style="width: 132px"
-                                        src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled.png" />
-                                </a>
-                            </figure>
-                            <figure class="image">
-                                <a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%201.png">
-                                    <img
-                                        style="width: 132px"
-                                        src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%201.png" />
-                                </a>
-                            </figure>
-                            <figure class="image">
-                                <a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%202.png">
-                                    <img
-                                        style="width: 144px"
-                                        src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%202.png" />
-                                </a>
-                                <figcaption>Taskboard</figcaption>
-                            </figure>
-                            <p></p>
-                            <p><mark class="highlight-blue">Iteration Zero</mark></p>
-                            <div class="indented">
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">
-                                        Task Boards aufstellen, Product Backlogs vervollständigen → Projektumfangs einschätzen
-                                    </li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">
-                                        Initiale Systemarchitektur, erste Prototypen, notwendige Werkzeuge (für Testmanagement, Fehlermanagement,
-                                        Testautomatisierung, continuous Integration)
-                                    </li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">
-                                        Initiale Teststrategie für alle Teststufen.
-                                        <p>Bestimmung von: Testumfang, technische Risiken, Testarten und überdeckungsziele</p>
-                                    </li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Initiale Qualitätsrisikoanalyse</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Definition von Metriken für: Testfortschritt, Produktqualität</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Definition of Done</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">
-                                        Definition des Zeitpunktes andem nicht mehr getestet werden soll, bevor System an Kunden geliefert wird
-                                    </li>
-                                </ul>
-                            </div>
-                            <p></p>
-                            <p><mark class="highlight-blue">Estimation / Aufwandsabschätzung</mark></p>
-                            <div class="indented">
-                                <p><mark class="highlight-gray">Aufwand = Komplexität, Schwierigkeitsgrad (inkl Testen, da Whole-team approach)</mark></p>
-                                <p>In Story-Points (1, 2, 3, 5, 7, 13, ...) oder T-Shirt größen (S, M, L, XL)</p>
-                                <p>Planning Poker</p>
-                            </div>
-                            <p></p>
-                            <p><mark class="highlight-blue">Iterationsplanung</mark></p>
-                            <div class="indented">
-                                <p>Meeting mit kompletten Team (auch Tester)</p>
-                                <div class="indented">
-                                    <ul class="toggle">
-                                        <li>
-                                            <details open="">
-                                                <summary><em>Mehrwert von Tester in Iterationsplanung</em></summary>
-                                                <ul class="bulleted-list">
-                                                    <li style="list-style-type: disc">Risikoanalyse, Testbarkeit, Abnahmetests für US</li>
-                                                </ul>
-                                                <ul class="bulleted-list">
-                                                    <li style="list-style-type: disc">Zerlegung in Testaufgaben mit Testaufwand</li>
-                                                </ul>
-                                                <ul class="bulleted-list">
-                                                    <li style="list-style-type: disc">Hilfe bei Testautomatisierung</li>
-                                                </ul>
-                                            </details>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <p></p>
-                                <p>Priorisierung von offenen US im Product Backlog</p>
-                                <p>Aufwandsabschätzung (falls nicht bereits erfolgt)</p>
-                                <p>Diskussion vom Scope des Sprints und Team-Commitment</p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><mark class="highlight-blue">Sprint Review</mark></p>
-                            <div class="indented">
-                                <p>Formale Abhname der US: Demo gegenüber von Stakeholder und Owner</p>
-                                <p>Unvollständige US landen in den nächsten Sprint</p>
-                            </div>
-                            <p></p>
-                            <p><mark class="highlight-blue">Retrospective</mark></p>
-                            <div class="indented">
-                                <p>
-                                    Team-Sitzung am Ende jeder Iteration: Was erfolgreich war, was verbessert werden könnte - Prozess, Beteiligte und deren
-                                    Organisation und Beziehungen, Werkzeuge
-                                </p>
-                            </div>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <p><mark class="highlight-blue">User stories</mark></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>User Stories</summary>
-                            <p>
-                                Anforderungen aus der Sicht eines Fachbereichsvertreter (Funktionale und Nicht-Funktionale Eigenschaften) und Abnahmekriterien
-                            </p>
-                            <p>Befinden sich im Product-Backlog</p>
-                            <p>Spezifikation</p>
-                            <hr />
-                            <p>
-                                Konstrukt: As a
-                                <em>[user role]</em>
-                                , I want to
-                                <em>[goal]</em>
-                                , so that I can
-                                <em>[reason]</em>
-                                .
-                            </p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>User Story Card</summary>
-                            <ol type="1" class="numbered-list" start="1">
-                                <li>
-                                    Card
-                                    <p>Das physische Medium, dass die Userstory beschreibt.</p>
-                                    <p>genaue Anforderung, Drinklichkeit, erwartete Test und Entwicklungsdauer, Abnahmekriterien</p>
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="2">
-                                <li>
-                                    Conversation
-                                    <p>Diskussion die erklärt wie Software genutzt werden soll</p>
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="3">
-                                <li>
-                                    Confirmation
-                                    <p>Abnahmekriterien die in Diskussion festgelegt werden Bestätigung des Abschlusses der Userstory.</p>
-                                </li>
-                            </ol>
-                            <hr />
-                            <ul class="toggle">
-                                <li>
-                                    <details open="">
-                                        <summary>Beispiel</summary>
-                                        <figure class="image">
-                                            <a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%203.png">
-                                                <img
-                                                    style="width: 384px"
-                                                    src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%203.png" />
-                                            </a>
-                                        </figure>
-                                        <p>Confirmation</p>
-                                        <ol type="1" class="numbered-list" start="1">
-                                            <li>
-                                                Success-valid user logged in and referred to home page. a. “Remember me” ticked - store cookie/ automatic login
-                                                next timne. b. “Remember me” not ticked -force login next time.
-                                            </li>
-                                        </ol>
-                                        <ol type="1" class="numbered-list" start="2">
-                                            <li>
-                                                Failure- display message: a) "Email address in wrong format" b) "Unrecognised user name, please try again" c)
-                                                Incorrect password, please try again" d) "Service unavailable, please try again" e) Account has expired- refer
-                                                to account renewal sales page.
-                                            </li>
-                                        </ol>
-                                    </details>
-                                </li>
-                            </ul>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>User Stories: Kriterien für Anforderungsreview (Definition of Done)</summary>
-                            <p>basierend auf Definition of Ready</p>
-                            <p>
-                                – Vollständigkeit – Konsistenz – Unmissverständlichkeit – Realisierbarkeit – Testbarkeit – Tracability – Spezifisch – Messbar –
-                                Durchführbarkeit innerhalb eines Sprints – Unabhängigkeit
-                            </p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <p>
-                    <del><mark class="highlight-blue">Kanban</mark></del>
-                </p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><del>Kanban</del></summary>
-                            <p>Ziel: Soll wie Arbeitsfluss in Wertschöpfungskette sein und optimiert werden.</p>
-                            <p>
-                                <mark class="highlight-blue">Kanban Board</mark>
-                                Visualisierung von Wertschöpfungskette
-                            </p>
-                            <p>
-                                <mark class="highlight-blue">WIP-Limit</mark>
-                                Limitierte Anzahl der gleichzeitig erledigten Aufgaben (Work in Progress)
-                            </p>
-                            <p>
-                                <mark class="highlight-blue">Lead Time</mark>
-                                Optimierung durch Senkung der durchschnittlichen Bearbeitungszeit
-                            </p>
-                            <figure class="image">
-                                <a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%204.png">
-                                    <img
-                                        style="width: 192px"
-                                        src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%204.png" />
-                                </a>
-                                <figcaption>Taskboard verglichen zu Scrum</figcaption>
-                            </figure>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <p><mark class="highlight-blue">Tester in Scrum</mark></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Tester in Scrum</summary>
-                            <p><mark class="highlight-blue">Keine Tester im Scrum Prozess</mark></p>
-                            <div class="indented">
-                                <p>Testen ist Teil der Entwicklung (Unit Tests, TDD)</p>
-                                <p>Akzetanztests durch Owner, Kunde nach jedem Sprint</p>
-                            </div>
-                            <p></p>
-                            <p><mark class="highlight-blue">Vorteil von eigenen Testern</mark></p>
-                            <div class="indented">
-                                <p>Fokus auf Kundensicht statt technische implementierung</p>
-                                <p>Fokus auf Fehler anstatt von Verfikation der Vollständigkeit</p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Aufgaben eines Testers in Scrum</summary>
-                            <p>
-                                – Statisches Testen (Anforderungen, Dokumentation) – Dynamisches Testen (Ausführung von Akzeptanztests) – Erstellung von
-                                Akzeptanztests – Verwaltung von Testfällen im Source Code Manager SCM – Unterstützung bei Unit Tests und TTD – Test Ansatz,
-                                Planung – Regressionstests (manuell &amp; automatisiert) – Risikoanalyse, Risikoabschätzung – Schätzung, Tracability von Tests
-                                der User Stories – Demonstration während des Sprint Reviews – Erstellung und Wartung von automatisierten Tests – Unterstützung
-                                bei Akzeptanztests
-                            </p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><del>Spezialisierte Testrollen</del></summary>
-                            <p>Entweder außerhalb des Teams und nur bei kritischen Punkten aufgerufen oder in Team vollzeit Integriert:</p>
-                            <p>– Security – Performance und Stresstests – Usability – Portability – Wartbarkeit</p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><del>Test-Manager Aufgaben</del></summary>
-                            <p>
-                                – Mentoring – Personalmanagement – Aufteilung der Testressourcen über Teams – Wissenstransfer – Training und Entwicklungsplanung
-                                – Test Strategie / Ansatz – Test Planung – Identifikation, Analyse und Verhinderung von Risiken – Bindeglied zwischen Business
-                                und Stakeholdern – ...
-                            </p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <p><mark class="highlight-blue">Agile Testmethoden</mark></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>CI</summary>
-                            <p><mark class="highlight-blue">Continous Integration CI</mark></p>
-                            <div class="indented">
-                                <p>Nach jeder Iteration muss funktionierende Software vorliegen.</p>
-                                <p>Kontinuierlich (min 1x am Tag oder bei Änderungen) automatisiert in CI-Pipeline durchgeführt:</p>
-                                <p><em>Komponenten miteinander zusammenführen (Integration)</em></p>
-                                <div class="indented">
-                                    <p>Konfigurationsmanagement</p>
-                                    <p>Kompilierung</p>
-                                    <p>Build</p>
-                                    <p>Verteilung in Production Environment</p>
-                                    <p>Ausführung in Testumgebung (Berechnung von Metriken zB Test converage)</p>
-                                </div>
-                                <p></p>
-                                <p>Aktivitäten:</p>
-                                <div class="indented">
-                                    <p>Statische Codeanalyse</p>
-                                    <p>Kompilieren und Linken, executable herstellen</p>
-                                    <p>Unittests, Code Coverage</p>
-                                    <p>Deployment (Bereitstellung), Installieren der Software in einer Testumgebung</p>
-                                    <p>Integrationstests, Systemtests in Testumgebung</p>
-                                    <p>Dashboard</p>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <figure class="image">
-                                <a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%206.png">
-                                    <img
-                                        style="width: 240px"
-                                        src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%206.png" />
-                                </a>
-                            </figure>
-                            <figure class="image">
-                                <a
-                                    href="../../3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%206.png">
-                                    <img
-                                        style="width: 144px"
-                                        src="../../3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%206.png" />
-                                </a>
-                            </figure>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><del>Code reviews, Pull requests</del></summary>
-                            <p><mark class="highlight-blue">Code-Reviews, Pull Requests</mark></p>
-                            <div class="indented">
-                                <p>Workflows / Pipeline in Versionierungssystemen (SCM): Verwendung von Branching-Modelle für verpflichtende Code Reviews</p>
-                                <div class="indented"><p>Pull-Requests, Merge nach Review</p></div>
-                                <p></p>
-                                <p>Änderungen von stabiler Codelinie ist ohne Review / QA Überprüfung (oder CI) nicht möglich</p>
-                                <p>
-                                    <em><mark class="highlight-gray">Siehe:</mark></em>
-                                    <em>
-                                        <mark class="highlight-gray">
-                                            <a href="https://help.github.com/articles/about-pull-request-reviews/">
-                                                https://help.github.com/articles/about-pull-request-reviews/
-                                            </a>
-                                        </mark>
-                                    </em>
-                                </p>
-                            </div>
-                            <p></p>
-                            <figure class="image">
-                                <a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%207.png">
-                                    <img
-                                        style="width: 240px"
-                                        src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%207.png" />
-                                </a>
-                            </figure>
-                            <figure class="image">
-                                <a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%208.png">
-                                    <img
-                                        style="width: 240px"
-                                        src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%208.png" />
-                                </a>
-                            </figure>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><del>CD</del></summary>
-                            <p><mark class="highlight-blue">Continuous Delivery / Deployment</mark></p>
-                            <div class="indented">
-                                <p>Auslieferung / Deployment / Release erfolgt automatisiert nach Qualitätsüberprüfung</p>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Continuous Delivery: Automatisches deployment von Artefakten</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">
-                                        Continuous Deployment: Automatische Installation in Produktion
-                                        <p><mark class="highlight-gray">zB: Continuous Deployment der Netflix API</mark></p>
-                                        <p>
-                                            <em><mark class="highlight-gray">Siehe:</mark></em>
-                                            <em>
-                                                <mark class="highlight-gray">
-                                                    <a href="https://medium.com/netflix-techblog/preparing-the-netflix-api-for-deployment-786d8f58090d">
-                                                        https://medium.com/netflix-techblog/preparing-the-netflix-api-for-deployment-786d8f58090d
-                                                    </a>
-                                                </mark>
-                                            </em>
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div>
-                            <p></p>
-                            <figure class="image">
-                                <a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%209.png">
-                                    <img
-                                        style="width: 240px"
-                                        src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%209.png" />
-                                </a>
-                            </figure>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <p><mark class="highlight-blue">Agile Testmethoden</mark></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>TDD</summary>
-                            <p><mark class="highlight-blue">Test driven development TDD / testgetriebene Entwicklung</mark></p>
-                            <div class="indented">
-                                <p>eher Unit-Tests, automatisiert in CI</p>
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>
-                                        <mark class="highlight-teal">Think</mark>
-                                        <p>– Auswahl der Anforderungen die implementiert werden sollen – Testfall-Spezifikation</p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        <mark class="highlight-teal">Red</mark>
-                                        <p>Implementierung und Ausführung der Testfälle</p>
-                                        <div class="indented"><p>– Alle Tests müssen fehlschlagen</p></div>
-                                        <p></p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="3">
-                                    <li>
-                                        <mark class="highlight-teal">Green</mark>
-                                        <p>Implementierung der Komponenten und Klassen und Ausführung der Testfälle</p>
-                                        <div class="indented">
-                                            <p>– erfolgreich → weiter bei Schritt 4, Refactor – schlägt fehlt → weiter bei Schritt 3, Green</p>
-                                        </div>
-                                        <p></p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="4">
-                                    <li>
-                                        <mark class="highlight-teal">Refactor</mark>
-                                        <p>Optimierung der Implementierung ohne Änderung der Funktionalität, Ausführung der Testfälle.</p>
-                                        <div class="indented">
-                                            <p>– Testfälle dürfen nicht fehlschlagen. – Auswahl der nächsten Anforderung (weiter zu Schritt 1)</p>
-                                        </div>
-                                        <p></p>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <figure class="image">
-                                <a
-                                    href="../../3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%205.png">
-                                    <img
-                                        style="width: 60px"
-                                        src="../../3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%205.png" />
-                                </a>
-                            </figure>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Abnahmegetriebene Entwicklung</summary>
-                            <p>US enthält Abnahmekriterien, Test</p>
-                            <div class="indented"><p>Stakeholder können Funktionalität durch Tests nachvollziehen (Abnahmekriterien).</p></div>
-                            <p></p>
-                            <p><mark class="highlight-gray">Wiederverwendbare Tests für Regressionserstellung.</mark></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>BDD</summary>
-                            <p>
-                                Entwickler testet
-                                <em>erwartetes Verhalten</em>
-                            </p>
-                            <div class="indented"><p>Stakeholder können Funktionalität durch Tests nachvollziehen (Abnahmekriterien).</p></div>
-                            <p></p>
-                            <p>In manchen Frameworks Gherkin-Format (deklarativ) → automatische Testerstellung:</p>
-                            <div class="indented">
-                                <p><em>Gegeben ein Einstiegskontext, Wenn ein Ereignis auftritt, Dann werden bestimmte Wirkungen sichergestellt</em></p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Blackbox test design in agiler Softwareentwicklung</summary>
-                            <p>In agilen Projekten Tests gleichzeitig mit Komponenten entwickelt (nach US, Abnahmekriterien)</p>
-                            <p>
-                                <em>
-                                    Blackbox Testentwurfsverfahren: Äquivalenzklassenbildung, Grenzwertanalyse (um Testwerte auszuwählen),
-                                    Entscheidungstabellen, zustandsbasierte Tests.
-                                </em>
-                            </p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Exploratives testen</summary>
-                            <p>Wichtig wegen begrenzter Zeit für Testanalyse und Detailgenauigkeit der US.</p>
-                            <p>zusätzlich zu anderen Testentwurfsverfahren</p>
-                            <p>basiert auf Intuition, Erfahrung des Testers</p>
-                            <div class="indented"><p>zB Erfahrung aus anderen Projekten, Stellen die unter Zeitdruck entstanden sind etc.</p></div>
-                            <p></p>
-                            <p>muss dokumentiert werden</p>
-                            <p>Vorgehen:</p>
-                            <div class="indented">
-                                <p>
-                                    – Erfahrungsbasiertes Verfahren – Riskobasiertes Testen – Anforderungsbasiertes Testen – Modellbasiertes Testen –
-                                    Regessionsvermeidendes Testen
-                                </p>
-                            </div>
-                            <p></p>
-                            <p>Testsitzungen beinhalten:</p>
-                            <div class="indented">
-                                <p>
-                                    – Überblickssitzung um zu lernen, wie es funktioniert – Analysesitzung Bewertung von Funktionalität, Eigenschaften – Genaue
-                                    Überdeckung Ausnahmefälle, Szenarien, Interaktionen
-                                </p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><del>Agile Testpraktiken</del></summary>
-                            <p><mark class="highlight-blue">Pairing</mark></p>
-                            <div class="indented">
-                                <p>
-                                    2 Teammitglieder (beliebig: Entwickler, Tester, Owner) setzten sich zusammen um Test oder andere Sprintaufgabe zu
-                                    bearbeiten.
-                                </p>
-                            </div>
-                            <p></p>
-                            <p><mark class="highlight-blue">Inkrementelles Test Design</mark></p>
-                            <div class="indented"><p>Testfälle, Chartas aus US aufgebaut.</p></div>
-                            <p></p>
-                            <p><mark class="highlight-blue">Mind Mapping</mark></p>
-                            <div class="indented"><p>zum Finden und Beschreiben von Teststrategien.</p></div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <p><mark class="highlight-blue">Akzeptanzkriterien</mark></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Definition of Done / Abnahmekriterien</summary>
-                            <p><mark class="highlight-blue">Definition of Done</mark></p>
-                            <div class="indented"><p>Kriterien anhand denen entschieden wird, ob Inkrement abgeschlossen</p></div>
-                            <p></p>
-                            <p></p>
-                            <p><mark class="highlight-blue">Abnahmekriterien / Definition of Done</mark></p>
-                            <div class="indented">
-                                <p>Abnahmekriterien mit Abnahmetests getestet:</p>
-                                <div class="indented">
-                                    <p>
-                                        – Funktionales Verhalten – Qualitätsmerkmale – Szenarios (Use Cases) – Geschäftsprozessregeln – Externe Schnittstellen –
-                                        Einschränkungen – Datendefinitionen
-                                    </p>
-                                </div>
-                                <p></p>
-                                <p><em>Userstories</em></p>
-                                <div class="indented">
-                                    <p>
-                                        – Ausgewählte US für Iteration sind reviewed, vollständig, verständlich und haben detaillierte, testbare
-                                        Abnahmekriterien. – Abnahmetests als Testbeschreibung, Testscript bereitgestellt. – Aufgaben für die Implementierung,
-                                        Testen identifiziert und Aufwand eingeschätzt.
-                                    </p>
-                                </div>
-                                <p></p>
-                                <p><em>Iteration</em></p>
-                                <div class="indented">
-                                    <p>
-                                        – Alle Features der Iteration fertig entwickelt, nach Feature-Level Kriterien getestet. – Nicht-kritischen Fehler, die
-                                        nicht behoben wurden im Product Backlog und priorisiert. – Integration aller Feature erfolgt, getestet. – Dokumentation
-                                        nach Review abgenommen.
-                                    </p>
-                                </div>
-                                <p></p>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <figure class="image">
-                                <a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%2010.png">
-                                    <img
-                                        style="width: 192px"
-                                        src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%2010.png" />
-                                </a>
-                            </figure>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Testen von Akzeptanzkriterien (Beispiel)</summary>
-                            <p>Beispiel: Registrieren Funktion</p>
-                            <div class="indented">
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>
-                                        Conditions of Satisfaction
-                                        <p>Welche Bedingungen, Anforderungen gibt es? “Passwörter dürfen nicht knackbar sein”</p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        Acceptance Criteria
-                                        <p>Wann gilt ein Passwort als “nicht knackbar”?</p>
-                                        <p>
-                                            – Mind. 8 Zeichen, aber nicht mehr als 12 – Darf nur alphanumerische Zeichen beinhalten – Muss mind. eine Zahl
-                                            beinhalten – Muss mind. einen Buchstaben beinhalten
-                                        </p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="3">
-                                    <li>
-                                        Examples
-                                        <p>Erstellung von Testdaten: “abc123”, “abcdefghi”, “1aaaaaaaaa”, “ajx972dab”</p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="4">
-                                    <li>
-                                        Executable Examples
-                                        <p>Durch BDD:</p>
-                                        <pre class="code"><code>Given the "Unregistered User" user has navigated to the "register" page
-
-When entering "newuser" in the "Username" field
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>Fragen 6 - Testen IV: Agile Testmethoden</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+-webkit-print-color-adjust: exact;
+}
+* {
+box-sizing: border-box;
+-webkit-print-color-adjust: exact;
+}html,
+body {
+margin: 0;
+padding: 0;
+}
+@media only screen {
+body {
+margin: 2em auto;
+max-width: 900px;
+color: rgb(55, 53, 47);
+}
+}body {
+line-height: 1.5;
+white-space: pre-wrap;
+}a,
+a.visited {
+color: inherit;
+text-decoration: underline;
+}.pdf-relative-link-path {
+font-size: 80%;
+color: #444;
+}h1,
+h2,
+h3 {
+letter-spacing: -0.01em;
+line-height: 1.2;
+font-weight: 600;
+margin-bottom: 0;
+}.page-title {
+font-size: 2.5rem;
+font-weight: 700;
+margin-top: 0;
+margin-bottom: 0.75em;
+}h1 {
+font-size: 1.875rem;
+margin-top: 1.875rem;
+}h2 {
+font-size: 1.5rem;
+margin-top: 1.5rem;
+}h3 {
+font-size: 1.25rem;
+margin-top: 1.25rem;
+}.source {
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 1.5em;
+word-break: break-all;
+}.callout {
+border-radius: 3px;
+padding: 1rem;
+}figure {
+margin: 1.25em 0;
+page-break-inside: avoid;
+}figcaption {
+opacity: 0.5;
+font-size: 85%;
+margin-top: 0.5em;
+}mark {
+background-color: transparent;
+}.indented {
+padding-left: 1.5em;
+}hr {
+background: transparent;
+display: block;
+width: 100%;
+height: 1px;
+visibility: visible;
+border: none;
+border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}img {
+max-width: 100%;
+}@media only print {
+img {
+max-height: 100vh;
+object-fit: contain;
+}
+}@page {
+margin: 1in;
+}.collection-content {
+font-size: 0.875rem;
+}.column-list {
+display: flex;
+justify-content: space-between;
+}.column {
+padding: 0 1em;
+}.column:first-child {
+padding-left: 0;
+}.column:last-child {
+padding-right: 0;
+}.table_of_contents-item {
+display: block;
+font-size: 0.875rem;
+line-height: 1.3;
+padding: 0.125rem;
+}.table_of_contents-indent-1 {
+margin-left: 1.5rem;
+}.table_of_contents-indent-2 {
+margin-left: 3rem;
+}.table_of_contents-indent-3 {
+margin-left: 4.5rem;
+}.table_of_contents-link {
+text-decoration: none;
+opacity: 0.7;
+border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}table,
+th,
+td {
+border: 1px solid rgba(55, 53, 47, 0.09);
+border-collapse: collapse;
+}table {
+border-left: none;
+border-right: none;
+}th,
+td {
+font-weight: normal;
+padding: 0.25em 0.5em;
+line-height: 1.5;
+min-height: 1.5em;
+text-align: left;
+}th {
+color: rgba(55, 53, 47, 0.6);
+}ol,
+ul {
+margin: 0;
+margin-block-start: 0.6em;
+margin-block-end: 0.6em;
+}li > ol:first-child,
+li > ul:first-child {
+margin-block-start: 0.6em;
+}ul > li {
+list-style: disc;
+}ul.to-do-list {
+padding-inline-start: 0;
+}ul.to-do-list > li {
+list-style: none;
+}.to-do-children-checked {
+text-decoration: line-through;
+opacity: 0.375;
+}ul.toggle > li {
+list-style: none;
+}ul {
+padding-inline-start: 1.7em;
+}ul > li {
+padding-left: 0.1em;
+}ol {
+padding-inline-start: 1.6em;
+}ol > li {
+padding-left: 0.2em;
+}.mono ol {
+padding-inline-start: 2em;
+}.mono ol > li {
+text-indent: -0.4em;
+}.toggle {
+padding-inline-start: 0em;
+list-style-type: none;
+}/* Indent toggle children */
+.toggle > li > details {
+padding-left: 1.7em;
+}.toggle > li > details > summary {
+margin-left: -1.1em;
+}.selected-value {
+display: inline-block;
+padding: 0 0.5em;
+background: rgba(206, 205, 202, 0.5);
+border-radius: 3px;
+margin-right: 0.5em;
+margin-top: 0.3em;
+margin-bottom: 0.3em;
+white-space: nowrap;
+}.collection-title {
+display: inline-block;
+margin-right: 1em;
+}.page-description {
+margin-bottom: 2em;
+}.simple-table {
+margin-top: 1em;
+font-size: 0.875rem;
+empty-cells: show;
+}
+.simple-table td {
+height: 29px;
+min-width: 120px;
+}.simple-table th {
+height: 29px;
+min-width: 120px;
+}.simple-table-header-color {
+background: rgb(247, 246, 243);
+color: black;
+}
+.simple-table-header {
+font-weight: 500;
+}time {
+opacity: 0.5;
+}.icon {
+display: inline-block;
+max-width: 1.2em;
+max-height: 1.2em;
+text-decoration: none;
+vertical-align: text-bottom;
+margin-right: 0.5em;
+}img.icon {
+border-radius: 3px;
+}.user-icon {
+width: 1.5em;
+height: 1.5em;
+border-radius: 100%;
+margin-right: 0.5rem;
+}.user-icon-inner {
+font-size: 0.8em;
+}.text-icon {
+border: 1px solid #000;
+text-align: center;
+}.page-cover-image {
+display: block;
+object-fit: cover;
+width: 100%;
+max-height: 30vh;
+}.page-header-icon {
+font-size: 3rem;
+margin-bottom: 1rem;
+}.page-header-icon-with-cover {
+margin-top: -0.72em;
+margin-left: 0.07em;
+}.page-header-icon img {
+border-radius: 3px;
+}.link-to-page {
+margin: 1em 0;
+padding: 0;
+border: none;
+font-weight: 500;
+}p > .user {
+opacity: 0.5;
+}td > .user,
+td > time {
+white-space: nowrap;
+}input[type="checkbox"] {
+transform: scale(1.5);
+margin-right: 0.6em;
+vertical-align: middle;
+}p {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}.image {
+border: none;
+margin: 1.5em 0;
+padding: 0;
+border-radius: 0;
+text-align: center;
+}.code,
+code {
+background: rgba(135, 131, 120, 0.15);
+border-radius: 3px;
+padding: 0.2em 0.4em;
+border-radius: 3px;
+font-size: 85%;
+tab-size: 2;
+}code {
+color: #eb5757;
+}.code {
+padding: 1.5em 1em;
+}.code-wrap {
+white-space: pre-wrap;
+word-break: break-all;
+}.code > code {
+background: none;
+padding: 0;
+font-size: 100%;
+color: inherit;
+}blockquote {
+font-size: 1.25em;
+margin: 1em 0;
+padding-left: 1em;
+border-left: 3px solid rgb(55, 53, 47);
+}.bookmark {
+text-decoration: none;
+max-height: 8em;
+padding: 0;
+display: flex;
+width: 100%;
+align-items: stretch;
+}.bookmark-title {
+font-size: 0.85em;
+overflow: hidden;
+text-overflow: ellipsis;
+height: 1.75em;
+white-space: nowrap;
+}.bookmark-text {
+display: flex;
+flex-direction: column;
+}.bookmark-info {
+flex: 4 1 180px;
+padding: 12px 14px 14px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}.bookmark-image {
+width: 33%;
+flex: 1 1 180px;
+display: block;
+position: relative;
+object-fit: cover;
+border-radius: 1px;
+}.bookmark-description {
+color: rgba(55, 53, 47, 0.6);
+font-size: 0.75em;
+overflow: hidden;
+max-height: 4.5em;
+word-break: break-word;
+}.bookmark-href {
+font-size: 0.75em;
+margin-top: 0.25em;
+}.sans {
+font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+"Segoe UI Symbol";
+}
+.code {
+font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+}
+.serif {
+font-family: Lyon-Text, Georgia, ui-serif, serif;
+}
+.mono {
+font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+}
+.pdf .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+}
+.pdf:lang(zh-CN) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+}
+.pdf:lang(zh-TW) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+}
+.pdf:lang(ko-KR) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+}
+.pdf .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK KR";
+}
+.pdf .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+}
+.pdf:lang(zh-CN) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+}
+.pdf:lang(zh-TW) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+}
+.pdf:lang(ko-KR) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+}
+.pdf .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+}
+.highlight-default {
+color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+color: inherit;
+fill: inherit;
+}
+.block-color-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue {
+background-color: rgba(35, 131, 226, 0.07);
+}
+.select-value-color-pink {
+background-color: rgba(245, 224, 233, 1);
+}
+.select-value-color-purple {
+background-color: rgba(232, 222, 238, 1);
+}
+.select-value-color-green {
+background-color: rgba(219, 237, 219, 1);
+}
+.select-value-color-gray {
+background-color: rgba(227, 226, 224, 1);
+}
+.select-value-color-translucentGray {
+background-color: rgba(255, 255, 255, 0.0375);
+}
+.select-value-color-orange {
+background-color: rgba(250, 222, 201, 1);
+}
+.select-value-color-brown {
+background-color: rgba(238, 224, 218, 1);
+}
+.select-value-color-red {
+background-color: rgba(255, 226, 221, 1);
+}
+.select-value-color-yellow {
+background-color: rgba(253, 236, 200, 1);
+}
+.select-value-color-blue {
+background-color: rgba(211, 229, 239, 1);
+}
+.select-value-color-pageGlass {
+background-color: undefined;
+}
+.select-value-color-washGlass {
+background-color: undefined;
+}.checkbox {
+display: inline-flex;
+vertical-align: text-bottom;
+width: 16;
+height: 16;
+background-size: 16px;
+margin-left: 2px;
+margin-right: 5px;
+}.checkbox-on {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}.checkbox-off {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}/* -------- injections from notionBackup -------- */body {
+white-space: normal !important;
+}p {
+min-height: 1em !important;
+}.code,
+code {
+font-size: 100% !important;
+}blockquote {
+font-size: 100% !important;
+}.callout {
+white-space: normal !important;
+}
+.callout div:has(span.icon) {
+font-size: 100% !important;
+}.source:not(.bookmark) {
+font-size: 100% !important;
+}p {
+min-height: 1em !important;
+}
+</style></head><body><article class="page sans"><header><h1 class="page-title">Fragen 6 - Testen IV: Agile Testmethoden</h1><p class="page-description"></p></header><div class="page-body"><p></p><p><mark class="highlight-blue">Agile Softwareentwicklung (allgemein)</mark></p><ul class="toggle"><li><details open=""><summary><del>Agile Softwareentwicklung (allgemein)</del></summary><p><mark class="highlight-blue">Whole-Team approach</mark></p><div class="indented"><p>Tester werden wie Entwickler behandelt</p></div><p></p><p></p><p><mark class="highlight-blue">Agile Manifesto 2001 (zusammengefasst)</mark></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Individuen und Interaktionen &gt; Prozesse und Werkzeuge</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Funktionierende Software &gt; Dokumentation</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Zusammenarbeit mit Kunden &gt; Vertragsverhandlungen</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Reagieren auf Veränderungen &gt; Befolgen von Plänen</li></ul><ul class="toggle"><li><details open=""><summary><mark class="highlight-teal"><em>Ausführliches Manifesto</em></mark></summary><ul class="bulleted-list"><li style="list-style-type: disc">
+Höchste Priorität: Kunden früh und kontinuierlich gute Software ausliefern und zufriedenzustellen.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Anforderungsänderungen auch in später Entwicklung in Ordnung.
+<p>Veränderungen = Wettbewerbsvorteil des Kunden.</p></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Funktionierende Software regelmäßig innerhalb wenigen Wochen / Monate liefern.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Fachexperten und Entwickler müssen während des Projektes täglich zusammenarbeiten.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Entwicklern wird benötigte Unterstützung und Umfeld gegeben und darauf vertraut, dass sie die Aufgabe
+erledigen.
+<p>Die besten Architekturen, Anforderungen und Entwürfe entstehen durch selbstorganisierte Teams.</p></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Informationen an und innerhalb eines Entwicklungsteams von Angesicht zu Angesicht.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Funktionierende Software ist das wichtigste Fortschrittsmaß.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Nachhaltige Entwicklung fördern - gleichmäßiges Tempo dauerhaft halten können.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Technische Exzellenz und gutes Design fördert Agilität.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Einfachheit: Menge nicht getaner Arbeit nicht maximieren.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+In regelmäßigen Abständen reflektiert das Team, wie es effektiver werden kann und passt sein Verhalten
+entsprechend an.
+</li></ul></details></li></ul></div><p></p></details></li></ul><p></p><p><mark class="highlight-blue">Scrum</mark></p><ul class="toggle"><li><details open=""><summary><del>Scrum Begriffe</del></summary><p><mark class="highlight-blue">Sprint</mark>
+kurze, gleich lange Iterationen des Projekts - 2 bis 4 Wochen
+</p><p><mark class="highlight-blue">Inkrement</mark>
+Jeder Sprint soll auslieferbares Produkt erzeugen, dass pro Sprint wächst
+</p><p>= Produkterweiterung</p><p><mark class="highlight-blue">Product Backlog</mark>
+priorisierte Liste von Feature die sich ändern kann (geführt von Product Owner)
+</p><p><em>Die Änderung nennt man Backlog Refinement.</em></p><p><mark class="highlight-blue">Sprint Backlog</mark>
+Dinge aus Product Backlog für den aktuellen Sprint ausgewählt wurden
+</p><p><mark class="highlight-blue">Definition of Done</mark>
+Kriterien anhand denen entschieden wird, ob Inkrement abgeschlossen
+</p><p><mark class="highlight-blue">Timeboxing</mark>
+Nur so viel in Sprint-Backlog aufnehmen wie realistisch umsetzbar
+</p><p><mark class="highlight-blue">Transparenz</mark>
+Sprint Status im Daily Scrum / Stand-up Meeting aktualisieren
+</p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary><del>Scrum Rollen</del></summary><p><mark class="highlight-blue">Scrum Master</mark></p><div class="indented"><p>Verantwortlich für Umsetzung und Verfolgung, Auflösung von Fragen, Hindernissen (Impediments)</p><p>Keine Teamleitung sondern Coach</p></div><p></p><p><mark class="highlight-blue">Product Owner</mark></p><div class="indented"><p>Person verantwortlich für Backlog, Vertritt Kunden für Team</p><p>verantwortlich für Produkteigenschaften</p></div><p></p><p><mark class="highlight-blue">Entwicklungsteam</mark></p><div class="indented"><p>Entwicklung und Testen des Produkts</p><p>Selbstorganisiert: Keine Teamleitung, Entscheidungen gemeinsam getroffen, funktionsübergreifende Zusammenarbeit</p></div><p></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary><del>Scrum Prozess</del></summary><figure class="image"><a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled.png"><img src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled.png" style="width: 132px"/></a></figure><figure class="image"><a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%201.png"><img src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%201.png" style="width: 132px"/></a></figure><figure class="image"><a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%202.png"><img src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%202.png" style="width: 144px"/></a><figcaption>Taskboard</figcaption></figure><p></p><p><mark class="highlight-blue">Iteration Zero</mark></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Task Boards aufstellen, Product Backlogs vervollständigen → Projektumfangs einschätzen
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Initiale Systemarchitektur, erste Prototypen, notwendige Werkzeuge (für Testmanagement, Fehlermanagement,
+Testautomatisierung, continuous Integration)
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Initiale Teststrategie für alle Teststufen.
+<p>Bestimmung von: Testumfang, technische Risiken, Testarten und überdeckungsziele</p></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Initiale Qualitätsrisikoanalyse</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Definition von Metriken für: Testfortschritt, Produktqualität</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Definition of Done</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Definition des Zeitpunktes andem nicht mehr getestet werden soll, bevor System an Kunden geliefert wird
+</li></ul></div><p></p><p><mark class="highlight-blue">Estimation / Aufwandsabschätzung</mark></p><div class="indented"><p><mark class="highlight-gray">Aufwand = Komplexität, Schwierigkeitsgrad (inkl Testen, da Whole-team approach)</mark></p><p>In Story-Points (1, 2, 3, 5, 7, 13, ...) oder T-Shirt größen (S, M, L, XL)</p><p>Planning Poker</p></div><p></p><p><mark class="highlight-blue">Iterationsplanung</mark></p><div class="indented"><p>Meeting mit kompletten Team (auch Tester)</p><div class="indented"><ul class="toggle"><li><details open=""><summary><em>Mehrwert von Tester in Iterationsplanung</em></summary><ul class="bulleted-list"><li style="list-style-type: disc">Risikoanalyse, Testbarkeit, Abnahmetests für US</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Zerlegung in Testaufgaben mit Testaufwand</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Hilfe bei Testautomatisierung</li></ul></details></li></ul></div><p></p><p>Priorisierung von offenen US im Product Backlog</p><p>Aufwandsabschätzung (falls nicht bereits erfolgt)</p><p>Diskussion vom Scope des Sprints und Team-Commitment</p></div><p></p><p></p><p><mark class="highlight-blue">Sprint Review</mark></p><div class="indented"><p>Formale Abhname der US: Demo gegenüber von Stakeholder und Owner</p><p>Unvollständige US landen in den nächsten Sprint</p></div><p></p><p><mark class="highlight-blue">Retrospective</mark></p><div class="indented"><p>
+Team-Sitzung am Ende jeder Iteration: Was erfolgreich war, was verbessert werden könnte - Prozess, Beteiligte und deren
+Organisation und Beziehungen, Werkzeuge
+</p></div><p></p></details></li></ul><p></p><p><mark class="highlight-blue">User stories</mark></p><ul class="toggle"><li><details open=""><summary>User Stories</summary><p>
+Anforderungen aus der Sicht eines Fachbereichsvertreter (Funktionale und Nicht-Funktionale Eigenschaften) und Abnahmekriterien
+</p><p>Befinden sich im Product-Backlog</p><p>Spezifikation</p><hr/><p>
+Konstrukt: As a
+<em>[user role]</em>
+, I want to
+<em>[goal]</em>
+, so that I can
+<em>[reason]</em>
+.
+</p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>User Story Card</summary><ol class="numbered-list" start="1" type="1"><li>
+Card
+<p>Das physische Medium, dass die Userstory beschreibt.</p><p>genaue Anforderung, Drinklichkeit, erwartete Test und Entwicklungsdauer, Abnahmekriterien</p></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Conversation
+<p>Diskussion die erklärt wie Software genutzt werden soll</p></li></ol><ol class="numbered-list" start="3" type="1"><li>
+Confirmation
+<p>Abnahmekriterien die in Diskussion festgelegt werden Bestätigung des Abschlusses der Userstory.</p></li></ol><hr/><ul class="toggle"><li><details open=""><summary>Beispiel</summary><figure class="image"><a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%203.png"><img src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%203.png" style="width: 384px"/></a></figure><p>Confirmation</p><ol class="numbered-list" start="1" type="1"><li>
+Success-valid user logged in and referred to home page. a. “Remember me” ticked - store cookie/ automatic login
+next timne. b. “Remember me” not ticked -force login next time.
+</li></ol><ol class="numbered-list" start="2" type="1"><li>
+Failure- display message: a) "Email address in wrong format" b) "Unrecognised user name, please try again" c)
+Incorrect password, please try again" d) "Service unavailable, please try again" e) Account has expired- refer
+to account renewal sales page.
+</li></ol></details></li></ul><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>User Stories: Kriterien für Anforderungsreview (Definition of Done)</summary><p>basierend auf Definition of Ready</p><p>
+– Vollständigkeit – Konsistenz – Unmissverständlichkeit – Realisierbarkeit – Testbarkeit – Tracability – Spezifisch – Messbar –
+Durchführbarkeit innerhalb eines Sprints – Unabhängigkeit
+</p><p></p></details></li></ul><p></p><p><del><mark class="highlight-blue">Kanban</mark></del></p><ul class="toggle"><li><details open=""><summary><del>Kanban</del></summary><p>Ziel: Soll wie Arbeitsfluss in Wertschöpfungskette sein und optimiert werden.</p><p><mark class="highlight-blue">Kanban Board</mark>
+Visualisierung von Wertschöpfungskette
+</p><p><mark class="highlight-blue">WIP-Limit</mark>
+Limitierte Anzahl der gleichzeitig erledigten Aufgaben (Work in Progress)
+</p><p><mark class="highlight-blue">Lead Time</mark>
+Optimierung durch Senkung der durchschnittlichen Bearbeitungszeit
+</p><figure class="image"><a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%204.png"><img src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%204.png" style="width: 192px"/></a><figcaption>Taskboard verglichen zu Scrum</figcaption></figure></details></li></ul><p></p><p><mark class="highlight-blue">Tester in Scrum</mark></p><ul class="toggle"><li><details open=""><summary>Tester in Scrum</summary><p><mark class="highlight-blue">Keine Tester im Scrum Prozess</mark></p><div class="indented"><p>Testen ist Teil der Entwicklung (Unit Tests, TDD)</p><p>Akzetanztests durch Owner, Kunde nach jedem Sprint</p></div><p></p><p><mark class="highlight-blue">Vorteil von eigenen Testern</mark></p><div class="indented"><p>Fokus auf Kundensicht statt technische implementierung</p><p>Fokus auf Fehler anstatt von Verfikation der Vollständigkeit</p></div><p></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Aufgaben eines Testers in Scrum</summary><p>
+– Statisches Testen (Anforderungen, Dokumentation) – Dynamisches Testen (Ausführung von Akzeptanztests) – Erstellung von
+Akzeptanztests – Verwaltung von Testfällen im Source Code Manager SCM – Unterstützung bei Unit Tests und TTD – Test Ansatz,
+Planung – Regressionstests (manuell &amp; automatisiert) – Risikoanalyse, Risikoabschätzung – Schätzung, Tracability von Tests
+der User Stories – Demonstration während des Sprint Reviews – Erstellung und Wartung von automatisierten Tests – Unterstützung
+bei Akzeptanztests
+</p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary><del>Spezialisierte Testrollen</del></summary><p>Entweder außerhalb des Teams und nur bei kritischen Punkten aufgerufen oder in Team vollzeit Integriert:</p><p>– Security – Performance und Stresstests – Usability – Portability – Wartbarkeit</p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary><del>Test-Manager Aufgaben</del></summary><p>
+– Mentoring – Personalmanagement – Aufteilung der Testressourcen über Teams – Wissenstransfer – Training und Entwicklungsplanung
+– Test Strategie / Ansatz – Test Planung – Identifikation, Analyse und Verhinderung von Risiken – Bindeglied zwischen Business
+und Stakeholdern – ...
+</p><p></p></details></li></ul><p></p><p><mark class="highlight-blue">Agile Testmethoden</mark></p><ul class="toggle"><li><details open=""><summary>CI</summary><p><mark class="highlight-blue">Continous Integration CI</mark></p><div class="indented"><p>Nach jeder Iteration muss funktionierende Software vorliegen.</p><p>Kontinuierlich (min 1x am Tag oder bei Änderungen) automatisiert in CI-Pipeline durchgeführt:</p><p><em>Komponenten miteinander zusammenführen (Integration)</em></p><div class="indented"><p>Konfigurationsmanagement</p><p>Kompilierung</p><p>Build</p><p>Verteilung in Production Environment</p><p>Ausführung in Testumgebung (Berechnung von Metriken zB Test converage)</p></div><p></p><p>Aktivitäten:</p><div class="indented"><p>Statische Codeanalyse</p><p>Kompilieren und Linken, executable herstellen</p><p>Unittests, Code Coverage</p><p>Deployment (Bereitstellung), Installieren der Software in einer Testumgebung</p><p>Integrationstests, Systemtests in Testumgebung</p><p>Dashboard</p></div><p></p></div><p></p><figure class="image"><a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%206.png"><img src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%206.png" style="width: 240px"/></a></figure><figure class="image"><a href="../../3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%206.png"><img src="../../3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%206.png" style="width: 144px"/></a></figure><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary><del>Code reviews, Pull requests</del></summary><p><mark class="highlight-blue">Code-Reviews, Pull Requests</mark></p><div class="indented"><p>Workflows / Pipeline in Versionierungssystemen (SCM): Verwendung von Branching-Modelle für verpflichtende Code Reviews</p><div class="indented"><p>Pull-Requests, Merge nach Review</p></div><p></p><p>Änderungen von stabiler Codelinie ist ohne Review / QA Überprüfung (oder CI) nicht möglich</p><p><em><mark class="highlight-gray">Siehe:</mark></em><em><mark class="highlight-gray"><a href="https://help.github.com/articles/about-pull-request-reviews/">
+https://help.github.com/articles/about-pull-request-reviews/
+</a></mark></em></p></div><p></p><figure class="image"><a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%207.png"><img src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%207.png" style="width: 240px"/></a></figure><figure class="image"><a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%208.png"><img src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%208.png" style="width: 240px"/></a></figure><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary><del>CD</del></summary><p><mark class="highlight-blue">Continuous Delivery / Deployment</mark></p><div class="indented"><p>Auslieferung / Deployment / Release erfolgt automatisiert nach Qualitätsüberprüfung</p><ul class="bulleted-list"><li style="list-style-type: disc">Continuous Delivery: Automatisches deployment von Artefakten</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Continuous Deployment: Automatische Installation in Produktion
+<p><mark class="highlight-gray">zB: Continuous Deployment der Netflix API</mark></p><p><em><mark class="highlight-gray">Siehe:</mark></em><em><mark class="highlight-gray"><a href="https://medium.com/netflix-techblog/preparing-the-netflix-api-for-deployment-786d8f58090d">
+https://medium.com/netflix-techblog/preparing-the-netflix-api-for-deployment-786d8f58090d
+</a></mark></em></p></li></ul></div><p></p><figure class="image"><a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%209.png"><img src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%209.png" style="width: 240px"/></a></figure><p></p></details></li></ul><p></p><p><mark class="highlight-blue">Agile Testmethoden</mark></p><ul class="toggle"><li><details open=""><summary>TDD</summary><p><mark class="highlight-blue">Test driven development TDD / testgetriebene Entwicklung</mark></p><div class="indented"><p>eher Unit-Tests, automatisiert in CI</p><ol class="numbered-list" start="1" type="1"><li><mark class="highlight-teal">Think</mark><p>– Auswahl der Anforderungen die implementiert werden sollen – Testfall-Spezifikation</p></li></ol><ol class="numbered-list" start="2" type="1"><li><mark class="highlight-teal">Red</mark><p>Implementierung und Ausführung der Testfälle</p><div class="indented"><p>– Alle Tests müssen fehlschlagen</p></div><p></p></li></ol><ol class="numbered-list" start="3" type="1"><li><mark class="highlight-teal">Green</mark><p>Implementierung der Komponenten und Klassen und Ausführung der Testfälle</p><div class="indented"><p>– erfolgreich → weiter bei Schritt 4, Refactor – schlägt fehlt → weiter bei Schritt 3, Green</p></div><p></p></li></ol><ol class="numbered-list" start="4" type="1"><li><mark class="highlight-teal">Refactor</mark><p>Optimierung der Implementierung ohne Änderung der Funktionalität, Ausführung der Testfälle.</p><div class="indented"><p>– Testfälle dürfen nicht fehlschlagen. – Auswahl der nächsten Anforderung (weiter zu Schritt 1)</p></div><p></p></li></ol></div><p></p><figure class="image"><a href="../../3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%205.png"><img src="../../3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%201ae815b3cb7d454fa76fa9281d031ed9/Untitled%205.png" style="width: 60px"/></a></figure><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Abnahmegetriebene Entwicklung</summary><p>US enthält Abnahmekriterien, Test</p><div class="indented"><p>Stakeholder können Funktionalität durch Tests nachvollziehen (Abnahmekriterien).</p></div><p></p><p><mark class="highlight-gray">Wiederverwendbare Tests für Regressionserstellung.</mark></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>BDD</summary><p>
+Entwickler testet
+<em>erwartetes Verhalten</em></p><div class="indented"><p>Stakeholder können Funktionalität durch Tests nachvollziehen (Abnahmekriterien).</p></div><p></p><p>In manchen Frameworks Gherkin-Format (deklarativ) → automatische Testerstellung:</p><div class="indented"><p><em>Gegeben ein Einstiegskontext, Wenn ein Ereignis auftritt, Dann werden bestimmte Wirkungen sichergestellt</em></p></div><p></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Blackbox test design in agiler Softwareentwicklung</summary><p>In agilen Projekten Tests gleichzeitig mit Komponenten entwickelt (nach US, Abnahmekriterien)</p><p><em>
+Blackbox Testentwurfsverfahren: Äquivalenzklassenbildung, Grenzwertanalyse (um Testwerte auszuwählen),
+Entscheidungstabellen, zustandsbasierte Tests.
+</em></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Exploratives testen</summary><p>Wichtig wegen begrenzter Zeit für Testanalyse und Detailgenauigkeit der US.</p><p>zusätzlich zu anderen Testentwurfsverfahren</p><p>basiert auf Intuition, Erfahrung des Testers</p><div class="indented"><p>zB Erfahrung aus anderen Projekten, Stellen die unter Zeitdruck entstanden sind etc.</p></div><p></p><p>muss dokumentiert werden</p><p>Vorgehen:</p><div class="indented"><p>
+– Erfahrungsbasiertes Verfahren – Riskobasiertes Testen – Anforderungsbasiertes Testen – Modellbasiertes Testen –
+Regessionsvermeidendes Testen
+</p></div><p></p><p>Testsitzungen beinhalten:</p><div class="indented"><p>
+– Überblickssitzung um zu lernen, wie es funktioniert – Analysesitzung Bewertung von Funktionalität, Eigenschaften – Genaue
+Überdeckung Ausnahmefälle, Szenarien, Interaktionen
+</p></div><p></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary><del>Agile Testpraktiken</del></summary><p><mark class="highlight-blue">Pairing</mark></p><div class="indented"><p>
+2 Teammitglieder (beliebig: Entwickler, Tester, Owner) setzten sich zusammen um Test oder andere Sprintaufgabe zu
+bearbeiten.
+</p></div><p></p><p><mark class="highlight-blue">Inkrementelles Test Design</mark></p><div class="indented"><p>Testfälle, Chartas aus US aufgebaut.</p></div><p></p><p><mark class="highlight-blue">Mind Mapping</mark></p><div class="indented"><p>zum Finden und Beschreiben von Teststrategien.</p></div><p></p><p></p></details></li></ul><p></p><p><mark class="highlight-blue">Akzeptanzkriterien</mark></p><ul class="toggle"><li><details open=""><summary>Definition of Done / Abnahmekriterien</summary><p><mark class="highlight-blue">Definition of Done</mark></p><div class="indented"><p>Kriterien anhand denen entschieden wird, ob Inkrement abgeschlossen</p></div><p></p><p></p><p><mark class="highlight-blue">Abnahmekriterien / Definition of Done</mark></p><div class="indented"><p>Abnahmekriterien mit Abnahmetests getestet:</p><div class="indented"><p>
+– Funktionales Verhalten – Qualitätsmerkmale – Szenarios (Use Cases) – Geschäftsprozessregeln – Externe Schnittstellen –
+Einschränkungen – Datendefinitionen
+</p></div><p></p><p><em>Userstories</em></p><div class="indented"><p>
+– Ausgewählte US für Iteration sind reviewed, vollständig, verständlich und haben detaillierte, testbare
+Abnahmekriterien. – Abnahmetests als Testbeschreibung, Testscript bereitgestellt. – Aufgaben für die Implementierung,
+Testen identifiziert und Aufwand eingeschätzt.
+</p></div><p></p><p><em>Iteration</em></p><div class="indented"><p>
+– Alle Features der Iteration fertig entwickelt, nach Feature-Level Kriterien getestet. – Nicht-kritischen Fehler, die
+nicht behoben wurden im Product Backlog und priorisiert. – Integration aller Feature erfolgt, getestet. – Dokumentation
+nach Review abgenommen.
+</p></div><p></p><p></p></div><p></p><figure class="image"><a href="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%2010.png"><img src="../../6%20-%20Testen%20IV%20Agile%20Testmethoden%2032a5e7e8ee8d43389203a4c60c2a6339/Untitled%2010.png" style="width: 192px"/></a></figure><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Testen von Akzeptanzkriterien (Beispiel)</summary><p>Beispiel: Registrieren Funktion</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Conditions of Satisfaction
+<p>Welche Bedingungen, Anforderungen gibt es? “Passwörter dürfen nicht knackbar sein”</p></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Acceptance Criteria
+<p>Wann gilt ein Passwort als “nicht knackbar”?</p><p>
+– Mind. 8 Zeichen, aber nicht mehr als 12 – Darf nur alphanumerische Zeichen beinhalten – Muss mind. eine Zahl
+beinhalten – Muss mind. einen Buchstaben beinhalten
+</p></li></ol><ol class="numbered-list" start="3" type="1"><li>
+Examples
+<p>Erstellung von Testdaten: “abc123”, “abcdefghi”, “1aaaaaaaaa”, “ajx972dab”</p></li></ol><ol class="numbered-list" start="4" type="1"><li>
+Executable Examples
+<p>Durch BDD:</p><pre class="code"><code>Given the "Unregistered User" user has navigated to the "register" pageWhen entering "newuser" in the "Username" field
 And entering "abc123" in the "Password" field
 And entering "abc1 23" in the "Confirm Password" field
-And pressing the "Register" button
-
-Then the text "Thank you for Registering" should appear on page
-And the URL should end with "use/accountPage"</code></pre>
-                                        <p></p>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <p><mark class="highlight-blue">Werkzeuge</mark></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><del>Werkzeuge in agiler Softwareentwicklung</del></summary>
-                            <p><mark class="highlight-blue">Werzeuge</mark></p>
-                            <div class="indented">
-                                <p>Organisation vom Team</p>
-                                <div class="indented">
-                                    <p>Aufgabenmanagement- und Nachverfolgungswerkzeuge</p>
-                                    <p>Speichern von US (Entwicklungs- und Testaufgaben), Aufwandsschätzungen, Aufgabenstatus</p>
-                                </div>
-                                <p></p>
-                                <p>Kommunikation</p>
-                                <div class="indented"><p>Kommunikations- und Informationsweitergabe-Werkzeuge (synchron und asynchron)</p></div>
-                                <p></p>
-                                <p>Build und Distribution</p>
-                                <p>Konfigurationsmanagement und Version Control System VCS</p>
-                                <div class="indented">
-                                    <p>Speichern von Quellcode, automatisierten Testskripten, manuellen Tests, Arbeitsergebnisse mit Versionsverwaltung</p>
-                                </div>
-                                <p></p>
-                                <p>Testentwurf, Implementierung und Durchführung</p>
-                                <div class="indented">
-                                    <p>
-                                        – Testentwurf mit zB. Mind Maps – Testfallmanagement-Werkzeuge – Testdatenvorbereitung, Daten-Generation um Datenbank zu
-                                        füllen – Testdatenladewerkzeuge: damit man nicht manuell Daten eingeben muss – Automatisierte Testdurchführung
-                                    </p>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-            </div>
-        </article>
-    </body>
-</html>
+And pressing the "Register" buttonThen the text "Thank you for Registering" should appear on page
+And the URL should end with "use/accountPage"</code></pre><p></p></li></ol></div><p></p><p></p></details></li></ul><p></p><p><mark class="highlight-blue">Werkzeuge</mark></p><ul class="toggle"><li><details open=""><summary><del>Werkzeuge in agiler Softwareentwicklung</del></summary><p><mark class="highlight-blue">Werzeuge</mark></p><div class="indented"><p>Organisation vom Team</p><div class="indented"><p>Aufgabenmanagement- und Nachverfolgungswerkzeuge</p><p>Speichern von US (Entwicklungs- und Testaufgaben), Aufwandsschätzungen, Aufgabenstatus</p></div><p></p><p>Kommunikation</p><div class="indented"><p>Kommunikations- und Informationsweitergabe-Werkzeuge (synchron und asynchron)</p></div><p></p><p>Build und Distribution</p><p>Konfigurationsmanagement und Version Control System VCS</p><div class="indented"><p>Speichern von Quellcode, automatisierten Testskripten, manuellen Tests, Arbeitsergebnisse mit Versionsverwaltung</p></div><p></p><p>Testentwurf, Implementierung und Durchführung</p><div class="indented"><p>
+– Testentwurf mit zB. Mind Maps – Testfallmanagement-Werkzeuge – Testdatenvorbereitung, Daten-Generation um Datenbank zu
+füllen – Testdatenladewerkzeuge: damit man nicht manuell Daten eingeben muss – Automatisierte Testdurchführung
+</p></div><p></p></div><p></p><p></p></details></li></ul></div></article></body></html>

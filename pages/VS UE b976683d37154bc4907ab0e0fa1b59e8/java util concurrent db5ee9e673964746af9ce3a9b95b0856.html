@@ -1,1735 +1,1001 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>java.util.concurrent</title>
-        <style>
-            /* cspell:disable-file */
-            /* webkit printing magic: print all background colors */
-            html {
-                -webkit-print-color-adjust: exact;
-            }
-            * {
-                box-sizing: border-box;
-                -webkit-print-color-adjust: exact;
-            }
-
-            html,
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            @media only screen {
-                body {
-                    margin: 2em auto;
-                    max-width: 900px;
-                    color: rgb(55, 53, 47);
-                }
-            }
-
-            body {
-                line-height: 1.5;
-                white-space: pre-wrap;
-            }
-
-            a,
-            a.visited {
-                color: inherit;
-                text-decoration: underline;
-            }
-
-            .pdf-relative-link-path {
-                font-size: 80%;
-                color: #444;
-            }
-
-            h1,
-            h2,
-            h3 {
-                letter-spacing: -0.01em;
-                line-height: 1.2;
-                font-weight: 600;
-                margin-bottom: 0;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-top: 0;
-                margin-bottom: 0.75em;
-            }
-
-            h1 {
-                font-size: 1.875rem;
-                margin-top: 1.875rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-                margin-top: 1.5rem;
-            }
-
-            h3 {
-                font-size: 1.25rem;
-                margin-top: 1.25rem;
-            }
-
-            .source {
-                border: 1px solid #ddd;
-                border-radius: 3px;
-                padding: 1.5em;
-                word-break: break-all;
-            }
-
-            .callout {
-                border-radius: 3px;
-                padding: 1rem;
-            }
-
-            figure {
-                margin: 1.25em 0;
-                page-break-inside: avoid;
-            }
-
-            figcaption {
-                opacity: 0.5;
-                font-size: 85%;
-                margin-top: 0.5em;
-            }
-
-            mark {
-                background-color: transparent;
-            }
-
-            .indented {
-                padding-left: 1.5em;
-            }
-
-            hr {
-                background: transparent;
-                display: block;
-                width: 100%;
-                height: 1px;
-                visibility: visible;
-                border: none;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            @media only print {
-                img {
-                    max-height: 100vh;
-                    object-fit: contain;
-                }
-            }
-
-            @page {
-                margin: 1in;
-            }
-
-            .collection-content {
-                font-size: 0.875rem;
-            }
-
-            .column-list {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .column {
-                padding: 0 1em;
-            }
-
-            .column:first-child {
-                padding-left: 0;
-            }
-
-            .column:last-child {
-                padding-right: 0;
-            }
-
-            .table_of_contents-item {
-                display: block;
-                font-size: 0.875rem;
-                line-height: 1.3;
-                padding: 0.125rem;
-            }
-
-            .table_of_contents-indent-1 {
-                margin-left: 1.5rem;
-            }
-
-            .table_of_contents-indent-2 {
-                margin-left: 3rem;
-            }
-
-            .table_of_contents-indent-3 {
-                margin-left: 4.5rem;
-            }
-
-            .table_of_contents-link {
-                text-decoration: none;
-                opacity: 0.7;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-            }
-
-            table,
-            th,
-            td {
-                border: 1px solid rgba(55, 53, 47, 0.09);
-                border-collapse: collapse;
-            }
-
-            table {
-                border-left: none;
-                border-right: none;
-            }
-
-            th,
-            td {
-                font-weight: normal;
-                padding: 0.25em 0.5em;
-                line-height: 1.5;
-                min-height: 1.5em;
-                text-align: left;
-            }
-
-            th {
-                color: rgba(55, 53, 47, 0.6);
-            }
-
-            ol,
-            ul {
-                margin: 0;
-                margin-block-start: 0.6em;
-                margin-block-end: 0.6em;
-            }
-
-            li > ol:first-child,
-            li > ul:first-child {
-                margin-block-start: 0.6em;
-            }
-
-            ul > li {
-                list-style: disc;
-            }
-
-            ul.to-do-list {
-                padding-inline-start: 0;
-            }
-
-            ul.to-do-list > li {
-                list-style: none;
-            }
-
-            .to-do-children-checked {
-                text-decoration: line-through;
-                opacity: 0.375;
-            }
-
-            ul.toggle > li {
-                list-style: none;
-            }
-
-            ul {
-                padding-inline-start: 1.7em;
-            }
-
-            ul > li {
-                padding-left: 0.1em;
-            }
-
-            ol {
-                padding-inline-start: 1.6em;
-            }
-
-            ol > li {
-                padding-left: 0.2em;
-            }
-
-            .mono ol {
-                padding-inline-start: 2em;
-            }
-
-            .mono ol > li {
-                text-indent: -0.4em;
-            }
-
-            .toggle {
-                padding-inline-start: 0em;
-                list-style-type: none;
-            }
-
-            /* Indent toggle children */
-            .toggle > li > details {
-                padding-left: 1.7em;
-            }
-
-            .toggle > li > details > summary {
-                margin-left: -1.1em;
-            }
-
-            .selected-value {
-                display: inline-block;
-                padding: 0 0.5em;
-                background: rgba(206, 205, 202, 0.5);
-                border-radius: 3px;
-                margin-right: 0.5em;
-                margin-top: 0.3em;
-                margin-bottom: 0.3em;
-                white-space: nowrap;
-            }
-
-            .collection-title {
-                display: inline-block;
-                margin-right: 1em;
-            }
-
-            .page-description {
-                margin-bottom: 2em;
-            }
-
-            .simple-table {
-                margin-top: 1em;
-                font-size: 0.875rem;
-                empty-cells: show;
-            }
-            .simple-table td {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table th {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table-header-color {
-                background: rgb(247, 246, 243);
-                color: black;
-            }
-            .simple-table-header {
-                font-weight: 500;
-            }
-
-            time {
-                opacity: 0.5;
-            }
-
-            .icon {
-                display: inline-block;
-                max-width: 1.2em;
-                max-height: 1.2em;
-                text-decoration: none;
-                vertical-align: text-bottom;
-                margin-right: 0.5em;
-            }
-
-            img.icon {
-                border-radius: 3px;
-            }
-
-            .user-icon {
-                width: 1.5em;
-                height: 1.5em;
-                border-radius: 100%;
-                margin-right: 0.5rem;
-            }
-
-            .user-icon-inner {
-                font-size: 0.8em;
-            }
-
-            .text-icon {
-                border: 1px solid #000;
-                text-align: center;
-            }
-
-            .page-cover-image {
-                display: block;
-                object-fit: cover;
-                width: 100%;
-                max-height: 30vh;
-            }
-
-            .page-header-icon {
-                font-size: 3rem;
-                margin-bottom: 1rem;
-            }
-
-            .page-header-icon-with-cover {
-                margin-top: -0.72em;
-                margin-left: 0.07em;
-            }
-
-            .page-header-icon img {
-                border-radius: 3px;
-            }
-
-            .link-to-page {
-                margin: 1em 0;
-                padding: 0;
-                border: none;
-                font-weight: 500;
-            }
-
-            p > .user {
-                opacity: 0.5;
-            }
-
-            td > .user,
-            td > time {
-                white-space: nowrap;
-            }
-
-            input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 0.6em;
-                vertical-align: middle;
-            }
-
-            p {
-                margin-top: 0.5em;
-                margin-bottom: 0.5em;
-            }
-
-            .image {
-                border: none;
-                margin: 1.5em 0;
-                padding: 0;
-                border-radius: 0;
-                text-align: center;
-            }
-
-            .code,
-            code {
-                background: rgba(135, 131, 120, 0.15);
-                border-radius: 3px;
-                padding: 0.2em 0.4em;
-                border-radius: 3px;
-                font-size: 85%;
-                tab-size: 2;
-            }
-
-            code {
-                color: #eb5757;
-            }
-
-            .code {
-                padding: 1.5em 1em;
-            }
-
-            .code-wrap {
-                white-space: pre-wrap;
-                word-break: break-all;
-            }
-
-            .code > code {
-                background: none;
-                padding: 0;
-                font-size: 100%;
-                color: inherit;
-            }
-
-            blockquote {
-                font-size: 1.25em;
-                margin: 1em 0;
-                padding-left: 1em;
-                border-left: 3px solid rgb(55, 53, 47);
-            }
-
-            .bookmark {
-                text-decoration: none;
-                max-height: 8em;
-                padding: 0;
-                display: flex;
-                width: 100%;
-                align-items: stretch;
-            }
-
-            .bookmark-title {
-                font-size: 0.85em;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                height: 1.75em;
-                white-space: nowrap;
-            }
-
-            .bookmark-text {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .bookmark-info {
-                flex: 4 1 180px;
-                padding: 12px 14px 14px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-
-            .bookmark-image {
-                width: 33%;
-                flex: 1 1 180px;
-                display: block;
-                position: relative;
-                object-fit: cover;
-                border-radius: 1px;
-            }
-
-            .bookmark-description {
-                color: rgba(55, 53, 47, 0.6);
-                font-size: 0.75em;
-                overflow: hidden;
-                max-height: 4.5em;
-                word-break: break-word;
-            }
-
-            .bookmark-href {
-                font-size: 0.75em;
-                margin-top: 0.25em;
-            }
-
-            .sans {
-                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-                    "Segoe UI Symbol";
-            }
-            .code {
-                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
-            }
-            .serif {
-                font-family: Lyon-Text, Georgia, ui-serif, serif;
-            }
-            .mono {
-                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-            }
-            .pdf .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
-            }
-            .pdf:lang(zh-CN) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
-            }
-            .pdf:lang(zh-TW) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
-            }
-            .pdf:lang(ko-KR) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
-            }
-            .pdf .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK KR";
-            }
-            .pdf .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
-            }
-            .pdf:lang(zh-CN) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
-            }
-            .pdf:lang(zh-TW) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
-            }
-            .pdf:lang(ko-KR) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
-            }
-            .pdf .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
-            }
-            .highlight-default {
-                color: rgba(55, 53, 47, 1);
-            }
-            .highlight-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .highlight-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .highlight-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .highlight-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .highlight-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .highlight-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .highlight-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .highlight-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .highlight-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .highlight-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .highlight-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .highlight-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .highlight-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .highlight-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .highlight-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .highlight-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .highlight-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .highlight-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .block-color-default {
-                color: inherit;
-                fill: inherit;
-            }
-            .block-color-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .block-color-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .block-color-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .block-color-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .block-color-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .block-color-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .block-color-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .block-color-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .block-color-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .block-color-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .block-color-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .block-color-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .block-color-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .block-color-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .block-color-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .block-color-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .block-color-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .block-color-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .select-value-color-interactiveBlue {
-                background-color: rgba(35, 131, 226, 0.07);
-            }
-            .select-value-color-pink {
-                background-color: rgba(245, 224, 233, 1);
-            }
-            .select-value-color-purple {
-                background-color: rgba(232, 222, 238, 1);
-            }
-            .select-value-color-green {
-                background-color: rgba(219, 237, 219, 1);
-            }
-            .select-value-color-gray {
-                background-color: rgba(227, 226, 224, 1);
-            }
-            .select-value-color-translucentGray {
-                background-color: rgba(255, 255, 255, 0.0375);
-            }
-            .select-value-color-orange {
-                background-color: rgba(250, 222, 201, 1);
-            }
-            .select-value-color-brown {
-                background-color: rgba(238, 224, 218, 1);
-            }
-            .select-value-color-red {
-                background-color: rgba(255, 226, 221, 1);
-            }
-            .select-value-color-yellow {
-                background-color: rgba(253, 236, 200, 1);
-            }
-            .select-value-color-blue {
-                background-color: rgba(211, 229, 239, 1);
-            }
-            .select-value-color-pageGlass {
-                background-color: undefined;
-            }
-            .select-value-color-washGlass {
-                background-color: undefined;
-            }
-
-            .checkbox {
-                display: inline-flex;
-                vertical-align: text-bottom;
-                width: 16;
-                height: 16;
-                background-size: 16px;
-                margin-left: 2px;
-                margin-right: 5px;
-            }
-
-            .checkbox-on {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            .checkbox-off {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            /* -------- injections from notionBackup -------- */
-
-            body {
-                white-space: normal !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-
-            .code,
-            code {
-                font-size: 100% !important;
-            }
-
-            blockquote {
-                font-size: 100% !important;
-            }
-
-            .callout {
-                white-space: normal !important;
-            }
-            .callout div:has(span.icon) {
-                font-size: 100% !important;
-            }
-
-            .source:not(.bookmark) {
-                font-size: 100% !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-        </style>
-    </head>
-    <body>
-        <article class="page sans">
-            <header>
-                <h1 class="page-title">java.util.concurrent</h1>
-                <p class="page-description"></p>
-            </header>
-            <div class="page-body">
-                <p>
-                    <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html">
-                        https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html
-                    </a>
-                </p>
-                <p>
-                    <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/executors.html">
-                        https://docs.oracle.com/javase/tutorial/essential/concurrency/executors.html
-                    </a>
-                </p>
-                <p>
-                    <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-summary.html#MemoryVisibility">
-                        https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-summary.html#MemoryVisibility
-                    </a>
-                </p>
-                <p></p>
-                <p>In depth tutorials</p>
-                <div class="indented">
-                    <p>
-                        <a href="https://www.youtube.com/watch?v=mTGdtC9f4EU&amp;list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&amp;index=1">
-                            https://www.youtube.com/watch?v=mTGdtC9f4EU&amp;list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&amp;index=1
-                        </a>
-                    </p>
-                </div>
-                <p></p>
-                <p>Compact summary</p>
-                <div class="indented">
-                    <p><a href="https://www.youtube.com/watch?v=c-a5JHVfGYM">https://www.youtube.com/watch?v=c-a5JHVfGYM</a></p>
-                </div>
-                <p></p>
-                <p></p>
-                <nav class="block-color-gray table_of_contents">
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#115fe601-eb41-4963-a297-96fda761ce2e">Definition</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#8ad9fc1d-3b46-4305-9cf6-0789987c9e64">Thread</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#21093a83-e2a9-45b0-8031-d083230fe6ae">Thread API</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#f325b5f2-3018-422d-8137-fd5a001b8d2d">Synchronization</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#144e5af9-9ab9-4022-bc39-b826385e9577">Liveliness</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#bbdce8ab-a095-4e6a-acb5-a839ef65fb3c">Guarded Blocks</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#781f7f64-a37f-478c-bf6d-80793a96d3c9">High level Concurrency Objects</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#fc918062-86c0-4c03-8455-534b4b48feab">Lock</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#ae77970d-79f4-4fa1-86c9-c93da153ef43">Executor</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#b6820dc2-949a-4275-8fa4-138f087b06c4">Thread Pools</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#2d38581e-d3ba-4ace-8d78-6ec15261d57d">Concurrent Collections</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#28fb931f-614f-45a6-afde-f401980f64de">Atomic Variables</a>
-                    </div>
-                </nav>
-                <p></p>
-                <h1>Definition</h1>
-                <p><mark class="highlight-blue">Process</mark></p>
-                <div class="indented">
-                    <p>The JVM is run as a single process process scheduled by the OS.</p>
-                    <p>A Java application can also create additional processes (not part of this tutorial).</p>
-                    <p></p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Thread</mark></p>
-                <div class="indented">
-                    <p>Lightweight processes - creating it requires less resources.</p>
-                    <p>Exist within a process and share its resources.</p>
-                    <p>
-                        You start with the
-                        <em>main</em>
-                        <em>thread</em>
-                        .
-                    </p>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <h1>Thread</h1>
-                <p><code>Runnable</code></p>
-                <div class="indented">
-                    <p>
-                        Runnable is an interface which represents a task that could be executed by either a&nbsp;
-                        <mark class="highlight-gray"><code>Thread</code></mark>
-                        <mark class="highlight-gray">&nbsp;</mark>
-                        or&nbsp;
-                        <mark class="highlight-gray"><code>Executor</code></mark>
-                        <mark class="highlight-gray">&nbsp;</mark>
-                        or some similar means.
-                    </p>
-                    <div class="indented">
-                        <p>
-                            They are passed to the
-                            <mark class="highlight-gray"><code>Thread</code></mark>
-                            s constructor.
-                        </p>
-                    </div>
-                    <p></p>
-                    <p>
-                        Interface that classes that run within the
-                        <em>Thread</em>
-                        Object must implement.
-                    </p>
-                </div>
-                <p></p>
-                <pre class="code code-wrap"><code>public class HelloRunnable implements Runnable {
-
-    public void run() {
-        System.out.println("Hello from a thread!");
-    }
-
-    public static void main(String args[]) {
-        (new Thread(new HelloRunnable())).start();
-    }
-
-}</code></pre>
-                <p></p>
-                <p></p>
-                <h2>Thread API</h2>
-                <p><code>.sleep()</code></p>
-                <div class="indented">
-                    <p>suspend execution inside a Thread (not precise).</p>
-                    <p>Make CPU time available for other threads or processes.</p>
-                    <p>
-                        Can be interrupted with
-                        <mark class="highlight-gray"><code>InterruptedException</code></mark>
-                        .
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><code>.interrupt()</code></p>
-                <div class="indented">
-                    <p>
-                        Usually interruped threads are programmed to terminate (
-                        <mark class="highlight-gray"><code>return</code></mark>
-                        <mark class="highlight-gray"></mark>
-                        from the run method).
-                    </p>
-                    <p>
-                        When interrupted, a
-                        <mark class="highlight-gray"><code>InterruptedException</code></mark>
-                        <mark class="highlight-gray"></mark>
-                        is thrown in the Thread.
-                    </p>
-                    <div class="indented">
-                        <p>
-                            If the used methods do not invoke this execution, we must periodically check it ourselves with
-                            <mark class="highlight-gray"><code>.interrupted()</code></mark>
-                            and then throw the exception ourselves.
-                        </p>
-                    </div>
-                    <p></p>
-                    <hr />
-                    <p>
-                        For interruptions, we set the
-                        <em>interrupt-status-flag</em>
-                        of a Thread.
-                    </p>
-                    <div class="indented">
-                        <p>
-                            Static method:
-                            <mark class="highlight-gray"><code>Thread.interrupt()</code></mark>
-                            → sets flag to true
-                        </p>
-                        <p>
-                            Static method:
-                            <mark class="highlight-gray"><code>Thread.interrupted()</code></mark>
-                            → sets flag to false
-                        </p>
-                        <p>
-                            Non-static method:
-                            <mark class="highlight-gray"><code>isInterrupted()</code></mark>
-                            <mark class="highlight-gray"></mark>
-                            → doesnt change flag
-                        </p>
-                        <p>
-                            Throwing
-                            <mark class="highlight-gray"><code>InterruptedException</code></mark>
-                            <mark class="highlight-gray"></mark>
-                            and exiting → sets flag to false
-                        </p>
-                    </div>
-                    <p></p>
-                    <p></p>
-                </div>
-                <p></p>
-                <p><code>t.join()</code></p>
-                <div class="indented">
-                    <p>Called inside a Thread.</p>
-                    <p>
-                        Waits for termination of
-                        <mark class="highlight-gray"><code>t</code></mark>
-                        .
-                    </p>
-                    <p>
-                        Can be interrupted with
-                        <mark class="highlight-gray"><code>InterruptedException</code></mark>
-                        .
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Example</p>
-                <div class="indented">
-                    <p>We have 2 Threads:</p>
-                    <div class="indented">
-                        <p>
-                            <em>main-thread</em>
-                            creates a new thread from the Runnable,
-                            <mark class="highlight-gray"><code>MessageLoop</code></mark>
-                            and waits for it to finish.
-                        </p>
-                        <p>
-                            If it takes to long, the
-                            <em>main-thread</em>
-                            will interrupt it.
-                        </p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <pre class="code"><code>public class SimpleThreads {
-
-    // Display message + name of the current thread
-    public static void threadMessage(String message) {
-        String threadName = Thread.currentThread().getName();
-        System.out.format("%s: %s%n", threadName, message);
-    }
-
-    public static void main(String args[]) throws InterruptedException {
-        long patience = 1000 * 60 * 60; // one hour
-
-				//start Timer
-        threadMessage("Starting MessageLoop thread");
-        long startTime = System.currentTimeMillis();
-				//start MessageLoop
-				Thread t = new Thread(new MessageLoop());
-        t.start();
-
-        threadMessage("Waiting for MessageLoop thread to finish");
-        while (t.isAlive()) {
-            threadMessage("Still waiting...");
-            // Wait max 1 second
-            t.join(1000);
-            if (((System.currentTimeMillis() - startTime) &gt; patience) &amp;&amp; t.isAlive()) {
-                threadMessage("Tired of waiting!");
-                t.interrupt();
-                t.join(); // wait indefinitely
-            }
-        }
-        threadMessage("Finally!");
-    }
-}</code></pre>
-                <pre class="code"><code>private static class MessageLoop implements Runnable {
-    public void run() {
-        String importantInfo[] = { "Mares eat oats", ...};
-        try {
-            for (int i = 0; i &lt; importantInfo.length; i++) {
-                Thread.sleep(4000);
-                SimpleThreads.threadMessage(importantInfo[i]);
-            }
-        } catch (InterruptedException e) {
-            SimpleThreads.threadMessage("I wasn't done!");
-        }
-    }
-}</code></pre>
-                <p></p>
-                <p></p>
-                <h1>Synchronization</h1>
-                <p>Threads communicate by sharing memory. This might cause:</p>
-                <div class="indented">
-                    <p><mark class="highlight-blue">Thread Interference</mark></p>
-                    <div class="indented">
-                        <p>Multiple Threads access shared memory</p>
-                        <div class="indented">
-                            <p>
-                                This happens when two operations running on different threads acting on the same data,
-                                <em>interleave</em>
-                                .
-                            </p>
-                        </div>
-                        <p></p>
-                    </div>
-                    <p></p>
-                    <p><mark class="highlight-blue">Memory consistency error</mark></p>
-                    <div class="indented">
-                        <p>Inconsistent views of shared memory.</p>
-                        <div class="indented"><p>There is no fixed execution-order.</p></div>
-                        <p></p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p>Solution: Synchronization.</p>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Synchronized Methods: Atomic actions</mark></p>
-                <div class="indented">
-                    <p>No interleaving allowed: "Kritischer Abschnitt"</p>
-                    <pre class="code"><code>public class SynchronizedCounter {
-    private int c = 0;
-
-    public synchronized void increment() {
-        c++;
-    }
-
-    public synchronized void decrement() {
-        c--;
-    }
-
-    public synchronized int value() {
-        return c;
-    }
-}</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Synchronized Statements: making only a part of the method atomic</mark></p>
-                <div class="indented">
-                    <p>
-                        Built on the&nbsp;
-                        <em>intrinsic lock</em>
-                        &nbsp;or&nbsp;
-                        <em>monitor lock</em>
-                        .
-                    </p>
-                    <p>
-                        Thread that needs exclusive access has to&nbsp;
-                        <em>acquire</em>
-                        &nbsp;the intrinsic lock, access it, then
-                        <em>release</em>
-                        &nbsp;the intrinsic lock when it's done.
-                    </p>
-                    <p>
-                        A thread is said to&nbsp;
-                        <em>own</em>
-                        &nbsp;the intrinsic lock between the time it has acquired the lock and released the lock.
-                    </p>
-                    <p>Synchronized statements must specify the object that provides the intrinsic lock:</p>
-                    <pre class="code"><code>public void addName(String name) {
-    synchronized(this) {
-        lastName = name;
-        nameCount++;
-    }
-    nameList.add(name);
-}</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p>To avoid unneccasry blocking, where interleaving does not affect the memory:</p>
-                <div class="indented">
-                    <p>
-                        Incrementing
-                        <mark class="highlight-gray"><code>c1</code></mark>
-                        <mark class="highlight-gray"></mark>
-                        and
-                        <mark class="highlight-gray"><code>c2</code></mark>
-                        <mark class="highlight-gray"></mark>
-                        can interleave since they are never read together, but the operations must be synchronized.
-                        <mark class="highlight-gray"></mark>
-                    </p>
-                    <pre class="code"><code>public class Example {
-    private long c1 = 0;
-    private long c2 = 0;
-    private Object lock1 = new Object();
-    private Object lock2 = new Object();
-
-    public void inc1() {
-        synchronized(lock1) {
-            c1++;
-        }
-    }
-
-    public void inc2() {
-        synchronized(lock2) {
-            c2++;
-        }
-    }
-}</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Atomic Access</mark></p>
-                <div class="indented">
-                    <p>No interruptions: Action happens completely or not at all.</p>
-                    <p>No side effects are visible until the action is complete.</p>
-                    <p>
-                        Reads and writes are atomic for all primitive variables - but
-                        <mark class="highlight-gray"><code>long</code></mark>
-                        <mark class="highlight-gray">&nbsp;</mark>
-                        and&nbsp;
-                        <mark class="highlight-gray"><code>double</code></mark>
-                        <mark class="highlight-gray">&nbsp;</mark>
-                        variables must be declared&nbsp;
-                        <code>volatile</code>
-                        &nbsp;
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <h1>Liveliness</h1>
-                <p>Synchronization can cause thread contention like these.</p>
-                <p></p>
-                <p><mark class="highlight-blue">Deadlock</mark></p>
-                <div class="indented"><p>describes a situation where two or more threads are blocked forever, waiting for each other.</p></div>
-                <p></p>
-                <p>Example</p>
-                <div class="indented">
-                    <p>Two Friends (Gaston, Alphonse) who bow and remain bowed until the other friend can bow back.</p>
-                    <p>
-                        If both bow at the same time, they remain locked forever. Neither block will ever end, because each thread is waiting for the other to
-                        exit&nbsp;
-                        <mark class="highlight-gray"><code>bow</code></mark>
-                        .
-                    </p>
-                </div>
-                <p></p>
-                <pre class="code"><code>public class Deadlock {
-    static class Friend {
-        private final String name;
-
-        public Friend(String name) { ... }
-        public String getName() { ... }
-
-        public synchronized void bow(Friend bower) {
-            System.out.format("%s: %s" + "  has bowed to me!%n", this.name, bower.getName());
-            bower.bowBack(this);
-        }
-
-        public synchronized void bowBack(Friend bower) {
-            System.out.format("%s: %s" + " has bowed back to me!%n", this.name, bower.getName());
-        }
-    }
-
-    public static void main(String[] args) {
-        final Friend alphonse = new Friend("Alphonse");
-        final Friend gaston = new Friend("Gaston");
-        new Thread(new Runnable() {
-            public void run() {
-                alphonse.bow(gaston);
-            }
-        }).start();
-        new Thread(new Runnable() {
-            public void run() {
-                gaston.bow(alphonse);
-            }
-        }).start();
-    }
-}</code></pre>
-                <p></p>
-                <p><mark class="highlight-blue">Starvation</mark></p>
-                <div class="indented">
-                    <p>situation where a thread is unable to gain regular access to shared resources and is unable to make progress.</p>
-                    <p>This happens when shared resources are made unavailable for long periods by "greedy" threads.</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Livelock</mark></p>
-                <div class="indented">
-                    <p>The threads are not blocked but still make no process- they are simply too busy responding to each other to resume work.</p>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>Guarded Blocks</h2>
-                <p>Only proceed if a specified condition is met.</p>
-                <p>Using loops is wasteful:</p>
-                <div class="indented">
-                    <pre class="code"><code>public void guardedJoy() {
-    while(!joy) {}
-    System.out.println("Joy has been achieved!");
-}</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p><code>Object.wait()</code></p>
-                <div class="indented">
-                    <p>Suspends current Thread until (any) event - then it checks if the condition was met, again.</p>
-                    <pre class="code"><code>public synchronized void guardedJoy() {
-    // This guard only loops once for each special event, which may not
-    // be the event we're waiting for.
-    while(!joy) {
-        try {
-            wait();
-        } catch (InterruptedException e) {}
-    }
-    System.out.println("Joy and efficiency have been achieved!");
-}</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p><code>Object.notifyAll()</code></p>
-                <div class="indented">
-                    <p>Event</p>
-                    <pre class="code"><code>public synchronized notifyJoy() {
-    joy = true;
-    notifyAll();
-}</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p>Producer-Consumer-Example</p>
-                <div class="indented"><p>Only used to demonstrate guarded blocks. This could be done a lot easier using java.collections.</p></div>
-                <p></p>
-                <pre class="code"><code>public class Drop {
-    // Message producer -&gt; consumer
-    private String message;
-    // True: consumer should wait (for producer to put())
-		// False: producer should wait (for consumer to take())
-    private boolean empty = true;
-
-    public synchronized String take() {
-        while (empty) {
-            try {
-                wait();
-            } catch (InterruptedException e) {}
-        }
-        empty = true;
-        notifyAll(); // Notify producer that status has changed.
-        return message;
-    }
-
-    public synchronized void put(String message) {
-        while (!empty) {
-            try { 
-                wait();
-            } catch (InterruptedException e) {}
-        }
-        empty = false;
-        this.message = message;
-        notifyAll(); // Notify consumer that status has changed.
-    }
-}</code></pre>
-                <p></p>
-                <pre class="code"><code>public class Producer implements Runnable {
-    private Drop drop;
-
-    public Producer(Drop drop) {
-        this.drop = drop;
-    }
-
-    public void run() {
-        String importantInfo[] = { "Mares eat oats", ... };
-
-        for (int i = 0; i &lt; importantInfo.length; i++) {
-            drop.put(importantInfo[i]);
-            try {
-                Thread.sleep(...random time);
-            } catch (InterruptedException e) {}
-        }
-        drop.put("DONE");
-    }
-}</code></pre>
-                <pre class="code"><code>public class Consumer implements Runnable {
-    private Drop drop;
-
-    public Consumer(Drop drop) {
-        this.drop = drop;
-    }
-
-    public void run() {
-        for (String message = drop.take();
-             ! message.equals("DONE");
-             message = drop.take()) {
-
-            System.out.format("MESSAGE RECEIVED: %s%n", message);
-            try {
-                Thread.sleep(...random time);
-            } catch (InterruptedException e) {}
-        }
-    }
-}</code></pre>
-                <p></p>
-                <pre class="code"><code>public class ProducerConsumerExample {
-    public static void main(String[] args) {
-        Drop drop = new Drop();
-        (new Thread(new Producer(drop))).start();
-        (new Thread(new Consumer(drop))).start();
-    }
-}</code></pre>
-                <p></p>
-                <p></p>
-                <h1>High level Concurrency Objects</h1>
-                <p>
-                    Synchronized code is build on top of a simple
-                    <em>reentrant lock</em>
-                    .
-                </p>
-                <div class="indented">
-                    <p>Easy to use but many limitations.</p>
-                    <p>One thread can lock an object at a time (kritischen Abschnitt betreten).</p>
-                    <p>We now encapsulate task creation and management (previously done by threads) and the tasks themselves (runnables).</p>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>Lock</h2>
-                <p>
-                    <code>Lock</code>
-                    Interface in
-                    <code>java.util.concurrent.locks</code>
-                </p>
-                <p>Example: Solve Deadlock</p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Example</summary>
-                            <pre class="code"><code>  public static void main(String[] args) {
-    final Friend alphonse = new Friend("Alphonse");
-    final Friend gaston = new Friend("Gaston");
-    new Thread(new BowLoop(alphonse, gaston)).start();
-    new Thread(new BowLoop(gaston, alphonse)).start();
-  }</code></pre>
-                            <pre class="code"><code>static class BowLoop implements Runnable {
-  private Friend bower;
-  private Friend bowee;
-
-  public BowLoop(Friend bower, Friend bowee) { ... }
-
-  public void run() {
-    while(true) {
-      try {
-        Thread.sleep(...random time);
-      } catch (InterruptedException e) {}
-      bowee.bow(bower);
-    }
-  }
-}</code></pre>
-                            <pre class="code"><code>import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>java.util.concurrent</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+-webkit-print-color-adjust: exact;
+}
+* {
+box-sizing: border-box;
+-webkit-print-color-adjust: exact;
+}html,
+body {
+margin: 0;
+padding: 0;
+}
+@media only screen {
+body {
+margin: 2em auto;
+max-width: 900px;
+color: rgb(55, 53, 47);
+}
+}body {
+line-height: 1.5;
+white-space: pre-wrap;
+}a,
+a.visited {
+color: inherit;
+text-decoration: underline;
+}.pdf-relative-link-path {
+font-size: 80%;
+color: #444;
+}h1,
+h2,
+h3 {
+letter-spacing: -0.01em;
+line-height: 1.2;
+font-weight: 600;
+margin-bottom: 0;
+}.page-title {
+font-size: 2.5rem;
+font-weight: 700;
+margin-top: 0;
+margin-bottom: 0.75em;
+}h1 {
+font-size: 1.875rem;
+margin-top: 1.875rem;
+}h2 {
+font-size: 1.5rem;
+margin-top: 1.5rem;
+}h3 {
+font-size: 1.25rem;
+margin-top: 1.25rem;
+}.source {
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 1.5em;
+word-break: break-all;
+}.callout {
+border-radius: 3px;
+padding: 1rem;
+}figure {
+margin: 1.25em 0;
+page-break-inside: avoid;
+}figcaption {
+opacity: 0.5;
+font-size: 85%;
+margin-top: 0.5em;
+}mark {
+background-color: transparent;
+}.indented {
+padding-left: 1.5em;
+}hr {
+background: transparent;
+display: block;
+width: 100%;
+height: 1px;
+visibility: visible;
+border: none;
+border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}img {
+max-width: 100%;
+}@media only print {
+img {
+max-height: 100vh;
+object-fit: contain;
+}
+}@page {
+margin: 1in;
+}.collection-content {
+font-size: 0.875rem;
+}.column-list {
+display: flex;
+justify-content: space-between;
+}.column {
+padding: 0 1em;
+}.column:first-child {
+padding-left: 0;
+}.column:last-child {
+padding-right: 0;
+}.table_of_contents-item {
+display: block;
+font-size: 0.875rem;
+line-height: 1.3;
+padding: 0.125rem;
+}.table_of_contents-indent-1 {
+margin-left: 1.5rem;
+}.table_of_contents-indent-2 {
+margin-left: 3rem;
+}.table_of_contents-indent-3 {
+margin-left: 4.5rem;
+}.table_of_contents-link {
+text-decoration: none;
+opacity: 0.7;
+border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}table,
+th,
+td {
+border: 1px solid rgba(55, 53, 47, 0.09);
+border-collapse: collapse;
+}table {
+border-left: none;
+border-right: none;
+}th,
+td {
+font-weight: normal;
+padding: 0.25em 0.5em;
+line-height: 1.5;
+min-height: 1.5em;
+text-align: left;
+}th {
+color: rgba(55, 53, 47, 0.6);
+}ol,
+ul {
+margin: 0;
+margin-block-start: 0.6em;
+margin-block-end: 0.6em;
+}li > ol:first-child,
+li > ul:first-child {
+margin-block-start: 0.6em;
+}ul > li {
+list-style: disc;
+}ul.to-do-list {
+padding-inline-start: 0;
+}ul.to-do-list > li {
+list-style: none;
+}.to-do-children-checked {
+text-decoration: line-through;
+opacity: 0.375;
+}ul.toggle > li {
+list-style: none;
+}ul {
+padding-inline-start: 1.7em;
+}ul > li {
+padding-left: 0.1em;
+}ol {
+padding-inline-start: 1.6em;
+}ol > li {
+padding-left: 0.2em;
+}.mono ol {
+padding-inline-start: 2em;
+}.mono ol > li {
+text-indent: -0.4em;
+}.toggle {
+padding-inline-start: 0em;
+list-style-type: none;
+}/* Indent toggle children */
+.toggle > li > details {
+padding-left: 1.7em;
+}.toggle > li > details > summary {
+margin-left: -1.1em;
+}.selected-value {
+display: inline-block;
+padding: 0 0.5em;
+background: rgba(206, 205, 202, 0.5);
+border-radius: 3px;
+margin-right: 0.5em;
+margin-top: 0.3em;
+margin-bottom: 0.3em;
+white-space: nowrap;
+}.collection-title {
+display: inline-block;
+margin-right: 1em;
+}.page-description {
+margin-bottom: 2em;
+}.simple-table {
+margin-top: 1em;
+font-size: 0.875rem;
+empty-cells: show;
+}
+.simple-table td {
+height: 29px;
+min-width: 120px;
+}.simple-table th {
+height: 29px;
+min-width: 120px;
+}.simple-table-header-color {
+background: rgb(247, 246, 243);
+color: black;
+}
+.simple-table-header {
+font-weight: 500;
+}time {
+opacity: 0.5;
+}.icon {
+display: inline-block;
+max-width: 1.2em;
+max-height: 1.2em;
+text-decoration: none;
+vertical-align: text-bottom;
+margin-right: 0.5em;
+}img.icon {
+border-radius: 3px;
+}.user-icon {
+width: 1.5em;
+height: 1.5em;
+border-radius: 100%;
+margin-right: 0.5rem;
+}.user-icon-inner {
+font-size: 0.8em;
+}.text-icon {
+border: 1px solid #000;
+text-align: center;
+}.page-cover-image {
+display: block;
+object-fit: cover;
+width: 100%;
+max-height: 30vh;
+}.page-header-icon {
+font-size: 3rem;
+margin-bottom: 1rem;
+}.page-header-icon-with-cover {
+margin-top: -0.72em;
+margin-left: 0.07em;
+}.page-header-icon img {
+border-radius: 3px;
+}.link-to-page {
+margin: 1em 0;
+padding: 0;
+border: none;
+font-weight: 500;
+}p > .user {
+opacity: 0.5;
+}td > .user,
+td > time {
+white-space: nowrap;
+}input[type="checkbox"] {
+transform: scale(1.5);
+margin-right: 0.6em;
+vertical-align: middle;
+}p {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}.image {
+border: none;
+margin: 1.5em 0;
+padding: 0;
+border-radius: 0;
+text-align: center;
+}.code,
+code {
+background: rgba(135, 131, 120, 0.15);
+border-radius: 3px;
+padding: 0.2em 0.4em;
+border-radius: 3px;
+font-size: 85%;
+tab-size: 2;
+}code {
+color: #eb5757;
+}.code {
+padding: 1.5em 1em;
+}.code-wrap {
+white-space: pre-wrap;
+word-break: break-all;
+}.code > code {
+background: none;
+padding: 0;
+font-size: 100%;
+color: inherit;
+}blockquote {
+font-size: 1.25em;
+margin: 1em 0;
+padding-left: 1em;
+border-left: 3px solid rgb(55, 53, 47);
+}.bookmark {
+text-decoration: none;
+max-height: 8em;
+padding: 0;
+display: flex;
+width: 100%;
+align-items: stretch;
+}.bookmark-title {
+font-size: 0.85em;
+overflow: hidden;
+text-overflow: ellipsis;
+height: 1.75em;
+white-space: nowrap;
+}.bookmark-text {
+display: flex;
+flex-direction: column;
+}.bookmark-info {
+flex: 4 1 180px;
+padding: 12px 14px 14px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}.bookmark-image {
+width: 33%;
+flex: 1 1 180px;
+display: block;
+position: relative;
+object-fit: cover;
+border-radius: 1px;
+}.bookmark-description {
+color: rgba(55, 53, 47, 0.6);
+font-size: 0.75em;
+overflow: hidden;
+max-height: 4.5em;
+word-break: break-word;
+}.bookmark-href {
+font-size: 0.75em;
+margin-top: 0.25em;
+}.sans {
+font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+"Segoe UI Symbol";
+}
+.code {
+font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+}
+.serif {
+font-family: Lyon-Text, Georgia, ui-serif, serif;
+}
+.mono {
+font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+}
+.pdf .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+}
+.pdf:lang(zh-CN) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+}
+.pdf:lang(zh-TW) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+}
+.pdf:lang(ko-KR) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+}
+.pdf .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK KR";
+}
+.pdf .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+}
+.pdf:lang(zh-CN) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+}
+.pdf:lang(zh-TW) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+}
+.pdf:lang(ko-KR) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+}
+.pdf .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+}
+.highlight-default {
+color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+color: inherit;
+fill: inherit;
+}
+.block-color-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue {
+background-color: rgba(35, 131, 226, 0.07);
+}
+.select-value-color-pink {
+background-color: rgba(245, 224, 233, 1);
+}
+.select-value-color-purple {
+background-color: rgba(232, 222, 238, 1);
+}
+.select-value-color-green {
+background-color: rgba(219, 237, 219, 1);
+}
+.select-value-color-gray {
+background-color: rgba(227, 226, 224, 1);
+}
+.select-value-color-translucentGray {
+background-color: rgba(255, 255, 255, 0.0375);
+}
+.select-value-color-orange {
+background-color: rgba(250, 222, 201, 1);
+}
+.select-value-color-brown {
+background-color: rgba(238, 224, 218, 1);
+}
+.select-value-color-red {
+background-color: rgba(255, 226, 221, 1);
+}
+.select-value-color-yellow {
+background-color: rgba(253, 236, 200, 1);
+}
+.select-value-color-blue {
+background-color: rgba(211, 229, 239, 1);
+}
+.select-value-color-pageGlass {
+background-color: undefined;
+}
+.select-value-color-washGlass {
+background-color: undefined;
+}.checkbox {
+display: inline-flex;
+vertical-align: text-bottom;
+width: 16;
+height: 16;
+background-size: 16px;
+margin-left: 2px;
+margin-right: 5px;
+}.checkbox-on {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}.checkbox-off {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}/* -------- injections from notionBackup -------- */body {
+white-space: normal !important;
+}p {
+min-height: 1em !important;
+}.code,
+code {
+font-size: 100% !important;
+}blockquote {
+font-size: 100% !important;
+}.callout {
+white-space: normal !important;
+}
+.callout div:has(span.icon) {
+font-size: 100% !important;
+}.source:not(.bookmark) {
+font-size: 100% !important;
+}p {
+min-height: 1em !important;
+}
+</style></head><body><article class="page sans"><header><h1 class="page-title">java.util.concurrent</h1><p class="page-description"></p></header><div class="page-body"><p><a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html">
+https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html
+</a></p><p><a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/executors.html">
+https://docs.oracle.com/javase/tutorial/essential/concurrency/executors.html
+</a></p><p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-summary.html#MemoryVisibility">
+https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-summary.html#MemoryVisibility
+</a></p><p></p><p>In depth tutorials</p><div class="indented"><p><a href="https://www.youtube.com/watch?v=mTGdtC9f4EU&amp;list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&amp;index=1">
+https://www.youtube.com/watch?v=mTGdtC9f4EU&amp;list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&amp;index=1
+</a></p></div><p></p><p>Compact summary</p><div class="indented"><p><a href="https://www.youtube.com/watch?v=c-a5JHVfGYM">https://www.youtube.com/watch?v=c-a5JHVfGYM</a></p></div><p></p><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#115fe601-eb41-4963-a297-96fda761ce2e">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8ad9fc1d-3b46-4305-9cf6-0789987c9e64">Thread</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#21093a83-e2a9-45b0-8031-d083230fe6ae">Thread API</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f325b5f2-3018-422d-8137-fd5a001b8d2d">Synchronization</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#144e5af9-9ab9-4022-bc39-b826385e9577">Liveliness</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bbdce8ab-a095-4e6a-acb5-a839ef65fb3c">Guarded Blocks</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#781f7f64-a37f-478c-bf6d-80793a96d3c9">High level Concurrency Objects</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fc918062-86c0-4c03-8455-534b4b48feab">Lock</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ae77970d-79f4-4fa1-86c9-c93da153ef43">Executor</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b6820dc2-949a-4275-8fa4-138f087b06c4">Thread Pools</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2d38581e-d3ba-4ace-8d78-6ec15261d57d">Concurrent Collections</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#28fb931f-614f-45a6-afde-f401980f64de">Atomic Variables</a></div></nav><p></p><h1>Definition</h1><p><mark class="highlight-blue">Process</mark></p><div class="indented"><p>The JVM is run as a single process process scheduled by the OS.</p><p>A Java application can also create additional processes (not part of this tutorial).</p><p></p></div><p></p><p><mark class="highlight-blue">Thread</mark></p><div class="indented"><p>Lightweight processes - creating it requires less resources.</p><p>Exist within a process and share its resources.</p><p>
+You start with the
+<em>main</em><em>thread</em>
+.
+</p><p></p></div><p></p><p></p><h1>Thread</h1><p><code>Runnable</code></p><div class="indented"><p>
+Runnable is an interface which represents a task that could be executed by either a
+<mark class="highlight-gray"><code>Thread</code></mark><mark class="highlight-gray"></mark>
+or
+<mark class="highlight-gray"><code>Executor</code></mark><mark class="highlight-gray"></mark>
+or some similar means.
+</p><div class="indented"><p>
+They are passed to the
+<mark class="highlight-gray"><code>Thread</code></mark>
+s constructor.
+</p></div><p></p><p>
+Interface that classes that run within the
+<em>Thread</em>
+Object must implement.
+</p></div><p></p><pre class="code code-wrap"><code>public class HelloRunnable implements Runnable {public void run() {
+System.out.println("Hello from a thread!");
+}public static void main(String args[]) {
+(new Thread(new HelloRunnable())).start();
+}}</code></pre><p></p><p></p><h2>Thread API</h2><p><code>.sleep()</code></p><div class="indented"><p>suspend execution inside a Thread (not precise).</p><p>Make CPU time available for other threads or processes.</p><p>
+Can be interrupted with
+<mark class="highlight-gray"><code>InterruptedException</code></mark>
+.
+</p></div><p></p><p></p><p><code>.interrupt()</code></p><div class="indented"><p>
+Usually interruped threads are programmed to terminate (
+<mark class="highlight-gray"><code>return</code></mark><mark class="highlight-gray"></mark>
+from the run method).
+</p><p>
+When interrupted, a
+<mark class="highlight-gray"><code>InterruptedException</code></mark><mark class="highlight-gray"></mark>
+is thrown in the Thread.
+</p><div class="indented"><p>
+If the used methods do not invoke this execution, we must periodically check it ourselves with
+<mark class="highlight-gray"><code>.interrupted()</code></mark>
+and then throw the exception ourselves.
+</p></div><p></p><hr/><p>
+For interruptions, we set the
+<em>interrupt-status-flag</em>
+of a Thread.
+</p><div class="indented"><p>
+Static method:
+<mark class="highlight-gray"><code>Thread.interrupt()</code></mark>
+→ sets flag to true
+</p><p>
+Static method:
+<mark class="highlight-gray"><code>Thread.interrupted()</code></mark>
+→ sets flag to false
+</p><p>
+Non-static method:
+<mark class="highlight-gray"><code>isInterrupted()</code></mark><mark class="highlight-gray"></mark>
+→ doesnt change flag
+</p><p>
+Throwing
+<mark class="highlight-gray"><code>InterruptedException</code></mark><mark class="highlight-gray"></mark>
+and exiting → sets flag to false
+</p></div><p></p><p></p></div><p></p><p><code>t.join()</code></p><div class="indented"><p>Called inside a Thread.</p><p>
+Waits for termination of
+<mark class="highlight-gray"><code>t</code></mark>
+.
+</p><p>
+Can be interrupted with
+<mark class="highlight-gray"><code>InterruptedException</code></mark>
+.
+</p></div><p></p><p></p><p>Example</p><div class="indented"><p>We have 2 Threads:</p><div class="indented"><p><em>main-thread</em>
+creates a new thread from the Runnable,
+<mark class="highlight-gray"><code>MessageLoop</code></mark>
+and waits for it to finish.
+</p><p>
+If it takes to long, the
+<em>main-thread</em>
+will interrupt it.
+</p></div><p></p></div><p></p><pre class="code"><code>public class SimpleThreads {// Display message + name of the current thread
+public static void threadMessage(String message) {
+String threadName = Thread.currentThread().getName();
+System.out.format("%s: %s%n", threadName, message);
+}public static void main(String args[]) throws InterruptedException {
+long patience = 1000 * 60 * 60; // one hour//start Timer
+threadMessage("Starting MessageLoop thread");
+long startTime = System.currentTimeMillis();
+//start MessageLoop
+Thread t = new Thread(new MessageLoop());
+t.start();threadMessage("Waiting for MessageLoop thread to finish");
+while (t.isAlive()) {
+threadMessage("Still waiting...");
+// Wait max 1 second
+t.join(1000);
+if (((System.currentTimeMillis() - startTime) &gt; patience) &amp;&amp; t.isAlive()) {
+threadMessage("Tired of waiting!");
+t.interrupt();
+t.join(); // wait indefinitely
+}
+}
+threadMessage("Finally!");
+}
+}</code></pre><pre class="code"><code>private static class MessageLoop implements Runnable {
+public void run() {
+String importantInfo[] = { "Mares eat oats", ...};
+try {
+for (int i = 0; i &lt; importantInfo.length; i++) {
+Thread.sleep(4000);
+SimpleThreads.threadMessage(importantInfo[i]);
+}
+} catch (InterruptedException e) {
+SimpleThreads.threadMessage("I wasn't done!");
+}
+}
+}</code></pre><p></p><p></p><h1>Synchronization</h1><p>Threads communicate by sharing memory. This might cause:</p><div class="indented"><p><mark class="highlight-blue">Thread Interference</mark></p><div class="indented"><p>Multiple Threads access shared memory</p><div class="indented"><p>
+This happens when two operations running on different threads acting on the same data,
+<em>interleave</em>
+.
+</p></div><p></p></div><p></p><p><mark class="highlight-blue">Memory consistency error</mark></p><div class="indented"><p>Inconsistent views of shared memory.</p><div class="indented"><p>There is no fixed execution-order.</p></div><p></p></div><p></p></div><p></p><p>Solution: Synchronization.</p><p></p><p></p><p><mark class="highlight-blue">Synchronized Methods: Atomic actions</mark></p><div class="indented"><p>No interleaving allowed: "Kritischer Abschnitt"</p><pre class="code"><code>public class SynchronizedCounter {
+private int c = 0;public synchronized void increment() {
+c++;
+}public synchronized void decrement() {
+c--;
+}public synchronized int value() {
+return c;
+}
+}</code></pre></div><p></p><p></p><p><mark class="highlight-blue">Synchronized Statements: making only a part of the method atomic</mark></p><div class="indented"><p>
+Built on the
+<em>intrinsic lock</em>
+or
+<em>monitor lock</em>
+.
+</p><p>
+Thread that needs exclusive access has to
+<em>acquire</em>
+the intrinsic lock, access it, then
+<em>release</em>
+the intrinsic lock when it's done.
+</p><p>
+A thread is said to
+<em>own</em>
+the intrinsic lock between the time it has acquired the lock and released the lock.
+</p><p>Synchronized statements must specify the object that provides the intrinsic lock:</p><pre class="code"><code>public void addName(String name) {
+synchronized(this) {
+lastName = name;
+nameCount++;
+}
+nameList.add(name);
+}</code></pre></div><p></p><p></p><p>To avoid unneccasry blocking, where interleaving does not affect the memory:</p><div class="indented"><p>
+Incrementing
+<mark class="highlight-gray"><code>c1</code></mark><mark class="highlight-gray"></mark>
+and
+<mark class="highlight-gray"><code>c2</code></mark><mark class="highlight-gray"></mark>
+can interleave since they are never read together, but the operations must be synchronized.
+<mark class="highlight-gray"></mark></p><pre class="code"><code>public class Example {
+private long c1 = 0;
+private long c2 = 0;
+private Object lock1 = new Object();
+private Object lock2 = new Object();public void inc1() {
+synchronized(lock1) {
+c1++;
+}
+}public void inc2() {
+synchronized(lock2) {
+c2++;
+}
+}
+}</code></pre></div><p></p><p></p><p><mark class="highlight-blue">Atomic Access</mark></p><div class="indented"><p>No interruptions: Action happens completely or not at all.</p><p>No side effects are visible until the action is complete.</p><p>
+Reads and writes are atomic for all primitive variables - but
+<mark class="highlight-gray"><code>long</code></mark><mark class="highlight-gray"></mark>
+and
+<mark class="highlight-gray"><code>double</code></mark><mark class="highlight-gray"></mark>
+variables must be declared
+<code>volatile</code></p></div><p></p><p></p><h1>Liveliness</h1><p>Synchronization can cause thread contention like these.</p><p></p><p><mark class="highlight-blue">Deadlock</mark></p><div class="indented"><p>describes a situation where two or more threads are blocked forever, waiting for each other.</p></div><p></p><p>Example</p><div class="indented"><p>Two Friends (Gaston, Alphonse) who bow and remain bowed until the other friend can bow back.</p><p>
+If both bow at the same time, they remain locked forever. Neither block will ever end, because each thread is waiting for the other to
+exit
+<mark class="highlight-gray"><code>bow</code></mark>
+.
+</p></div><p></p><pre class="code"><code>public class Deadlock {
 static class Friend {
-
-  private final String name;
-  private final Lock lock = new ReentrantLock();
-
-  public Friend(String name) { ... }
-  public String getName() { ... }
-
-	//if it returns false: both bowing at the same time
-  public boolean impendingBow(Friend bower) {
-    Boolean myLock = false;
-    Boolean yourLock = false;
-    try {
-			// returns true if the lock was free and was acquired by the current thread
-      myLock = lock.tryLock();
-      yourLock = bower.lock.tryLock();
-    } finally {
-      if (!myLock || !yourLock)) { //if one of us wasnt free
-        if (myLock) { lock.unlock(); }
-        if (yourLock) { bower.lock.unlock(); }
-      }
-    }
-    return myLock &amp;&amp; yourLock;
-  }
-
-  public void bow(Friend bower) {
-    if (impendingBow(bower)) {
-      try {
-        System.out.format(
-          "%s: %s has" + " bowed to me!%n",
-          this.name,
-          bower.getName()
-        );
-        bower.bowBack(this);
-      } finally {
-        lock.unlock();
-        bower.lock.unlock();
-      }
-    } else {
-      System.out.format(
-        "%s: %s started" + "to bow to me, but saw that I was already bowing to him.%n",
-        this.name,
-        bower.getName()
-      );
-    }
-  }
-
-  public void bowBack(Friend bower) {
-    System.out.format(
-      "%s: %s has" + " bowed back to me!%n",
-      this.name,
-      bower.getName()
-    );
-  }
-}</code></pre>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <h2>Executor</h2>
-                <p>Previously, we seperated the task being done by the thread (Runnable), and the thread itself, responsible for creating tasks.</p>
-                <p>We dont want to sperate thread management and creation from the rest of the application in large applications.</p>
-                <p></p>
-                <p><code>Executor</code></p>
-                <div class="indented">
-                    <p>Interface for launching new tasks.</p>
-                    <p>
-                        The Executor runs an existing worker thread to run the runnable
-                        <mark class="highlight-gray"><code>r</code></mark>
-                        or place it in a queue until the worker thread is available
-                        <mark class="highlight-gray">(→ see thread pools)</mark>
-                        .
-                    </p>
-                    <pre class="code"><code>Runnable r = ...
-(new Thread(r)).start();</code></pre>
-                    <pre class="code"><code>Runnable r = ...
+private final String name;public Friend(String name) { ... }
+public String getName() { ... }public synchronized void bow(Friend bower) {
+System.out.format("%s: %s" + "  has bowed to me!%n", this.name, bower.getName());
+bower.bowBack(this);
+}public synchronized void bowBack(Friend bower) {
+System.out.format("%s: %s" + " has bowed back to me!%n", this.name, bower.getName());
+}
+}public static void main(String[] args) {
+final Friend alphonse = new Friend("Alphonse");
+final Friend gaston = new Friend("Gaston");
+new Thread(new Runnable() {
+public void run() {
+alphonse.bow(gaston);
+}
+}).start();
+new Thread(new Runnable() {
+public void run() {
+gaston.bow(alphonse);
+}
+}).start();
+}
+}</code></pre><p></p><p><mark class="highlight-blue">Starvation</mark></p><div class="indented"><p>situation where a thread is unable to gain regular access to shared resources and is unable to make progress.</p><p>This happens when shared resources are made unavailable for long periods by "greedy" threads.</p></div><p></p><p></p><p><mark class="highlight-blue">Livelock</mark></p><div class="indented"><p>The threads are not blocked but still make no process- they are simply too busy responding to each other to resume work.</p></div><p></p><p></p><h2>Guarded Blocks</h2><p>Only proceed if a specified condition is met.</p><p>Using loops is wasteful:</p><div class="indented"><pre class="code"><code>public void guardedJoy() {
+while(!joy) {}
+System.out.println("Joy has been achieved!");
+}</code></pre></div><p></p><p></p><p><code>Object.wait()</code></p><div class="indented"><p>Suspends current Thread until (any) event - then it checks if the condition was met, again.</p><pre class="code"><code>public synchronized void guardedJoy() {
+// This guard only loops once for each special event, which may not
+// be the event we're waiting for.
+while(!joy) {
+try {
+wait();
+} catch (InterruptedException e) {}
+}
+System.out.println("Joy and efficiency have been achieved!");
+}</code></pre></div><p></p><p></p><p><code>Object.notifyAll()</code></p><div class="indented"><p>Event</p><pre class="code"><code>public synchronized notifyJoy() {
+joy = true;
+notifyAll();
+}</code></pre></div><p></p><p></p><p>Producer-Consumer-Example</p><div class="indented"><p>Only used to demonstrate guarded blocks. This could be done a lot easier using java.collections.</p></div><p></p><pre class="code"><code>public class Drop {
+// Message producer -&gt; consumer
+private String message;
+// True: consumer should wait (for producer to put())
+// False: producer should wait (for consumer to take())
+private boolean empty = true;public synchronized String take() {
+while (empty) {
+try {
+wait();
+} catch (InterruptedException e) {}
+}
+empty = true;
+notifyAll(); // Notify producer that status has changed.
+return message;
+}public synchronized void put(String message) {
+while (!empty) {
+try {
+wait();
+} catch (InterruptedException e) {}
+}
+empty = false;
+this.message = message;
+notifyAll(); // Notify consumer that status has changed.
+}
+}</code></pre><p></p><pre class="code"><code>public class Producer implements Runnable {
+private Drop drop;public Producer(Drop drop) {
+this.drop = drop;
+}public void run() {
+String importantInfo[] = { "Mares eat oats", ... };for (int i = 0; i &lt; importantInfo.length; i++) {
+drop.put(importantInfo[i]);
+try {
+Thread.sleep(...random time);
+} catch (InterruptedException e) {}
+}
+drop.put("DONE");
+}
+}</code></pre><pre class="code"><code>public class Consumer implements Runnable {
+private Drop drop;public Consumer(Drop drop) {
+this.drop = drop;
+}public void run() {
+for (String message = drop.take();
+! message.equals("DONE");
+message = drop.take()) {System.out.format("MESSAGE RECEIVED: %s%n", message);
+try {
+Thread.sleep(...random time);
+} catch (InterruptedException e) {}
+}
+}
+}</code></pre><p></p><pre class="code"><code>public class ProducerConsumerExample {
+public static void main(String[] args) {
+Drop drop = new Drop();
+(new Thread(new Producer(drop))).start();
+(new Thread(new Consumer(drop))).start();
+}
+}</code></pre><p></p><p></p><h1>High level Concurrency Objects</h1><p>
+Synchronized code is build on top of a simple
+<em>reentrant lock</em>
+.
+</p><div class="indented"><p>Easy to use but many limitations.</p><p>One thread can lock an object at a time (kritischen Abschnitt betreten).</p><p>We now encapsulate task creation and management (previously done by threads) and the tasks themselves (runnables).</p></div><p></p><p></p><h2>Lock</h2><p><code>Lock</code>
+Interface in
+<code>java.util.concurrent.locks</code></p><p>Example: Solve Deadlock</p><ul class="toggle"><li><details open=""><summary>Example</summary><pre class="code"><code>  public static void main(String[] args) {
+final Friend alphonse = new Friend("Alphonse");
+final Friend gaston = new Friend("Gaston");
+new Thread(new BowLoop(alphonse, gaston)).start();
+new Thread(new BowLoop(gaston, alphonse)).start();
+}</code></pre><pre class="code"><code>static class BowLoop implements Runnable {
+private Friend bower;
+private Friend bowee;public BowLoop(Friend bower, Friend bowee) { ... }public void run() {
+while(true) {
+try {
+Thread.sleep(...random time);
+} catch (InterruptedException e) {}
+bowee.bow(bower);
+}
+}
+}</code></pre><pre class="code"><code>import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;static class Friend {private final String name;
+private final Lock lock = new ReentrantLock();public Friend(String name) { ... }
+public String getName() { ... }//if it returns false: both bowing at the same time
+public boolean impendingBow(Friend bower) {
+Boolean myLock = false;
+Boolean yourLock = false;
+try {
+// returns true if the lock was free and was acquired by the current thread
+myLock = lock.tryLock();
+yourLock = bower.lock.tryLock();
+} finally {
+if (!myLock || !yourLock)) { //if one of us wasnt free
+if (myLock) { lock.unlock(); }
+if (yourLock) { bower.lock.unlock(); }
+}
+}
+return myLock &amp;&amp; yourLock;
+}public void bow(Friend bower) {
+if (impendingBow(bower)) {
+try {
+System.out.format(
+"%s: %s has" + " bowed to me!%n",
+this.name,
+bower.getName()
+);
+bower.bowBack(this);
+} finally {
+lock.unlock();
+bower.lock.unlock();
+}
+} else {
+System.out.format(
+"%s: %s started" + "to bow to me, but saw that I was already bowing to him.%n",
+this.name,
+bower.getName()
+);
+}
+}public void bowBack(Friend bower) {
+System.out.format(
+"%s: %s has" + " bowed back to me!%n",
+this.name,
+bower.getName()
+);
+}
+}</code></pre></details></li></ul><p></p><h2>Executor</h2><p>Previously, we seperated the task being done by the thread (Runnable), and the thread itself, responsible for creating tasks.</p><p>We dont want to sperate thread management and creation from the rest of the application in large applications.</p><p></p><p><code>Executor</code></p><div class="indented"><p>Interface for launching new tasks.</p><p>
+The Executor runs an existing worker thread to run the runnable
+<mark class="highlight-gray"><code>r</code></mark>
+or place it in a queue until the worker thread is available
+<mark class="highlight-gray">(→ see thread pools)</mark>
+.
+</p><pre class="code"><code>Runnable r = ...
+(new Thread(r)).start();</code></pre><pre class="code"><code>Runnable r = ...
 Executor e = ...
-e.execute(r);</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p><code>ExecutorService</code></p>
-                <div class="indented">
-                    <p>Subinterface of Executor.</p>
-                    <p>Additional features for life cycle.</p>
-                    <div class="indented">
-                        <p><code>.submit()</code></p>
-                        <div class="indented">
-                            <p>
-                                Accepts
-                                <mark class="highlight-gray"><code>Runnable</code></mark>
-                                <mark class="highlight-gray"></mark>
-                                and
-                                <mark class="highlight-gray"><code>Callable</code></mark>
-                            </p>
-                            <p>
-                                returns a
-                                <mark class="highlight-gray"><code>Future</code></mark>
-                                <mark class="highlight-gray"></mark>
-                                Object
-                            </p>
-                            <p>
-                                Can handle large collections of
-                                <mark class="highlight-gray"><code>Callable</code></mark>
-                                <mark class="highlight-gray"></mark>
-                                objects.
-                            </p>
-                            <p>Can handle immediate shutdown of tasks.</p>
-                        </div>
-                        <p></p>
-                    </div>
-                    <p></p>
-                    <p></p>
-                </div>
-                <p></p>
-                <p><code>ScheduledExecutorService</code></p>
-                <div class="indented">
-                    <p>Subinterface of ExecutorService.</p>
-                    <p>Additional features for future and periodic execution of tasks.</p>
-                    <p><code>.schedule()</code></p>
-                    <div class="indented">
-                        <p>
-                            Accepts
-                            <mark class="highlight-gray"><code>Runnable</code></mark>
-                            <mark class="highlight-gray"></mark>
-                            and
-                            <mark class="highlight-gray"><code>Callable</code></mark>
-                        </p>
-                        <p>Calls tasks with specified delay or in intervals with fixed delays.</p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>Thread Pools</h2>
-                <p>
-                    These are implementations of the
-                    <mark class="highlight-gray"><code>ExecutorService</code></mark>
-                    .
-                </p>
-                <p>
-                    One can also implement the
-                    <code>ThreadPoolExecutor</code>
-                    Interface to implement own thread pools.
-                </p>
-                <p>
-                    Thread pools consist of
-                    <em>worker-threads</em>
-                    .
-                </p>
-                <div class="indented">
-                    <p>Used to execute multiple tasks.</p>
-                    <p>Less overhead for thread-creation.</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><code>newFixedThreadPool</code></p>
-                <div class="indented">
-                    <p>Has a maximum of allowed threads runnning.</p>
-                    <p>Works with internal queue.</p>
-                    <p>Useful for servers handling requests.</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><code>newCachedThreadPool</code></p>
-                <div class="indented">
-                    <p>Creates Executor with expandable threadpool.</p>
-                    <p>For short-lived tasks.</p>
-                    <p></p>
-                </div>
-                <p></p>
-                <p><code>newSingleThreadExecutor</code></p>
-                <div class="indented"><p>Thread pool size = 1</p></div>
-                <p></p>
-                <p></p>
-                <p><code>ForkJoinPool</code></p>
-                <div class="indented">
-                    <p>
-                        Can execute
-                        <mark class="highlight-gray"><code>ForkJoinTask</code></mark>
-                        <mark class="highlight-gray"></mark>
-                        Processes.
-                    </p>
-                    <p>Helps take advantage of multiple CPU cores.</p>
-                    <p>
-                        <em>work-stealing algorithm</em>
-                        : workers that run out of things to do can steal tasks from workers that are still busy.
-                    </p>
-                    <p>
-                        Usage: Writing small portions of code in a
-                        <code><mark class="highlight-gray">ForkJoinTask</mark></code>
-                    </p>
-                    <div class="indented">
-                        <pre class="code"><code>if (my portion of the work is small enough)
-  do the work directly
+e.execute(r);</code></pre></div><p></p><p></p><p><code>ExecutorService</code></p><div class="indented"><p>Subinterface of Executor.</p><p>Additional features for life cycle.</p><div class="indented"><p><code>.submit()</code></p><div class="indented"><p>
+Accepts
+<mark class="highlight-gray"><code>Runnable</code></mark><mark class="highlight-gray"></mark>
+and
+<mark class="highlight-gray"><code>Callable</code></mark></p><p>
+returns a
+<mark class="highlight-gray"><code>Future</code></mark><mark class="highlight-gray"></mark>
+Object
+</p><p>
+Can handle large collections of
+<mark class="highlight-gray"><code>Callable</code></mark><mark class="highlight-gray"></mark>
+objects.
+</p><p>Can handle immediate shutdown of tasks.</p></div><p></p></div><p></p><p></p></div><p></p><p><code>ScheduledExecutorService</code></p><div class="indented"><p>Subinterface of ExecutorService.</p><p>Additional features for future and periodic execution of tasks.</p><p><code>.schedule()</code></p><div class="indented"><p>
+Accepts
+<mark class="highlight-gray"><code>Runnable</code></mark><mark class="highlight-gray"></mark>
+and
+<mark class="highlight-gray"><code>Callable</code></mark></p><p>Calls tasks with specified delay or in intervals with fixed delays.</p></div><p></p></div><p></p><p></p><h2>Thread Pools</h2><p>
+These are implementations of the
+<mark class="highlight-gray"><code>ExecutorService</code></mark>
+.
+</p><p>
+One can also implement the
+<code>ThreadPoolExecutor</code>
+Interface to implement own thread pools.
+</p><p>
+Thread pools consist of
+<em>worker-threads</em>
+.
+</p><div class="indented"><p>Used to execute multiple tasks.</p><p>Less overhead for thread-creation.</p></div><p></p><p></p><p><code>newFixedThreadPool</code></p><div class="indented"><p>Has a maximum of allowed threads runnning.</p><p>Works with internal queue.</p><p>Useful for servers handling requests.</p></div><p></p><p></p><p><code>newCachedThreadPool</code></p><div class="indented"><p>Creates Executor with expandable threadpool.</p><p>For short-lived tasks.</p><p></p></div><p></p><p><code>newSingleThreadExecutor</code></p><div class="indented"><p>Thread pool size = 1</p></div><p></p><p></p><p><code>ForkJoinPool</code></p><div class="indented"><p>
+Can execute
+<mark class="highlight-gray"><code>ForkJoinTask</code></mark><mark class="highlight-gray"></mark>
+Processes.
+</p><p>Helps take advantage of multiple CPU cores.</p><p><em>work-stealing algorithm</em>
+: workers that run out of things to do can steal tasks from workers that are still busy.
+</p><p>
+Usage: Writing small portions of code in a
+<code><mark class="highlight-gray">ForkJoinTask</mark></code></p><div class="indented"><pre class="code"><code>if (my portion of the work is small enough)
+do the work directly
 else
-  split my work into two pieces
-  invoke the two pieces and wait for the results</code></pre>
-                    </div>
-                    <p></p>
-                    <p></p>
-                </div>
-                <p></p>
-                <h1>Concurrent Collections</h1>
-                <p>Help avoid Memory Consistency Errors.</p>
-                <div class="indented"><p>Set an Execution Order.</p></div>
-                <p></p>
-                <p></p>
-                <p><code>BlockingQueue</code></p>
-                <div class="indented">
-                    <p>Fifo Queue</p>
-                    <p>Blocks when you try to add to a full queue or retrieve from an empty queue.</p>
-                    <p></p>
-                </div>
-                <p></p>
-                <p>
-                    <code>ConcurrentMap</code>
-                    /
-                    <code>ConcurrentHashMap</code>
-                </p>
-                <div class="indented">
-                    <p>
-                        Subinterface of
-                        <a href="http://java.util.Map">
-                            <mark class="highlight-gray"><code>java.util.Map</code></mark>
-                        </a>
-                        <mark class="highlight-gray">/</mark>
-                        <mark class="highlight-gray"><code>java.util.Hashmap</code></mark>
-                    </p>
-                    <p>Atomic operations</p>
-                    <p></p>
-                </div>
-                <p></p>
-                <p><code>ConcurrentNavigableMap</code></p>
-                <div class="indented">
-                    <p>
-                        Analog of
-                        <mark class="highlight-gray"><code>TreeMap</code></mark>
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <h1>Atomic Variables</h1>
-                <p>Atomic operations on a single variable.</p>
-                <p>
-                    All classes have
-                    <mark class="highlight-gray">&nbsp;</mark>
-                    <mark class="highlight-gray"><code>get</code></mark>
-                    <mark class="highlight-gray">&nbsp;</mark>
-                    and&nbsp;
-                    <mark class="highlight-gray"><code>set</code></mark>
-                    <mark class="highlight-gray">&nbsp;</mark>
-                    methods that work like reads and writes on&nbsp;
-                    <mark class="highlight-gray"><code>volatile</code></mark>
-                    &nbsp;variables.
-                </p>
-                <pre class="code"><code>import java.util.concurrent.atomic.AtomicInteger;
-
-class AtomicCounter {
-    private AtomicInteger c = new AtomicInteger(0);
-
-    public void increment() {
-        c.incrementAndGet();
-    }
-
-    public void decrement() {
-        c.decrementAndGet();
-    }
-
-    public int value() {
-        return c.get();
-    }
-
-}</code></pre>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-            </div>
-        </article>
-    </body>
-</html>
+split my work into two pieces
+invoke the two pieces and wait for the results</code></pre></div><p></p><p></p></div><p></p><h1>Concurrent Collections</h1><p>Help avoid Memory Consistency Errors.</p><div class="indented"><p>Set an Execution Order.</p></div><p></p><p></p><p><code>BlockingQueue</code></p><div class="indented"><p>Fifo Queue</p><p>Blocks when you try to add to a full queue or retrieve from an empty queue.</p><p></p></div><p></p><p><code>ConcurrentMap</code>
+/
+<code>ConcurrentHashMap</code></p><div class="indented"><p>
+Subinterface of
+<a href="http://java.util.Map"><mark class="highlight-gray"><code>java.util.Map</code></mark></a><mark class="highlight-gray">/</mark><mark class="highlight-gray"><code>java.util.Hashmap</code></mark></p><p>Atomic operations</p><p></p></div><p></p><p><code>ConcurrentNavigableMap</code></p><div class="indented"><p>
+Analog of
+<mark class="highlight-gray"><code>TreeMap</code></mark></p></div><p></p><p></p><h1>Atomic Variables</h1><p>Atomic operations on a single variable.</p><p>
+All classes have
+<mark class="highlight-gray"></mark><mark class="highlight-gray"><code>get</code></mark><mark class="highlight-gray"></mark>
+and
+<mark class="highlight-gray"><code>set</code></mark><mark class="highlight-gray"></mark>
+methods that work like reads and writes on
+<mark class="highlight-gray"><code>volatile</code></mark>
+variables.
+</p><pre class="code"><code>import java.util.concurrent.atomic.AtomicInteger;class AtomicCounter {
+private AtomicInteger c = new AtomicInteger(0);public void increment() {
+c.incrementAndGet();
+}public void decrement() {
+c.decrementAndGet();
+}public int value() {
+return c.get();
+}}</code></pre><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></div></article></body></html>

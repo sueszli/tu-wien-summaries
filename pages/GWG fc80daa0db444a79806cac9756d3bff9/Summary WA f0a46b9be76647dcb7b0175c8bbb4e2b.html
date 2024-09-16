@@ -1,2196 +1,721 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Summary WA</title>
-        <style>
-            /* cspell:disable-file */
-            /* webkit printing magic: print all background colors */
-            html {
-                -webkit-print-color-adjust: exact;
-            }
-            * {
-                box-sizing: border-box;
-                -webkit-print-color-adjust: exact;
-            }
-
-            html,
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            @media only screen {
-                body {
-                    margin: 2em auto;
-                    max-width: 900px;
-                    color: rgb(55, 53, 47);
-                }
-            }
-
-            body {
-                line-height: 1.5;
-                white-space: pre-wrap;
-            }
-
-            a,
-            a.visited {
-                color: inherit;
-                text-decoration: underline;
-            }
-
-            .pdf-relative-link-path {
-                font-size: 80%;
-                color: #444;
-            }
-
-            h1,
-            h2,
-            h3 {
-                letter-spacing: -0.01em;
-                line-height: 1.2;
-                font-weight: 600;
-                margin-bottom: 0;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-top: 0;
-                margin-bottom: 0.75em;
-            }
-
-            h1 {
-                font-size: 1.875rem;
-                margin-top: 1.875rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-                margin-top: 1.5rem;
-            }
-
-            h3 {
-                font-size: 1.25rem;
-                margin-top: 1.25rem;
-            }
-
-            .source {
-                border: 1px solid #ddd;
-                border-radius: 3px;
-                padding: 1.5em;
-                word-break: break-all;
-            }
-
-            .callout {
-                border-radius: 3px;
-                padding: 1rem;
-            }
-
-            figure {
-                margin: 1.25em 0;
-                page-break-inside: avoid;
-            }
-
-            figcaption {
-                opacity: 0.5;
-                font-size: 85%;
-                margin-top: 0.5em;
-            }
-
-            mark {
-                background-color: transparent;
-            }
-
-            .indented {
-                padding-left: 1.5em;
-            }
-
-            hr {
-                background: transparent;
-                display: block;
-                width: 100%;
-                height: 1px;
-                visibility: visible;
-                border: none;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            @media only print {
-                img {
-                    max-height: 100vh;
-                    object-fit: contain;
-                }
-            }
-
-            @page {
-                margin: 1in;
-            }
-
-            .collection-content {
-                font-size: 0.875rem;
-            }
-
-            .column-list {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .column {
-                padding: 0 1em;
-            }
-
-            .column:first-child {
-                padding-left: 0;
-            }
-
-            .column:last-child {
-                padding-right: 0;
-            }
-
-            .table_of_contents-item {
-                display: block;
-                font-size: 0.875rem;
-                line-height: 1.3;
-                padding: 0.125rem;
-            }
-
-            .table_of_contents-indent-1 {
-                margin-left: 1.5rem;
-            }
-
-            .table_of_contents-indent-2 {
-                margin-left: 3rem;
-            }
-
-            .table_of_contents-indent-3 {
-                margin-left: 4.5rem;
-            }
-
-            .table_of_contents-link {
-                text-decoration: none;
-                opacity: 0.7;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-            }
-
-            table,
-            th,
-            td {
-                border: 1px solid rgba(55, 53, 47, 0.09);
-                border-collapse: collapse;
-            }
-
-            table {
-                border-left: none;
-                border-right: none;
-            }
-
-            th,
-            td {
-                font-weight: normal;
-                padding: 0.25em 0.5em;
-                line-height: 1.5;
-                min-height: 1.5em;
-                text-align: left;
-            }
-
-            th {
-                color: rgba(55, 53, 47, 0.6);
-            }
-
-            ol,
-            ul {
-                margin: 0;
-                margin-block-start: 0.6em;
-                margin-block-end: 0.6em;
-            }
-
-            li > ol:first-child,
-            li > ul:first-child {
-                margin-block-start: 0.6em;
-            }
-
-            ul > li {
-                list-style: disc;
-            }
-
-            ul.to-do-list {
-                padding-inline-start: 0;
-            }
-
-            ul.to-do-list > li {
-                list-style: none;
-            }
-
-            .to-do-children-checked {
-                text-decoration: line-through;
-                opacity: 0.375;
-            }
-
-            ul.toggle > li {
-                list-style: none;
-            }
-
-            ul {
-                padding-inline-start: 1.7em;
-            }
-
-            ul > li {
-                padding-left: 0.1em;
-            }
-
-            ol {
-                padding-inline-start: 1.6em;
-            }
-
-            ol > li {
-                padding-left: 0.2em;
-            }
-
-            .mono ol {
-                padding-inline-start: 2em;
-            }
-
-            .mono ol > li {
-                text-indent: -0.4em;
-            }
-
-            .toggle {
-                padding-inline-start: 0em;
-                list-style-type: none;
-            }
-
-            /* Indent toggle children */
-            .toggle > li > details {
-                padding-left: 1.7em;
-            }
-
-            .toggle > li > details > summary {
-                margin-left: -1.1em;
-            }
-
-            .selected-value {
-                display: inline-block;
-                padding: 0 0.5em;
-                background: rgba(206, 205, 202, 0.5);
-                border-radius: 3px;
-                margin-right: 0.5em;
-                margin-top: 0.3em;
-                margin-bottom: 0.3em;
-                white-space: nowrap;
-            }
-
-            .collection-title {
-                display: inline-block;
-                margin-right: 1em;
-            }
-
-            .page-description {
-                margin-bottom: 2em;
-            }
-
-            .simple-table {
-                margin-top: 1em;
-                font-size: 0.875rem;
-                empty-cells: show;
-            }
-            .simple-table td {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table th {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table-header-color {
-                background: rgb(247, 246, 243);
-                color: black;
-            }
-            .simple-table-header {
-                font-weight: 500;
-            }
-
-            time {
-                opacity: 0.5;
-            }
-
-            .icon {
-                display: inline-block;
-                max-width: 1.2em;
-                max-height: 1.2em;
-                text-decoration: none;
-                vertical-align: text-bottom;
-                margin-right: 0.5em;
-            }
-
-            img.icon {
-                border-radius: 3px;
-            }
-
-            .user-icon {
-                width: 1.5em;
-                height: 1.5em;
-                border-radius: 100%;
-                margin-right: 0.5rem;
-            }
-
-            .user-icon-inner {
-                font-size: 0.8em;
-            }
-
-            .text-icon {
-                border: 1px solid #000;
-                text-align: center;
-            }
-
-            .page-cover-image {
-                display: block;
-                object-fit: cover;
-                width: 100%;
-                max-height: 30vh;
-            }
-
-            .page-header-icon {
-                font-size: 3rem;
-                margin-bottom: 1rem;
-            }
-
-            .page-header-icon-with-cover {
-                margin-top: -0.72em;
-                margin-left: 0.07em;
-            }
-
-            .page-header-icon img {
-                border-radius: 3px;
-            }
-
-            .link-to-page {
-                margin: 1em 0;
-                padding: 0;
-                border: none;
-                font-weight: 500;
-            }
-
-            p > .user {
-                opacity: 0.5;
-            }
-
-            td > .user,
-            td > time {
-                white-space: nowrap;
-            }
-
-            input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 0.6em;
-                vertical-align: middle;
-            }
-
-            p {
-                margin-top: 0.5em;
-                margin-bottom: 0.5em;
-            }
-
-            .image {
-                border: none;
-                margin: 1.5em 0;
-                padding: 0;
-                border-radius: 0;
-                text-align: center;
-            }
-
-            .code,
-            code {
-                background: rgba(135, 131, 120, 0.15);
-                border-radius: 3px;
-                padding: 0.2em 0.4em;
-                border-radius: 3px;
-                font-size: 85%;
-                tab-size: 2;
-            }
-
-            code {
-                color: #eb5757;
-            }
-
-            .code {
-                padding: 1.5em 1em;
-            }
-
-            .code-wrap {
-                white-space: pre-wrap;
-                word-break: break-all;
-            }
-
-            .code > code {
-                background: none;
-                padding: 0;
-                font-size: 100%;
-                color: inherit;
-            }
-
-            blockquote {
-                font-size: 1.25em;
-                margin: 1em 0;
-                padding-left: 1em;
-                border-left: 3px solid rgb(55, 53, 47);
-            }
-
-            .bookmark {
-                text-decoration: none;
-                max-height: 8em;
-                padding: 0;
-                display: flex;
-                width: 100%;
-                align-items: stretch;
-            }
-
-            .bookmark-title {
-                font-size: 0.85em;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                height: 1.75em;
-                white-space: nowrap;
-            }
-
-            .bookmark-text {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .bookmark-info {
-                flex: 4 1 180px;
-                padding: 12px 14px 14px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-
-            .bookmark-image {
-                width: 33%;
-                flex: 1 1 180px;
-                display: block;
-                position: relative;
-                object-fit: cover;
-                border-radius: 1px;
-            }
-
-            .bookmark-description {
-                color: rgba(55, 53, 47, 0.6);
-                font-size: 0.75em;
-                overflow: hidden;
-                max-height: 4.5em;
-                word-break: break-word;
-            }
-
-            .bookmark-href {
-                font-size: 0.75em;
-                margin-top: 0.25em;
-            }
-
-            .sans {
-                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-                    "Segoe UI Symbol";
-            }
-            .code {
-                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
-            }
-            .serif {
-                font-family: Lyon-Text, Georgia, ui-serif, serif;
-            }
-            .mono {
-                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-            }
-            .pdf .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
-            }
-            .pdf:lang(zh-CN) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
-            }
-            .pdf:lang(zh-TW) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
-            }
-            .pdf:lang(ko-KR) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
-            }
-            .pdf .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK KR";
-            }
-            .pdf .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
-            }
-            .pdf:lang(zh-CN) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
-            }
-            .pdf:lang(zh-TW) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
-            }
-            .pdf:lang(ko-KR) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
-            }
-            .pdf .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
-            }
-            .highlight-default {
-                color: rgba(55, 53, 47, 1);
-            }
-            .highlight-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .highlight-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .highlight-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .highlight-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .highlight-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .highlight-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .highlight-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .highlight-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .highlight-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .highlight-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .highlight-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .highlight-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .highlight-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .highlight-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .highlight-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .highlight-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .highlight-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .highlight-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .block-color-default {
-                color: inherit;
-                fill: inherit;
-            }
-            .block-color-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .block-color-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .block-color-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .block-color-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .block-color-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .block-color-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .block-color-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .block-color-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .block-color-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .block-color-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .block-color-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .block-color-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .block-color-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .block-color-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .block-color-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .block-color-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .block-color-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .block-color-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .select-value-color-interactiveBlue {
-                background-color: rgba(35, 131, 226, 0.07);
-            }
-            .select-value-color-pink {
-                background-color: rgba(245, 224, 233, 1);
-            }
-            .select-value-color-purple {
-                background-color: rgba(232, 222, 238, 1);
-            }
-            .select-value-color-green {
-                background-color: rgba(219, 237, 219, 1);
-            }
-            .select-value-color-gray {
-                background-color: rgba(227, 226, 224, 1);
-            }
-            .select-value-color-translucentGray {
-                background-color: rgba(255, 255, 255, 0.0375);
-            }
-            .select-value-color-orange {
-                background-color: rgba(250, 222, 201, 1);
-            }
-            .select-value-color-brown {
-                background-color: rgba(238, 224, 218, 1);
-            }
-            .select-value-color-red {
-                background-color: rgba(255, 226, 221, 1);
-            }
-            .select-value-color-yellow {
-                background-color: rgba(253, 236, 200, 1);
-            }
-            .select-value-color-blue {
-                background-color: rgba(211, 229, 239, 1);
-            }
-            .select-value-color-pageGlass {
-                background-color: undefined;
-            }
-            .select-value-color-washGlass {
-                background-color: undefined;
-            }
-
-            .checkbox {
-                display: inline-flex;
-                vertical-align: text-bottom;
-                width: 16;
-                height: 16;
-                background-size: 16px;
-                margin-left: 2px;
-                margin-right: 5px;
-            }
-
-            .checkbox-on {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            .checkbox-off {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            /* -------- injections from notionBackup -------- */
-
-            body {
-                white-space: normal !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-
-            .code,
-            code {
-                font-size: 100% !important;
-            }
-
-            blockquote {
-                font-size: 100% !important;
-            }
-
-            .callout {
-                white-space: normal !important;
-            }
-            .callout div:has(span.icon) {
-                font-size: 100% !important;
-            }
-
-            .source:not(.bookmark) {
-                font-size: 100% !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-        </style>
-    </head>
-    <body>
-        <article class="page sans">
-            <header>
-                <h1 class="page-title">Summary WA</h1>
-                <p class="page-description"></p>
-            </header>
-            <div class="page-body">
-                <figure>
-                    <div class="source">
-                        <a
-                            href="../WA%20b8277284d6a54e39a6e2c460bc014554/TU_Wien-Wissenschaftliches_Arbeiten_SE_(diverse)_-_Wissenschaftliches_Arbeiten_Inoffizielles_Skriptum.pdf">
-                            TU_Wien-Wissenschaftliches_Arbeiten_SE_(diverse)_-_Wissenschaftliches_Arbeiten_Inoffizielles_Skriptum.pdf
-                        </a>
-                    </div>
-                </figure>
-                <p></p>
-                <nav class="block-color-gray table_of_contents">
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#6a794a0a-7908-4341-99e0-ea747ed6a083">Wissenschaftstheorie</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#20147653-a5d0-4154-a183-060dcda37d5b">Definition</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#e31d8ba1-dc55-4341-b757-f099ff5751c9">Warum machen wir Wissenschaft?</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#007030a2-48ed-4411-935f-fd4eceef1ef1">Geschichte der Wissenschaft</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#1760cb0c-f247-4dea-b2d8-25398742391d">Einteilung der Wissenschaft</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#845da780-d4be-466c-8195-2c5d9b470222">Forschungsmethodologie</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#1943758c-1770-42d0-99d6-6a8aae177a17">Schließen</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#21f75a5f-2c85-4713-8a47-847058fcb42d">
-                            Induktion: Emprisch-Quantitativ vs. Empirisch-Qualitativ
-                        </a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#1ec904f0-5a58-41cc-9d8f-6229d3ea9b65">Ingenieurswissenschaften / Design Science</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#770775c7-4f78-4a59-bed5-10a0bca4ef95">Ethik in Wissenschaft</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#595ce889-18b5-4c33-bce0-c95ce8630164">Aufbau einer wissenschaftlichen Arbeit</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#5a0e82c3-7e48-4726-9360-b31632635bd4">Richtiges Zitieren</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#46d42b0f-5a09-4d47-9ec1-bbfe41d77028">Quellen</a>
-                    </div>
-                </nav>
-                <p></p>
-                <h1 class="block-color-gray_background">Wissenschaftstheorie</h1>
-                <p>Verwandt mit Erkenntnistheorie</p>
-                <p></p>
-                <h2 class="block-color-gray_background">Definition</h2>
-                <p><mark class="highlight-blue">Aufklärung → Moderne Wissenschaft</mark></p>
-                <div class="indented">
-                    <p>Glaube an Gott → Verstand und Vernunft, Ratio</p>
-                    <p>Immanuel Kant: "Sapere Aude", "Gebrauche deinen Verstand"</p>
-                    <p></p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Ziel der Wissenschaft</mark></p>
-                <div class="indented">
-                    <p>"Warum ist etwas so?"</p>
-                    <p>Erkenntnissgewinn</p>
-                    <div class="indented">
-                        <p>= Gewinnung von objektiver, wissenschaftlicher Erkenntnis</p>
-                        <p>= begründetes Wissen erlangen</p>
-                        <p>= Beantworten einer Fragestellung, Problemstellung</p>
-                        <p>= Neugier, "Erkenntnis-Interesse" stillen</p>
-                        <p>= Verstehen von Entwicklungen, Gesetzesmäßigkeiten, Zusammenhängen, komplexe Probleme lösen, optimieren ...</p>
-                    </div>
-                    <p></p>
-                    <p>Aktuelle wissenschaftliche Wissensbasis vergrößern, neue Lösungen entwickeln, alte Lösungen verbessern.</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Kennzeichen von Wissenschaft</mark></p>
-                <div class="indented">
-                    <p>Beobachten, Hinterfragen, Unterscheiden, das Dahinterliegende ergründen</p>
-                    <p>Begründungsanspruch</p>
-                    <div class="indented">
-                        <p>= rational geführte Argumentation, Begründung, Belegung von Aussagen, Behauptungen</p>
-                        <p>
-                            Mittelstraß: Wenn wir unsere Aussagen gut begründen können, dann können sie in jeder gut kompetent geführten Diskussion Zustimmung
-                            finden.
-                        </p>
-                    </div>
-                    <p></p>
-                    <p>geht über Alltagswissen hinaus</p>
-                    <p>erweitert bestehendes wissen (state-of-the-art), knüpft daran an und schreibt nicht ab</p>
-                    <hr />
-                    <p>Methodisch Ergebnis und Vorgehensweise reproduzierbar, nachvollziehbar</p>
-                    <p>Reproduzierbar</p>
-                    <p>Relevant für wissenschaftlichen Fortschritt</p>
-                    <p>Objektiv Sachbezogen, Nicht subjektiv, Ergebnisse unabhängig von Forscher</p>
-                    <p>Konsistent Widerspruchsfrei</p>
-                    <p>Stringent Schlüssige, nachvollziehbare Argumentationsfolge</p>
-                    <p>Kritisch Nichts einfach hinnehmen sondern hinterfragen (auch aus der Wissenschaft)</p>
-                    <p>Diskursiv Diskussionen mit diversen Disziplinen, Kommunikation mit Öffentlichkeit</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Wissenschaftssprache vs. Alltagssprache</mark></p>
-                <div class="indented">
-                    <p>Eindeutige, präzise definierte Begriffe → stringente Argumente</p>
-                    <p>Bedeutung nicht gleich wie aus dem Alltag auch für denselben Begriff</p>
-                    <p>Wörter in Alltagssprache abhängig von Kontext</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Nicht-Wissenschaft</mark></p>
-                <div class="indented">
-                    <p>= Glauben, Subjektive Meinung (persönliche Präferenz), Handwerk ("Kunstfertigkeit"), Kunst</p>
-                    <p>Praktisches Wissen basiert nicht auf wissenschaftlicher Erkenntnis</p>
-                    <p>Diese Dinge können aber Gegenstand wissenschaftlicher Forschung sein.</p>
-                    <p>Handwerk / Fertigung verwendet Erkenntnisse / Ergebnisse der Wissenschaft, ist selbst nicht Wissenschaft per se.</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Gegensätze der Wissenschaft</mark></p>
-                <div class="indented">
-                    <p>Esoterik, Populismus, Vorurteile, Alternative Facts, Intuition, Feelings, Verschwörungstheorien, Stammtischgespräche</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h2 class="block-color-gray_background">Warum machen wir Wissenschaft?</h2>
-                <p><mark class="highlight-blue">Exkurs: Steuerung</mark></p>
-                <div class="indented">
-                    <p>Unbelebtes</p>
-                    <div class="indented">
-                        <p>kann keine Entscheidungen treffen, feste Gesetzmäßigkeiten</p>
-                        <p>keine Steuerungsprobleme</p>
-                    </div>
-                    <p></p>
-                    <p>Belebtes</p>
-                    <div class="indented">
-                        <p>feste Aktionsprogramme</p>
-                        <p>höhere Lebewesen können Lernen, individuelle Entscheidungen treffen, steuern</p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Warum ist Wissenschaft wichtig?</mark></p>
-                <div class="indented">
-                    <p>Weil Alltagswissen nicht mehr ausreicht um in einer komplexen Welt richtige Entscheidungen zu treffen.</p>
-                    <p>Steuerung von Institutionen, Organisationen, Gesellschaften.</p>
-                    <hr />
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>
-                            Menschen sind in der Lage zu lernen und Entscheidungen zu treffen
-                            <p>Aneignung (= aktive Auseinandersetzung) statt anpassung</p>
-                            <p>nicht mehr determiniert durch Umweltbedingungen (dadurch auch orientierungslos)</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>
-                            Menschen können miteinander sprechen
-                            <p>= symbolische Bearbeitung (nicht mehr das Ding selbst sondern die Idee davon)</p>
-                            <p><em>Erst durch Sprache wird Wissenschaft und Reflexion möglich.</em></p>
-                        </li>
-                    </ol>
-                    <hr />
-                    <p>Dadurch: Wissen über Sprache weitergeben</p>
-                    <div class="indented">
-                        <p>Erfahrungen austauschen = Lernen ohne zu erfahren.</p>
-                        <p>Wissensbasis erweitern.</p>
-                        <p>auf Erfahrungen der vergangenen Generationen aufbauen</p>
-                        <p>nicht mehr determiniert an Umweltbedingungen</p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Umgang mit Wissen: Routinemodus vs. Reflexionsmodus</mark></p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>
-                            Routinemodus des Alltagsbewusstsein
-                            <p>Funktioniert nur wenn keine Probleme auftreten - Abläufe als Routinen.</p>
-                            <div class="indented">
-                                <p>Selectiver Blickwinkel, Egozentrisch</p>
-                                <p>Behauptungen ohne Verpflichtung zur Begründung</p>
-                            </div>
-                            <p></p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>
-                            Reflexionsmodus
-                            <p>Wenn Probleme / Schwierigkeiten auftreten - Problem Bewusst beobachten.</p>
-                            <div class="indented">
-                                <p>Gezieltes Nachdenken in Sondersituationen wo Handlungszwang reduziert ist.</p>
-                                <p>Ziel: Objektive Erkenntnis, Überwindung des Egozentrismus.</p>
-                                <p>Langsamer aber bessere Problemlösung und Vergrößerung des Handlungsspielraumes.</p>
-                                <p>Behauptungen müssen begründet werden.</p>
-                                <p>Reflexion nur möglich ohne unmittelbaren Handlungszwang</p>
-                            </div>
-                            <p></p>
-                        </li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Wissenschaftliche Institutionen</mark></p>
-                <div class="indented">
-                    <p>Wissenschaftliche Institutionen = Sonderfall von institutionalisierter Reflexion</p>
-                    <p>Institutionalisierung von Reflexion = Systematische Schaffung von Sondersituationen ohne Handlungszwang</p>
-                    <p>Systematische Untersuchung, Auswertung</p>
-                    <p>Wichtig für die Gesellschaft (Siehe Geschichte der Industrialisierung)</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h2 class="block-color-gray_background">Geschichte der Wissenschaft</h2>
-                <p><mark class="highlight-blue">Entstehung von Wissenschaft als Welterklärung</mark></p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>
-                            Mythos
-                            <p>Erzählungen über gesellschaftliche Themen, Entstehung der Welt zB Schöpfungsmythen.</p>
-                            <p>Reine Überzeugung.</p>
-                            <p>Keine Experten, Mythos als gemeinsame Leistung.</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>
-                            Religion
-                            <p>Viele Menschen auf ausgedehntem Raum haben gemeinsame Mythen gebraucht.</p>
-                            <p>Systematisiert, theologische Welterklärung.</p>
-                            <p>Experten: Herrscher, Priester - Haben ihre Macht mit Religion gerechtfertigt.</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>
-                            Philosophie → Wissenschaft
-                            <p>Das erste mal im antiken Griechenland</p>
-                            <p>Größere Aggregationen (Städte)</p>
-                            <p>Keine Herschende Klasse</p>
-                            <p>Bürgerliche Gesellschaften (Handwerker, Handel, Dienstleistungen)</p>
-                            <p>Lebensmittel verfügbar durch Sklaven oder Handel.</p>
-                            <p>Dadurch:</p>
-                            <div class="indented">
-                                <p>Loslösung von Religion, neuer Bedarf an Erkenntnis</p>
-                                <p>Experten aber viel Kritik und Diskurs</p>
-                                <p>Mehr Selbststeuerung der Gesellschaft</p>
-                            </div>
-                            <p></p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li>
-                            Industrialisierung, Moderne, Spätmoderne
-                            <p>Zunehmende Bedeutung von Wissenschaft</p>
-                        </li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h2 class="block-color-gray_background">Einteilung der Wissenschaft</h2>
-                <p>Einteilung nach Gegenstandsbereich durch Begründungsart und Methode</p>
-                <p></p>
-                <p><mark class="highlight-blue">Wissenschafts-Arten</mark></p>
-                <div class="indented">
-                    <p>Fragestellung / Problemstellung → Forschung</p>
-                    <p>Formalwissenschaft</p>
-                    <div class="indented"><p>Problemstellungen im symbolischen Bereich</p></div>
-                    <p></p>
-                    <p>Realwissenschaft (Natur oder Kulturwissenschaftlich)</p>
-                    <div class="indented"><p>Problemstellungen der realen Welt</p></div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <figure class="image">
-                    <a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled.png">
-                        <img style="width: 480px" src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled.png" />
-                    </a>
-                </figure>
-                <figure class="image">
-                    <a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%201.png">
-                        <img style="width: 480px" src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%201.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h1 class="block-color-gray_background">Forschungsmethodologie</h1>
-                <p><mark class="highlight-blue">Forschung</mark></p>
-                <div class="indented"><p>systematisches Suchen nach neuen Erkenntnissen</p></div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Wissenschaftliche Methode</mark></p>
-                <div class="indented">
-                    <p>= Weg von Frage (Problemstellung) zu Antwort (wissenschaftliche Erkenntnis).</p>
-                    <p>Abhängig von</p>
-                    <div class="indented">
-                        <p>Forschungsgegenstand (= Gegenstandsbereich der Wissenschaft)</p>
-                        <p>Forschungsfrage</p>
-                        <p></p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%202.png">
-                        <img style="width: 384px" src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%202.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <p><mark class="highlight-blue">Forschungsgegenstand → Forschungsmethode</mark></p>
-                <div class="indented">
-                    <p>Gegenstandsbereiche bestimmen Realitäten, Theorie-Strukturen, Konzepte, Forschungsmethoden</p>
-                    <div class="indented">
-                        <p><mark class="highlight-blue">Formalwissenschaft (Deduktiv)</mark></p>
-                        <div class="indented">
-                            <p>symbolischer Bereich</p>
-                            <p>formale Systeme genutzt für Erkenntnisgewinnung</p>
-                        </div>
-                        <p></p>
-                        <p><mark class="highlight-blue">Realwissenschaft (Induktiv)</mark></p>
-                        <div class="indented">
-                            <p>Analyse der äußeren Wirklichkeit</p>
-                            <p><mark class="highlight-blue">Naturwissenschaft (Induktiv)</mark></p>
-                            <div class="indented">
-                                <p>induktiv, empirisch-quantitativ, experimentell</p>
-                                <p>
-                                    <em>denotative Theorien</em>
-                                    → Erklären von Gesetzmäßigkeiten
-                                </p>
-                                <p>fixer Gegenstandsbereich, "nomologische Realität"</p>
-                                <div class="indented"><p>innerhalb bestimmter Grenzen konstant</p></div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p><mark class="highlight-blue">Kulturwissenschaften (Induktiv-hermeneutisch)</mark></p>
-                            <div class="indented">
-                                <p>induktiv-hermeneutisch, empririsch-quantitativ und qualitativ</p>
-                                <p>
-                                    <em>konnotative Theorien</em>
-                                    → Verstehen von Zusammenhängen im Kontext
-                                </p>
-                                <p>variabler, kontextabhängiger Gegenstandsbereich, "autopoietische Realität"</p>
-                                <div class="indented">
-                                    <p>In Wechselwirkung mit Kontext, nicht determiniert mit Kontext.</p>
-                                    <p>offener Entwicklungshorizont</p>
-                                    <p>innerhalb bestimmter Grenzen veränderlich</p>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                        </div>
-                        <p></p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <figure class="image">
-                    <a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%203.png">
-                        <img style="width: 288px" src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%203.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <p><mark class="highlight-blue">Informatik als Wissenschaft</mark></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Informatik lange missverstanden: Teilgebiet der Mathematik.</summary>
-                            <p>Formalwissenschaftlich</p>
-                            <div class="indented">
-                                <p>Laufzeizabschätzung</p>
-                                <p>Formale Verifikation</p>
-                            </div>
-                            <p></p>
-                            <p>Realwissenschaftlich</p>
-                            <div class="indented">
-                                <p>UI / UX</p>
-                                <p>Benchmarking von Algorithmen</p>
-                            </div>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <figure class="image">
-                    <a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%204.png">
-                        <img style="width: 288px" src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%204.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <p><mark class="highlight-blue">Forschung</mark></p>
-                <div class="indented">
-                    <p>Systematische Suche nach Erkenntnissen</p>
-                    <ol type="i" class="numbered-list" start="1">
-                        <li>
-                            Grundlagen-Forschung (An Universitäten)
-                            <ol type="i" class="numbered-list" start="1">
-                                <li>
-                                    Reine Grundlagenforschung
-                                    <p>Allgemein, Methodisches Fundament der Disziplin</p>
-                                </li>
-                            </ol>
-                            <ol type="i" class="numbered-list" start="2">
-                                <li>
-                                    Anwendungsorientierte Grundlagenforschung
-                                    <p>alles obige + Anregung für praxisrelevante Probleme</p>
-                                </li>
-                            </ol>
-                        </li>
-                    </ol>
-                    <ol type="i" class="numbered-list" start="2">
-                        <li>
-                            Angewandte-Forschung (An Fachhochschulen)
-                            <p>Theoretische Basis für Entwicklung</p>
-                            <p>Ausweitung, Anwendung von Forschungsergebnissen</p>
-                        </li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Entwicklung</mark></p>
-                <div class="indented">
-                    <p>Anwendung von Erkenntnissen die produktionsfähig, marktfähig sind</p>
-                    <p>Verfahren und Produkte</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Innovation</mark></p>
-                <div class="indented">
-                    <p>Radikale Innovation, Disruption</p>
-                    <p>Inkrementelle Innovation, Folgeinnovation</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h2 class="block-color-gray_background">Schließen</h2>
-                <p>Wissenschaftliche Methoden, Methodologie, Herangehensweise</p>
-                <ol type="1" class="numbered-list" start="1">
-                    <li>
-                        <mark class="highlight-blue">Deduktion</mark>
-                        <p>
-                            Schluss von Allgemein
-                            <style>
-                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                            </style>
-                            <span
-                                data-token-index="0"
-                                contenteditable="false"
-                                class="notion-text-equation-token"
-                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                <span></span>
-                                <span>
-                                    <span class="katex">
-                                        <span class="katex-mathml">
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <semantics>
-                                                    <mrow><mo>→</mo></mrow>
-                                                    <annotation encoding="application/x-tex">\rarr</annotation>
-                                                </semantics>
-                                            </math>
-                                        </span>
-                                        <span class="katex-html" aria-hidden="true">
-                                            <span class="base">
-                                                <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                                <span class="mrel">→</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span>﻿</span>
-                            </span>
-                            Spezifisch
-                        </p>
-                        <p>Ableitung, Beweis</p>
-                        <ul class="toggle">
-                            <li>
-                                <details open="">
-                                    <summary>Beispiel</summary>
-                                    <pre class="code"><code>1. Alle Bohnen aus diesem Sack sind weiß
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>Summary WA</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+-webkit-print-color-adjust: exact;
+}
+* {
+box-sizing: border-box;
+-webkit-print-color-adjust: exact;
+}html,
+body {
+margin: 0;
+padding: 0;
+}
+@media only screen {
+body {
+margin: 2em auto;
+max-width: 900px;
+color: rgb(55, 53, 47);
+}
+}body {
+line-height: 1.5;
+white-space: pre-wrap;
+}a,
+a.visited {
+color: inherit;
+text-decoration: underline;
+}.pdf-relative-link-path {
+font-size: 80%;
+color: #444;
+}h1,
+h2,
+h3 {
+letter-spacing: -0.01em;
+line-height: 1.2;
+font-weight: 600;
+margin-bottom: 0;
+}.page-title {
+font-size: 2.5rem;
+font-weight: 700;
+margin-top: 0;
+margin-bottom: 0.75em;
+}h1 {
+font-size: 1.875rem;
+margin-top: 1.875rem;
+}h2 {
+font-size: 1.5rem;
+margin-top: 1.5rem;
+}h3 {
+font-size: 1.25rem;
+margin-top: 1.25rem;
+}.source {
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 1.5em;
+word-break: break-all;
+}.callout {
+border-radius: 3px;
+padding: 1rem;
+}figure {
+margin: 1.25em 0;
+page-break-inside: avoid;
+}figcaption {
+opacity: 0.5;
+font-size: 85%;
+margin-top: 0.5em;
+}mark {
+background-color: transparent;
+}.indented {
+padding-left: 1.5em;
+}hr {
+background: transparent;
+display: block;
+width: 100%;
+height: 1px;
+visibility: visible;
+border: none;
+border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}img {
+max-width: 100%;
+}@media only print {
+img {
+max-height: 100vh;
+object-fit: contain;
+}
+}@page {
+margin: 1in;
+}.collection-content {
+font-size: 0.875rem;
+}.column-list {
+display: flex;
+justify-content: space-between;
+}.column {
+padding: 0 1em;
+}.column:first-child {
+padding-left: 0;
+}.column:last-child {
+padding-right: 0;
+}.table_of_contents-item {
+display: block;
+font-size: 0.875rem;
+line-height: 1.3;
+padding: 0.125rem;
+}.table_of_contents-indent-1 {
+margin-left: 1.5rem;
+}.table_of_contents-indent-2 {
+margin-left: 3rem;
+}.table_of_contents-indent-3 {
+margin-left: 4.5rem;
+}.table_of_contents-link {
+text-decoration: none;
+opacity: 0.7;
+border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}table,
+th,
+td {
+border: 1px solid rgba(55, 53, 47, 0.09);
+border-collapse: collapse;
+}table {
+border-left: none;
+border-right: none;
+}th,
+td {
+font-weight: normal;
+padding: 0.25em 0.5em;
+line-height: 1.5;
+min-height: 1.5em;
+text-align: left;
+}th {
+color: rgba(55, 53, 47, 0.6);
+}ol,
+ul {
+margin: 0;
+margin-block-start: 0.6em;
+margin-block-end: 0.6em;
+}li > ol:first-child,
+li > ul:first-child {
+margin-block-start: 0.6em;
+}ul > li {
+list-style: disc;
+}ul.to-do-list {
+padding-inline-start: 0;
+}ul.to-do-list > li {
+list-style: none;
+}.to-do-children-checked {
+text-decoration: line-through;
+opacity: 0.375;
+}ul.toggle > li {
+list-style: none;
+}ul {
+padding-inline-start: 1.7em;
+}ul > li {
+padding-left: 0.1em;
+}ol {
+padding-inline-start: 1.6em;
+}ol > li {
+padding-left: 0.2em;
+}.mono ol {
+padding-inline-start: 2em;
+}.mono ol > li {
+text-indent: -0.4em;
+}.toggle {
+padding-inline-start: 0em;
+list-style-type: none;
+}/* Indent toggle children */
+.toggle > li > details {
+padding-left: 1.7em;
+}.toggle > li > details > summary {
+margin-left: -1.1em;
+}.selected-value {
+display: inline-block;
+padding: 0 0.5em;
+background: rgba(206, 205, 202, 0.5);
+border-radius: 3px;
+margin-right: 0.5em;
+margin-top: 0.3em;
+margin-bottom: 0.3em;
+white-space: nowrap;
+}.collection-title {
+display: inline-block;
+margin-right: 1em;
+}.page-description {
+margin-bottom: 2em;
+}.simple-table {
+margin-top: 1em;
+font-size: 0.875rem;
+empty-cells: show;
+}
+.simple-table td {
+height: 29px;
+min-width: 120px;
+}.simple-table th {
+height: 29px;
+min-width: 120px;
+}.simple-table-header-color {
+background: rgb(247, 246, 243);
+color: black;
+}
+.simple-table-header {
+font-weight: 500;
+}time {
+opacity: 0.5;
+}.icon {
+display: inline-block;
+max-width: 1.2em;
+max-height: 1.2em;
+text-decoration: none;
+vertical-align: text-bottom;
+margin-right: 0.5em;
+}img.icon {
+border-radius: 3px;
+}.user-icon {
+width: 1.5em;
+height: 1.5em;
+border-radius: 100%;
+margin-right: 0.5rem;
+}.user-icon-inner {
+font-size: 0.8em;
+}.text-icon {
+border: 1px solid #000;
+text-align: center;
+}.page-cover-image {
+display: block;
+object-fit: cover;
+width: 100%;
+max-height: 30vh;
+}.page-header-icon {
+font-size: 3rem;
+margin-bottom: 1rem;
+}.page-header-icon-with-cover {
+margin-top: -0.72em;
+margin-left: 0.07em;
+}.page-header-icon img {
+border-radius: 3px;
+}.link-to-page {
+margin: 1em 0;
+padding: 0;
+border: none;
+font-weight: 500;
+}p > .user {
+opacity: 0.5;
+}td > .user,
+td > time {
+white-space: nowrap;
+}input[type="checkbox"] {
+transform: scale(1.5);
+margin-right: 0.6em;
+vertical-align: middle;
+}p {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}.image {
+border: none;
+margin: 1.5em 0;
+padding: 0;
+border-radius: 0;
+text-align: center;
+}.code,
+code {
+background: rgba(135, 131, 120, 0.15);
+border-radius: 3px;
+padding: 0.2em 0.4em;
+border-radius: 3px;
+font-size: 85%;
+tab-size: 2;
+}code {
+color: #eb5757;
+}.code {
+padding: 1.5em 1em;
+}.code-wrap {
+white-space: pre-wrap;
+word-break: break-all;
+}.code > code {
+background: none;
+padding: 0;
+font-size: 100%;
+color: inherit;
+}blockquote {
+font-size: 1.25em;
+margin: 1em 0;
+padding-left: 1em;
+border-left: 3px solid rgb(55, 53, 47);
+}.bookmark {
+text-decoration: none;
+max-height: 8em;
+padding: 0;
+display: flex;
+width: 100%;
+align-items: stretch;
+}.bookmark-title {
+font-size: 0.85em;
+overflow: hidden;
+text-overflow: ellipsis;
+height: 1.75em;
+white-space: nowrap;
+}.bookmark-text {
+display: flex;
+flex-direction: column;
+}.bookmark-info {
+flex: 4 1 180px;
+padding: 12px 14px 14px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}.bookmark-image {
+width: 33%;
+flex: 1 1 180px;
+display: block;
+position: relative;
+object-fit: cover;
+border-radius: 1px;
+}.bookmark-description {
+color: rgba(55, 53, 47, 0.6);
+font-size: 0.75em;
+overflow: hidden;
+max-height: 4.5em;
+word-break: break-word;
+}.bookmark-href {
+font-size: 0.75em;
+margin-top: 0.25em;
+}.sans {
+font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+"Segoe UI Symbol";
+}
+.code {
+font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+}
+.serif {
+font-family: Lyon-Text, Georgia, ui-serif, serif;
+}
+.mono {
+font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+}
+.pdf .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+}
+.pdf:lang(zh-CN) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+}
+.pdf:lang(zh-TW) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+}
+.pdf:lang(ko-KR) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+}
+.pdf .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK KR";
+}
+.pdf .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+}
+.pdf:lang(zh-CN) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+}
+.pdf:lang(zh-TW) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+}
+.pdf:lang(ko-KR) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+}
+.pdf .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+}
+.highlight-default {
+color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+color: inherit;
+fill: inherit;
+}
+.block-color-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue {
+background-color: rgba(35, 131, 226, 0.07);
+}
+.select-value-color-pink {
+background-color: rgba(245, 224, 233, 1);
+}
+.select-value-color-purple {
+background-color: rgba(232, 222, 238, 1);
+}
+.select-value-color-green {
+background-color: rgba(219, 237, 219, 1);
+}
+.select-value-color-gray {
+background-color: rgba(227, 226, 224, 1);
+}
+.select-value-color-translucentGray {
+background-color: rgba(255, 255, 255, 0.0375);
+}
+.select-value-color-orange {
+background-color: rgba(250, 222, 201, 1);
+}
+.select-value-color-brown {
+background-color: rgba(238, 224, 218, 1);
+}
+.select-value-color-red {
+background-color: rgba(255, 226, 221, 1);
+}
+.select-value-color-yellow {
+background-color: rgba(253, 236, 200, 1);
+}
+.select-value-color-blue {
+background-color: rgba(211, 229, 239, 1);
+}
+.select-value-color-pageGlass {
+background-color: undefined;
+}
+.select-value-color-washGlass {
+background-color: undefined;
+}.checkbox {
+display: inline-flex;
+vertical-align: text-bottom;
+width: 16;
+height: 16;
+background-size: 16px;
+margin-left: 2px;
+margin-right: 5px;
+}.checkbox-on {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}.checkbox-off {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}/* -------- injections from notionBackup -------- */body {
+white-space: normal !important;
+}p {
+min-height: 1em !important;
+}.code,
+code {
+font-size: 100% !important;
+}blockquote {
+font-size: 100% !important;
+}.callout {
+white-space: normal !important;
+}
+.callout div:has(span.icon) {
+font-size: 100% !important;
+}.source:not(.bookmark) {
+font-size: 100% !important;
+}p {
+min-height: 1em !important;
+}
+</style></head><body><article class="page sans"><header><h1 class="page-title">Summary WA</h1><p class="page-description"></p></header><div class="page-body"><figure><div class="source"><a href="../WA%20b8277284d6a54e39a6e2c460bc014554/TU_Wien-Wissenschaftliches_Arbeiten_SE_(diverse)_-_Wissenschaftliches_Arbeiten_Inoffizielles_Skriptum.pdf">
+TU_Wien-Wissenschaftliches_Arbeiten_SE_(diverse)_-_Wissenschaftliches_Arbeiten_Inoffizielles_Skriptum.pdf
+</a></div></figure><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6a794a0a-7908-4341-99e0-ea747ed6a083">Wissenschaftstheorie</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#20147653-a5d0-4154-a183-060dcda37d5b">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e31d8ba1-dc55-4341-b757-f099ff5751c9">Warum machen wir Wissenschaft?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#007030a2-48ed-4411-935f-fd4eceef1ef1">Geschichte der Wissenschaft</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1760cb0c-f247-4dea-b2d8-25398742391d">Einteilung der Wissenschaft</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#845da780-d4be-466c-8195-2c5d9b470222">Forschungsmethodologie</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1943758c-1770-42d0-99d6-6a8aae177a17">Schließen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#21f75a5f-2c85-4713-8a47-847058fcb42d">
+Induktion: Emprisch-Quantitativ vs. Empirisch-Qualitativ
+</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1ec904f0-5a58-41cc-9d8f-6229d3ea9b65">Ingenieurswissenschaften / Design Science</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#770775c7-4f78-4a59-bed5-10a0bca4ef95">Ethik in Wissenschaft</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#595ce889-18b5-4c33-bce0-c95ce8630164">Aufbau einer wissenschaftlichen Arbeit</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5a0e82c3-7e48-4726-9360-b31632635bd4">Richtiges Zitieren</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#46d42b0f-5a09-4d47-9ec1-bbfe41d77028">Quellen</a></div></nav><p></p><h1 class="block-color-gray_background">Wissenschaftstheorie</h1><p>Verwandt mit Erkenntnistheorie</p><p></p><h2 class="block-color-gray_background">Definition</h2><p><mark class="highlight-blue">Aufklärung → Moderne Wissenschaft</mark></p><div class="indented"><p>Glaube an Gott → Verstand und Vernunft, Ratio</p><p>Immanuel Kant: "Sapere Aude", "Gebrauche deinen Verstand"</p><p></p></div><p></p><p><mark class="highlight-blue">Ziel der Wissenschaft</mark></p><div class="indented"><p>"Warum ist etwas so?"</p><p>Erkenntnissgewinn</p><div class="indented"><p>= Gewinnung von objektiver, wissenschaftlicher Erkenntnis</p><p>= begründetes Wissen erlangen</p><p>= Beantworten einer Fragestellung, Problemstellung</p><p>= Neugier, "Erkenntnis-Interesse" stillen</p><p>= Verstehen von Entwicklungen, Gesetzesmäßigkeiten, Zusammenhängen, komplexe Probleme lösen, optimieren ...</p></div><p></p><p>Aktuelle wissenschaftliche Wissensbasis vergrößern, neue Lösungen entwickeln, alte Lösungen verbessern.</p></div><p></p><p></p><p><mark class="highlight-blue">Kennzeichen von Wissenschaft</mark></p><div class="indented"><p>Beobachten, Hinterfragen, Unterscheiden, das Dahinterliegende ergründen</p><p>Begründungsanspruch</p><div class="indented"><p>= rational geführte Argumentation, Begründung, Belegung von Aussagen, Behauptungen</p><p>
+Mittelstraß: Wenn wir unsere Aussagen gut begründen können, dann können sie in jeder gut kompetent geführten Diskussion Zustimmung
+finden.
+</p></div><p></p><p>geht über Alltagswissen hinaus</p><p>erweitert bestehendes wissen (state-of-the-art), knüpft daran an und schreibt nicht ab</p><hr/><p>Methodisch Ergebnis und Vorgehensweise reproduzierbar, nachvollziehbar</p><p>Reproduzierbar</p><p>Relevant für wissenschaftlichen Fortschritt</p><p>Objektiv Sachbezogen, Nicht subjektiv, Ergebnisse unabhängig von Forscher</p><p>Konsistent Widerspruchsfrei</p><p>Stringent Schlüssige, nachvollziehbare Argumentationsfolge</p><p>Kritisch Nichts einfach hinnehmen sondern hinterfragen (auch aus der Wissenschaft)</p><p>Diskursiv Diskussionen mit diversen Disziplinen, Kommunikation mit Öffentlichkeit</p></div><p></p><p></p><p><mark class="highlight-blue">Wissenschaftssprache vs. Alltagssprache</mark></p><div class="indented"><p>Eindeutige, präzise definierte Begriffe → stringente Argumente</p><p>Bedeutung nicht gleich wie aus dem Alltag auch für denselben Begriff</p><p>Wörter in Alltagssprache abhängig von Kontext</p></div><p></p><p></p><p><mark class="highlight-blue">Nicht-Wissenschaft</mark></p><div class="indented"><p>= Glauben, Subjektive Meinung (persönliche Präferenz), Handwerk ("Kunstfertigkeit"), Kunst</p><p>Praktisches Wissen basiert nicht auf wissenschaftlicher Erkenntnis</p><p>Diese Dinge können aber Gegenstand wissenschaftlicher Forschung sein.</p><p>Handwerk / Fertigung verwendet Erkenntnisse / Ergebnisse der Wissenschaft, ist selbst nicht Wissenschaft per se.</p></div><p></p><p></p><p><mark class="highlight-blue">Gegensätze der Wissenschaft</mark></p><div class="indented"><p>Esoterik, Populismus, Vorurteile, Alternative Facts, Intuition, Feelings, Verschwörungstheorien, Stammtischgespräche</p></div><p></p><p></p><p></p><p></p><h2 class="block-color-gray_background">Warum machen wir Wissenschaft?</h2><p><mark class="highlight-blue">Exkurs: Steuerung</mark></p><div class="indented"><p>Unbelebtes</p><div class="indented"><p>kann keine Entscheidungen treffen, feste Gesetzmäßigkeiten</p><p>keine Steuerungsprobleme</p></div><p></p><p>Belebtes</p><div class="indented"><p>feste Aktionsprogramme</p><p>höhere Lebewesen können Lernen, individuelle Entscheidungen treffen, steuern</p></div><p></p></div><p></p><p></p><p><mark class="highlight-blue">Warum ist Wissenschaft wichtig?</mark></p><div class="indented"><p>Weil Alltagswissen nicht mehr ausreicht um in einer komplexen Welt richtige Entscheidungen zu treffen.</p><p>Steuerung von Institutionen, Organisationen, Gesellschaften.</p><hr/><ol class="numbered-list" start="1" type="1"><li>
+Menschen sind in der Lage zu lernen und Entscheidungen zu treffen
+<p>Aneignung (= aktive Auseinandersetzung) statt anpassung</p><p>nicht mehr determiniert durch Umweltbedingungen (dadurch auch orientierungslos)</p></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Menschen können miteinander sprechen
+<p>= symbolische Bearbeitung (nicht mehr das Ding selbst sondern die Idee davon)</p><p><em>Erst durch Sprache wird Wissenschaft und Reflexion möglich.</em></p></li></ol><hr/><p>Dadurch: Wissen über Sprache weitergeben</p><div class="indented"><p>Erfahrungen austauschen = Lernen ohne zu erfahren.</p><p>Wissensbasis erweitern.</p><p>auf Erfahrungen der vergangenen Generationen aufbauen</p><p>nicht mehr determiniert an Umweltbedingungen</p></div><p></p></div><p></p><p></p><p><mark class="highlight-blue">Umgang mit Wissen: Routinemodus vs. Reflexionsmodus</mark></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Routinemodus des Alltagsbewusstsein
+<p>Funktioniert nur wenn keine Probleme auftreten - Abläufe als Routinen.</p><div class="indented"><p>Selectiver Blickwinkel, Egozentrisch</p><p>Behauptungen ohne Verpflichtung zur Begründung</p></div><p></p></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Reflexionsmodus
+<p>Wenn Probleme / Schwierigkeiten auftreten - Problem Bewusst beobachten.</p><div class="indented"><p>Gezieltes Nachdenken in Sondersituationen wo Handlungszwang reduziert ist.</p><p>Ziel: Objektive Erkenntnis, Überwindung des Egozentrismus.</p><p>Langsamer aber bessere Problemlösung und Vergrößerung des Handlungsspielraumes.</p><p>Behauptungen müssen begründet werden.</p><p>Reflexion nur möglich ohne unmittelbaren Handlungszwang</p></div><p></p></li></ol></div><p></p><p></p><p><mark class="highlight-blue">Wissenschaftliche Institutionen</mark></p><div class="indented"><p>Wissenschaftliche Institutionen = Sonderfall von institutionalisierter Reflexion</p><p>Institutionalisierung von Reflexion = Systematische Schaffung von Sondersituationen ohne Handlungszwang</p><p>Systematische Untersuchung, Auswertung</p><p>Wichtig für die Gesellschaft (Siehe Geschichte der Industrialisierung)</p></div><p></p><p></p><p></p><p></p><h2 class="block-color-gray_background">Geschichte der Wissenschaft</h2><p><mark class="highlight-blue">Entstehung von Wissenschaft als Welterklärung</mark></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Mythos
+<p>Erzählungen über gesellschaftliche Themen, Entstehung der Welt zB Schöpfungsmythen.</p><p>Reine Überzeugung.</p><p>Keine Experten, Mythos als gemeinsame Leistung.</p></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Religion
+<p>Viele Menschen auf ausgedehntem Raum haben gemeinsame Mythen gebraucht.</p><p>Systematisiert, theologische Welterklärung.</p><p>Experten: Herrscher, Priester - Haben ihre Macht mit Religion gerechtfertigt.</p></li></ol><ol class="numbered-list" start="3" type="1"><li>
+Philosophie → Wissenschaft
+<p>Das erste mal im antiken Griechenland</p><p>Größere Aggregationen (Städte)</p><p>Keine Herschende Klasse</p><p>Bürgerliche Gesellschaften (Handwerker, Handel, Dienstleistungen)</p><p>Lebensmittel verfügbar durch Sklaven oder Handel.</p><p>Dadurch:</p><div class="indented"><p>Loslösung von Religion, neuer Bedarf an Erkenntnis</p><p>Experten aber viel Kritik und Diskurs</p><p>Mehr Selbststeuerung der Gesellschaft</p></div><p></p></li></ol><ol class="numbered-list" start="4" type="1"><li>
+Industrialisierung, Moderne, Spätmoderne
+<p>Zunehmende Bedeutung von Wissenschaft</p></li></ol></div><p></p><p></p><p></p><p></p><h2 class="block-color-gray_background">Einteilung der Wissenschaft</h2><p>Einteilung nach Gegenstandsbereich durch Begründungsart und Methode</p><p></p><p><mark class="highlight-blue">Wissenschafts-Arten</mark></p><div class="indented"><p>Fragestellung / Problemstellung → Forschung</p><p>Formalwissenschaft</p><div class="indented"><p>Problemstellungen im symbolischen Bereich</p></div><p></p><p>Realwissenschaft (Natur oder Kulturwissenschaftlich)</p><div class="indented"><p>Problemstellungen der realen Welt</p></div><p></p></div><p></p><p></p><figure class="image"><a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled.png"><img src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled.png" style="width: 480px"/></a></figure><figure class="image"><a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%201.png"><img src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%201.png" style="width: 480px"/></a></figure><p></p><p></p><p></p><h1 class="block-color-gray_background">Forschungsmethodologie</h1><p><mark class="highlight-blue">Forschung</mark></p><div class="indented"><p>systematisches Suchen nach neuen Erkenntnissen</p></div><p></p><p></p><p><mark class="highlight-blue">Wissenschaftliche Methode</mark></p><div class="indented"><p>= Weg von Frage (Problemstellung) zu Antwort (wissenschaftliche Erkenntnis).</p><p>Abhängig von</p><div class="indented"><p>Forschungsgegenstand (= Gegenstandsbereich der Wissenschaft)</p><p>Forschungsfrage</p><p></p></div><p></p></div><p></p><figure class="image"><a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%202.png"><img src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%202.png" style="width: 384px"/></a></figure><p></p><p><mark class="highlight-blue">Forschungsgegenstand → Forschungsmethode</mark></p><div class="indented"><p>Gegenstandsbereiche bestimmen Realitäten, Theorie-Strukturen, Konzepte, Forschungsmethoden</p><div class="indented"><p><mark class="highlight-blue">Formalwissenschaft (Deduktiv)</mark></p><div class="indented"><p>symbolischer Bereich</p><p>formale Systeme genutzt für Erkenntnisgewinnung</p></div><p></p><p><mark class="highlight-blue">Realwissenschaft (Induktiv)</mark></p><div class="indented"><p>Analyse der äußeren Wirklichkeit</p><p><mark class="highlight-blue">Naturwissenschaft (Induktiv)</mark></p><div class="indented"><p>induktiv, empirisch-quantitativ, experimentell</p><p><em>denotative Theorien</em>
+→ Erklären von Gesetzmäßigkeiten
+</p><p>fixer Gegenstandsbereich, "nomologische Realität"</p><div class="indented"><p>innerhalb bestimmter Grenzen konstant</p></div><p></p></div><p></p><p><mark class="highlight-blue">Kulturwissenschaften (Induktiv-hermeneutisch)</mark></p><div class="indented"><p>induktiv-hermeneutisch, empririsch-quantitativ und qualitativ</p><p><em>konnotative Theorien</em>
+→ Verstehen von Zusammenhängen im Kontext
+</p><p>variabler, kontextabhängiger Gegenstandsbereich, "autopoietische Realität"</p><div class="indented"><p>In Wechselwirkung mit Kontext, nicht determiniert mit Kontext.</p><p>offener Entwicklungshorizont</p><p>innerhalb bestimmter Grenzen veränderlich</p></div><p></p></div><p></p></div><p></p></div><p></p></div><p></p><p></p><figure class="image"><a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%203.png"><img src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%203.png" style="width: 288px"/></a></figure><p></p><p><mark class="highlight-blue">Informatik als Wissenschaft</mark></p><ul class="toggle"><li><details open=""><summary>Informatik lange missverstanden: Teilgebiet der Mathematik.</summary><p>Formalwissenschaftlich</p><div class="indented"><p>Laufzeizabschätzung</p><p>Formale Verifikation</p></div><p></p><p>Realwissenschaftlich</p><div class="indented"><p>UI / UX</p><p>Benchmarking von Algorithmen</p></div><p></p></details></li></ul><figure class="image"><a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%204.png"><img src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%204.png" style="width: 288px"/></a></figure><p></p><p><mark class="highlight-blue">Forschung</mark></p><div class="indented"><p>Systematische Suche nach Erkenntnissen</p><ol class="numbered-list" start="1" type="i"><li>
+Grundlagen-Forschung (An Universitäten)
+<ol class="numbered-list" start="1" type="i"><li>
+Reine Grundlagenforschung
+<p>Allgemein, Methodisches Fundament der Disziplin</p></li></ol><ol class="numbered-list" start="2" type="i"><li>
+Anwendungsorientierte Grundlagenforschung
+<p>alles obige + Anregung für praxisrelevante Probleme</p></li></ol></li></ol><ol class="numbered-list" start="2" type="i"><li>
+Angewandte-Forschung (An Fachhochschulen)
+<p>Theoretische Basis für Entwicklung</p><p>Ausweitung, Anwendung von Forschungsergebnissen</p></li></ol></div><p></p><p></p><p><mark class="highlight-blue">Entwicklung</mark></p><div class="indented"><p>Anwendung von Erkenntnissen die produktionsfähig, marktfähig sind</p><p>Verfahren und Produkte</p></div><p></p><p></p><p><mark class="highlight-blue">Innovation</mark></p><div class="indented"><p>Radikale Innovation, Disruption</p><p>Inkrementelle Innovation, Folgeinnovation</p></div><p></p><p></p><p></p><p></p><h2 class="block-color-gray_background">Schließen</h2><p>Wissenschaftliche Methoden, Methodologie, Herangehensweise</p><ol class="numbered-list" start="1" type="1"><li><mark class="highlight-blue">Deduktion</mark><p>
+Schluss von Allgemein
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span>
+Spezifisch
+</p><p>Ableitung, Beweis</p><ul class="toggle"><li><details open=""><summary>Beispiel</summary><pre class="code"><code>1. Alle Bohnen aus diesem Sack sind weiß
 2. Diese Bohnen sind aus diesem dem Sack
 ---------------------------------------
-3. Diese Bohnen sind weiß</code></pre>
-                                </details>
-                            </li>
-                        </ul>
-                        <ul class="toggle">
-                            <li>
-                                <details open="">
-                                    <summary>Beispiel</summary>
-                                    <p>Ableitung von einer Aussage aus einem Anderen.</p>
-                                    <p>Ausgangspunkt: Axiome die nicht bewiesen werden müssen.</p>
-                                </details>
-                            </li>
-                        </ul>
-                    </li>
-                </ol>
-                <ol type="1" class="numbered-list" start="2">
-                    <li>
-                        <mark class="highlight-blue">Induktion</mark>
-                        <p>
-                            Schluss von Allgemein
-                            <style>
-                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                            </style>
-                            <span
-                                data-token-index="0"
-                                contenteditable="false"
-                                class="notion-text-equation-token"
-                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                <span></span>
-                                <span>
-                                    <span class="katex">
-                                        <span class="katex-mathml">
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <semantics>
-                                                    <mrow><mo>←</mo></mrow>
-                                                    <annotation encoding="application/x-tex">\larr</annotation>
-                                                </semantics>
-                                            </math>
-                                        </span>
-                                        <span class="katex-html" aria-hidden="true">
-                                            <span class="base">
-                                                <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                                <span class="mrel">←</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span>﻿</span>
-                            </span>
-                            Spezifisch
-                        </p>
-                        <p>Beobachtung einer Regelmäßigkeit, emprirische Methode</p>
-                        <p>Falsifikationsprinzip: Schlussfolgerungen gelten so lange bis sie falsifiziert werden</p>
-                        <div class="indented"><p>Aussagen können nicht verifiziert, nur falsifiziert werden</p></div>
-                        <p></p>
-                        <p>Stichprobenstatistik</p>
-                        <div class="indented"><p>Wahrscheinlichkeitsaussagen über Grundgesamtheit durch repräsentativen Stichproben</p></div>
-                        <p></p>
-                        <p>Unterschiedliche Reichweite von Aussagen</p>
-                        <div class="indented">
-                            <p>All-Sätze in Naturwissenschaften (universelle Geltung)</p>
-                            <p>Teils-Teils-Sätze in Kultuwissenschaften (nicht verallgemeinerbar, kontextabhängig)</p>
-                        </div>
-                        <p></p>
-                        <ul class="toggle">
-                            <li>
-                                <details open="">
-                                    <summary>Beispiel</summary>
-                                    <pre class="code"><code>1. Diese Bohnen sind aus diesem Sack
+3. Diese Bohnen sind weiß</code></pre></details></li></ul><ul class="toggle"><li><details open=""><summary>Beispiel</summary><p>Ableitung von einer Aussage aus einem Anderen.</p><p>Ausgangspunkt: Axiome die nicht bewiesen werden müssen.</p></details></li></ul></li></ol><ol class="numbered-list" start="2" type="1"><li><mark class="highlight-blue">Induktion</mark><p>
+Schluss von Allgemein
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>←</mo></mrow><annotation encoding="application/x-tex">\larr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">←</span></span></span></span></span><span>﻿</span></span>
+Spezifisch
+</p><p>Beobachtung einer Regelmäßigkeit, emprirische Methode</p><p>Falsifikationsprinzip: Schlussfolgerungen gelten so lange bis sie falsifiziert werden</p><div class="indented"><p>Aussagen können nicht verifiziert, nur falsifiziert werden</p></div><p></p><p>Stichprobenstatistik</p><div class="indented"><p>Wahrscheinlichkeitsaussagen über Grundgesamtheit durch repräsentativen Stichproben</p></div><p></p><p>Unterschiedliche Reichweite von Aussagen</p><div class="indented"><p>All-Sätze in Naturwissenschaften (universelle Geltung)</p><p>Teils-Teils-Sätze in Kultuwissenschaften (nicht verallgemeinerbar, kontextabhängig)</p></div><p></p><ul class="toggle"><li><details open=""><summary>Beispiel</summary><pre class="code"><code>1. Diese Bohnen sind aus diesem Sack
 2. Diese Bohnen sind weiß
 ---------------------------------------
-3. Alle Bohnen aus diesem Sack sind (sehr wahrscheinlich) aus dem Sack</code></pre>
-                                </details>
-                            </li>
-                        </ul>
-                    </li>
-                </ol>
-                <ol type="1" class="numbered-list" start="3">
-                    <li>
-                        <mark class="highlight-blue">Hermeneutik</mark>
-                        <p>Rekonstruktion von Sinnzusammenhängen, Bedeutungszusammenhängen</p>
-                        <p>Erkenntnis durch sinnhaftes Verstehen</p>
-                        <p>Einzelereignis (Inzidenz) als Hinweis auf allgemeines zugrundeliegendes Muster interpretiert.</p>
-                        <p>Hermeneutischer Zirkel</p>
-                        <div class="indented">
-                            <p>
-                                Ganzes / Allgemeines
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow><mo>⇆</mo></mrow>
-                                                        <annotation encoding="application/x-tex">\leftrightarrows</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.8558em; vertical-align: -0.1808em"></span>
-                                                    <span class="mrel amsrm">⇆</span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                                Inzidenz / Teil
-                            </p>
-                            <ol type="i" class="numbered-list" start="1">
-                                <li>
-                                    Allgemeines durch Einzelfälle verstanden
-                                    <p>Vorläufiges (tenatives) Verstehen vom Ganzen durch Einzelfälle</p>
-                                </li>
-                            </ol>
-                            <ol type="i" class="numbered-list" start="2">
-                                <li>Einzelfälle durch bisheriges Verständnis vom Ganzen verstanden</li>
-                            </ol>
-                        </div>
-                        <p></p>
-                        <p>Hermeneutische Spirale</p>
-                        <div class="indented"><p>Wiederholung des Zirkels</p></div>
-                        <p></p>
-                        <p>zb In User-Research, Soziologie</p>
-                    </li>
-                </ol>
-                <ol type="1" class="numbered-list" start="4">
-                    <li>
-                        <mark class="highlight-blue">Abduktion (keine Wissenschaftliche Methode des Erkenntnisgewinns)</mark>
-                        <p>Eher plausible Vermutungen als Schlussfolgerungen</p>
-                        <p>Braucht Kontext und viel implizites Wissen</p>
-                        <p>zB in der Diagnostik der Medizin, um Forschungsideen zu finden in der Wissenschaft</p>
-                        <ul class="toggle">
-                            <li>
-                                <details open="">
-                                    <summary>Beispiel</summary>
-                                    <pre class="code"><code>1. Diese Bohnen sind weiß
+3. Alle Bohnen aus diesem Sack sind (sehr wahrscheinlich) aus dem Sack</code></pre></details></li></ul></li></ol><ol class="numbered-list" start="3" type="1"><li><mark class="highlight-blue">Hermeneutik</mark><p>Rekonstruktion von Sinnzusammenhängen, Bedeutungszusammenhängen</p><p>Erkenntnis durch sinnhaftes Verstehen</p><p>Einzelereignis (Inzidenz) als Hinweis auf allgemeines zugrundeliegendes Muster interpretiert.</p><p>Hermeneutischer Zirkel</p><div class="indented"><p>
+Ganzes / Allgemeines
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⇆</mo></mrow><annotation encoding="application/x-tex">\leftrightarrows</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.8558em; vertical-align: -0.1808em"></span><span class="mrel amsrm">⇆</span></span></span></span></span><span>﻿</span></span>
+Inzidenz / Teil
+</p><ol class="numbered-list" start="1" type="i"><li>
+Allgemeines durch Einzelfälle verstanden
+<p>Vorläufiges (tenatives) Verstehen vom Ganzen durch Einzelfälle</p></li></ol><ol class="numbered-list" start="2" type="i"><li>Einzelfälle durch bisheriges Verständnis vom Ganzen verstanden</li></ol></div><p></p><p>Hermeneutische Spirale</p><div class="indented"><p>Wiederholung des Zirkels</p></div><p></p><p>zb In User-Research, Soziologie</p></li></ol><ol class="numbered-list" start="4" type="1"><li><mark class="highlight-blue">Abduktion (keine Wissenschaftliche Methode des Erkenntnisgewinns)</mark><p>Eher plausible Vermutungen als Schlussfolgerungen</p><p>Braucht Kontext und viel implizites Wissen</p><p>zB in der Diagnostik der Medizin, um Forschungsideen zu finden in der Wissenschaft</p><ul class="toggle"><li><details open=""><summary>Beispiel</summary><pre class="code"><code>1. Diese Bohnen sind weiß
 2. Alle Bohnen aus diesem Sack sind weiß
 ---------------------------------------
-3. Diese Bohnen sind (sehr wahrscheinlich) aus diesem Sack</code></pre>
-                                    <p>
-                                        Wenn
-                                        <code>3</code>
-                                        unter der Annahme von
-                                        <code>2</code>
-                                        wahr wäre, müsste daraus
-                                        <code>1</code>
-                                        folgen.
-                                    </p>
-                                </details>
-                            </li>
-                        </ul>
-                    </li>
-                </ol>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h2 class="block-color-gray_background">Induktion: Emprisch-Quantitativ vs. Empirisch-Qualitativ</h2>
-                <p><mark class="highlight-blue">Experiment</mark></p>
-                <div class="indented">
-                    <p>Italienisch für: Versuch, Probe, Beweis</p>
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>Beobachten</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>Hypothese über Zusammenhänge</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>Experiment</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li>
-                            Vorhersage über Ergebnisse
-                            <p>Bestätigung (keine allgemeine Verifikation) - stützt Hypothese</p>
-                            <p>Falsifikaiton - lehnt Hypothese ab (Ablehnung, Veränderung, Störhypothese)</p>
-                        </li>
-                    </ol>
-                    <p>(Oft wiederholen für Statisik)</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Statistik</mark></p>
-                <div class="indented">
-                    <p>Baseline als Referenz festgelegt</p>
-                    <p>Abhängige Variable - Messung von Output</p>
-                    <div class="indented"><p>zB execution time, temperatur, ...</p></div>
-                    <p></p>
-                    <p>Unabhängige Variable - Messung von Input</p>
-                    <div class="indented"><p>zB Algorithmus, CPU Architektur, ...</p></div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <hr />
-                <p></p>
-                <p><mark class="highlight-blue">Empirisch quantitativ</mark></p>
-                <div class="indented">
-                    <p>Messbar</p>
-                    <p>Reduktion des Informationsgehalts (zB Ankreuzen von Antworten)</p>
-                    <p>Subjekt-Objekt-Relation: Forscher beobachtet das Beforschte</p>
-                    <p>Experimente, auswertung statistischer Daten</p>
-                    <hr />
-                    <p>Standardisierte Methoden</p>
-                    <p>Korrelationen (können auch zufällig sein), Baselines, verschiedene Gruppen</p>
-                    <p>Durch repräsentative Stichprobe (Zufallsstichprobe, Klumpenstichprobe, Quotenstichprobe) auf Grundgesamtheit schließen</p>
-                    <div class="indented">
-                        <p>Theorie (begründete Annahme) aufstellen, dann:</p>
-                        <div class="indented">
-                            <p>
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow>
-                                                            <mstyle mathsize="0.9em">
-                                                                <msub>
-                                                                    <mi>H</mi>
-                                                                    <mn>0</mn>
-                                                                </msub>
-                                                            </mstyle>
-                                                        </mrow>
-                                                        <annotation encoding="application/x-tex">\small H_0</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span>
-                                                    <span class="mord sizing reset-size6 size5">
-                                                        <span class="mord mathnormal" style="margin-right: 0.08125em">H</span>
-                                                        <span class="msupsub">
-                                                            <span class="vlist-t vlist-t2">
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.2796266666666667em">
-                                                                        <span
-                                                                            style="top: -2.45em; margin-left: -0.08125em; margin-right: 0.05555555555555556em">
-                                                                            <span class="pstrut" style="height: 2.6em"></span>
-                                                                            <span class="sizing reset-size5 size2 mtight">
-                                                                                <span class="mord mtight">0</span>
-                                                                            </span>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="vlist-s">​</span>
-                                                                </span>
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.15em"><span></span></span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                                : Nullhypothese (Wiederspricht Forschungshypothese)
-                            </p>
-                            <div class="indented"><p>Es gibt keine Zusammenhänge, Effekte, Veränderungen</p></div>
-                            <p></p>
-                            <p>
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow>
-                                                            <mstyle mathsize="0.9em">
-                                                                <msub>
-                                                                    <mi>H</mi>
-                                                                    <mn>1</mn>
-                                                                </msub>
-                                                            </mstyle>
-                                                        </mrow>
-                                                        <annotation encoding="application/x-tex">\small H_1</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span>
-                                                    <span class="mord sizing reset-size6 size5">
-                                                        <span class="mord mathnormal" style="margin-right: 0.08125em">H</span>
-                                                        <span class="msupsub">
-                                                            <span class="vlist-t vlist-t2">
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.2796266666666667em">
-                                                                        <span
-                                                                            style="top: -2.45em; margin-left: -0.08125em; margin-right: 0.05555555555555556em">
-                                                                            <span class="pstrut" style="height: 2.6em"></span>
-                                                                            <span class="sizing reset-size5 size2 mtight">
-                                                                                <span class="mord mtight">1</span>
-                                                                            </span>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="vlist-s">​</span>
-                                                                </span>
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.15em"><span></span></span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                                : Alternativhypothese (Forschungshypothese)
-                            </p>
-                            <div class="indented"><p>zB Es existiert ein Mittelwert-Unterschied zwischen 2 Gruppen</p></div>
-                            <p></p>
-                        </div>
-                        <p></p>
-                    </div>
-                    <p></p>
-                    <p>Deskriptive Statistik</p>
-                    <div class="indented"><p>Beschreibend, explorativ-heuristischer Wert</p></div>
-                    <p></p>
-                    <p>Prüfstatisik, Statistische Signifikanzprüfung</p>
-                    <div class="indented">
-                        <p>Wahrscheinlichkeit, dass Ergebnis nicht durch Zufall entstanden ist</p>
-                        <p>5%-Niveau-signifikant ist Wahrscheinlichkeit für ein false-positive (Irrtumswahrscheinlichkeit)</p>
-                    </div>
-                    <p></p>
-                    <hr />
-                    <p>Voraussetzungen</p>
-                    <div class="indented">
-                        <p>Objektivität Ergebniss von Untersuchungsperson unabhängig</p>
-                        <p>Reliabilität Zuverlässigkeit, Exaktheit, Gleichheit von Messinstrumenten</p>
-                        <p>Validität Gültigkeit von dem was gemessen wurde</p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Empirisch-qualitativ (Induktiv hermeneutisch)</mark></p>
-                <div class="indented">
-                    <p>Interpretierbar</p>
-                    <p>Höherer Informationsgehalt (zB Befragte erzählen)</p>
-                    <p>Interaktion zwischen Forscher und Beforschtem</p>
-                    <p>Sinn und Bedeutungsstrukturen</p>
-                    <p>Untersuchung von Erfahrungen und Bedürfnissen</p>
-                    <p>Arbeitet nicht mit empririschen Untersuchungen und Hypothesen</p>
-                    <hr />
-                    <p>Interpretativ, Analyse von verbalen, nicht numerischen Daten, keine Quantifizierung</p>
-                    <p>Strukturiert, Theoretisch-Methodische Gewinnung von Daten und Auswertung, Begründung</p>
-                    <p>zB Offene interviews, Diskussionsgruppen</p>
-                    <ol type="a" class="numbered-list" start="1">
-                        <li>
-                            "substantive theory"
-                            <p>Theorien nur für einem bestimmten Gegenstandsbereich</p>
-                        </li>
-                    </ol>
-                    <ol type="a" class="numbered-list" start="2">
-                        <li>
-                            "grounded theory"
-                            <p>Generierung von Theorien aus empirisch erhobenen Befunden</p>
-                        </li>
-                    </ol>
-                    <hr />
-                    <p>Voraussetzungen (Nicht standardisiert, aber "Gütekriterien")</p>
-                    <div class="indented">
-                        <p>
-                            Sachbezogenheit quasi "Objektivität",
-                            <em>Intersubjektivität</em>
-                        </p>
-                        <p>Reliabilität Ergebnisse Replizierbar</p>
-                        <p>Validität Realitätshaltigkeit - Es muss das richtige untersucht werden</p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h2 class="block-color-gray_background">Ingenieurswissenschaften / Design Science</h2>
-                <p>Problem-Löse-Paradigma</p>
-                <div class="indented">
-                    <p>Relevante Probleme lösen</p>
-                    <p>Beitrag zur wissenschaftlichen Basis</p>
-                    <ol type="a" class="numbered-list" start="1">
-                        <li>
-                            Entwicklung begründeter Theorien
-                            <style>
-                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                            </style>
-                            <span
-                                data-token-index="0"
-                                contenteditable="false"
-                                class="notion-text-equation-token"
-                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                <span></span>
-                                <span>
-                                    <span class="katex">
-                                        <span class="katex-mathml">
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <semantics>
-                                                    <mrow><mo>→</mo></mrow>
-                                                    <annotation encoding="application/x-tex">\rarr</annotation>
-                                                </semantics>
-                                            </math>
-                                        </span>
-                                        <span class="katex-html" aria-hidden="true">
-                                            <span class="base">
-                                                <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                                <span class="mrel">→</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span>﻿</span>
-                            </span>
-                            Erkenntnis
-                        </li>
-                    </ol>
-                    <ol type="a" class="numbered-list" start="2">
-                        <li>
-                            Konstruktion von nützlichen Dingen / Artefakten
-                            <style>
-                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                            </style>
-                            <span
-                                data-token-index="0"
-                                contenteditable="false"
-                                class="notion-text-equation-token"
-                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                <span></span>
-                                <span>
-                                    <span class="katex">
-                                        <span class="katex-mathml">
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <semantics>
-                                                    <mrow><mo>→</mo></mrow>
-                                                    <annotation encoding="application/x-tex">\rarr</annotation>
-                                                </semantics>
-                                            </math>
-                                        </span>
-                                        <span class="katex-html" aria-hidden="true">
-                                            <span class="base">
-                                                <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                                <span class="mrel">→</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span>﻿</span>
-                            </span>
-                            Nützlichkeit
-                        </li>
-                    </ol>
-                    <p></p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Nach Hevner, 2004</mark></p>
-                <figure class="image">
-                    <a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%205.png">
-                        <img style="width: 956px" src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%205.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <ol type="1" class="numbered-list" start="1">
-                    <li>
-                        Knowledge base
-                        <style>
-                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                        </style>
-                        <span
-                            data-token-index="0"
-                            contenteditable="false"
-                            class="notion-text-equation-token"
-                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                            <span></span>
-                            <span>
-                                <span class="katex">
-                                    <span class="katex-mathml">
-                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                            <semantics>
-                                                <mrow><mo>→</mo></mrow>
-                                                <annotation encoding="application/x-tex">\rarr</annotation>
-                                            </semantics>
-                                        </math>
-                                    </span>
-                                    <span class="katex-html" aria-hidden="true">
-                                        <span class="base">
-                                            <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                            <span class="mrel">→</span>
-                                        </span>
-                                    </span>
-                                </span>
-                            </span>
-                            <span>﻿</span>
-                        </span>
-                    </li>
-                </ol>
-                <ol type="1" class="numbered-list" start="2">
-                    <li>
-                        Applicable Knowledge
-                        <style>
-                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                        </style>
-                        <span
-                            data-token-index="0"
-                            contenteditable="false"
-                            class="notion-text-equation-token"
-                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                            <span></span>
-                            <span>
-                                <span class="katex">
-                                    <span class="katex-mathml">
-                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                            <semantics>
-                                                <mrow>
-                                                    <mo>−</mo>
-                                                    <mstyle mathsize="0.9em">
-                                                        <mrow>
-                                                            <mtext>&nbsp;</mtext>
-                                                            <mtext mathvariant="sans-serif">Rigor</mtext>
-                                                        </mrow>
-                                                        <mo>→</mo>
-                                                    </mstyle>
-                                                </mrow>
-                                                <annotation encoding="application/x-tex">- \small{\textsf{ Rigor}}\rarr</annotation>
-                                            </semantics>
-                                        </math>
-                                    </span>
-                                    <span class="katex-html" aria-hidden="true">
-                                        <span class="base">
-                                            <span class="strut" style="height: 0.799992em; vertical-align: -0.174996em"></span>
-                                            <span class="mord">−</span>
-                                            <span class="mord sizing reset-size6 size5">
-                                                <span class="mord text"><span class="mord textsf">&nbsp;Rigor</span></span>
-                                            </span>
-                                            <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
-                                            <span class="mrel sizing reset-size6 size5">→</span>
-                                        </span>
-                                    </span>
-                                </span>
-                            </span>
-                            <span>﻿</span>
-                        </span>
-                    </li>
-                </ol>
-                <ol type="1" class="numbered-list" start="3">
-                    <li>
-                        Develop and Build thoeries and artefacts
-                        <style>
-                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                        </style>
-                        <span
-                            data-token-index="0"
-                            contenteditable="false"
-                            class="notion-text-equation-token"
-                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                            <span></span>
-                            <span>
-                                <span class="katex">
-                                    <span class="katex-mathml">
-                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                            <semantics>
-                                                <mrow><mo>⇆</mo></mrow>
-                                                <annotation encoding="application/x-tex">\leftrightarrows</annotation>
-                                            </semantics>
-                                        </math>
-                                    </span>
-                                    <span class="katex-html" aria-hidden="true">
-                                        <span class="base">
-                                            <span class="strut" style="height: 0.8558em; vertical-align: -0.1808em"></span>
-                                            <span class="mrel amsrm">⇆</span>
-                                        </span>
-                                    </span>
-                                </span>
-                            </span>
-                            <span>﻿</span>
-                        </span>
-                        Evaluate usefulness (repeat this step)
-                        <p>Add to new knowledge to knowledge base</p>
-                        <p></p>
-                    </li>
-                </ol>
-                <hr />
-                <p></p>
-                <ol type="1" class="numbered-list" start="1">
-                    <li>
-                        <mark class="highlight-blue">analyse</mark>
-                        - Vorfeldanalyse, Problemdefinition
-                    </li>
-                </ol>
-                <ol type="1" class="numbered-list" start="2">
-                    <li>
-                        <mark class="highlight-blue">build</mark>
-                        - Konstruktion, Herstellung eines Artefakts
-                        <p>Verschiedene Abstraktionen und Realisierungen</p>
-                        <div class="indented">
-                            <p>Sprachen für die Domäne</p>
-                            <p>Modelle, Bechreibung eines Domänenausschnitts</p>
-                            <p>Methoden, Algorithmen, Best-Practice Beschreibungen</p>
-                            <p>Implementierungen</p>
-                        </div>
-                        <p></p>
-                        <p>
-                            <style>
-                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                            </style>
-                            <span
-                                data-token-index="0"
-                                contenteditable="false"
-                                class="notion-text-equation-token"
-                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                <span></span>
-                                <span>
-                                    <span class="katex">
-                                        <span class="katex-mathml">
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <semantics>
-                                                    <mrow><mo>↕</mo></mrow>
-                                                    <annotation encoding="application/x-tex">\updownarrow</annotation>
-                                                </semantics>
-                                            </math>
-                                        </span>
-                                        <span class="katex-html" aria-hidden="true">
-                                            <span class="base">
-                                                <span class="strut" style="height: 1em; vertical-align: -0.25em"></span>
-                                                <span class="mrel">↕</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span>﻿</span>
-                            </span>
-                            (iterativ)
-                        </p>
-                    </li>
-                </ol>
-                <ol type="1" class="numbered-list" start="3">
-                    <li>
-                        <mark class="highlight-blue">evaluate</mark>
-                        - Evaluation des Artefakts nach "praktischen Implikationen" (Folgen und Auswirkungen)
-                        <p>Fallstudie, Feldstudie, Kontrolliertes Expeirment, Functional Testing (Black Box), Structural Testing (White Box)</p>
-                        <div class="indented"><p>Ziel: Hohe Coverage</p></div>
-                        <p></p>
-                        <p>
-                            Kriterien: Funktionalität, Vollständigkeit, Konsistenz, Genauigkeit, Leistung, Zuverlässigkeit, Nutzbarkeit und Nützlichkeit,
-                            Passung zum Kontext, ...
-                        </p>
-                    </li>
-                </ol>
-                <p></p>
-                <p><mark class="highlight-blue">Design-Science Research Guidelines</mark></p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>Design as Artifact</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>Problem Relevance</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>Design Evaluation</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li>Research Contributions</li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="5">
-                        <li>Research Rigor</li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Ingenieruhandeln als Praxis vs. Ingenieurswissenschaft</mark></p>
-                <div class="indented">
-                    <p>Design als Praxis</p>
-                    <div class="indented">
-                        <p>= Routine-Design</p>
-                        <p>Mit bestehendem Wissen etwas wirtschaftliches nach Best-Practice-Artefakten machen</p>
-                        <p>Bastelei ist keine experimentelle Wissenschaft: basiert nicht auf und erweitert nicht Wissensbasis. Evaluiert Ergebnisse nicht</p>
-                    </div>
-                    <p></p>
-                    <p>Design als Wissenschaft</p>
-                    <div class="indented">
-                        <p>= Design Science Forschung / Ingenieurswissenschaft</p>
-                        <p>Bisher ungelöste Probleme innovativ lösen oder Lösungen verbessern</p>
-                        <p>Wissenschaftlich fundierte Lösungsverfahren (Stringenz)</p>
-                        <p>fundierte Evaluation der Ergebnisse</p>
-                        <p>Beitrag zur wissenschaftlichen Wissensbasis</p>
-                        <div class="indented">
-                            <ol type="1" class="numbered-list" start="1">
-                                <li>Verifikation richtige Entwicklung</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="2">
-                                <li>Validierung richtiges Endresultat</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="3">
-                                <li>Evaluation Tatsächliche Nützlichkeit</li>
-                            </ol>
-                        </div>
-                        <p></p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h1 class="block-color-gray_background">Ethik in Wissenschaft</h1>
-                <p>Forschungsinteressen vs. Einhaltung von gültigen Normen und Werten</p>
-                <p>Ethical review Comittees</p>
-                <div class="indented">
-                    <p>Hat der Forschungs-Prozess oder -Ergebnis negative Konsequenzen für Menschen, Gesellschaft, Umwelt, ...?</p>
-                    <p>Wurde Forschung durch die Firmen die es finanziert haben beeinflusst?</p>
-                    <div class="indented"><p>Geheime Abhängigkeiten oder Verpflichtungen?</p></div>
-                    <p></p>
-                    <p>Einhaltung wissenschaftlicher Standards</p>
-                    <p>Publikation von unerfolgreichen Ergebnissen?</p>
-                    <p>Code of Ethics</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h1 class="block-color-gray_background">Aufbau einer wissenschaftlichen Arbeit</h1>
-                <p>
-                    <mark class="highlight-blue">Forschung</mark>
-                    <mark class="highlight-blue">
-                        <style>
-                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                        </style>
-                        <span
-                            data-token-index="0"
-                            contenteditable="false"
-                            class="notion-text-equation-token"
-                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                            <span></span>
-                            <span>
-                                <span class="katex">
-                                    <span class="katex-mathml">
-                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                            <semantics>
-                                                <mrow><mo>→</mo></mrow>
-                                                <annotation encoding="application/x-tex">\rarr</annotation>
-                                            </semantics>
-                                        </math>
-                                    </span>
-                                    <span class="katex-html" aria-hidden="true">
-                                        <span class="base">
-                                            <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                            <span class="mrel">→</span>
-                                        </span>
-                                    </span>
-                                </span>
-                            </span>
-                            <span>﻿</span>
-                        </span>
-                    </mark>
-                    <mark class="highlight-blue">Präsentation</mark>
-                </p>
-                <div class="indented">
-                    <p>"Problem Definition" - Frage- und Problemstellung</p>
-                    <div class="indented">
-                        <p>Bestimmt Literatursuche, Vorgehensweise und Methoden, Aufbau der Arbeit, Roter Argumentationsfaden</p>
-                        <p>Beschreibung des Problems, zentrale Frage, Relevanz, Perspektiven</p>
-                    </div>
-                    <p></p>
-                    <p>Durchdringen des Problems</p>
-                    <div class="indented">
-                        <p>Literaturrecherche, Querverweise</p>
-                        <p>Exzerpieren, Lesen, Zusammenfassen</p>
-                        <p>Begrifflichkeiten klären</p>
-                        <p>Anknüpfen an State-of-the-art</p>
-                    </div>
-                    <p></p>
-                    <p>Neue Erkenntnisse gewinnen, Methoden durchführen</p>
-                    <div class="indented">
-                        <p>Begründung für Wahl der Methode</p>
-                        <p>Durchführung des Vorhabens</p>
-                        <p>Darstellung der Vorgehensweise / Resultate</p>
-                        <p>Methodenkombination möglich / sinnvoll</p>
-                    </div>
-                    <p></p>
-                    <p>Zusammenfassung der Ergebnisse, Schlussfolgerungen, Ausblick</p>
-                    <div class="indented"><p>Wie wurde durch die Wissensbasis erweitert?</p></div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Präsentation</mark></p>
-                <div class="indented">
-                    <p>Schriftliche Arbeit (Artikel, Buchbeitrag, Buch, Bachelor / Masterarbeit)</p>
-                    <p>Slide-Präsentation</p>
-                    <p>Poster-Präsentation</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h1 class="block-color-gray_background">Richtiges Zitieren</h1>
-                <p>Wissenschaft referenziert State-of-the-art und erweitert sie - plagiiert nicht.</p>
-                <p></p>
-                <p><mark class="highlight-blue">Zitat</mark></p>
-                <div class="indented"><p>übernommener Inhalt, direkt oder indirekt</p></div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Quellenverweis im Text</mark></p>
-                <div class="indented">
-                    <p>steht nach Zitat je nach Zitierstil</p>
-                    <p>Entweder Kurzverweis, Fußnote, Nummer</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Quellenbeleg (Vollbeleg) im Literaturverzeichnis / Quellenverzeichnis</mark></p>
-                <div class="indented"><p>je nach Zitierstil am Ende der Arbeit oder am Ende der Seite</p></div>
-                <p></p>
-                <p></p>
-                <hr />
-                <p></p>
-                <p><mark class="highlight-blue">Zitieren mit Quellenverweisen und Quellenbelegen</mark></p>
-                <div class="indented">
-                    <p>Zitat</p>
-                    <div class="indented">
-                        <p>wortwörtliche Wiedergabe</p>
-                        <p>Originalsprache (Übersetzung in Fußnoten)</p>
-                    </div>
-                    <p></p>
-                    <p>Paraphrase (indirektes Zitat, sinngemäßes Zitat)</p>
-                    <div class="indented">
-                        <p>wiedergabe mit eigenen Worten</p>
-                        <p></p>
-                    </div>
-                    <p></p>
-                    <p>Verweis auf Ideen und Überlegungen eines anderen Wissenschaftlers</p>
-                    <div class="indented"><p>Kollegen erwähnen</p></div>
-                    <p></p>
-                    <p></p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Warum zitieren</mark></p>
-                <div class="indented">
-                    <p>Richtige wiedergabe prüfen lassen von Leser</p>
-                    <p>Lektüre für Zusatzrecherche bereitstellen</p>
-                    <p>Offenlegen worauf man sich stützt, Anerkennung schenken an Urheber</p>
-                    <p></p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Zitierstile</mark></p>
-                <div class="indented">
-                    <p>Harvard-Zitiermethode</p>
-                    <p>Vancouver-Konvention</p>
-                    <p>IEEE-Editorial-Stil</p>
-                    <p>Chicago-Stil</p>
-                    <p>Geisteswissenschaftliche Zitierweise (vermeiden)</p>
-                </div>
-                <p></p>
-                <p></p>
-                <figure class="image">
-                    <a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%206.png">
-                        <img style="width: 384px" src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%206.png" />
-                    </a>
-                </figure>
-                <figure class="image">
-                    <a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%207.png">
-                        <img style="width: 384px" src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%207.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h1 class="block-color-gray_background">Quellen</h1>
-                <p><mark class="highlight-blue">Was man zitieren darf</mark></p>
-                <div class="indented">
-                    <p>Zeitschriftartikel</p>
-                    <p>Konferenz-Proceedings</p>
-                    <p>Bücher</p>
-                    <p>relevante, seriöse Artikel</p>
-                    <p>Eher vermeiden: Wikipedia, Produktdatenblätter, Manuals</p>
-                </div>
-                <p></p>
-            </div>
-        </article>
-    </body>
-</html>
+3. Diese Bohnen sind (sehr wahrscheinlich) aus diesem Sack</code></pre><p>
+Wenn
+<code>3</code>
+unter der Annahme von
+<code>2</code>
+wahr wäre, müsste daraus
+<code>1</code>
+folgen.
+</p></details></li></ul></li></ol><p></p><p></p><p></p><p></p><h2 class="block-color-gray_background">Induktion: Emprisch-Quantitativ vs. Empirisch-Qualitativ</h2><p><mark class="highlight-blue">Experiment</mark></p><div class="indented"><p>Italienisch für: Versuch, Probe, Beweis</p><ol class="numbered-list" start="1" type="1"><li>Beobachten</li></ol><ol class="numbered-list" start="2" type="1"><li>Hypothese über Zusammenhänge</li></ol><ol class="numbered-list" start="3" type="1"><li>Experiment</li></ol><ol class="numbered-list" start="4" type="1"><li>
+Vorhersage über Ergebnisse
+<p>Bestätigung (keine allgemeine Verifikation) - stützt Hypothese</p><p>Falsifikaiton - lehnt Hypothese ab (Ablehnung, Veränderung, Störhypothese)</p></li></ol><p>(Oft wiederholen für Statisik)</p></div><p></p><p></p><p><mark class="highlight-blue">Statistik</mark></p><div class="indented"><p>Baseline als Referenz festgelegt</p><p>Abhängige Variable - Messung von Output</p><div class="indented"><p>zB execution time, temperatur, ...</p></div><p></p><p>Unabhängige Variable - Messung von Input</p><div class="indented"><p>zB Algorithmus, CPU Architektur, ...</p></div><p></p></div><p></p><p></p><hr/><p></p><p><mark class="highlight-blue">Empirisch quantitativ</mark></p><div class="indented"><p>Messbar</p><p>Reduktion des Informationsgehalts (zB Ankreuzen von Antworten)</p><p>Subjekt-Objekt-Relation: Forscher beobachtet das Beforschte</p><p>Experimente, auswertung statistischer Daten</p><hr/><p>Standardisierte Methoden</p><p>Korrelationen (können auch zufällig sein), Baselines, verschiedene Gruppen</p><p>Durch repräsentative Stichprobe (Zufallsstichprobe, Klumpenstichprobe, Quotenstichprobe) auf Grundgesamtheit schließen</p><div class="indented"><p>Theorie (begründete Annahme) aufstellen, dann:</p><div class="indented"><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mi>H</mi><mn>0</mn></msub></mstyle></mrow><annotation encoding="application/x-tex">\small H_0</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right: 0.08125em">H</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.2796266666666667em"><span style="top: -2.45em; margin-left: -0.08125em; margin-right: 0.05555555555555556em"><span class="pstrut" style="height: 2.6em"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>
+: Nullhypothese (Wiederspricht Forschungshypothese)
+</p><div class="indented"><p>Es gibt keine Zusammenhänge, Effekte, Veränderungen</p></div><p></p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mi>H</mi><mn>1</mn></msub></mstyle></mrow><annotation encoding="application/x-tex">\small H_1</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right: 0.08125em">H</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.2796266666666667em"><span style="top: -2.45em; margin-left: -0.08125em; margin-right: 0.05555555555555556em"><span class="pstrut" style="height: 2.6em"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>
+: Alternativhypothese (Forschungshypothese)
+</p><div class="indented"><p>zB Es existiert ein Mittelwert-Unterschied zwischen 2 Gruppen</p></div><p></p></div><p></p></div><p></p><p>Deskriptive Statistik</p><div class="indented"><p>Beschreibend, explorativ-heuristischer Wert</p></div><p></p><p>Prüfstatisik, Statistische Signifikanzprüfung</p><div class="indented"><p>Wahrscheinlichkeit, dass Ergebnis nicht durch Zufall entstanden ist</p><p>5%-Niveau-signifikant ist Wahrscheinlichkeit für ein false-positive (Irrtumswahrscheinlichkeit)</p></div><p></p><hr/><p>Voraussetzungen</p><div class="indented"><p>Objektivität Ergebniss von Untersuchungsperson unabhängig</p><p>Reliabilität Zuverlässigkeit, Exaktheit, Gleichheit von Messinstrumenten</p><p>Validität Gültigkeit von dem was gemessen wurde</p></div><p></p></div><p></p><p></p><p><mark class="highlight-blue">Empirisch-qualitativ (Induktiv hermeneutisch)</mark></p><div class="indented"><p>Interpretierbar</p><p>Höherer Informationsgehalt (zB Befragte erzählen)</p><p>Interaktion zwischen Forscher und Beforschtem</p><p>Sinn und Bedeutungsstrukturen</p><p>Untersuchung von Erfahrungen und Bedürfnissen</p><p>Arbeitet nicht mit empririschen Untersuchungen und Hypothesen</p><hr/><p>Interpretativ, Analyse von verbalen, nicht numerischen Daten, keine Quantifizierung</p><p>Strukturiert, Theoretisch-Methodische Gewinnung von Daten und Auswertung, Begründung</p><p>zB Offene interviews, Diskussionsgruppen</p><ol class="numbered-list" start="1" type="a"><li>
+"substantive theory"
+<p>Theorien nur für einem bestimmten Gegenstandsbereich</p></li></ol><ol class="numbered-list" start="2" type="a"><li>
+"grounded theory"
+<p>Generierung von Theorien aus empirisch erhobenen Befunden</p></li></ol><hr/><p>Voraussetzungen (Nicht standardisiert, aber "Gütekriterien")</p><div class="indented"><p>
+Sachbezogenheit quasi "Objektivität",
+<em>Intersubjektivität</em></p><p>Reliabilität Ergebnisse Replizierbar</p><p>Validität Realitätshaltigkeit - Es muss das richtige untersucht werden</p></div><p></p></div><p></p><p></p><p></p><p></p><h2 class="block-color-gray_background">Ingenieurswissenschaften / Design Science</h2><p>Problem-Löse-Paradigma</p><div class="indented"><p>Relevante Probleme lösen</p><p>Beitrag zur wissenschaftlichen Basis</p><ol class="numbered-list" start="1" type="a"><li>
+Entwicklung begründeter Theorien
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span>
+Erkenntnis
+</li></ol><ol class="numbered-list" start="2" type="a"><li>
+Konstruktion von nützlichen Dingen / Artefakten
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span>
+Nützlichkeit
+</li></ol><p></p></div><p></p><p><mark class="highlight-blue">Nach Hevner, 2004</mark></p><figure class="image"><a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%205.png"><img src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%205.png" style="width: 956px"/></a></figure><p></p><ol class="numbered-list" start="1" type="1"><li>
+Knowledge base
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Applicable Knowledge
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mstyle mathsize="0.9em"><mrow><mtext></mtext><mtext mathvariant="sans-serif">Rigor</mtext></mrow><mo>→</mo></mstyle></mrow><annotation encoding="application/x-tex">- \small{\textsf{ Rigor}}\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.799992em; vertical-align: -0.174996em"></span><span class="mord">−</span><span class="mord sizing reset-size6 size5"><span class="mord text"><span class="mord textsf"> Rigor</span></span></span><span class="mspace" style="margin-right: 0.2777777777777778em"></span><span class="mrel sizing reset-size6 size5">→</span></span></span></span></span><span>﻿</span></span></li></ol><ol class="numbered-list" start="3" type="1"><li>
+Develop and Build thoeries and artefacts
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⇆</mo></mrow><annotation encoding="application/x-tex">\leftrightarrows</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.8558em; vertical-align: -0.1808em"></span><span class="mrel amsrm">⇆</span></span></span></span></span><span>﻿</span></span>
+Evaluate usefulness (repeat this step)
+<p>Add to new knowledge to knowledge base</p><p></p></li></ol><hr/><p></p><ol class="numbered-list" start="1" type="1"><li><mark class="highlight-blue">analyse</mark>
+- Vorfeldanalyse, Problemdefinition
+</li></ol><ol class="numbered-list" start="2" type="1"><li><mark class="highlight-blue">build</mark>
+- Konstruktion, Herstellung eines Artefakts
+<p>Verschiedene Abstraktionen und Realisierungen</p><div class="indented"><p>Sprachen für die Domäne</p><p>Modelle, Bechreibung eines Domänenausschnitts</p><p>Methoden, Algorithmen, Best-Practice Beschreibungen</p><p>Implementierungen</p></div><p></p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↕</mo></mrow><annotation encoding="application/x-tex">\updownarrow</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em"></span><span class="mrel">↕</span></span></span></span></span><span>﻿</span></span>
+(iterativ)
+</p></li></ol><ol class="numbered-list" start="3" type="1"><li><mark class="highlight-blue">evaluate</mark>
+- Evaluation des Artefakts nach "praktischen Implikationen" (Folgen und Auswirkungen)
+<p>Fallstudie, Feldstudie, Kontrolliertes Expeirment, Functional Testing (Black Box), Structural Testing (White Box)</p><div class="indented"><p>Ziel: Hohe Coverage</p></div><p></p><p>
+Kriterien: Funktionalität, Vollständigkeit, Konsistenz, Genauigkeit, Leistung, Zuverlässigkeit, Nutzbarkeit und Nützlichkeit,
+Passung zum Kontext, ...
+</p></li></ol><p></p><p><mark class="highlight-blue">Design-Science Research Guidelines</mark></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Design as Artifact</li></ol><ol class="numbered-list" start="2" type="1"><li>Problem Relevance</li></ol><ol class="numbered-list" start="3" type="1"><li>Design Evaluation</li></ol><ol class="numbered-list" start="4" type="1"><li>Research Contributions</li></ol><ol class="numbered-list" start="5" type="1"><li>Research Rigor</li></ol></div><p></p><p></p><p><mark class="highlight-blue">Ingenieruhandeln als Praxis vs. Ingenieurswissenschaft</mark></p><div class="indented"><p>Design als Praxis</p><div class="indented"><p>= Routine-Design</p><p>Mit bestehendem Wissen etwas wirtschaftliches nach Best-Practice-Artefakten machen</p><p>Bastelei ist keine experimentelle Wissenschaft: basiert nicht auf und erweitert nicht Wissensbasis. Evaluiert Ergebnisse nicht</p></div><p></p><p>Design als Wissenschaft</p><div class="indented"><p>= Design Science Forschung / Ingenieurswissenschaft</p><p>Bisher ungelöste Probleme innovativ lösen oder Lösungen verbessern</p><p>Wissenschaftlich fundierte Lösungsverfahren (Stringenz)</p><p>fundierte Evaluation der Ergebnisse</p><p>Beitrag zur wissenschaftlichen Wissensbasis</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Verifikation richtige Entwicklung</li></ol><ol class="numbered-list" start="2" type="1"><li>Validierung richtiges Endresultat</li></ol><ol class="numbered-list" start="3" type="1"><li>Evaluation Tatsächliche Nützlichkeit</li></ol></div><p></p></div><p></p></div><p></p><p></p><p></p><p></p><h1 class="block-color-gray_background">Ethik in Wissenschaft</h1><p>Forschungsinteressen vs. Einhaltung von gültigen Normen und Werten</p><p>Ethical review Comittees</p><div class="indented"><p>Hat der Forschungs-Prozess oder -Ergebnis negative Konsequenzen für Menschen, Gesellschaft, Umwelt, ...?</p><p>Wurde Forschung durch die Firmen die es finanziert haben beeinflusst?</p><div class="indented"><p>Geheime Abhängigkeiten oder Verpflichtungen?</p></div><p></p><p>Einhaltung wissenschaftlicher Standards</p><p>Publikation von unerfolgreichen Ergebnissen?</p><p>Code of Ethics</p></div><p></p><p></p><p></p><p></p><h1 class="block-color-gray_background">Aufbau einer wissenschaftlichen Arbeit</h1><p><mark class="highlight-blue">Forschung</mark><mark class="highlight-blue"><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-blue">Präsentation</mark></p><div class="indented"><p>"Problem Definition" - Frage- und Problemstellung</p><div class="indented"><p>Bestimmt Literatursuche, Vorgehensweise und Methoden, Aufbau der Arbeit, Roter Argumentationsfaden</p><p>Beschreibung des Problems, zentrale Frage, Relevanz, Perspektiven</p></div><p></p><p>Durchdringen des Problems</p><div class="indented"><p>Literaturrecherche, Querverweise</p><p>Exzerpieren, Lesen, Zusammenfassen</p><p>Begrifflichkeiten klären</p><p>Anknüpfen an State-of-the-art</p></div><p></p><p>Neue Erkenntnisse gewinnen, Methoden durchführen</p><div class="indented"><p>Begründung für Wahl der Methode</p><p>Durchführung des Vorhabens</p><p>Darstellung der Vorgehensweise / Resultate</p><p>Methodenkombination möglich / sinnvoll</p></div><p></p><p>Zusammenfassung der Ergebnisse, Schlussfolgerungen, Ausblick</p><div class="indented"><p>Wie wurde durch die Wissensbasis erweitert?</p></div><p></p></div><p></p><p></p><p><mark class="highlight-blue">Präsentation</mark></p><div class="indented"><p>Schriftliche Arbeit (Artikel, Buchbeitrag, Buch, Bachelor / Masterarbeit)</p><p>Slide-Präsentation</p><p>Poster-Präsentation</p></div><p></p><p></p><p></p><p></p><h1 class="block-color-gray_background">Richtiges Zitieren</h1><p>Wissenschaft referenziert State-of-the-art und erweitert sie - plagiiert nicht.</p><p></p><p><mark class="highlight-blue">Zitat</mark></p><div class="indented"><p>übernommener Inhalt, direkt oder indirekt</p></div><p></p><p></p><p><mark class="highlight-blue">Quellenverweis im Text</mark></p><div class="indented"><p>steht nach Zitat je nach Zitierstil</p><p>Entweder Kurzverweis, Fußnote, Nummer</p></div><p></p><p></p><p><mark class="highlight-blue">Quellenbeleg (Vollbeleg) im Literaturverzeichnis / Quellenverzeichnis</mark></p><div class="indented"><p>je nach Zitierstil am Ende der Arbeit oder am Ende der Seite</p></div><p></p><p></p><hr/><p></p><p><mark class="highlight-blue">Zitieren mit Quellenverweisen und Quellenbelegen</mark></p><div class="indented"><p>Zitat</p><div class="indented"><p>wortwörtliche Wiedergabe</p><p>Originalsprache (Übersetzung in Fußnoten)</p></div><p></p><p>Paraphrase (indirektes Zitat, sinngemäßes Zitat)</p><div class="indented"><p>wiedergabe mit eigenen Worten</p><p></p></div><p></p><p>Verweis auf Ideen und Überlegungen eines anderen Wissenschaftlers</p><div class="indented"><p>Kollegen erwähnen</p></div><p></p><p></p></div><p></p><p><mark class="highlight-blue">Warum zitieren</mark></p><div class="indented"><p>Richtige wiedergabe prüfen lassen von Leser</p><p>Lektüre für Zusatzrecherche bereitstellen</p><p>Offenlegen worauf man sich stützt, Anerkennung schenken an Urheber</p><p></p></div><p></p><p><mark class="highlight-blue">Zitierstile</mark></p><div class="indented"><p>Harvard-Zitiermethode</p><p>Vancouver-Konvention</p><p>IEEE-Editorial-Stil</p><p>Chicago-Stil</p><p>Geisteswissenschaftliche Zitierweise (vermeiden)</p></div><p></p><p></p><figure class="image"><a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%206.png"><img src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%206.png" style="width: 384px"/></a></figure><figure class="image"><a href="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%207.png"><img src="../WA%20b8277284d6a54e39a6e2c460bc014554/Untitled%207.png" style="width: 384px"/></a></figure><p></p><p></p><p></p><h1 class="block-color-gray_background">Quellen</h1><p><mark class="highlight-blue">Was man zitieren darf</mark></p><div class="indented"><p>Zeitschriftartikel</p><p>Konferenz-Proceedings</p><p>Bücher</p><p>relevante, seriöse Artikel</p><p>Eher vermeiden: Wikipedia, Produktdatenblätter, Manuals</p></div><p></p></div></article></body></html>

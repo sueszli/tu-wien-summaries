@@ -1,1694 +1,709 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>2 - Qualitätskontrolle: Reviews, Lesetechniken, Anforderungen, UML</title>
-        <style>
-            /* cspell:disable-file */
-            /* webkit printing magic: print all background colors */
-            html {
-                -webkit-print-color-adjust: exact;
-            }
-            * {
-                box-sizing: border-box;
-                -webkit-print-color-adjust: exact;
-            }
-
-            html,
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            @media only screen {
-                body {
-                    margin: 2em auto;
-                    max-width: 900px;
-                    color: rgb(55, 53, 47);
-                }
-            }
-
-            body {
-                line-height: 1.5;
-                white-space: pre-wrap;
-            }
-
-            a,
-            a.visited {
-                color: inherit;
-                text-decoration: underline;
-            }
-
-            .pdf-relative-link-path {
-                font-size: 80%;
-                color: #444;
-            }
-
-            h1,
-            h2,
-            h3 {
-                letter-spacing: -0.01em;
-                line-height: 1.2;
-                font-weight: 600;
-                margin-bottom: 0;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-top: 0;
-                margin-bottom: 0.75em;
-            }
-
-            h1 {
-                font-size: 1.875rem;
-                margin-top: 1.875rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-                margin-top: 1.5rem;
-            }
-
-            h3 {
-                font-size: 1.25rem;
-                margin-top: 1.25rem;
-            }
-
-            .source {
-                border: 1px solid #ddd;
-                border-radius: 3px;
-                padding: 1.5em;
-                word-break: break-all;
-            }
-
-            .callout {
-                border-radius: 3px;
-                padding: 1rem;
-            }
-
-            figure {
-                margin: 1.25em 0;
-                page-break-inside: avoid;
-            }
-
-            figcaption {
-                opacity: 0.5;
-                font-size: 85%;
-                margin-top: 0.5em;
-            }
-
-            mark {
-                background-color: transparent;
-            }
-
-            .indented {
-                padding-left: 1.5em;
-            }
-
-            hr {
-                background: transparent;
-                display: block;
-                width: 100%;
-                height: 1px;
-                visibility: visible;
-                border: none;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            @media only print {
-                img {
-                    max-height: 100vh;
-                    object-fit: contain;
-                }
-            }
-
-            @page {
-                margin: 1in;
-            }
-
-            .collection-content {
-                font-size: 0.875rem;
-            }
-
-            .column-list {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .column {
-                padding: 0 1em;
-            }
-
-            .column:first-child {
-                padding-left: 0;
-            }
-
-            .column:last-child {
-                padding-right: 0;
-            }
-
-            .table_of_contents-item {
-                display: block;
-                font-size: 0.875rem;
-                line-height: 1.3;
-                padding: 0.125rem;
-            }
-
-            .table_of_contents-indent-1 {
-                margin-left: 1.5rem;
-            }
-
-            .table_of_contents-indent-2 {
-                margin-left: 3rem;
-            }
-
-            .table_of_contents-indent-3 {
-                margin-left: 4.5rem;
-            }
-
-            .table_of_contents-link {
-                text-decoration: none;
-                opacity: 0.7;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-            }
-
-            table,
-            th,
-            td {
-                border: 1px solid rgba(55, 53, 47, 0.09);
-                border-collapse: collapse;
-            }
-
-            table {
-                border-left: none;
-                border-right: none;
-            }
-
-            th,
-            td {
-                font-weight: normal;
-                padding: 0.25em 0.5em;
-                line-height: 1.5;
-                min-height: 1.5em;
-                text-align: left;
-            }
-
-            th {
-                color: rgba(55, 53, 47, 0.6);
-            }
-
-            ol,
-            ul {
-                margin: 0;
-                margin-block-start: 0.6em;
-                margin-block-end: 0.6em;
-            }
-
-            li > ol:first-child,
-            li > ul:first-child {
-                margin-block-start: 0.6em;
-            }
-
-            ul > li {
-                list-style: disc;
-            }
-
-            ul.to-do-list {
-                padding-inline-start: 0;
-            }
-
-            ul.to-do-list > li {
-                list-style: none;
-            }
-
-            .to-do-children-checked {
-                text-decoration: line-through;
-                opacity: 0.375;
-            }
-
-            ul.toggle > li {
-                list-style: none;
-            }
-
-            ul {
-                padding-inline-start: 1.7em;
-            }
-
-            ul > li {
-                padding-left: 0.1em;
-            }
-
-            ol {
-                padding-inline-start: 1.6em;
-            }
-
-            ol > li {
-                padding-left: 0.2em;
-            }
-
-            .mono ol {
-                padding-inline-start: 2em;
-            }
-
-            .mono ol > li {
-                text-indent: -0.4em;
-            }
-
-            .toggle {
-                padding-inline-start: 0em;
-                list-style-type: none;
-            }
-
-            /* Indent toggle children */
-            .toggle > li > details {
-                padding-left: 1.7em;
-            }
-
-            .toggle > li > details > summary {
-                margin-left: -1.1em;
-            }
-
-            .selected-value {
-                display: inline-block;
-                padding: 0 0.5em;
-                background: rgba(206, 205, 202, 0.5);
-                border-radius: 3px;
-                margin-right: 0.5em;
-                margin-top: 0.3em;
-                margin-bottom: 0.3em;
-                white-space: nowrap;
-            }
-
-            .collection-title {
-                display: inline-block;
-                margin-right: 1em;
-            }
-
-            .page-description {
-                margin-bottom: 2em;
-            }
-
-            .simple-table {
-                margin-top: 1em;
-                font-size: 0.875rem;
-                empty-cells: show;
-            }
-            .simple-table td {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table th {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table-header-color {
-                background: rgb(247, 246, 243);
-                color: black;
-            }
-            .simple-table-header {
-                font-weight: 500;
-            }
-
-            time {
-                opacity: 0.5;
-            }
-
-            .icon {
-                display: inline-block;
-                max-width: 1.2em;
-                max-height: 1.2em;
-                text-decoration: none;
-                vertical-align: text-bottom;
-                margin-right: 0.5em;
-            }
-
-            img.icon {
-                border-radius: 3px;
-            }
-
-            .user-icon {
-                width: 1.5em;
-                height: 1.5em;
-                border-radius: 100%;
-                margin-right: 0.5rem;
-            }
-
-            .user-icon-inner {
-                font-size: 0.8em;
-            }
-
-            .text-icon {
-                border: 1px solid #000;
-                text-align: center;
-            }
-
-            .page-cover-image {
-                display: block;
-                object-fit: cover;
-                width: 100%;
-                max-height: 30vh;
-            }
-
-            .page-header-icon {
-                font-size: 3rem;
-                margin-bottom: 1rem;
-            }
-
-            .page-header-icon-with-cover {
-                margin-top: -0.72em;
-                margin-left: 0.07em;
-            }
-
-            .page-header-icon img {
-                border-radius: 3px;
-            }
-
-            .link-to-page {
-                margin: 1em 0;
-                padding: 0;
-                border: none;
-                font-weight: 500;
-            }
-
-            p > .user {
-                opacity: 0.5;
-            }
-
-            td > .user,
-            td > time {
-                white-space: nowrap;
-            }
-
-            input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 0.6em;
-                vertical-align: middle;
-            }
-
-            p {
-                margin-top: 0.5em;
-                margin-bottom: 0.5em;
-            }
-
-            .image {
-                border: none;
-                margin: 1.5em 0;
-                padding: 0;
-                border-radius: 0;
-                text-align: center;
-            }
-
-            .code,
-            code {
-                background: rgba(135, 131, 120, 0.15);
-                border-radius: 3px;
-                padding: 0.2em 0.4em;
-                border-radius: 3px;
-                font-size: 85%;
-                tab-size: 2;
-            }
-
-            code {
-                color: #eb5757;
-            }
-
-            .code {
-                padding: 1.5em 1em;
-            }
-
-            .code-wrap {
-                white-space: pre-wrap;
-                word-break: break-all;
-            }
-
-            .code > code {
-                background: none;
-                padding: 0;
-                font-size: 100%;
-                color: inherit;
-            }
-
-            blockquote {
-                font-size: 1.25em;
-                margin: 1em 0;
-                padding-left: 1em;
-                border-left: 3px solid rgb(55, 53, 47);
-            }
-
-            .bookmark {
-                text-decoration: none;
-                max-height: 8em;
-                padding: 0;
-                display: flex;
-                width: 100%;
-                align-items: stretch;
-            }
-
-            .bookmark-title {
-                font-size: 0.85em;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                height: 1.75em;
-                white-space: nowrap;
-            }
-
-            .bookmark-text {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .bookmark-info {
-                flex: 4 1 180px;
-                padding: 12px 14px 14px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-
-            .bookmark-image {
-                width: 33%;
-                flex: 1 1 180px;
-                display: block;
-                position: relative;
-                object-fit: cover;
-                border-radius: 1px;
-            }
-
-            .bookmark-description {
-                color: rgba(55, 53, 47, 0.6);
-                font-size: 0.75em;
-                overflow: hidden;
-                max-height: 4.5em;
-                word-break: break-word;
-            }
-
-            .bookmark-href {
-                font-size: 0.75em;
-                margin-top: 0.25em;
-            }
-
-            .sans {
-                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-                    "Segoe UI Symbol";
-            }
-            .code {
-                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
-            }
-            .serif {
-                font-family: Lyon-Text, Georgia, ui-serif, serif;
-            }
-            .mono {
-                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-            }
-            .pdf .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
-            }
-            .pdf:lang(zh-CN) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
-            }
-            .pdf:lang(zh-TW) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
-            }
-            .pdf:lang(ko-KR) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
-            }
-            .pdf .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK KR";
-            }
-            .pdf .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
-            }
-            .pdf:lang(zh-CN) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
-            }
-            .pdf:lang(zh-TW) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
-            }
-            .pdf:lang(ko-KR) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
-            }
-            .pdf .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
-            }
-            .highlight-default {
-                color: rgba(55, 53, 47, 1);
-            }
-            .highlight-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .highlight-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .highlight-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .highlight-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .highlight-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .highlight-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .highlight-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .highlight-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .highlight-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .highlight-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .highlight-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .highlight-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .highlight-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .highlight-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .highlight-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .highlight-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .highlight-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .highlight-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .block-color-default {
-                color: inherit;
-                fill: inherit;
-            }
-            .block-color-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .block-color-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .block-color-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .block-color-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .block-color-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .block-color-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .block-color-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .block-color-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .block-color-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .block-color-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .block-color-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .block-color-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .block-color-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .block-color-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .block-color-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .block-color-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .block-color-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .block-color-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .select-value-color-interactiveBlue {
-                background-color: rgba(35, 131, 226, 0.07);
-            }
-            .select-value-color-pink {
-                background-color: rgba(245, 224, 233, 1);
-            }
-            .select-value-color-purple {
-                background-color: rgba(232, 222, 238, 1);
-            }
-            .select-value-color-green {
-                background-color: rgba(219, 237, 219, 1);
-            }
-            .select-value-color-gray {
-                background-color: rgba(227, 226, 224, 1);
-            }
-            .select-value-color-translucentGray {
-                background-color: rgba(255, 255, 255, 0.0375);
-            }
-            .select-value-color-orange {
-                background-color: rgba(250, 222, 201, 1);
-            }
-            .select-value-color-brown {
-                background-color: rgba(238, 224, 218, 1);
-            }
-            .select-value-color-red {
-                background-color: rgba(255, 226, 221, 1);
-            }
-            .select-value-color-yellow {
-                background-color: rgba(253, 236, 200, 1);
-            }
-            .select-value-color-blue {
-                background-color: rgba(211, 229, 239, 1);
-            }
-            .select-value-color-pageGlass {
-                background-color: undefined;
-            }
-            .select-value-color-washGlass {
-                background-color: undefined;
-            }
-
-            .checkbox {
-                display: inline-flex;
-                vertical-align: text-bottom;
-                width: 16;
-                height: 16;
-                background-size: 16px;
-                margin-left: 2px;
-                margin-right: 5px;
-            }
-
-            .checkbox-on {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            .checkbox-off {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            /* -------- injections from notionBackup -------- */
-
-            body {
-                white-space: normal !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-
-            .code,
-            code {
-                font-size: 100% !important;
-            }
-
-            blockquote {
-                font-size: 100% !important;
-            }
-
-            .callout {
-                white-space: normal !important;
-            }
-            .callout div:has(span.icon) {
-                font-size: 100% !important;
-            }
-
-            .source:not(.bookmark) {
-                font-size: 100% !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-        </style>
-    </head>
-    <body>
-        <article class="page sans">
-            <header>
-                <h1 class="page-title">2 - Qualitätskontrolle: Reviews, Lesetechniken, Anforderungen, UML</h1>
-                <p class="page-description"></p>
-            </header>
-            <div class="page-body">
-                <p></p>
-                <nav class="block-color-gray table_of_contents">
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#7ce6184b-09e7-4fcb-b63f-58bd30657393">Reviews</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#98a15b3e-fd42-429d-9737-54ce3d7cb852">Arten im Vergleich</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#00aeb6ed-54e2-43c0-bf15-3edb64cc4f1e">Inspektion</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#84091276-c7b7-4558-93f4-9d9a0b736bf6">Alternative Arten von Inspektion</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#ebba0e07-620b-4f1d-af82-e49cfc0ba289">Lesetechniken</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#c365ab18-f63f-4305-9c23-3760c2ad6b20">Lesearten</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#a6ca2756-04bf-4839-91a8-6318a2204924">Anforderungen</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#4f441abb-fd8c-46df-9184-9c3deea5c1b9">Klassifikation</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#331a0b49-1568-4c60-a6a7-4307971e90e5">Modelle</a>
-                    </div>
-                </nav>
-                <p></p>
-                <p>Je später Fehler erkannt wird desto höher sind Aufwand und Kosten zur Behebung.</p>
-                <div class="indented">
-                    <p>Ziel: Fehler früh erkennen, beheben.</p>
-                    <p>
-                        Fast 50% von
-                        <em>software development effort</em>
-                        ist die Überarbeitung (
-                        <em>rework</em>
-                        ).
-                    </p>
-                </div>
-                <p></p>
-                <p>
-                    Review, Inpektion, Audit sind
-                    <mark class="highlight-blue">analytische QS Methoden</mark>
-                    die vor allem in frühen Phasen eingesetzt werden für Dokumente oder Code (muss nicht ausführbar sein)
-                </p>
-                <figure class="image">
-                    <a href="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled.png">
-                        <img
-                            style="width: 240px"
-                            src="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <h1>Reviews</h1>
-                <p><mark class="highlight-blue">Definition</mark></p>
-                <div class="indented">
-                    <p>Qualitative Beurteilung von Produkten, Prozessen (wo quantitative Beurteilung schwer)</p>
-                    <p>Mängel entdeckt, nicht korrigiert</p>
-                    <p>
-                        <mark class="highlight-gray">
-                            IEE: “Ein Review ist ein [..] formal geplanter und strukturierter Analyse- und Bewertungsprozess, in dem Projektergebnisse einem
-                            Team von Gutachtern präsentiert und von diesen kommentiert oder genehmigt werden.“
-                        </mark>
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Ablauf</mark></p>
-                <div class="indented">
-                    <p>Vorgang nach Arbeitsplan / Checkliste</p>
-                    <p>Nachträgliche Beurteilung des Reviews selbst zur Verbesserung</p>
-                    <p>Dauer: ~2h</p>
-                    <hr />
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>
-                            Planung
-                            <p>Teilnehmer, Prüfobjekt, Prüfziele, Auslösekriterien (Einstiegskriterien), Ort, Zeit, ... auswählen</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>
-                            Vorbesprechung (optional)
-                            <p>Vorstellung Prüfobjekt (falls Produkt komplex oder neu)</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>
-                            Einzeldurcharbeitung
-                            <p>Teilnehmer bereiten sich vor - Beurteilen Prüfobjekt nach ihrer Rolle, notieren Auffälligkeiten (Fehler, Fragen, Kommentare)</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li>
-                            Durchführung (Review Sitzung)
-                            <p>Gemeinsames Lesen, Aufzeichnung von Mängeln</p>
-                            <p>Erkentnisse besprechen, protokollieren (Mängel nicht beheben)</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="5">
-                        <li>
-                            Nachbearbeitung
-                            <p>dokumentierte Mängel beheben, Dokumente aktualisieren</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="6">
-                        <li>
-                            Bewertung (Follow-up)
-                            <p>dokumentierte Mängel überprüft</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="7">
-                        <li>
-                            Berichterstattung
-                            <p>Wiederholungen von Reviews sind möglich</p>
-                        </li>
-                    </ol>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%201.png">
-                        <img
-                            style="width: 192px"
-                            src="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%201.png" />
-                    </a>
-                </figure>
-                <p><mark class="highlight-blue">Rollen / Teilnehmer</mark></p>
-                <div class="indented">
-                    <p>
-                        Moderator Leiter des Reviews
-                        <mark class="highlight-gray">(keeper of the process)</mark>
-                    </p>
-                    <p>
-                        Leser Leser
-                        <mark class="highlight-gray">(keeper of focus and pace)</mark>
-                    </p>
-                    <p>
-                        Gutachter Kommentierung des Prüfobjekts
-                        <mark class="highlight-gray">(Reviewer)</mark>
-                    </p>
-                    <p>
-                        Schreiber Verfassung von Protokoll
-                        <mark class="highlight-gray">(preserver of knowledge)</mark>
-                    </p>
-                    <p>
-                        Autor Klärung von offenen Fragen - keine Rechtfertigung
-                        <mark class="highlight-gray">(author)</mark>
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <figure class="image">
-                    <a href="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%202.png">
-                        <img
-                            style="width: 240px"
-                            src="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%202.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <p></p>
-                <h2>Arten im Vergleich</h2>
-                <p>Review-Arten im Vergleich</p>
-                <p></p>
-                <p><mark class="highlight-blue">Code Walk-through (abgeschwächtes Review)</mark></p>
-                <div class="indented">
-                    <p>Autor stellt seine Module ablauforientiert vor, Qualität der Implementierung wird begutachtet.</p>
-                    <p>Neue Mitarbeiter können dabei zusehen, sich mit Projekt vertraut machen.</p>
-                    <p>Autor selbst entscheidet ob etwas und was überarbeitet wird.</p>
-                    <hr />
-                    <p>Ziel Fehler im Prüfobjekt finden, Benutzer und Mitarbeiter ausbilden</p>
-                    <p>Teilnehmer Autor (= Moderator), Gutachter</p>
-                    <p>Eigenschaften Prüfobjekt wird nach Ablauf von Autor vorgetragen und dieser entscheidet</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Technisches Review</mark></p>
-                <div class="indented">
-                    <p>Etwas formaleres Review: Moderator und Protokollführer anwesend.</p>
-                    <p>Produkt wird begutachtet um Schwächen, Stärken zu finden.</p>
-                    <p>Review-Team gibt Empfehlung an Management, das letztendlich entscheidet.</p>
-                    <ul class="toggle">
-                        <li>
-                            <details open="">
-                                <summary>Richtlinien</summary>
-                                <p>
-                                    – Produkt nicht der Autor soll Reviewed werden – Verwendung eines Arbeitsplans – Diskussion sachlich und Kurz – Keine
-                                    Lösungen suchen nur Fehler – Schriftliche Aufzeichnung führen – Anzahl der Teilnehmer begrenzen – Teilnehmer sollen gut
-                                    vorbereitet sein – Auch Review selbst beurteilen
-                                </p>
-                                <p></p>
-                            </details>
-                        </li>
-                    </ul>
-                    <hr />
-                    <p>Ziel Stärken, Schwächen von Prüfobjekt finden, Prozess verbessern</p>
-                    <p>Teilnehmer Moderator, Autor, Gutachter, Protokollführer</p>
-                    <p>Eigenschaften Alle Reviewer ausgebildet, Prüfteam gibt Empfehlung an Manager</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Inspektion (formales Review)</mark></p>
-                <div class="indented">
-                    <p>Formales Review - speziell in frühen Phasen der Entwicklung (vor allem Anforderungs und Designdokumente).</p>
-                    <p>Leser trägt Absatz für Absatz vor - Team versucht schwere Fehler zu finden.</p>
-                    <p>Moderator entscheidet Freigabe.</p>
-                    <hr />
-                    <p>Ziel Schwere Fehler im Prüfobjekt finden, Prozess verbessern, Metriken ermitteln</p>
-                    <p>Teilnehmer Moderator, Autor, Gutachter, Protokollführer, Vorleser</p>
-                    <p>Eigenschaften Ausgebildeter Moderator gibt Freigabe, Vorleser liest absatzweise vor</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Übersicht: Reviews mit Kunde vs. Reviews ohne Kunde</mark></p>
-                <div class="indented">
-                    <p><mark class="highlight-teal">Mit Kunde</mark></p>
-                    <div class="indented">
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">
-                                SRR: Software Requirement Review
-                                <p>
-                                    <mark class="highlight-gray">
-                                        Review von Anforderungen und ihrer Verständlichkeit. Wird in der Systemspezifikationsphase verwendet.
-                                    </mark>
-                                </p>
-                            </li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">
-                                PDR: Primary Design Review
-                                <p><mark class="highlight-gray">Vergleich von: momentanes Design vs. Software Designbeschreibung</mark></p>
-                            </li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">
-                                CDR: Critical Design Review
-                                <p><mark class="highlight-gray">Informierung von Kunde bei kritischen Entscheidungen</mark></p>
-                            </li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">IPR: In Prozess Review</li>
-                        </ul>
-                    </div>
-                    <p></p>
-                    <p><mark class="highlight-teal">Ohne Kunde</mark></p>
-                    <div class="indented">
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">MR: Management Review</li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">Code Walkthrough</li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">Technical Review</li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">Inspektion</li>
-                        </ul>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%203.png">
-                        <img
-                            style="width: 288px"
-                            src="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%203.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <h2>Inspektion</h2>
-                <p>
-                    <mark class="highlight-blue">Inspektion</mark>
-                    <style>
-                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                    </style>
-                    <span
-                        data-token-index="0"
-                        contenteditable="false"
-                        class="notion-text-equation-token"
-                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                        <span></span>
-                        <span>
-                            <span class="katex">
-                                <span class="katex-mathml">
-                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                        <semantics>
-                                            <mrow>
-                                                <mstyle mathsize="0.9em"><mo>∈</mo></mstyle>
-                                            </mrow>
-                                            <annotation encoding="application/x-tex">\small \in</annotation>
-                                        </semantics>
-                                    </math>
-                                </span>
-                                <span class="katex-html" aria-hidden="true">
-                                    <span class="base">
-                                        <span class="strut" style="height: 0.5203800000000001em; vertical-align: -0.035190000000000006em"></span>
-                                        <span class="mrel sizing reset-size6 size5">∈</span>
-                                    </span>
-                                </span>
-                            </span>
-                        </span>
-                        <span>﻿</span>
-                    </span>
-                    Review
-                </p>
-                <div class="indented">
-                    <p>in frühen Phasen der Fehlerfindeung</p>
-                    <div class="indented"><p>(zB auch für Anforderungsdokument, Designdokument, Testfälle, Code)</p></div>
-                    <p></p>
-                    <p>systematisch, formal, wirtschaftlich um Fehler zu finden</p>
-                    <hr />
-                    <p>Einsparungen durch frühes Finden von Fehlern.</p>
-                    <p>Beurteilungsgrundlage für Qualität (zB durch Restfehlerschätzungen).</p>
-                    <p>Unterstützt von Lesetechniken und Fehlerlisten (Fehler in Teammeetings gesammelt)</p>
-                    <p>Mehr Informationen über Produkt: Lerninstrument für neue Teammitglieder, Erkenntnisse für Management (PM und QM).</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Planung und Kontrolle durch QM</mark></p>
-                <figure class="image">
-                    <a href="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%204.png">
-                        <img
-                            style="width: 288px"
-                            src="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%204.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <p><mark class="highlight-blue">Dimensionen</mark></p>
-                <div class="indented">
-                    <p>Prozess</p>
-                    <div class="indented"><p>Planung → Überblick → Fehlerfindung → Fehlersammlung → Fehlerkorrektur → Follow-Up</p></div>
-                    <p></p>
-                    <p>Produkt</p>
-                    <div class="indented"><p>Anforderung, Design, Code, Testfälle</p></div>
-                    <p></p>
-                    <p>Rollen</p>
-                    <div class="indented"><p>Organisator, Moderator, Inspektor, Autor, Schreiber, Präsentator, Sammler</p></div>
-                    <p></p>
-                    <p>Lesetechniken</p>
-                    <div class="indented"><p>Ad-hoc, Checklisten-basiert, Szenario-basiert, Perspektiven-basiert, Fehler-basiert</p></div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Kosten vs. Nutzen</mark></p>
-                <div class="indented">
-                    <p>Kosten</p>
-                    <div class="indented"><p>Aufwand von Inspektoren, Einplanung im Projektplan</p></div>
-                    <p></p>
-                    <p>Nutzen</p>
-                    <div class="indented">
-                        <p>Einsparungen durch frühe Fehlerfindung</p>
-                        <p>Beurteilungsgrundlage für Produktqualität (zB Restfehlerschätzungen)</p>
-                        <p>Mehr Informationen über Produkt zur Planung</p>
-                        <p>Inspektion als Lerninstrument für Inspektoren und neue Teammitglieder um Produkt kennenzulernen</p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>Alternative Arten von Inspektion</h2>
-                <p><mark class="highlight-blue">Crowdsourcing in Software Engineering</mark></p>
-                <div class="indented">
-                    <p>
-                        “The act of undertaking any external software engineering tasks by an undefined, potentially large group of online workers in an open
-                        call format.”
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Model Quality Inspection MQI</mark></p>
-                <div class="indented">
-                    <p>Funktioniert durch crowdsourcing</p>
-                    <p>Defekte in großen Modellen früh und effektiv finden durch Best-Practice Software Inspektion</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Crowdsourced Software Inspection CSI</mark></p>
-                <div class="indented">
-                    <p>Funktioniert durch crowdsourcing</p>
-                    <p>Automatisierung mit natural language processing NLP</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h1>Lesetechniken</h1>
-                <p><mark class="highlight-blue">Definition</mark></p>
-                <div class="indented">
-                    <p>“strukturierte Ansätze oder Dokumente, die den Fehlerfindungsprozess während einer Inspektion oder einer Review unterstützen.”</p>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>Lesearten</h2>
-                <p><mark class="highlight-blue">Ad hoc</mark></p>
-                <div class="indented">
-                    <p>Unstrukturiertes Lesen</p>
-                    <p>braucht hohe Kenntnisse des Gutachters</p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Checklistenbasiert</mark></p>
-                <div class="indented">
-                    <p>vordefinierte Fragestellungen sequentiell abarbeiten</p>
-                    <p>generische Checklisten für das Projekt erweitert</p>
-                    <div class="indented"><p>Checklisten für besondere Fehlertypen, Fehlerorte (Design, Code) usw</p></div>
-                    <p></p>
-                    <p>Durch Struktur gut wiederholbar</p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Perspektivenbasiert</mark></p>
-                <div class="indented">
-                    <p>Fehlersuche aus Perspektiven / Rollen (User, Tester, Entwickler)</p>
-                    <p>braucht Fachspezialisten</p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Fehlerbasiert</mark></p>
-                <div class="indented">
-                    <p>Spezielle Form von checklistenbasierter Lesetechnik</p>
-                    <p>Fehler in Fehlerkategorien eingeteilt</p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Szenariobasiert — Usage-Based Reading (UBR)</mark></p>
-                <div class="indented">
-                    <p><em>= Best Practice</em></p>
-                    <p>Szenarien / Use Cases die durch Fachspezialisten priorisiert werden.</p>
-                    <p>Fehlersuche nach Priorität.</p>
-                    <div class="indented">
-                        <ol type="1" class="numbered-list" start="1">
-                            <li>Auswahl des wichtigsten Anwendungsfalles</li>
-                        </ol>
-                        <ol type="1" class="numbered-list" start="2">
-                            <li>Überprüfung der relevanten Teile dafür</li>
-                        </ol>
-                        <ol type="1" class="numbered-list" start="3">
-                            <li>Reporting von Mängel, Fehler</li>
-                        </ol>
-                        <p>
-                            <style>
-                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                            </style>
-                            <span
-                                data-token-index="0"
-                                contenteditable="false"
-                                class="notion-text-equation-token"
-                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                <span></span>
-                                <span>
-                                    <span class="katex">
-                                        <span class="katex-mathml">
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <semantics>
-                                                    <mrow><mo>↺</mo></mrow>
-                                                    <annotation encoding="application/x-tex">\circlearrowleft</annotation>
-                                                </semantics>
-                                            </math>
-                                        </span>
-                                        <span class="katex-html" aria-hidden="true">
-                                            <span class="base">
-                                                <span class="strut" style="height: 0.6639600000000001em; vertical-align: -0.08198em"></span>
-                                                <span class="mrel amsrm">↺</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span>﻿</span>
-                            </span>
-                        </p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h1>Anforderungen</h1>
-                <p>
-                    Anforderung
-                    <style>
-                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                    </style>
-                    <span
-                        data-token-index="0"
-                        contenteditable="false"
-                        class="notion-text-equation-token"
-                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                        <span></span>
-                        <span>
-                            <span class="katex">
-                                <span class="katex-mathml">
-                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                        <semantics>
-                                            <mrow><mo>↦</mo></mrow>
-                                            <annotation encoding="application/x-tex">\mapsto</annotation>
-                                        </semantics>
-                                    </math>
-                                </span>
-                                <span class="katex-html" aria-hidden="true">
-                                    <span class="base">
-                                        <span class="strut" style="height: 0.522em; vertical-align: -0.011em"></span>
-                                        <span class="mrel">↦</span>
-                                    </span>
-                                </span>
-                            </span>
-                        </span>
-                        <span>﻿</span>
-                    </span>
-                    Qualitätsdefinition
-                </p>
-                <div class="indented">
-                    <p>
-                        Anforderungen beschreiben Funktionen und
-                        <em>Qualitäten</em>
-                    </p>
-                    <p>
-                        <em>Qualitäten</em>
-                        müssen testbar beschrieben werden
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Reviewing</mark></p>
-                <div class="indented">
-                    <p>Überprüfung, Verbesserung von Anforderungs-Qualität</p>
-                    <p><mark class="highlight-teal">Software Requirement Review</mark></p>
-                    <div class="indented">
-                        <p>Prüfen Korrektheit von Anforderung</p>
-                        <p>Phase: Systemspezifikation</p>
-                    </div>
-                    <p></p>
-                    <p><mark class="highlight-teal">Preliminary Design Review</mark></p>
-                    <div class="indented">
-                        <p>Prüfen technische Angemessenheit von Design (mit aktueller Beschreibung)</p>
-                        <p>Phase: Systemdesign</p>
-                    </div>
-                    <p></p>
-                    <hr />
-                    <p>Erstrebenswert: Beschreibung klar, knapp, konsistent, vollständig, umsetzbar</p>
-                    <p>Klassifikation</p>
-                    <div class="indented">
-                        <p>Kriterien: funktional, nichtfunktional, testbar, verständlich</p>
-                        <p>rückverfolgbar (zu Anforderungsdokumenten zB Projektbeschreibung)</p>
-                        <div class="indented">
-                            <p><mark class="highlight-gray">später hergestellte Dokumente dann gegen Anforderungen</mark></p>
-                        </div>
-                        <p></p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Anwendungsfall aufbau</mark></p>
-                <div class="indented">
-                    <p>Allgemein</p>
-                    <div class="indented">
-                        <ol type="1" class="numbered-list" start="1">
-                            <li>Titel</li>
-                        </ol>
-                        <ol type="1" class="numbered-list" start="2">
-                            <li>Kurzbeschreibung</li>
-                        </ol>
-                        <ol type="1" class="numbered-list" start="3">
-                            <li>Welche Aktoren sind beteiligt</li>
-                        </ol>
-                        <ol type="1" class="numbered-list" start="4">
-                            <li>Vorbedingung</li>
-                        </ol>
-                        <ol type="1" class="numbered-list" start="5">
-                            <li>Nachbedingung</li>
-                        </ol>
-                    </div>
-                    <p></p>
-                    <p>Flow of events</p>
-                    <div class="indented">
-                        <ol type="1" class="numbered-list" start="1">
-                            <li>Hauptszenario</li>
-                        </ol>
-                        <ol type="1" class="numbered-list" start="2">
-                            <li>Alternativszenario</li>
-                        </ol>
-                        <ol type="1" class="numbered-list" start="3">
-                            <li>Fehlerszenario</li>
-                        </ol>
-                    </div>
-                    <p></p>
-                    <p>Nichtfunktionale Anforderungen</p>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>Klassifikation</h2>
-                <p><mark class="highlight-blue">Klassifikation nach FURPS</mark></p>
-                <div class="indented">
-                    <p>Functional (Funktional) Features, Fähigkeiten, Sicherheitsvorrichtungen</p>
-                    <p>Usability (Benutzerfreundlich) Human factors, Nützlichkeit, Dokumentation</p>
-                    <p>Reliability (Zuverlässig) Uptime, Verlässlichkeit, Wiederherstellbarkeit</p>
-                    <p>Performance Antwortzeiten, Durchsatz, Genauigkeit</p>
-                    <p>Supportability (Wartbarkeit) Modifizierbarkeit, Wartung, Konfiguration</p>
-                    <hr />
-                    <p>Zur Laufzeit messbar: Performanz, Sicherheit, Verfügbarkeit, Verwendbarkeit</p>
-                    <p>Nicht zur Laufzeit messbar: Modifizierbarkeit, Portabilität, Wiederverwendbarkeit</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Funktionale Anforderungen</mark></p>
-                <div class="indented">
-                    <p>Beschreiben was das System tut, um Mehrwert für die Stakeholder zu liefern</p>
-                    <p>
-                        Bilden ein
-                        <mark class="highlight-teal">Anwendungs-Szenario:</mark>
-                        Meistens in der Form: “System kann Funktion X ausführen”
-                    </p>
-                    <ul class="toggle">
-                        <li>
-                            <details open="">
-                                <summary>Beispiele</summary>
-                                <p>– Das System kann gespeicherte Rechnungen als ausdruckbare Datei exportieren.</p>
-                                <p>– Der Administrator kann Bestellungen stornieren</p>
-                            </details>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Nichtfunktionale Anforderungen (”Qualitätsanforderungen”)</mark></p>
-                <div class="indented">
-                    <p>Charakteristika, nicht-technische Beschreibung, Eigenschaften</p>
-                    <ul class="toggle">
-                        <li>
-                            <details open="">
-                                <summary>Beispiele</summary>
-                                <p>
-                                    – Wenn ein Fehler eintritt, informiert das System den Benutzer und arbeitet in einem verschlechterten(degradierten) Zustand
-                                    weiter.
-                                </p>
-                                <p>
-                                    – Falls das System die Anzahl der Bestellungen nicht verarbeiten kann, trennt es einige bestehende Verbindungen zu Clients.
-                                    Die Administratorin wird informiert und das System arbeitet in einem verschlechterten(degradierten) Zustand weiter.
-                                </p>
-                            </details>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Constraints</mark></p>
-                <div class="indented"><p>Einschränkungen des Systems durch Frameworks bzw. Architekturentscheidungen</p></div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h1>Modelle</h1>
-                <p><mark class="highlight-blue">Modell</mark></p>
-                <div class="indented"><p>Gemeinsame Notation mit konsistenter Bedeutung</p></div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Einsatzgebiete</mark></p>
-                <div class="indented">
-                    <p>Modelle helfen Überblick zu behalten:</p>
-                    <div class="indented">
-                        <p>
-                            Anforderung
-                            <style>
-                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                            </style>
-                            <span
-                                data-token-index="0"
-                                contenteditable="false"
-                                class="notion-text-equation-token"
-                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                <span></span>
-                                <span>
-                                    <span class="katex">
-                                        <span class="katex-mathml">
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <semantics>
-                                                    <mrow><mo>→</mo></mrow>
-                                                    <annotation encoding="application/x-tex">\rarr</annotation>
-                                                </semantics>
-                                            </math>
-                                        </span>
-                                        <span class="katex-html" aria-hidden="true">
-                                            <span class="base">
-                                                <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                                <span class="mrel">→</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span>﻿</span>
-                            </span>
-                            Modell
-                            <style>
-                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                            </style>
-                            <span
-                                data-token-index="0"
-                                contenteditable="false"
-                                class="notion-text-equation-token"
-                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                <span></span>
-                                <span>
-                                    <span class="katex">
-                                        <span class="katex-mathml">
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <semantics>
-                                                    <mrow><mo>→</mo></mrow>
-                                                    <annotation encoding="application/x-tex">\rarr</annotation>
-                                                </semantics>
-                                            </math>
-                                        </span>
-                                        <span class="katex-html" aria-hidden="true">
-                                            <span class="base">
-                                                <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                                <span class="mrel">→</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span>﻿</span>
-                            </span>
-                            Daten-/Komponenten-/Test-Spezifikation
-                        </p>
-                        <p>
-                            Anforderung
-                            <style>
-                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                            </style>
-                            <span
-                                data-token-index="0"
-                                contenteditable="false"
-                                class="notion-text-equation-token"
-                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                <span></span>
-                                <span>
-                                    <span class="katex">
-                                        <span class="katex-mathml">
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <semantics>
-                                                    <mrow><mo>→</mo></mrow>
-                                                    <annotation encoding="application/x-tex">\rarr</annotation>
-                                                </semantics>
-                                            </math>
-                                        </span>
-                                        <span class="katex-html" aria-hidden="true">
-                                            <span class="base">
-                                                <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                                <span class="mrel">→</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span>﻿</span>
-                            </span>
-                            Modell
-                            <style>
-                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                            </style>
-                            <span
-                                data-token-index="0"
-                                contenteditable="false"
-                                class="notion-text-equation-token"
-                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                <span></span>
-                                <span>
-                                    <span class="katex">
-                                        <span class="katex-mathml">
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <semantics>
-                                                    <mrow><mo>→</mo></mrow>
-                                                    <annotation encoding="application/x-tex">\rarr</annotation>
-                                                </semantics>
-                                            </math>
-                                        </span>
-                                        <span class="katex-html" aria-hidden="true">
-                                            <span class="base">
-                                                <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                                <span class="mrel">→</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span>﻿</span>
-                            </span>
-                            Datenbank, Business Logik, GUI
-                        </p>
-                        <p>
-                            Anforderung
-                            <style>
-                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                            </style>
-                            <span
-                                data-token-index="0"
-                                contenteditable="false"
-                                class="notion-text-equation-token"
-                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                <span></span>
-                                <span>
-                                    <span class="katex">
-                                        <span class="katex-mathml">
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <semantics>
-                                                    <mrow><mo>→</mo></mrow>
-                                                    <annotation encoding="application/x-tex">\rarr</annotation>
-                                                </semantics>
-                                            </math>
-                                        </span>
-                                        <span class="katex-html" aria-hidden="true">
-                                            <span class="base">
-                                                <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                                <span class="mrel">→</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span>﻿</span>
-                            </span>
-                            Qualitätsdefinition und Modelle
-                            <style>
-                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                            </style>
-                            <span
-                                data-token-index="0"
-                                contenteditable="false"
-                                class="notion-text-equation-token"
-                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                <span></span>
-                                <span>
-                                    <span class="katex">
-                                        <span class="katex-mathml">
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <semantics>
-                                                    <mrow><mo>→</mo></mrow>
-                                                    <annotation encoding="application/x-tex">\rarr</annotation>
-                                                </semantics>
-                                            </math>
-                                        </span>
-                                        <span class="katex-html" aria-hidden="true">
-                                            <span class="base">
-                                                <span class="strut" style="height: 0.36687em; vertical-align: 0em"></span>
-                                                <span class="mrel">→</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span>﻿</span>
-                            </span>
-                            Qualitätssicherung QS
-                        </p>
-                    </div>
-                    <p></p>
-                    <hr />
-                    <p>Einsatz in Entwicklung:</p>
-                    <div class="indented">
-                        <p>
-                            –
-                            <mark class="highlight-gray">Datenbankmodelle:</mark>
-                            Datenmodellierung, EER &amp; Relationen –
-                            <mark class="highlight-gray">Business Logik:</mark>
-                            Zustandsdiagramme, Daten- und Kontrollfluss – Schnittstellen zwischen Teilsystemen und Benutzern
-                        </p>
-                    </div>
-                    <p></p>
-                    <p>Einsatz in QS:</p>
-                    <div class="indented">
-                        <p>
-                            – Anwendungsszenarien (etwa Use Cases) – Datenmodelle (Relationenmodell (ER), Domänenmodell) – Datenflussmodelle (UML, IDEF0) –
-                            Kontrollflussmodelle (UML, Pseudocode) – Zustandsdiagramme, Sequenzdiagramme (UML) – Testfallspezifikationen
-                        </p>
-                        <p></p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Charakteristika des Systems: UML-Sichten auf Softwarestrukturen</mark></p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>
-                            <em>Konzeptionelle Sicht</em>
-                            <p>Übersicht über Problembereich, Domäne — zB Domänenmodell</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>
-                            <em>Spezifizierende Sicht</em>
-                            <p>Softwareschnittstellen, keine Implementierung — zB Komponentendiagramm</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>
-                            <em>Implementierende Sicht</em>
-                            <p>Klassen als Grundlage für Implementierung — zB Klassendiagramm</p>
-                            <p>(am häufigsten eingenommene Sicht)</p>
-                        </li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p><em>Siehe slides für UML</em></p>
-            </div>
-        </article>
-    </body>
-</html>
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>2 - Qualitätskontrolle: Reviews, Lesetechniken, Anforderungen, UML</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+-webkit-print-color-adjust: exact;
+}
+* {
+box-sizing: border-box;
+-webkit-print-color-adjust: exact;
+}html,
+body {
+margin: 0;
+padding: 0;
+}
+@media only screen {
+body {
+margin: 2em auto;
+max-width: 900px;
+color: rgb(55, 53, 47);
+}
+}body {
+line-height: 1.5;
+white-space: pre-wrap;
+}a,
+a.visited {
+color: inherit;
+text-decoration: underline;
+}.pdf-relative-link-path {
+font-size: 80%;
+color: #444;
+}h1,
+h2,
+h3 {
+letter-spacing: -0.01em;
+line-height: 1.2;
+font-weight: 600;
+margin-bottom: 0;
+}.page-title {
+font-size: 2.5rem;
+font-weight: 700;
+margin-top: 0;
+margin-bottom: 0.75em;
+}h1 {
+font-size: 1.875rem;
+margin-top: 1.875rem;
+}h2 {
+font-size: 1.5rem;
+margin-top: 1.5rem;
+}h3 {
+font-size: 1.25rem;
+margin-top: 1.25rem;
+}.source {
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 1.5em;
+word-break: break-all;
+}.callout {
+border-radius: 3px;
+padding: 1rem;
+}figure {
+margin: 1.25em 0;
+page-break-inside: avoid;
+}figcaption {
+opacity: 0.5;
+font-size: 85%;
+margin-top: 0.5em;
+}mark {
+background-color: transparent;
+}.indented {
+padding-left: 1.5em;
+}hr {
+background: transparent;
+display: block;
+width: 100%;
+height: 1px;
+visibility: visible;
+border: none;
+border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}img {
+max-width: 100%;
+}@media only print {
+img {
+max-height: 100vh;
+object-fit: contain;
+}
+}@page {
+margin: 1in;
+}.collection-content {
+font-size: 0.875rem;
+}.column-list {
+display: flex;
+justify-content: space-between;
+}.column {
+padding: 0 1em;
+}.column:first-child {
+padding-left: 0;
+}.column:last-child {
+padding-right: 0;
+}.table_of_contents-item {
+display: block;
+font-size: 0.875rem;
+line-height: 1.3;
+padding: 0.125rem;
+}.table_of_contents-indent-1 {
+margin-left: 1.5rem;
+}.table_of_contents-indent-2 {
+margin-left: 3rem;
+}.table_of_contents-indent-3 {
+margin-left: 4.5rem;
+}.table_of_contents-link {
+text-decoration: none;
+opacity: 0.7;
+border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}table,
+th,
+td {
+border: 1px solid rgba(55, 53, 47, 0.09);
+border-collapse: collapse;
+}table {
+border-left: none;
+border-right: none;
+}th,
+td {
+font-weight: normal;
+padding: 0.25em 0.5em;
+line-height: 1.5;
+min-height: 1.5em;
+text-align: left;
+}th {
+color: rgba(55, 53, 47, 0.6);
+}ol,
+ul {
+margin: 0;
+margin-block-start: 0.6em;
+margin-block-end: 0.6em;
+}li > ol:first-child,
+li > ul:first-child {
+margin-block-start: 0.6em;
+}ul > li {
+list-style: disc;
+}ul.to-do-list {
+padding-inline-start: 0;
+}ul.to-do-list > li {
+list-style: none;
+}.to-do-children-checked {
+text-decoration: line-through;
+opacity: 0.375;
+}ul.toggle > li {
+list-style: none;
+}ul {
+padding-inline-start: 1.7em;
+}ul > li {
+padding-left: 0.1em;
+}ol {
+padding-inline-start: 1.6em;
+}ol > li {
+padding-left: 0.2em;
+}.mono ol {
+padding-inline-start: 2em;
+}.mono ol > li {
+text-indent: -0.4em;
+}.toggle {
+padding-inline-start: 0em;
+list-style-type: none;
+}/* Indent toggle children */
+.toggle > li > details {
+padding-left: 1.7em;
+}.toggle > li > details > summary {
+margin-left: -1.1em;
+}.selected-value {
+display: inline-block;
+padding: 0 0.5em;
+background: rgba(206, 205, 202, 0.5);
+border-radius: 3px;
+margin-right: 0.5em;
+margin-top: 0.3em;
+margin-bottom: 0.3em;
+white-space: nowrap;
+}.collection-title {
+display: inline-block;
+margin-right: 1em;
+}.page-description {
+margin-bottom: 2em;
+}.simple-table {
+margin-top: 1em;
+font-size: 0.875rem;
+empty-cells: show;
+}
+.simple-table td {
+height: 29px;
+min-width: 120px;
+}.simple-table th {
+height: 29px;
+min-width: 120px;
+}.simple-table-header-color {
+background: rgb(247, 246, 243);
+color: black;
+}
+.simple-table-header {
+font-weight: 500;
+}time {
+opacity: 0.5;
+}.icon {
+display: inline-block;
+max-width: 1.2em;
+max-height: 1.2em;
+text-decoration: none;
+vertical-align: text-bottom;
+margin-right: 0.5em;
+}img.icon {
+border-radius: 3px;
+}.user-icon {
+width: 1.5em;
+height: 1.5em;
+border-radius: 100%;
+margin-right: 0.5rem;
+}.user-icon-inner {
+font-size: 0.8em;
+}.text-icon {
+border: 1px solid #000;
+text-align: center;
+}.page-cover-image {
+display: block;
+object-fit: cover;
+width: 100%;
+max-height: 30vh;
+}.page-header-icon {
+font-size: 3rem;
+margin-bottom: 1rem;
+}.page-header-icon-with-cover {
+margin-top: -0.72em;
+margin-left: 0.07em;
+}.page-header-icon img {
+border-radius: 3px;
+}.link-to-page {
+margin: 1em 0;
+padding: 0;
+border: none;
+font-weight: 500;
+}p > .user {
+opacity: 0.5;
+}td > .user,
+td > time {
+white-space: nowrap;
+}input[type="checkbox"] {
+transform: scale(1.5);
+margin-right: 0.6em;
+vertical-align: middle;
+}p {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}.image {
+border: none;
+margin: 1.5em 0;
+padding: 0;
+border-radius: 0;
+text-align: center;
+}.code,
+code {
+background: rgba(135, 131, 120, 0.15);
+border-radius: 3px;
+padding: 0.2em 0.4em;
+border-radius: 3px;
+font-size: 85%;
+tab-size: 2;
+}code {
+color: #eb5757;
+}.code {
+padding: 1.5em 1em;
+}.code-wrap {
+white-space: pre-wrap;
+word-break: break-all;
+}.code > code {
+background: none;
+padding: 0;
+font-size: 100%;
+color: inherit;
+}blockquote {
+font-size: 1.25em;
+margin: 1em 0;
+padding-left: 1em;
+border-left: 3px solid rgb(55, 53, 47);
+}.bookmark {
+text-decoration: none;
+max-height: 8em;
+padding: 0;
+display: flex;
+width: 100%;
+align-items: stretch;
+}.bookmark-title {
+font-size: 0.85em;
+overflow: hidden;
+text-overflow: ellipsis;
+height: 1.75em;
+white-space: nowrap;
+}.bookmark-text {
+display: flex;
+flex-direction: column;
+}.bookmark-info {
+flex: 4 1 180px;
+padding: 12px 14px 14px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}.bookmark-image {
+width: 33%;
+flex: 1 1 180px;
+display: block;
+position: relative;
+object-fit: cover;
+border-radius: 1px;
+}.bookmark-description {
+color: rgba(55, 53, 47, 0.6);
+font-size: 0.75em;
+overflow: hidden;
+max-height: 4.5em;
+word-break: break-word;
+}.bookmark-href {
+font-size: 0.75em;
+margin-top: 0.25em;
+}.sans {
+font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+"Segoe UI Symbol";
+}
+.code {
+font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+}
+.serif {
+font-family: Lyon-Text, Georgia, ui-serif, serif;
+}
+.mono {
+font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+}
+.pdf .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+}
+.pdf:lang(zh-CN) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+}
+.pdf:lang(zh-TW) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+}
+.pdf:lang(ko-KR) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+}
+.pdf .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK KR";
+}
+.pdf .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+}
+.pdf:lang(zh-CN) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+}
+.pdf:lang(zh-TW) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+}
+.pdf:lang(ko-KR) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+}
+.pdf .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+}
+.highlight-default {
+color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+color: inherit;
+fill: inherit;
+}
+.block-color-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue {
+background-color: rgba(35, 131, 226, 0.07);
+}
+.select-value-color-pink {
+background-color: rgba(245, 224, 233, 1);
+}
+.select-value-color-purple {
+background-color: rgba(232, 222, 238, 1);
+}
+.select-value-color-green {
+background-color: rgba(219, 237, 219, 1);
+}
+.select-value-color-gray {
+background-color: rgba(227, 226, 224, 1);
+}
+.select-value-color-translucentGray {
+background-color: rgba(255, 255, 255, 0.0375);
+}
+.select-value-color-orange {
+background-color: rgba(250, 222, 201, 1);
+}
+.select-value-color-brown {
+background-color: rgba(238, 224, 218, 1);
+}
+.select-value-color-red {
+background-color: rgba(255, 226, 221, 1);
+}
+.select-value-color-yellow {
+background-color: rgba(253, 236, 200, 1);
+}
+.select-value-color-blue {
+background-color: rgba(211, 229, 239, 1);
+}
+.select-value-color-pageGlass {
+background-color: undefined;
+}
+.select-value-color-washGlass {
+background-color: undefined;
+}.checkbox {
+display: inline-flex;
+vertical-align: text-bottom;
+width: 16;
+height: 16;
+background-size: 16px;
+margin-left: 2px;
+margin-right: 5px;
+}.checkbox-on {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}.checkbox-off {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}/* -------- injections from notionBackup -------- */body {
+white-space: normal !important;
+}p {
+min-height: 1em !important;
+}.code,
+code {
+font-size: 100% !important;
+}blockquote {
+font-size: 100% !important;
+}.callout {
+white-space: normal !important;
+}
+.callout div:has(span.icon) {
+font-size: 100% !important;
+}.source:not(.bookmark) {
+font-size: 100% !important;
+}p {
+min-height: 1em !important;
+}
+</style></head><body><article class="page sans"><header><h1 class="page-title">2 - Qualitätskontrolle: Reviews, Lesetechniken, Anforderungen, UML</h1><p class="page-description"></p></header><div class="page-body"><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7ce6184b-09e7-4fcb-b63f-58bd30657393">Reviews</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#98a15b3e-fd42-429d-9737-54ce3d7cb852">Arten im Vergleich</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#00aeb6ed-54e2-43c0-bf15-3edb64cc4f1e">Inspektion</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#84091276-c7b7-4558-93f4-9d9a0b736bf6">Alternative Arten von Inspektion</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ebba0e07-620b-4f1d-af82-e49cfc0ba289">Lesetechniken</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c365ab18-f63f-4305-9c23-3760c2ad6b20">Lesearten</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a6ca2756-04bf-4839-91a8-6318a2204924">Anforderungen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4f441abb-fd8c-46df-9184-9c3deea5c1b9">Klassifikation</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#331a0b49-1568-4c60-a6a7-4307971e90e5">Modelle</a></div></nav><p></p><p>Je später Fehler erkannt wird desto höher sind Aufwand und Kosten zur Behebung.</p><div class="indented"><p>Ziel: Fehler früh erkennen, beheben.</p><p>
+Fast 50% von
+<em>software development effort</em>
+ist die Überarbeitung (
+<em>rework</em>
+).
+</p></div><p></p><p>
+Review, Inpektion, Audit sind
+<mark class="highlight-blue">analytische QS Methoden</mark>
+die vor allem in frühen Phasen eingesetzt werden für Dokumente oder Code (muss nicht ausführbar sein)
+</p><figure class="image"><a href="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled.png"><img src="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled.png" style="width: 240px"/></a></figure><p></p><h1>Reviews</h1><p><mark class="highlight-blue">Definition</mark></p><div class="indented"><p>Qualitative Beurteilung von Produkten, Prozessen (wo quantitative Beurteilung schwer)</p><p>Mängel entdeckt, nicht korrigiert</p><p><mark class="highlight-gray">
+IEE: “Ein Review ist ein [..] formal geplanter und strukturierter Analyse- und Bewertungsprozess, in dem Projektergebnisse einem
+Team von Gutachtern präsentiert und von diesen kommentiert oder genehmigt werden.“
+</mark></p></div><p></p><p></p><p><mark class="highlight-blue">Ablauf</mark></p><div class="indented"><p>Vorgang nach Arbeitsplan / Checkliste</p><p>Nachträgliche Beurteilung des Reviews selbst zur Verbesserung</p><p>Dauer: ~2h</p><hr/><ol class="numbered-list" start="1" type="1"><li>
+Planung
+<p>Teilnehmer, Prüfobjekt, Prüfziele, Auslösekriterien (Einstiegskriterien), Ort, Zeit, ... auswählen</p></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Vorbesprechung (optional)
+<p>Vorstellung Prüfobjekt (falls Produkt komplex oder neu)</p></li></ol><ol class="numbered-list" start="3" type="1"><li>
+Einzeldurcharbeitung
+<p>Teilnehmer bereiten sich vor - Beurteilen Prüfobjekt nach ihrer Rolle, notieren Auffälligkeiten (Fehler, Fragen, Kommentare)</p></li></ol><ol class="numbered-list" start="4" type="1"><li>
+Durchführung (Review Sitzung)
+<p>Gemeinsames Lesen, Aufzeichnung von Mängeln</p><p>Erkentnisse besprechen, protokollieren (Mängel nicht beheben)</p></li></ol><ol class="numbered-list" start="5" type="1"><li>
+Nachbearbeitung
+<p>dokumentierte Mängel beheben, Dokumente aktualisieren</p></li></ol><ol class="numbered-list" start="6" type="1"><li>
+Bewertung (Follow-up)
+<p>dokumentierte Mängel überprüft</p></li></ol><ol class="numbered-list" start="7" type="1"><li>
+Berichterstattung
+<p>Wiederholungen von Reviews sind möglich</p></li></ol></div><p></p><figure class="image"><a href="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%201.png"><img src="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%201.png" style="width: 192px"/></a></figure><p><mark class="highlight-blue">Rollen / Teilnehmer</mark></p><div class="indented"><p>
+Moderator Leiter des Reviews
+<mark class="highlight-gray">(keeper of the process)</mark></p><p>
+Leser Leser
+<mark class="highlight-gray">(keeper of focus and pace)</mark></p><p>
+Gutachter Kommentierung des Prüfobjekts
+<mark class="highlight-gray">(Reviewer)</mark></p><p>
+Schreiber Verfassung von Protokoll
+<mark class="highlight-gray">(preserver of knowledge)</mark></p><p>
+Autor Klärung von offenen Fragen - keine Rechtfertigung
+<mark class="highlight-gray">(author)</mark></p></div><p></p><p></p><figure class="image"><a href="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%202.png"><img src="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%202.png" style="width: 240px"/></a></figure><p></p><p></p><h2>Arten im Vergleich</h2><p>Review-Arten im Vergleich</p><p></p><p><mark class="highlight-blue">Code Walk-through (abgeschwächtes Review)</mark></p><div class="indented"><p>Autor stellt seine Module ablauforientiert vor, Qualität der Implementierung wird begutachtet.</p><p>Neue Mitarbeiter können dabei zusehen, sich mit Projekt vertraut machen.</p><p>Autor selbst entscheidet ob etwas und was überarbeitet wird.</p><hr/><p>Ziel Fehler im Prüfobjekt finden, Benutzer und Mitarbeiter ausbilden</p><p>Teilnehmer Autor (= Moderator), Gutachter</p><p>Eigenschaften Prüfobjekt wird nach Ablauf von Autor vorgetragen und dieser entscheidet</p></div><p></p><p></p><p><mark class="highlight-blue">Technisches Review</mark></p><div class="indented"><p>Etwas formaleres Review: Moderator und Protokollführer anwesend.</p><p>Produkt wird begutachtet um Schwächen, Stärken zu finden.</p><p>Review-Team gibt Empfehlung an Management, das letztendlich entscheidet.</p><ul class="toggle"><li><details open=""><summary>Richtlinien</summary><p>
+– Produkt nicht der Autor soll Reviewed werden – Verwendung eines Arbeitsplans – Diskussion sachlich und Kurz – Keine
+Lösungen suchen nur Fehler – Schriftliche Aufzeichnung führen – Anzahl der Teilnehmer begrenzen – Teilnehmer sollen gut
+vorbereitet sein – Auch Review selbst beurteilen
+</p><p></p></details></li></ul><hr/><p>Ziel Stärken, Schwächen von Prüfobjekt finden, Prozess verbessern</p><p>Teilnehmer Moderator, Autor, Gutachter, Protokollführer</p><p>Eigenschaften Alle Reviewer ausgebildet, Prüfteam gibt Empfehlung an Manager</p></div><p></p><p></p><p><mark class="highlight-blue">Inspektion (formales Review)</mark></p><div class="indented"><p>Formales Review - speziell in frühen Phasen der Entwicklung (vor allem Anforderungs und Designdokumente).</p><p>Leser trägt Absatz für Absatz vor - Team versucht schwere Fehler zu finden.</p><p>Moderator entscheidet Freigabe.</p><hr/><p>Ziel Schwere Fehler im Prüfobjekt finden, Prozess verbessern, Metriken ermitteln</p><p>Teilnehmer Moderator, Autor, Gutachter, Protokollführer, Vorleser</p><p>Eigenschaften Ausgebildeter Moderator gibt Freigabe, Vorleser liest absatzweise vor</p></div><p></p><p></p><p><mark class="highlight-blue">Übersicht: Reviews mit Kunde vs. Reviews ohne Kunde</mark></p><div class="indented"><p><mark class="highlight-teal">Mit Kunde</mark></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+SRR: Software Requirement Review
+<p><mark class="highlight-gray">
+Review von Anforderungen und ihrer Verständlichkeit. Wird in der Systemspezifikationsphase verwendet.
+</mark></p></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+PDR: Primary Design Review
+<p><mark class="highlight-gray">Vergleich von: momentanes Design vs. Software Designbeschreibung</mark></p></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+CDR: Critical Design Review
+<p><mark class="highlight-gray">Informierung von Kunde bei kritischen Entscheidungen</mark></p></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">IPR: In Prozess Review</li></ul></div><p></p><p><mark class="highlight-teal">Ohne Kunde</mark></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">MR: Management Review</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Code Walkthrough</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Technical Review</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Inspektion</li></ul></div><p></p></div><p></p><figure class="image"><a href="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%203.png"><img src="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%203.png" style="width: 288px"/></a></figure><p></p><h2>Inspektion</h2><p><mark class="highlight-blue">Inspektion</mark><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo>∈</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \in</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.5203800000000001em; vertical-align: -0.035190000000000006em"></span><span class="mrel sizing reset-size6 size5">∈</span></span></span></span></span><span>﻿</span></span>
+Review
+</p><div class="indented"><p>in frühen Phasen der Fehlerfindeung</p><div class="indented"><p>(zB auch für Anforderungsdokument, Designdokument, Testfälle, Code)</p></div><p></p><p>systematisch, formal, wirtschaftlich um Fehler zu finden</p><hr/><p>Einsparungen durch frühes Finden von Fehlern.</p><p>Beurteilungsgrundlage für Qualität (zB durch Restfehlerschätzungen).</p><p>Unterstützt von Lesetechniken und Fehlerlisten (Fehler in Teammeetings gesammelt)</p><p>Mehr Informationen über Produkt: Lerninstrument für neue Teammitglieder, Erkenntnisse für Management (PM und QM).</p></div><p></p><p></p><p><mark class="highlight-blue">Planung und Kontrolle durch QM</mark></p><figure class="image"><a href="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%204.png"><img src="2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%20c2ba11fc914f457884b9e55e8580e95d/Untitled%204.png" style="width: 288px"/></a></figure><p></p><p><mark class="highlight-blue">Dimensionen</mark></p><div class="indented"><p>Prozess</p><div class="indented"><p>Planung → Überblick → Fehlerfindung → Fehlersammlung → Fehlerkorrektur → Follow-Up</p></div><p></p><p>Produkt</p><div class="indented"><p>Anforderung, Design, Code, Testfälle</p></div><p></p><p>Rollen</p><div class="indented"><p>Organisator, Moderator, Inspektor, Autor, Schreiber, Präsentator, Sammler</p></div><p></p><p>Lesetechniken</p><div class="indented"><p>Ad-hoc, Checklisten-basiert, Szenario-basiert, Perspektiven-basiert, Fehler-basiert</p></div><p></p></div><p></p><p></p><p><mark class="highlight-blue">Kosten vs. Nutzen</mark></p><div class="indented"><p>Kosten</p><div class="indented"><p>Aufwand von Inspektoren, Einplanung im Projektplan</p></div><p></p><p>Nutzen</p><div class="indented"><p>Einsparungen durch frühe Fehlerfindung</p><p>Beurteilungsgrundlage für Produktqualität (zB Restfehlerschätzungen)</p><p>Mehr Informationen über Produkt zur Planung</p><p>Inspektion als Lerninstrument für Inspektoren und neue Teammitglieder um Produkt kennenzulernen</p></div><p></p></div><p></p><p></p><h2>Alternative Arten von Inspektion</h2><p><mark class="highlight-blue">Crowdsourcing in Software Engineering</mark></p><div class="indented"><p>
+“The act of undertaking any external software engineering tasks by an undefined, potentially large group of online workers in an open
+call format.”
+</p></div><p></p><p></p><p><mark class="highlight-blue">Model Quality Inspection MQI</mark></p><div class="indented"><p>Funktioniert durch crowdsourcing</p><p>Defekte in großen Modellen früh und effektiv finden durch Best-Practice Software Inspektion</p></div><p></p><p></p><p><mark class="highlight-blue">Crowdsourced Software Inspection CSI</mark></p><div class="indented"><p>Funktioniert durch crowdsourcing</p><p>Automatisierung mit natural language processing NLP</p></div><p></p><p></p><p></p><h1>Lesetechniken</h1><p><mark class="highlight-blue">Definition</mark></p><div class="indented"><p>“strukturierte Ansätze oder Dokumente, die den Fehlerfindungsprozess während einer Inspektion oder einer Review unterstützen.”</p></div><p></p><p></p><h2>Lesearten</h2><p><mark class="highlight-blue">Ad hoc</mark></p><div class="indented"><p>Unstrukturiertes Lesen</p><p>braucht hohe Kenntnisse des Gutachters</p></div><p></p><p><mark class="highlight-blue">Checklistenbasiert</mark></p><div class="indented"><p>vordefinierte Fragestellungen sequentiell abarbeiten</p><p>generische Checklisten für das Projekt erweitert</p><div class="indented"><p>Checklisten für besondere Fehlertypen, Fehlerorte (Design, Code) usw</p></div><p></p><p>Durch Struktur gut wiederholbar</p></div><p></p><p><mark class="highlight-blue">Perspektivenbasiert</mark></p><div class="indented"><p>Fehlersuche aus Perspektiven / Rollen (User, Tester, Entwickler)</p><p>braucht Fachspezialisten</p></div><p></p><p><mark class="highlight-blue">Fehlerbasiert</mark></p><div class="indented"><p>Spezielle Form von checklistenbasierter Lesetechnik</p><p>Fehler in Fehlerkategorien eingeteilt</p></div><p></p><p><mark class="highlight-blue">Szenariobasiert — Usage-Based Reading (UBR)</mark></p><div class="indented"><p><em>= Best Practice</em></p><p>Szenarien / Use Cases die durch Fachspezialisten priorisiert werden.</p><p>Fehlersuche nach Priorität.</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Auswahl des wichtigsten Anwendungsfalles</li></ol><ol class="numbered-list" start="2" type="1"><li>Überprüfung der relevanten Teile dafür</li></ol><ol class="numbered-list" start="3" type="1"><li>Reporting von Mängel, Fehler</li></ol><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↺</mo></mrow><annotation encoding="application/x-tex">\circlearrowleft</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.6639600000000001em; vertical-align: -0.08198em"></span><span class="mrel amsrm">↺</span></span></span></span></span><span>﻿</span></span></p></div><p></p></div><p></p><p></p><p></p><h1>Anforderungen</h1><p>
+Anforderung
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.522em; vertical-align: -0.011em"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span>
+Qualitätsdefinition
+</p><div class="indented"><p>
+Anforderungen beschreiben Funktionen und
+<em>Qualitäten</em></p><p><em>Qualitäten</em>
+müssen testbar beschrieben werden
+</p></div><p></p><p></p><p><mark class="highlight-blue">Reviewing</mark></p><div class="indented"><p>Überprüfung, Verbesserung von Anforderungs-Qualität</p><p><mark class="highlight-teal">Software Requirement Review</mark></p><div class="indented"><p>Prüfen Korrektheit von Anforderung</p><p>Phase: Systemspezifikation</p></div><p></p><p><mark class="highlight-teal">Preliminary Design Review</mark></p><div class="indented"><p>Prüfen technische Angemessenheit von Design (mit aktueller Beschreibung)</p><p>Phase: Systemdesign</p></div><p></p><hr/><p>Erstrebenswert: Beschreibung klar, knapp, konsistent, vollständig, umsetzbar</p><p>Klassifikation</p><div class="indented"><p>Kriterien: funktional, nichtfunktional, testbar, verständlich</p><p>rückverfolgbar (zu Anforderungsdokumenten zB Projektbeschreibung)</p><div class="indented"><p><mark class="highlight-gray">später hergestellte Dokumente dann gegen Anforderungen</mark></p></div><p></p></div><p></p></div><p></p><p></p><p><mark class="highlight-blue">Anwendungsfall aufbau</mark></p><div class="indented"><p>Allgemein</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Titel</li></ol><ol class="numbered-list" start="2" type="1"><li>Kurzbeschreibung</li></ol><ol class="numbered-list" start="3" type="1"><li>Welche Aktoren sind beteiligt</li></ol><ol class="numbered-list" start="4" type="1"><li>Vorbedingung</li></ol><ol class="numbered-list" start="5" type="1"><li>Nachbedingung</li></ol></div><p></p><p>Flow of events</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Hauptszenario</li></ol><ol class="numbered-list" start="2" type="1"><li>Alternativszenario</li></ol><ol class="numbered-list" start="3" type="1"><li>Fehlerszenario</li></ol></div><p></p><p>Nichtfunktionale Anforderungen</p></div><p></p><p></p><h2>Klassifikation</h2><p><mark class="highlight-blue">Klassifikation nach FURPS</mark></p><div class="indented"><p>Functional (Funktional) Features, Fähigkeiten, Sicherheitsvorrichtungen</p><p>Usability (Benutzerfreundlich) Human factors, Nützlichkeit, Dokumentation</p><p>Reliability (Zuverlässig) Uptime, Verlässlichkeit, Wiederherstellbarkeit</p><p>Performance Antwortzeiten, Durchsatz, Genauigkeit</p><p>Supportability (Wartbarkeit) Modifizierbarkeit, Wartung, Konfiguration</p><hr/><p>Zur Laufzeit messbar: Performanz, Sicherheit, Verfügbarkeit, Verwendbarkeit</p><p>Nicht zur Laufzeit messbar: Modifizierbarkeit, Portabilität, Wiederverwendbarkeit</p></div><p></p><p></p><p><mark class="highlight-blue">Funktionale Anforderungen</mark></p><div class="indented"><p>Beschreiben was das System tut, um Mehrwert für die Stakeholder zu liefern</p><p>
+Bilden ein
+<mark class="highlight-teal">Anwendungs-Szenario:</mark>
+Meistens in der Form: “System kann Funktion X ausführen”
+</p><ul class="toggle"><li><details open=""><summary>Beispiele</summary><p>– Das System kann gespeicherte Rechnungen als ausdruckbare Datei exportieren.</p><p>– Der Administrator kann Bestellungen stornieren</p></details></li></ul></div><p></p><p><mark class="highlight-blue">Nichtfunktionale Anforderungen (”Qualitätsanforderungen”)</mark></p><div class="indented"><p>Charakteristika, nicht-technische Beschreibung, Eigenschaften</p><ul class="toggle"><li><details open=""><summary>Beispiele</summary><p>
+– Wenn ein Fehler eintritt, informiert das System den Benutzer und arbeitet in einem verschlechterten(degradierten) Zustand
+weiter.
+</p><p>
+– Falls das System die Anzahl der Bestellungen nicht verarbeiten kann, trennt es einige bestehende Verbindungen zu Clients.
+Die Administratorin wird informiert und das System arbeitet in einem verschlechterten(degradierten) Zustand weiter.
+</p></details></li></ul></div><p></p><p><mark class="highlight-blue">Constraints</mark></p><div class="indented"><p>Einschränkungen des Systems durch Frameworks bzw. Architekturentscheidungen</p></div><p></p><p></p><p></p><h1>Modelle</h1><p><mark class="highlight-blue">Modell</mark></p><div class="indented"><p>Gemeinsame Notation mit konsistenter Bedeutung</p></div><p></p><p></p><p><mark class="highlight-blue">Einsatzgebiete</mark></p><div class="indented"><p>Modelle helfen Überblick zu behalten:</p><div class="indented"><p>
+Anforderung
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span>
+Modell
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span>
+Daten-/Komponenten-/Test-Spezifikation
+</p><p>
+Anforderung
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span>
+Modell
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span>
+Datenbank, Business Logik, GUI
+</p><p>
+Anforderung
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span>
+Qualitätsdefinition und Modelle
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span>
+Qualitätssicherung QS
+</p></div><p></p><hr/><p>Einsatz in Entwicklung:</p><div class="indented"><p>
+–
+<mark class="highlight-gray">Datenbankmodelle:</mark>
+Datenmodellierung, EER &amp; Relationen –
+<mark class="highlight-gray">Business Logik:</mark>
+Zustandsdiagramme, Daten- und Kontrollfluss – Schnittstellen zwischen Teilsystemen und Benutzern
+</p></div><p></p><p>Einsatz in QS:</p><div class="indented"><p>
+– Anwendungsszenarien (etwa Use Cases) – Datenmodelle (Relationenmodell (ER), Domänenmodell) – Datenflussmodelle (UML, IDEF0) –
+Kontrollflussmodelle (UML, Pseudocode) – Zustandsdiagramme, Sequenzdiagramme (UML) – Testfallspezifikationen
+</p><p></p></div><p></p></div><p></p><p><mark class="highlight-blue">Charakteristika des Systems: UML-Sichten auf Softwarestrukturen</mark></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li><em>Konzeptionelle Sicht</em><p>Übersicht über Problembereich, Domäne — zB Domänenmodell</p></li></ol><ol class="numbered-list" start="2" type="1"><li><em>Spezifizierende Sicht</em><p>Softwareschnittstellen, keine Implementierung — zB Komponentendiagramm</p></li></ol><ol class="numbered-list" start="3" type="1"><li><em>Implementierende Sicht</em><p>Klassen als Grundlage für Implementierung — zB Klassendiagramm</p><p>(am häufigsten eingenommene Sicht)</p></li></ol></div><p></p><p></p><p><em>Siehe slides für UML</em></p></div></article></body></html>

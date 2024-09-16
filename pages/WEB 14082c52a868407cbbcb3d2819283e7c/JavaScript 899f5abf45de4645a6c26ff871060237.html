@@ -1,2559 +1,1215 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>JavaScript</title>
-        <style>
-            /* cspell:disable-file */
-            /* webkit printing magic: print all background colors */
-            html {
-                -webkit-print-color-adjust: exact;
-            }
-            * {
-                box-sizing: border-box;
-                -webkit-print-color-adjust: exact;
-            }
-
-            html,
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            @media only screen {
-                body {
-                    margin: 2em auto;
-                    max-width: 900px;
-                    color: rgb(55, 53, 47);
-                }
-            }
-
-            body {
-                line-height: 1.5;
-                white-space: pre-wrap;
-            }
-
-            a,
-            a.visited {
-                color: inherit;
-                text-decoration: underline;
-            }
-
-            .pdf-relative-link-path {
-                font-size: 80%;
-                color: #444;
-            }
-
-            h1,
-            h2,
-            h3 {
-                letter-spacing: -0.01em;
-                line-height: 1.2;
-                font-weight: 600;
-                margin-bottom: 0;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-top: 0;
-                margin-bottom: 0.75em;
-            }
-
-            h1 {
-                font-size: 1.875rem;
-                margin-top: 1.875rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-                margin-top: 1.5rem;
-            }
-
-            h3 {
-                font-size: 1.25rem;
-                margin-top: 1.25rem;
-            }
-
-            .source {
-                border: 1px solid #ddd;
-                border-radius: 3px;
-                padding: 1.5em;
-                word-break: break-all;
-            }
-
-            .callout {
-                border-radius: 3px;
-                padding: 1rem;
-            }
-
-            figure {
-                margin: 1.25em 0;
-                page-break-inside: avoid;
-            }
-
-            figcaption {
-                opacity: 0.5;
-                font-size: 85%;
-                margin-top: 0.5em;
-            }
-
-            mark {
-                background-color: transparent;
-            }
-
-            .indented {
-                padding-left: 1.5em;
-            }
-
-            hr {
-                background: transparent;
-                display: block;
-                width: 100%;
-                height: 1px;
-                visibility: visible;
-                border: none;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            @media only print {
-                img {
-                    max-height: 100vh;
-                    object-fit: contain;
-                }
-            }
-
-            @page {
-                margin: 1in;
-            }
-
-            .collection-content {
-                font-size: 0.875rem;
-            }
-
-            .column-list {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .column {
-                padding: 0 1em;
-            }
-
-            .column:first-child {
-                padding-left: 0;
-            }
-
-            .column:last-child {
-                padding-right: 0;
-            }
-
-            .table_of_contents-item {
-                display: block;
-                font-size: 0.875rem;
-                line-height: 1.3;
-                padding: 0.125rem;
-            }
-
-            .table_of_contents-indent-1 {
-                margin-left: 1.5rem;
-            }
-
-            .table_of_contents-indent-2 {
-                margin-left: 3rem;
-            }
-
-            .table_of_contents-indent-3 {
-                margin-left: 4.5rem;
-            }
-
-            .table_of_contents-link {
-                text-decoration: none;
-                opacity: 0.7;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-            }
-
-            table,
-            th,
-            td {
-                border: 1px solid rgba(55, 53, 47, 0.09);
-                border-collapse: collapse;
-            }
-
-            table {
-                border-left: none;
-                border-right: none;
-            }
-
-            th,
-            td {
-                font-weight: normal;
-                padding: 0.25em 0.5em;
-                line-height: 1.5;
-                min-height: 1.5em;
-                text-align: left;
-            }
-
-            th {
-                color: rgba(55, 53, 47, 0.6);
-            }
-
-            ol,
-            ul {
-                margin: 0;
-                margin-block-start: 0.6em;
-                margin-block-end: 0.6em;
-            }
-
-            li > ol:first-child,
-            li > ul:first-child {
-                margin-block-start: 0.6em;
-            }
-
-            ul > li {
-                list-style: disc;
-            }
-
-            ul.to-do-list {
-                padding-inline-start: 0;
-            }
-
-            ul.to-do-list > li {
-                list-style: none;
-            }
-
-            .to-do-children-checked {
-                text-decoration: line-through;
-                opacity: 0.375;
-            }
-
-            ul.toggle > li {
-                list-style: none;
-            }
-
-            ul {
-                padding-inline-start: 1.7em;
-            }
-
-            ul > li {
-                padding-left: 0.1em;
-            }
-
-            ol {
-                padding-inline-start: 1.6em;
-            }
-
-            ol > li {
-                padding-left: 0.2em;
-            }
-
-            .mono ol {
-                padding-inline-start: 2em;
-            }
-
-            .mono ol > li {
-                text-indent: -0.4em;
-            }
-
-            .toggle {
-                padding-inline-start: 0em;
-                list-style-type: none;
-            }
-
-            /* Indent toggle children */
-            .toggle > li > details {
-                padding-left: 1.7em;
-            }
-
-            .toggle > li > details > summary {
-                margin-left: -1.1em;
-            }
-
-            .selected-value {
-                display: inline-block;
-                padding: 0 0.5em;
-                background: rgba(206, 205, 202, 0.5);
-                border-radius: 3px;
-                margin-right: 0.5em;
-                margin-top: 0.3em;
-                margin-bottom: 0.3em;
-                white-space: nowrap;
-            }
-
-            .collection-title {
-                display: inline-block;
-                margin-right: 1em;
-            }
-
-            .page-description {
-                margin-bottom: 2em;
-            }
-
-            .simple-table {
-                margin-top: 1em;
-                font-size: 0.875rem;
-                empty-cells: show;
-            }
-            .simple-table td {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table th {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table-header-color {
-                background: rgb(247, 246, 243);
-                color: black;
-            }
-            .simple-table-header {
-                font-weight: 500;
-            }
-
-            time {
-                opacity: 0.5;
-            }
-
-            .icon {
-                display: inline-block;
-                max-width: 1.2em;
-                max-height: 1.2em;
-                text-decoration: none;
-                vertical-align: text-bottom;
-                margin-right: 0.5em;
-            }
-
-            img.icon {
-                border-radius: 3px;
-            }
-
-            .user-icon {
-                width: 1.5em;
-                height: 1.5em;
-                border-radius: 100%;
-                margin-right: 0.5rem;
-            }
-
-            .user-icon-inner {
-                font-size: 0.8em;
-            }
-
-            .text-icon {
-                border: 1px solid #000;
-                text-align: center;
-            }
-
-            .page-cover-image {
-                display: block;
-                object-fit: cover;
-                width: 100%;
-                max-height: 30vh;
-            }
-
-            .page-header-icon {
-                font-size: 3rem;
-                margin-bottom: 1rem;
-            }
-
-            .page-header-icon-with-cover {
-                margin-top: -0.72em;
-                margin-left: 0.07em;
-            }
-
-            .page-header-icon img {
-                border-radius: 3px;
-            }
-
-            .link-to-page {
-                margin: 1em 0;
-                padding: 0;
-                border: none;
-                font-weight: 500;
-            }
-
-            p > .user {
-                opacity: 0.5;
-            }
-
-            td > .user,
-            td > time {
-                white-space: nowrap;
-            }
-
-            input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 0.6em;
-                vertical-align: middle;
-            }
-
-            p {
-                margin-top: 0.5em;
-                margin-bottom: 0.5em;
-            }
-
-            .image {
-                border: none;
-                margin: 1.5em 0;
-                padding: 0;
-                border-radius: 0;
-                text-align: center;
-            }
-
-            .code,
-            code {
-                background: rgba(135, 131, 120, 0.15);
-                border-radius: 3px;
-                padding: 0.2em 0.4em;
-                border-radius: 3px;
-                font-size: 85%;
-                tab-size: 2;
-            }
-
-            code {
-                color: #eb5757;
-            }
-
-            .code {
-                padding: 1.5em 1em;
-            }
-
-            .code-wrap {
-                white-space: pre-wrap;
-                word-break: break-all;
-            }
-
-            .code > code {
-                background: none;
-                padding: 0;
-                font-size: 100%;
-                color: inherit;
-            }
-
-            blockquote {
-                font-size: 1.25em;
-                margin: 1em 0;
-                padding-left: 1em;
-                border-left: 3px solid rgb(55, 53, 47);
-            }
-
-            .bookmark {
-                text-decoration: none;
-                max-height: 8em;
-                padding: 0;
-                display: flex;
-                width: 100%;
-                align-items: stretch;
-            }
-
-            .bookmark-title {
-                font-size: 0.85em;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                height: 1.75em;
-                white-space: nowrap;
-            }
-
-            .bookmark-text {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .bookmark-info {
-                flex: 4 1 180px;
-                padding: 12px 14px 14px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-
-            .bookmark-image {
-                width: 33%;
-                flex: 1 1 180px;
-                display: block;
-                position: relative;
-                object-fit: cover;
-                border-radius: 1px;
-            }
-
-            .bookmark-description {
-                color: rgba(55, 53, 47, 0.6);
-                font-size: 0.75em;
-                overflow: hidden;
-                max-height: 4.5em;
-                word-break: break-word;
-            }
-
-            .bookmark-href {
-                font-size: 0.75em;
-                margin-top: 0.25em;
-            }
-
-            .sans {
-                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-                    "Segoe UI Symbol";
-            }
-            .code {
-                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
-            }
-            .serif {
-                font-family: Lyon-Text, Georgia, ui-serif, serif;
-            }
-            .mono {
-                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-            }
-            .pdf .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
-            }
-            .pdf:lang(zh-CN) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
-            }
-            .pdf:lang(zh-TW) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
-            }
-            .pdf:lang(ko-KR) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
-            }
-            .pdf .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK KR";
-            }
-            .pdf .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
-            }
-            .pdf:lang(zh-CN) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
-            }
-            .pdf:lang(zh-TW) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
-            }
-            .pdf:lang(ko-KR) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
-            }
-            .pdf .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
-            }
-            .highlight-default {
-                color: rgba(55, 53, 47, 1);
-            }
-            .highlight-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .highlight-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .highlight-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .highlight-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .highlight-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .highlight-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .highlight-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .highlight-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .highlight-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .highlight-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .highlight-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .highlight-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .highlight-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .highlight-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .highlight-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .highlight-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .highlight-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .highlight-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .block-color-default {
-                color: inherit;
-                fill: inherit;
-            }
-            .block-color-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .block-color-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .block-color-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .block-color-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .block-color-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .block-color-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .block-color-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .block-color-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .block-color-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .block-color-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .block-color-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .block-color-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .block-color-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .block-color-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .block-color-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .block-color-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .block-color-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .block-color-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .select-value-color-interactiveBlue {
-                background-color: rgba(35, 131, 226, 0.07);
-            }
-            .select-value-color-pink {
-                background-color: rgba(245, 224, 233, 1);
-            }
-            .select-value-color-purple {
-                background-color: rgba(232, 222, 238, 1);
-            }
-            .select-value-color-green {
-                background-color: rgba(219, 237, 219, 1);
-            }
-            .select-value-color-gray {
-                background-color: rgba(227, 226, 224, 1);
-            }
-            .select-value-color-translucentGray {
-                background-color: rgba(255, 255, 255, 0.0375);
-            }
-            .select-value-color-orange {
-                background-color: rgba(250, 222, 201, 1);
-            }
-            .select-value-color-brown {
-                background-color: rgba(238, 224, 218, 1);
-            }
-            .select-value-color-red {
-                background-color: rgba(255, 226, 221, 1);
-            }
-            .select-value-color-yellow {
-                background-color: rgba(253, 236, 200, 1);
-            }
-            .select-value-color-blue {
-                background-color: rgba(211, 229, 239, 1);
-            }
-            .select-value-color-pageGlass {
-                background-color: undefined;
-            }
-            .select-value-color-washGlass {
-                background-color: undefined;
-            }
-
-            .checkbox {
-                display: inline-flex;
-                vertical-align: text-bottom;
-                width: 16;
-                height: 16;
-                background-size: 16px;
-                margin-left: 2px;
-                margin-right: 5px;
-            }
-
-            .checkbox-on {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            .checkbox-off {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            /* -------- injections from notionBackup -------- */
-
-            body {
-                white-space: normal !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-
-            .code,
-            code {
-                font-size: 100% !important;
-            }
-
-            blockquote {
-                font-size: 100% !important;
-            }
-
-            .callout {
-                white-space: normal !important;
-            }
-            .callout div:has(span.icon) {
-                font-size: 100% !important;
-            }
-
-            .source:not(.bookmark) {
-                font-size: 100% !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-        </style>
-    </head>
-    <body>
-        <article class="page sans">
-            <header>
-                <h1 class="page-title">JavaScript</h1>
-                <p class="page-description"></p>
-            </header>
-            <div class="page-body">
-                <p>
-                    Live Demo:
-                    <a href="https://www.youtube.com/watch?v=BrQKM_uaZKE">https://www.youtube.com/watch?v=BrQKM_uaZKE</a>
-                </p>
-                <p>
-                    Github Repo:
-                    <a href="https://github.com/web-engineering-tuwien/recipe-search-live-demo">
-                        https://github.com/web-engineering-tuwien/recipe-search-live-demo
-                    </a>
-                </p>
-                <p></p>
-                <p><a href="https://javascript.info/">https://javascript.info/</a></p>
-                <div class="indented">
-                    <p>
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference">
-                            https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
-                        </a>
-                    </p>
-                </div>
-                <p></p>
-                <p class="block-color-gray">
-                    <a href="https://developer.mozilla.org/en-US/docs/Web/Tutorials#javascript-tutorials">
-                        https://developer.mozilla.org/en-US/docs/Web/Tutorials#javascript-tutorials
-                    </a>
-                </p>
-                <p class="block-color-gray">
-                    <a href="https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/?messages=success%5B0%5D%3Dflash.signin-success">
-                        https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures
-                    </a>
-                </p>
-                <p class="block-color-gray"><a href="https://eloquentjavascript.net/">https://eloquentjavascript.net/</a></p>
-                <p></p>
-                <hr />
-                <p></p>
-                <nav class="block-color-gray table_of_contents">
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#208ba225-9e06-4645-82d5-7db1fa12dcce">JavaScript</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#8ba54a64-a741-44d7-8049-891869f7ed37">Embedding into HTML</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#b2c328af-3e31-4676-ad01-ab425665c500">Syntax</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#aaf4fcb5-8a55-4b43-b315-208074f40070">Browser and Document APIs</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#54296794-9819-4052-ab23-01b1c459e16e">Overview</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#4ddbff0b-e4c5-46de-b86b-590ac24eef95">Browser Object Model BOM (window)</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#bbb76da1-a034-4970-999d-8d7d3a01cce8">Storage (Local Storage, Cookies)</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#fb096e79-bffb-47bf-9322-bcb0ef771269">Document Object Model DOM</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#240c5ac5-5fcc-4766-accb-86c2be265ea8">Accessibility</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#79f028ac-583e-4193-8e98-c49509e1bb70">Event-Driven Programming</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#33773b18-6fb0-4606-b3e3-1c5eb6a1222a">DOM Event Types</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#254e158d-86d6-4b03-96e8-4c0ae2a040a2">Asynchronous Programming</a>
-                    </div>
-                </nav>
-                <p></p>
-                <h1>JavaScript</h1>
-                <p>interpreted scripting language.</p>
-                <p>Standardized as ECMAScript language in the ECMA-262</p>
-                <div class="indented">
-                    <p><mark class="highlight-gray">Other ECMAScript implementations: JScript, ActionScript, QtScript, …</mark></p>
-                </div>
-                <p></p>
-                <p>In this course: EXMAScript 6</p>
-                <h1>Embedding into HTML</h1>
-                <p>External</p>
-                <div class="indented">
-                    <p>linking to an external JavaScript file in &lt;head&gt;</p>
-                    <div class="indented">
-                        <p class="block-color-gray">
-                            <code>defer</code>
-                            = asynchronous loading
-                        </p>
-                        <p class="block-color-gray">
-                            It will
-                            <em>defer (= delay)</em>
-                            loading the JS until the page load is completed.
-                        </p>
-                    </div>
-                    <p></p>
-                    <pre class="code"><code>&lt;script type="text/javascript" src="foo.js" defer&gt; &lt;/script&gt;</code></pre>
-                </div>
-                <p></p>
-                <p>Internal</p>
-                <div class="indented">
-                    <p>In &lt;body&gt; or &lt;head&gt;</p>
-                    <p>
-                        <code>type="module"</code>
-                        is
-                        <code>defer</code>
-                        by default
-                    </p>
-                    <pre class="code"><code>&lt;script type="module"&gt;
-		statement;	
-		statement;
-		...
-&lt;/script&gt;</code></pre>
-                    <pre class="code"><code>&lt;script type="text/javascript"&gt;
-		statement;	
-		statement;
-		...
-&lt;/script&gt;</code></pre>
-                </div>
-                <p></p>
-                <p>As event handlers</p>
-                <div class="indented">
-                    <pre class="code"><code>&lt;a href="http://www.bar.com" onmouseover="alert('hi');"&gt;</code></pre>
-                </div>
-                <p></p>
-                <p>Pseudo-URLs in links</p>
-                <div class="indented">
-                    <pre class="code"><code>&lt;a href="javascript:alert('You clicked');"&gt;Click me&lt;/a&gt;</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <h1>Syntax</h1>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Key words for declaration, Scoping</summary>
-                            <p>
-                                <mark class="highlight-teal">Function-scope:</mark>
-                                <code>var</code>
-                                → try to avoid
-                            </p>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">will only live in the function or the outer scope that it was called in</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Function scopes can nest with nested functions</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    <mark class="highlight-teal">hoisting</mark>
-                                    : optimzing code before executing it within the virtual machine → During the hoisting process all
-                                    <code>var</code>
-                                    variables get
-                                    <em>declared</em>
-                                    in the beginning of every function without being
-                                    <em>initialized</em>
-                                    .
-                                    <p>
-                                        Therefore accessing / reading an previously un-initialized variable with
-                                        <code>var</code>
-                                        won´t cause an issue and is accessible everywhere within the function. → This makes code prone to error.
-                                    </p>
-                                </li>
-                            </ul>
-                            <p>
-                                <mark class="highlight-teal">Block-scope:</mark>
-                                <code>let</code>
-                                ,
-                                <code>const</code>
-                            </p>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">will only exist within its block (just like Java)</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    const identifiers cannot change → improves memory efficiency. Useful for objects and functions that shouldn´t change.
-                                </li>
-                            </ul>
-                            <p>
-                                <mark class="highlight-teal">Global Scope:</mark>
-                                no keyword
-                            </p>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Variables are global by default if no keyword is used</li>
-                            </ul>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Variables, Data types</summary>
-                            <p>There are 8 basic data types in JavaScript.</p>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    <code>number</code>
-                                    &nbsp;for numbers of any kind: integer or floating-point
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    <code>bigint</code>
-                                    &nbsp;is for integer numbers of arbitrary length.
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    <code>string</code>
-                                    &nbsp;for strings. A string may have zero or more characters, there’s no separate single-character type.
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    <code>boolean</code>
-                                    &nbsp;for&nbsp;
-                                    <code>true</code>
-                                    /
-                                    <code>false</code>
-                                    .
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    <code>null</code>
-                                    &nbsp;for unknown values – a standalone type that has a single value&nbsp;
-                                    <code>null</code>
-                                    .
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    <code>undefined</code>
-                                    &nbsp;for unassigned values – a standalone type that has a single value&nbsp;
-                                    <code>undefined</code>
-                                    .
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    <code>object</code>
-                                    &nbsp;for more complex data structures.
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    <code>symbol</code>
-                                    &nbsp;for unique identifiers.
-                                </li>
-                            </ul>
-                            <p>
-                                The&nbsp;
-                                <code>typeof</code>
-                                &nbsp;operator allows us to see which type is stored in a variable.
-                            </p>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    Two forms:&nbsp;
-                                    <code>typeof x</code>
-                                    &nbsp;or&nbsp;
-                                    <code>typeof(x)</code>
-                                    .
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    Returns a string with the name of the type, like&nbsp;
-                                    <code>"string"</code>
-                                    .
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    For&nbsp;
-                                    <code>null</code>
-                                    &nbsp;returns&nbsp;
-                                    <code>"object"</code>
-                                    &nbsp;– this is an error in the language, it’s not actually an object.
-                                </li>
-                            </ul>
-                            <hr />
-                            <p>Type conversions:</p>
-                            <div class="indented">
-                                <figure class="image">
-                                    <a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled.png">
-                                        <img style="width: 432px" src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled.png" />
-                                    </a>
-                                </figure>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Strings, Template Literals</summary>
-                            <p>Strings: (“…”, ‘…’)</p>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    Backslash escapes (\) String concatenation with + operator: "Dear " +
-                                    <a href="http://s1.name">s1.name</a>
-                                    + ", thank you for…”
-                                </li>
-                            </ul>
-                            <p>JavaScript Template Literals (Replaces concatenation operations)</p>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Use backquote (`) as delimiter</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Can span multiple lines (new line included in the string)</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    Can have embedded expressions → ${expression} — computes expression and replaces it with string value
-                                    <pre class="code"><code>message	=	`Dear	${student.name}, Your	GPA, ${gpa(student)},
-	is lower	than	the	average: ${averageGPA}`</code></pre>
-                                </li>
-                            </ul>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Operators</summary>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Numerical operators: +,-,*,/,++,--,%</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    Comparison operators: &gt;,&gt;=,&lt;,&lt;=,==,!=,===,!==
-                                    <p>Two kinds of comparison operators</p>
-                                    <pre class="code code-wrap"><code>console.log("1" == 1); // true - compares content
-console.log("1" === 1); // false - compares type + content</code></pre>
-                                    <p></p>
-                                </li>
-                            </ul>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Functions, Callbacks</summary>
-                            <p>
-                                Declared with keyword
-                                <code>function</code>
-                                :
-                            </p>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    Functions are first-class citizens, can be passed as parameters, can return other functions
-                                    <ul class="toggle">
-                                        <li>
-                                            <details open="">
-                                                <summary><span style="border-bottom: 0.05em solid">Callbacks (= higher order functions)</span></summary>
-                                                <p>Here is a quick example:</p>
-                                                <pre class="code code-wrap"><code>function greeting(name) {
-  alert('Hello ' + name);
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>JavaScript</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+-webkit-print-color-adjust: exact;
 }
-
-function processUserInput(callback) {
-  var name = prompt('Please enter your name.');
-  callback(name);
+* {
+box-sizing: border-box;
+-webkit-print-color-adjust: exact;
+}html,
+body {
+margin: 0;
+padding: 0;
 }
-
-processUserInput(greeting);</code></pre>
-                                                <p>
-                                                    The above example is a&nbsp;
-                                                    <a href="https://developer.mozilla.org/en-US/docs/Glossary/Synchronous">synchronous</a>
-                                                    &nbsp;callback, as it is executed immediately.
-                                                </p>
-                                                <p>
-                                                    Note, however, that callbacks are often used to continue code execution after an&nbsp;
-                                                    <a href="https://developer.mozilla.org/en-US/docs/Glossary/Asynchronous">asynchronous</a>
-                                                    &nbsp;(In other words, actions that we initiate now, but they finish later) operation has completed — these
-                                                    are called asynchronous callbacks.
-                                                </p>
-                                                <p>For instance, one such function is the setTimeout function.</p>
-                                                <p></p>
-                                            </details>
-                                        </li>
-                                    </ul>
-                                    <ul class="toggle">
-                                        <li>
-                                            <details open="">
-                                                <summary><span style="border-bottom: 0.05em solid">Callback Hell / Pyramid of Doom</span></summary>
-                                                <p>
-                                                    In a “callback-based” style of asynchronous programming. A function that does something asynchronously (at a
-                                                    later point in time) should provide a
-                                                    <em>callback argument</em>
-                                                    (usually an anonymous function) where we put the function to run after it’s complete.
-                                                </p>
-                                                <p>
-                                                    As calls become more nested, the code becomes deeper and increasingly more difficult to manage. That’s
-                                                    sometimes called “callback hell” or “pyramid of doom”:
-                                                </p>
-                                                <div class="indented">
-                                                    <figure class="image">
-                                                        <a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%201.png">
-                                                            <img style="width: 384px" src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%201.png" />
-                                                        </a>
-                                                    </figure>
-                                                </div>
-                                                <p></p>
-                                                <p>
-                                                    (Here the loadScript function executes the anonymous function that is its second parameter if script was
-                                                    loaded successfully → the goal is to load a series of scripts sequentially)
-                                                </p>
-                                                <ul class="toggle">
-                                                    <li>
-                                                        <details open="">
-                                                            <summary><span style="border-bottom: 0.05em solid">Callback Hell example</span></summary>
-                                                            <p>
-                                                                Take a look at the function&nbsp;
-                                                                <code>loadScript(src)</code>
-                                                                , that loads a script with the given&nbsp;
-                                                                <code>src</code>
-                                                                :
-                                                            </p>
-                                                            <pre class="code"><code>function loadScript(src) {
-  // creates &lt;script src="…"&gt;&nbsp;with given&nbsp;src
-  // this causes the script with given src to start loading and run when complete
-  let script = document.createElement('script'); 
-  script.src = src; 
-  document.head.append(script);
-}</code></pre>
-                                                            <p>We can use this function like this:</p>
-                                                            <pre class="code"><code>loadScript('/my/script.js');</code></pre>
-                                                            <p>
-                                                                The script is executed “asynchronously”, as it starts loading now, but runs later, when the
-                                                                function has already finished. If there’s any code below
-                                                                <code>loadScript(src)</code>
-                                                                , it doesn’t wait until the script loading finishes.
-                                                            </p>
-                                                            <p>
-                                                                Let’s say we need to use the new script as soon as it loads. It declares new functions, and we
-                                                                want to run them.
-                                                            </p>
-                                                            <p></p>
-                                                            <p>
-                                                                Let’s add a&nbsp;
-                                                                <code>callback</code>
-                                                                &nbsp;function as a second argument to&nbsp;
-                                                                <code>loadScript</code>
-                                                                &nbsp;that should execute when the script loads:
-                                                            </p>
-                                                            <pre class="code"><code>function loadScript(src, callback) {
-  let script = document.createElement('script');
-  script.src = src;
-
-  script.onload = () =&gt; callback(script);
-
-  document.head.append(script);
-} </code></pre>
-                                                            <p>
-                                                                Now:
-                                                                <span style="border-bottom: 0.05em solid">
-                                                                    How can we load two scripts sequentially: the first one, and then the second one after it
-                                                                    (with error handling)?
-                                                                </span>
-                                                            </p>
-                                                            <p></p>
-                                                            <hr />
-                                                            <p></p>
-                                                            <p>
-                                                                Here’s an improved version of&nbsp;
-                                                                <code>loadScript</code>
-                                                                &nbsp;that tracks loading errors:
-                                                            </p>
-                                                            <pre class="code"><code>function loadScript(src, callback) {
-  let script = document.createElement('script');
-  script.src = src;
-
-  script.onload = () =&gt; callback(null, script);
-  script.onerror = () =&gt; callback(new Error(`Script load error for ${src}`));
-
-  document.head.append(script);
-} </code></pre>
-                                                            <p>
-                                                                It calls&nbsp;
-                                                                <code>callback(null, script)</code>
-                                                                &nbsp;for successful load and&nbsp;
-                                                                <code>callback(error)</code>
-                                                                &nbsp;otherwise.
-                                                            </p>
-                                                            <p>To use the loadScript function:</p>
-                                                            <pre
-                                                                class="code"><code>loadScript('/my/script.js', function(error, script) { //anonymous function that takes 2 params
-  if (error) {
-    // handle error
-  } else {
-    // script loaded successfully
-  }
-}); </code></pre>
-                                                            <p></p>
-                                                            <hr />
-                                                            <p></p>
-                                                            <p>
-                                                                From the first look, it’s a viable way of asynchronous coding. And indeed it is. For one or
-                                                                maybe two nested calls it looks fine.
-                                                            </p>
-                                                            <p>
-                                                                But for multiple asynchronous actions that follow one after another we’ll have code like this:
-                                                            </p>
-                                                            <pre class="code"><code>loadScript('1.js', function(error, script) {
-
-  if (error) {
-    handleError(error);
-  } else {
-    // ...
-    loadScript('2.js', function(error, script) {
-      if (error) {
-        handleError(error);
-      } else {
-        // ...
-        loadScript('3.js', function(error, script) {
-          if (error) {
-            handleError(error);
-          } else {
-            // ...continue after all scripts are loaded (*)}
-        });
-
-      }
-    });
-  }
-}); </code></pre>
-                                                            <p>In the code above:</p>
-                                                            <div class="indented">
-                                                                <ol type="1" class="numbered-list" start="1">
-                                                                    <li>
-                                                                        We load&nbsp;
-                                                                        <code>1.js</code>
-                                                                        , then if there’s no error.
-                                                                    </li>
-                                                                </ol>
-                                                                <ol type="1" class="numbered-list" start="2">
-                                                                    <li>
-                                                                        We load&nbsp;
-                                                                        <code>2.js</code>
-                                                                        , then if there’s no error.
-                                                                    </li>
-                                                                </ol>
-                                                                <ol type="1" class="numbered-list" start="3">
-                                                                    <li>
-                                                                        We load&nbsp;
-                                                                        <code>3.js</code>
-                                                                        , then if there’s no error – do something else&nbsp;
-                                                                        <code>(*)</code>
-                                                                        .
-                                                                    </li>
-                                                                </ol>
-                                                            </div>
-                                                            <p></p>
-                                                            <p>That’s sometimes called “callback hell” or “pyramid of doom.”</p>
-                                                            <p>There are some solutions but none of them really solve the problem.</p>
-                                                            <p>
-                                                                Luckily, there are other ways to avoid such pyramids. One of the best ways is to use “promises”.
-                                                            </p>
-                                                        </details>
-                                                    </li>
-                                                </ul>
-                                                <p></p>
-                                            </details>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Function call only matched by name, not parameters → no overloading</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Missing parameters replaced by undefined, Additionally passed parameters are ignored</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    Since ES6:
-                                    <em>Optional parameters</em>
-                                    by specifying
-                                    <em>default</em>
-                                    <pre class="code"><code>function	topGrade(student,	threshold=1.5) {
-			return	gpa(student)	&lt;=	threshold;
-}</code></pre>
-                                </li>
-                            </ul>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Other function concepts:</span></p>
-                            <div class="indented">
-                                <ul class="toggle">
-                                    <li>
-                                        <details open="">
-                                            <summary>Anonymous functions (= lambda expressions)</summary>
-                                            <p>Named function:</p>
-                                            <div class="indented">
-                                                <pre class="code code-wrap"><code>function greet(name){ return "Hello"; }</code></pre>
-                                            </div>
-                                            <p></p>
-                                            <p>Anonymous function: without a name,</p>
-                                            <div class="indented">
-                                                <pre class="code code-wrap"><code>var greet = function(name){ return "Hello";}</code></pre>
-                                            </div>
-                                            <p></p>
-                                            <p></p>
-                                        </details>
-                                    </li>
-                                </ul>
-                                <ul class="toggle">
-                                    <li>
-                                        <details open="">
-                                            <summary>Arrow Functions</summary>
-                                            <p>
-                                                Their behavior are the same as of a function. They are
-                                                <em>anonymous functions</em>
-                                                with a special syntax. (syntactic sugar)
-                                            </p>
-                                            <p></p>
-                                            <p>
-                                                To define an arrow function, we use the&nbsp;
-                                                <code>()&nbsp;=&gt;&nbsp;{}</code>
-                                                &nbsp;structure as follows:
-                                            </p>
-                                            <pre class="code code-wrap"><code>const greet = (name) =&gt; { return "Hello " + name + "!"; }
-console.log(greet("Eric"));      // prints out Hello Eric!</code></pre>
-                                            <p>
-                                                In this function, the&nbsp;
-                                                <code>name</code>
-                                                &nbsp;argument to the&nbsp;
-                                                <code>greet</code>
-                                                &nbsp;function is used inside the function to construct a new string and return it using the&nbsp;
-                                                <code>return</code>
-                                                &nbsp;statement.
-                                            </p>
-                                            <p>In case that the function only receives one argument, we can omit the parenthesis:</p>
-                                            <pre class="code code-wrap"><code>const greet = name =&gt; { return "Hello " + name + "!"; }
-console.log(greet("Eric"));      // prints out Hello Eric!</code></pre>
-                                            <p>
-                                                And, in case that we want to do a explicit return of the function and we have only one line of code, we can
-                                                avoid the&nbsp;
-                                                <code>return</code>
-                                                &nbsp;statement and omit brackets too:
-                                            </p>
-                                            <pre class="code code-wrap"><code>const greet = name =&gt; "Hello " + name + "!";
-console.log(greet("Eric"));      // prints out Hello Eric!</code></pre>
-                                            <p>Using an arrow as a callback compared to a normal function:</p>
-                                            <pre class="code code-wrap"><code>let numbers = [3, 5, 8, 9, 2];
-
-// Old way
-function multiplyByTwo(number){ 
-	return number * 2;
+@media only screen {
+body {
+margin: 2em auto;
+max-width: 900px;
+color: rgb(55, 53, 47);
 }
-console.log(numbers.map(multiplyByTwo));    // prints out: 6, 10, 16, 18, 4
-
-// Using ES6 arrow functions
+}body {
+line-height: 1.5;
+white-space: pre-wrap;
+}a,
+a.visited {
+color: inherit;
+text-decoration: underline;
+}.pdf-relative-link-path {
+font-size: 80%;
+color: #444;
+}h1,
+h2,
+h3 {
+letter-spacing: -0.01em;
+line-height: 1.2;
+font-weight: 600;
+margin-bottom: 0;
+}.page-title {
+font-size: 2.5rem;
+font-weight: 700;
+margin-top: 0;
+margin-bottom: 0.75em;
+}h1 {
+font-size: 1.875rem;
+margin-top: 1.875rem;
+}h2 {
+font-size: 1.5rem;
+margin-top: 1.5rem;
+}h3 {
+font-size: 1.25rem;
+margin-top: 1.25rem;
+}.source {
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 1.5em;
+word-break: break-all;
+}.callout {
+border-radius: 3px;
+padding: 1rem;
+}figure {
+margin: 1.25em 0;
+page-break-inside: avoid;
+}figcaption {
+opacity: 0.5;
+font-size: 85%;
+margin-top: 0.5em;
+}mark {
+background-color: transparent;
+}.indented {
+padding-left: 1.5em;
+}hr {
+background: transparent;
+display: block;
+width: 100%;
+height: 1px;
+visibility: visible;
+border: none;
+border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}img {
+max-width: 100%;
+}@media only print {
+img {
+max-height: 100vh;
+object-fit: contain;
+}
+}@page {
+margin: 1in;
+}.collection-content {
+font-size: 0.875rem;
+}.column-list {
+display: flex;
+justify-content: space-between;
+}.column {
+padding: 0 1em;
+}.column:first-child {
+padding-left: 0;
+}.column:last-child {
+padding-right: 0;
+}.table_of_contents-item {
+display: block;
+font-size: 0.875rem;
+line-height: 1.3;
+padding: 0.125rem;
+}.table_of_contents-indent-1 {
+margin-left: 1.5rem;
+}.table_of_contents-indent-2 {
+margin-left: 3rem;
+}.table_of_contents-indent-3 {
+margin-left: 4.5rem;
+}.table_of_contents-link {
+text-decoration: none;
+opacity: 0.7;
+border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}table,
+th,
+td {
+border: 1px solid rgba(55, 53, 47, 0.09);
+border-collapse: collapse;
+}table {
+border-left: none;
+border-right: none;
+}th,
+td {
+font-weight: normal;
+padding: 0.25em 0.5em;
+line-height: 1.5;
+min-height: 1.5em;
+text-align: left;
+}th {
+color: rgba(55, 53, 47, 0.6);
+}ol,
+ul {
+margin: 0;
+margin-block-start: 0.6em;
+margin-block-end: 0.6em;
+}li > ol:first-child,
+li > ul:first-child {
+margin-block-start: 0.6em;
+}ul > li {
+list-style: disc;
+}ul.to-do-list {
+padding-inline-start: 0;
+}ul.to-do-list > li {
+list-style: none;
+}.to-do-children-checked {
+text-decoration: line-through;
+opacity: 0.375;
+}ul.toggle > li {
+list-style: none;
+}ul {
+padding-inline-start: 1.7em;
+}ul > li {
+padding-left: 0.1em;
+}ol {
+padding-inline-start: 1.6em;
+}ol > li {
+padding-left: 0.2em;
+}.mono ol {
+padding-inline-start: 2em;
+}.mono ol > li {
+text-indent: -0.4em;
+}.toggle {
+padding-inline-start: 0em;
+list-style-type: none;
+}/* Indent toggle children */
+.toggle > li > details {
+padding-left: 1.7em;
+}.toggle > li > details > summary {
+margin-left: -1.1em;
+}.selected-value {
+display: inline-block;
+padding: 0 0.5em;
+background: rgba(206, 205, 202, 0.5);
+border-radius: 3px;
+margin-right: 0.5em;
+margin-top: 0.3em;
+margin-bottom: 0.3em;
+white-space: nowrap;
+}.collection-title {
+display: inline-block;
+margin-right: 1em;
+}.page-description {
+margin-bottom: 2em;
+}.simple-table {
+margin-top: 1em;
+font-size: 0.875rem;
+empty-cells: show;
+}
+.simple-table td {
+height: 29px;
+min-width: 120px;
+}.simple-table th {
+height: 29px;
+min-width: 120px;
+}.simple-table-header-color {
+background: rgb(247, 246, 243);
+color: black;
+}
+.simple-table-header {
+font-weight: 500;
+}time {
+opacity: 0.5;
+}.icon {
+display: inline-block;
+max-width: 1.2em;
+max-height: 1.2em;
+text-decoration: none;
+vertical-align: text-bottom;
+margin-right: 0.5em;
+}img.icon {
+border-radius: 3px;
+}.user-icon {
+width: 1.5em;
+height: 1.5em;
+border-radius: 100%;
+margin-right: 0.5rem;
+}.user-icon-inner {
+font-size: 0.8em;
+}.text-icon {
+border: 1px solid #000;
+text-align: center;
+}.page-cover-image {
+display: block;
+object-fit: cover;
+width: 100%;
+max-height: 30vh;
+}.page-header-icon {
+font-size: 3rem;
+margin-bottom: 1rem;
+}.page-header-icon-with-cover {
+margin-top: -0.72em;
+margin-left: 0.07em;
+}.page-header-icon img {
+border-radius: 3px;
+}.link-to-page {
+margin: 1em 0;
+padding: 0;
+border: none;
+font-weight: 500;
+}p > .user {
+opacity: 0.5;
+}td > .user,
+td > time {
+white-space: nowrap;
+}input[type="checkbox"] {
+transform: scale(1.5);
+margin-right: 0.6em;
+vertical-align: middle;
+}p {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}.image {
+border: none;
+margin: 1.5em 0;
+padding: 0;
+border-radius: 0;
+text-align: center;
+}.code,
+code {
+background: rgba(135, 131, 120, 0.15);
+border-radius: 3px;
+padding: 0.2em 0.4em;
+border-radius: 3px;
+font-size: 85%;
+tab-size: 2;
+}code {
+color: #eb5757;
+}.code {
+padding: 1.5em 1em;
+}.code-wrap {
+white-space: pre-wrap;
+word-break: break-all;
+}.code > code {
+background: none;
+padding: 0;
+font-size: 100%;
+color: inherit;
+}blockquote {
+font-size: 1.25em;
+margin: 1em 0;
+padding-left: 1em;
+border-left: 3px solid rgb(55, 53, 47);
+}.bookmark {
+text-decoration: none;
+max-height: 8em;
+padding: 0;
+display: flex;
+width: 100%;
+align-items: stretch;
+}.bookmark-title {
+font-size: 0.85em;
+overflow: hidden;
+text-overflow: ellipsis;
+height: 1.75em;
+white-space: nowrap;
+}.bookmark-text {
+display: flex;
+flex-direction: column;
+}.bookmark-info {
+flex: 4 1 180px;
+padding: 12px 14px 14px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}.bookmark-image {
+width: 33%;
+flex: 1 1 180px;
+display: block;
+position: relative;
+object-fit: cover;
+border-radius: 1px;
+}.bookmark-description {
+color: rgba(55, 53, 47, 0.6);
+font-size: 0.75em;
+overflow: hidden;
+max-height: 4.5em;
+word-break: break-word;
+}.bookmark-href {
+font-size: 0.75em;
+margin-top: 0.25em;
+}.sans {
+font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+"Segoe UI Symbol";
+}
+.code {
+font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+}
+.serif {
+font-family: Lyon-Text, Georgia, ui-serif, serif;
+}
+.mono {
+font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+}
+.pdf .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+}
+.pdf:lang(zh-CN) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+}
+.pdf:lang(zh-TW) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+}
+.pdf:lang(ko-KR) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+}
+.pdf .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK KR";
+}
+.pdf .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+}
+.pdf:lang(zh-CN) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+}
+.pdf:lang(zh-TW) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+}
+.pdf:lang(ko-KR) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+}
+.pdf .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+}
+.highlight-default {
+color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+color: inherit;
+fill: inherit;
+}
+.block-color-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue {
+background-color: rgba(35, 131, 226, 0.07);
+}
+.select-value-color-pink {
+background-color: rgba(245, 224, 233, 1);
+}
+.select-value-color-purple {
+background-color: rgba(232, 222, 238, 1);
+}
+.select-value-color-green {
+background-color: rgba(219, 237, 219, 1);
+}
+.select-value-color-gray {
+background-color: rgba(227, 226, 224, 1);
+}
+.select-value-color-translucentGray {
+background-color: rgba(255, 255, 255, 0.0375);
+}
+.select-value-color-orange {
+background-color: rgba(250, 222, 201, 1);
+}
+.select-value-color-brown {
+background-color: rgba(238, 224, 218, 1);
+}
+.select-value-color-red {
+background-color: rgba(255, 226, 221, 1);
+}
+.select-value-color-yellow {
+background-color: rgba(253, 236, 200, 1);
+}
+.select-value-color-blue {
+background-color: rgba(211, 229, 239, 1);
+}
+.select-value-color-pageGlass {
+background-color: undefined;
+}
+.select-value-color-washGlass {
+background-color: undefined;
+}.checkbox {
+display: inline-flex;
+vertical-align: text-bottom;
+width: 16;
+height: 16;
+background-size: 16px;
+margin-left: 2px;
+margin-right: 5px;
+}.checkbox-on {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}.checkbox-off {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}/* -------- injections from notionBackup -------- */body {
+white-space: normal !important;
+}p {
+min-height: 1em !important;
+}.code,
+code {
+font-size: 100% !important;
+}blockquote {
+font-size: 100% !important;
+}.callout {
+white-space: normal !important;
+}
+.callout div:has(span.icon) {
+font-size: 100% !important;
+}.source:not(.bookmark) {
+font-size: 100% !important;
+}p {
+min-height: 1em !important;
+}
+</style></head><body><article class="page sans"><header><h1 class="page-title">JavaScript</h1><p class="page-description"></p></header><div class="page-body"><p>
+Live Demo:
+<a href="https://www.youtube.com/watch?v=BrQKM_uaZKE">https://www.youtube.com/watch?v=BrQKM_uaZKE</a></p><p>
+Github Repo:
+<a href="https://github.com/web-engineering-tuwien/recipe-search-live-demo">
+https://github.com/web-engineering-tuwien/recipe-search-live-demo
+</a></p><p></p><p><a href="https://javascript.info/">https://javascript.info/</a></p><div class="indented"><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference">
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
+</a></p></div><p></p><p class="block-color-gray"><a href="https://developer.mozilla.org/en-US/docs/Web/Tutorials#javascript-tutorials">
+https://developer.mozilla.org/en-US/docs/Web/Tutorials#javascript-tutorials
+</a></p><p class="block-color-gray"><a href="https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/?messages=success%5B0%5D%3Dflash.signin-success">
+https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures
+</a></p><p class="block-color-gray"><a href="https://eloquentjavascript.net/">https://eloquentjavascript.net/</a></p><p></p><hr/><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#208ba225-9e06-4645-82d5-7db1fa12dcce">JavaScript</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8ba54a64-a741-44d7-8049-891869f7ed37">Embedding into HTML</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b2c328af-3e31-4676-ad01-ab425665c500">Syntax</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#aaf4fcb5-8a55-4b43-b315-208074f40070">Browser and Document APIs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#54296794-9819-4052-ab23-01b1c459e16e">Overview</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4ddbff0b-e4c5-46de-b86b-590ac24eef95">Browser Object Model BOM (window)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bbb76da1-a034-4970-999d-8d7d3a01cce8">Storage (Local Storage, Cookies)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fb096e79-bffb-47bf-9322-bcb0ef771269">Document Object Model DOM</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#240c5ac5-5fcc-4766-accb-86c2be265ea8">Accessibility</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#79f028ac-583e-4193-8e98-c49509e1bb70">Event-Driven Programming</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#33773b18-6fb0-4606-b3e3-1c5eb6a1222a">DOM Event Types</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#254e158d-86d6-4b03-96e8-4c0ae2a040a2">Asynchronous Programming</a></div></nav><p></p><h1>JavaScript</h1><p>interpreted scripting language.</p><p>Standardized as ECMAScript language in the ECMA-262</p><div class="indented"><p><mark class="highlight-gray">Other ECMAScript implementations: JScript, ActionScript, QtScript, …</mark></p></div><p></p><p>In this course: EXMAScript 6</p><h1>Embedding into HTML</h1><p>External</p><div class="indented"><p>linking to an external JavaScript file in &lt;head&gt;</p><div class="indented"><p class="block-color-gray"><code>defer</code>
+= asynchronous loading
+</p><p class="block-color-gray">
+It will
+<em>defer (= delay)</em>
+loading the JS until the page load is completed.
+</p></div><p></p><pre class="code"><code>&lt;script type="text/javascript" src="foo.js" defer&gt; &lt;/script&gt;</code></pre></div><p></p><p>Internal</p><div class="indented"><p>In &lt;body&gt; or &lt;head&gt;</p><p><code>type="module"</code>
+is
+<code>defer</code>
+by default
+</p><pre class="code"><code>&lt;script type="module"&gt;
+statement;
+statement;
+...
+&lt;/script&gt;</code></pre><pre class="code"><code>&lt;script type="text/javascript"&gt;
+statement;
+statement;
+...
+&lt;/script&gt;</code></pre></div><p></p><p>As event handlers</p><div class="indented"><pre class="code"><code>&lt;a href="http://www.bar.com" onmouseover="alert('hi');"&gt;</code></pre></div><p></p><p>Pseudo-URLs in links</p><div class="indented"><pre class="code"><code>&lt;a href="javascript:alert('You clicked');"&gt;Click me&lt;/a&gt;</code></pre></div><p></p><p></p><h1>Syntax</h1><ul class="toggle"><li><details open=""><summary>Key words for declaration, Scoping</summary><p><mark class="highlight-teal">Function-scope:</mark><code>var</code>
+→ try to avoid
+</p><ul class="bulleted-list"><li style="list-style-type: disc">will only live in the function or the outer scope that it was called in</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Function scopes can nest with nested functions</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><mark class="highlight-teal">hoisting</mark>
+: optimzing code before executing it within the virtual machine → During the hoisting process all
+<code>var</code>
+variables get
+<em>declared</em>
+in the beginning of every function without being
+<em>initialized</em>
+.
+<p>
+Therefore accessing / reading an previously un-initialized variable with
+<code>var</code>
+won´t cause an issue and is accessible everywhere within the function. → This makes code prone to error.
+</p></li></ul><p><mark class="highlight-teal">Block-scope:</mark><code>let</code>
+,
+<code>const</code></p><ul class="bulleted-list"><li style="list-style-type: disc">will only exist within its block (just like Java)</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+const identifiers cannot change → improves memory efficiency. Useful for objects and functions that shouldn´t change.
+</li></ul><p><mark class="highlight-teal">Global Scope:</mark>
+no keyword
+</p><ul class="bulleted-list"><li style="list-style-type: disc">Variables are global by default if no keyword is used</li></ul><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Variables, Data types</summary><p>There are 8 basic data types in JavaScript.</p><ul class="bulleted-list"><li style="list-style-type: disc"><code>number</code>
+for numbers of any kind: integer or floating-point
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>bigint</code>
+is for integer numbers of arbitrary length.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>string</code>
+for strings. A string may have zero or more characters, there’s no separate single-character type.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>boolean</code>
+for
+<code>true</code>
+/
+<code>false</code>
+.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>null</code>
+for unknown values – a standalone type that has a single value
+<code>null</code>
+.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>undefined</code>
+for unassigned values – a standalone type that has a single value
+<code>undefined</code>
+.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>object</code>
+for more complex data structures.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>symbol</code>
+for unique identifiers.
+</li></ul><p>
+The
+<code>typeof</code>
+operator allows us to see which type is stored in a variable.
+</p><ul class="bulleted-list"><li style="list-style-type: disc">
+Two forms:
+<code>typeof x</code>
+or
+<code>typeof(x)</code>
+.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Returns a string with the name of the type, like
+<code>"string"</code>
+.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+For
+<code>null</code>
+returns
+<code>"object"</code>
+– this is an error in the language, it’s not actually an object.
+</li></ul><hr/><p>Type conversions:</p><div class="indented"><figure class="image"><a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled.png"><img src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled.png" style="width: 432px"/></a></figure></div><p></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Strings, Template Literals</summary><p>Strings: (“…”, ‘…’)</p><ul class="bulleted-list"><li style="list-style-type: disc">
+Backslash escapes (\) String concatenation with + operator: "Dear " +
+<a href="http://s1.name">s1.name</a>
++ ", thank you for…”
+</li></ul><p>JavaScript Template Literals (Replaces concatenation operations)</p><ul class="bulleted-list"><li style="list-style-type: disc">Use backquote (`) as delimiter</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Can span multiple lines (new line included in the string)</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Can have embedded expressions → ${expression} — computes expression and replaces it with string value
+<pre class="code"><code>message	=	`Dear	${student.name}, Your	GPA, ${gpa(student)},
+is lower	than	the	average: ${averageGPA}`</code></pre></li></ul><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Operators</summary><ul class="bulleted-list"><li style="list-style-type: disc">Numerical operators: +,-,*,/,++,--,%</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Comparison operators: &gt;,&gt;=,&lt;,&lt;=,==,!=,===,!==
+<p>Two kinds of comparison operators</p><pre class="code code-wrap"><code>console.log("1" == 1); // true - compares content
+console.log("1" === 1); // false - compares type + content</code></pre><p></p></li></ul></details></li></ul><ul class="toggle"><li><details open=""><summary>Functions, Callbacks</summary><p>
+Declared with keyword
+<code>function</code>
+:
+</p><ul class="bulleted-list"><li style="list-style-type: disc">
+Functions are first-class citizens, can be passed as parameters, can return other functions
+<ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">Callbacks (= higher order functions)</span></summary><p>Here is a quick example:</p><pre class="code code-wrap"><code>function greeting(name) {
+alert('Hello ' + name);
+}function processUserInput(callback) {
+var name = prompt('Please enter your name.');
+callback(name);
+}processUserInput(greeting);</code></pre><p>
+The above example is a
+<a href="https://developer.mozilla.org/en-US/docs/Glossary/Synchronous">synchronous</a>
+callback, as it is executed immediately.
+</p><p>
+Note, however, that callbacks are often used to continue code execution after an
+<a href="https://developer.mozilla.org/en-US/docs/Glossary/Asynchronous">asynchronous</a>
+(In other words, actions that we initiate now, but they finish later) operation has completed — these
+are called asynchronous callbacks.
+</p><p>For instance, one such function is the setTimeout function.</p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">Callback Hell / Pyramid of Doom</span></summary><p>
+In a “callback-based” style of asynchronous programming. A function that does something asynchronously (at a
+later point in time) should provide a
+<em>callback argument</em>
+(usually an anonymous function) where we put the function to run after it’s complete.
+</p><p>
+As calls become more nested, the code becomes deeper and increasingly more difficult to manage. That’s
+sometimes called “callback hell” or “pyramid of doom”:
+</p><div class="indented"><figure class="image"><a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%201.png"><img src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%201.png" style="width: 384px"/></a></figure></div><p></p><p>
+(Here the loadScript function executes the anonymous function that is its second parameter if script was
+loaded successfully → the goal is to load a series of scripts sequentially)
+</p><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">Callback Hell example</span></summary><p>
+Take a look at the function
+<code>loadScript(src)</code>
+, that loads a script with the given
+<code>src</code>
+:
+</p><pre class="code"><code>function loadScript(src) {
+// creates &lt;script src="…"&gt; with given src
+// this causes the script with given src to start loading and run when complete
+let script = document.createElement('script');
+script.src = src;
+document.head.append(script);
+}</code></pre><p>We can use this function like this:</p><pre class="code"><code>loadScript('/my/script.js');</code></pre><p>
+The script is executed “asynchronously”, as it starts loading now, but runs later, when the
+function has already finished. If there’s any code below
+<code>loadScript(src)</code>
+, it doesn’t wait until the script loading finishes.
+</p><p>
+Let’s say we need to use the new script as soon as it loads. It declares new functions, and we
+want to run them.
+</p><p></p><p>
+Let’s add a
+<code>callback</code>
+function as a second argument to
+<code>loadScript</code>
+that should execute when the script loads:
+</p><pre class="code"><code>function loadScript(src, callback) {
+let script = document.createElement('script');
+script.src = src;script.onload = () =&gt; callback(script);document.head.append(script);
+} </code></pre><p>
+Now:
+<span style="border-bottom: 0.05em solid">
+How can we load two scripts sequentially: the first one, and then the second one after it
+(with error handling)?
+</span></p><p></p><hr/><p></p><p>
+Here’s an improved version of
+<code>loadScript</code>
+that tracks loading errors:
+</p><pre class="code"><code>function loadScript(src, callback) {
+let script = document.createElement('script');
+script.src = src;script.onload = () =&gt; callback(null, script);
+script.onerror = () =&gt; callback(new Error(`Script load error for ${src}`));document.head.append(script);
+} </code></pre><p>
+It calls
+<code>callback(null, script)</code>
+for successful load and
+<code>callback(error)</code>
+otherwise.
+</p><p>To use the loadScript function:</p><pre class="code"><code>loadScript('/my/script.js', function(error, script) { //anonymous function that takes 2 params
+if (error) {
+// handle error
+} else {
+// script loaded successfully
+}
+}); </code></pre><p></p><hr/><p></p><p>
+From the first look, it’s a viable way of asynchronous coding. And indeed it is. For one or
+maybe two nested calls it looks fine.
+</p><p>
+But for multiple asynchronous actions that follow one after another we’ll have code like this:
+</p><pre class="code"><code>loadScript('1.js', function(error, script) {if (error) {
+handleError(error);
+} else {
+// ...
+loadScript('2.js', function(error, script) {
+if (error) {
+handleError(error);
+} else {
+// ...
+loadScript('3.js', function(error, script) {
+if (error) {
+handleError(error);
+} else {
+// ...continue after all scripts are loaded (*)}
+});}
+});
+}
+}); </code></pre><p>In the code above:</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+We load
+<code>1.js</code>
+, then if there’s no error.
+</li></ol><ol class="numbered-list" start="2" type="1"><li>
+We load
+<code>2.js</code>
+, then if there’s no error.
+</li></ol><ol class="numbered-list" start="3" type="1"><li>
+We load
+<code>3.js</code>
+, then if there’s no error – do something else
+<code>(*)</code>
+.
+</li></ol></div><p></p><p>That’s sometimes called “callback hell” or “pyramid of doom.”</p><p>There are some solutions but none of them really solve the problem.</p><p>
+Luckily, there are other ways to avoid such pyramids. One of the best ways is to use “promises”.
+</p></details></li></ul><p></p></details></li></ul></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Function call only matched by name, not parameters → no overloading</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Missing parameters replaced by undefined, Additionally passed parameters are ignored</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Since ES6:
+<em>Optional parameters</em>
+by specifying
+<em>default</em><pre class="code"><code>function	topGrade(student,	threshold=1.5) {
+return	gpa(student)	&lt;=	threshold;
+}</code></pre></li></ul><p></p><p><span style="border-bottom: 0.05em solid">Other function concepts:</span></p><div class="indented"><ul class="toggle"><li><details open=""><summary>Anonymous functions (= lambda expressions)</summary><p>Named function:</p><div class="indented"><pre class="code code-wrap"><code>function greet(name){ return "Hello"; }</code></pre></div><p></p><p>Anonymous function: without a name,</p><div class="indented"><pre class="code code-wrap"><code>var greet = function(name){ return "Hello";}</code></pre></div><p></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Arrow Functions</summary><p>
+Their behavior are the same as of a function. They are
+<em>anonymous functions</em>
+with a special syntax. (syntactic sugar)
+</p><p></p><p>
+To define an arrow function, we use the
+<code>() =&gt; {}</code>
+structure as follows:
+</p><pre class="code code-wrap"><code>const greet = (name) =&gt; { return "Hello " + name + "!"; }
+console.log(greet("Eric"));      // prints out Hello Eric!</code></pre><p>
+In this function, the
+<code>name</code>
+argument to the
+<code>greet</code>
+function is used inside the function to construct a new string and return it using the
+<code>return</code>
+statement.
+</p><p>In case that the function only receives one argument, we can omit the parenthesis:</p><pre class="code code-wrap"><code>const greet = name =&gt; { return "Hello " + name + "!"; }
+console.log(greet("Eric"));      // prints out Hello Eric!</code></pre><p>
+And, in case that we want to do a explicit return of the function and we have only one line of code, we can
+avoid the
+<code>return</code>
+statement and omit brackets too:
+</p><pre class="code code-wrap"><code>const greet = name =&gt; "Hello " + name + "!";
+console.log(greet("Eric"));      // prints out Hello Eric!</code></pre><p>Using an arrow as a callback compared to a normal function:</p><pre class="code code-wrap"><code>let numbers = [3, 5, 8, 9, 2];// Old way
+function multiplyByTwo(number){
+return number * 2;
+}
+console.log(numbers.map(multiplyByTwo));    // prints out: 6, 10, 16, 18, 4// Using ES6 arrow functions
 const multiplyByTwo = number =&gt; number * 2;
 console.log(numbers.map(multiplyByTwo));     // prints out: 6, 10, 16, 18, 4
-</code></pre>
-                                            <p></p>
-                                        </details>
-                                    </li>
-                                </ul>
-                                <p>Also:</p>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">
-                                        Arrow functions don’t have their own&nbsp;
-                                        <code>this</code>
-                                        &nbsp;or&nbsp;
-                                        <code>super</code>
-                                        , so they transparently fit into the surrounding context. - That makes them very useful in some cases.
-                                    </li>
-                                </ul>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Objects</summary>
-                            <pre class="code"><code>var	student	= new	Object();
+</code></pre><p></p></details></li></ul><p>Also:</p><ul class="bulleted-list"><li style="list-style-type: disc">
+Arrow functions don’t have their own
+<code>this</code>
+or
+<code>super</code>
+, so they transparently fit into the surrounding context. - That makes them very useful in some cases.
+</li></ul></div><p></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Objects</summary><pre class="code"><code>var	student	= new	Object();
 student.nr	= 'e11912007';
 student.name	= 'A	Student';
 student.age	= 19;
 student.hasSTEOP	= true;
 student	= {	nr	: 'e120...',
-						name	: 'A	Student',
-						age	: 19,
-						hasSTEOP	: true	};</code></pre>
-                            <p>Objects have no underlying class → (Almost) everything is an object!! Objects are associative arrays.</p>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">key = property, value = value</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Added when value assigned</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Support dynamically adding/deleting values</li>
-                            </ul>
-                            <p></p>
-                            <ul class="toggle">
-                                <li>
-                                    <details open="">
-                                        <summary>JSON - JavaScript Object Notation</summary>
-                                        <p>
-                                            The&nbsp;
-                                            <a href="http://en.wikipedia.org/wiki/JSON">JSON</a>
-                                            &nbsp;(JavaScript Object Notation) is a general format to represent values and objects. It is described as in&nbsp;
-                                            <a href="http://tools.ietf.org/html/rfc4627">RFC 4627</a>
-                                            &nbsp;standard. Initially it was made for JavaScript, but many other languages have libraries to handle it as well.
-                                            So it’s easy to use JSON for data exchange when the client uses JavaScript and the server is written on
-                                            Ruby/PHP/Java/....
-                                        </p>
-                                        <p>JavaScript provides methods:</p>
-                                        <ul class="bulleted-list">
-                                            <li style="list-style-type: disc">
-                                                <code>JSON.stringify</code>
-                                                &nbsp;to convert objects into JSON.
-                                            </li>
-                                        </ul>
-                                        <ul class="bulleted-list">
-                                            <li style="list-style-type: disc">
-                                                <code>JSON.parse</code>
-                                                &nbsp;to convert JSON back into an object.
-                                            </li>
-                                        </ul>
-                                        <p>
-                                            Limitations: Cannot de/serialize JS
-                                            <em>functions</em>
-                                            → JSON can not transfer data that contains functions
-                                        </p>
-                                        <p></p>
-                                    </details>
-                                </li>
-                            </ul>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Classes</summary>
-                            <p><strong>operator "new"</strong></p>
-                            <div class="indented">
-                                <p>
-                                    The regular&nbsp;
-                                    <code>{...}</code>
-                                    &nbsp;syntax allows to create one object. But often we need to create many similar objects, like multiple users or menu
-                                    items and so on.
-                                </p>
-                                <p>
-                                    That can be done using constructor functions and the&nbsp;
-                                    <code>"new"</code>
-                                    &nbsp;operator.
-                                </p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><strong>Constructor function</strong></p>
-                            <div class="indented">
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>They are named with capital letter first.</li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        They should be executed only with&nbsp;
-                                        <code>"new"</code>
-                                        &nbsp;operator.
-                                        <pre class="code"><code>function User(name) {
-  this.name = name;
-  this.isAdmin = false;
+name	: 'A	Student',
+age	: 19,
+hasSTEOP	: true	};</code></pre><p>Objects have no underlying class → (Almost) everything is an object!! Objects are associative arrays.</p><ul class="bulleted-list"><li style="list-style-type: disc">key = property, value = value</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Added when value assigned</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Support dynamically adding/deleting values</li></ul><p></p><ul class="toggle"><li><details open=""><summary>JSON - JavaScript Object Notation</summary><p>
+The
+<a href="http://en.wikipedia.org/wiki/JSON">JSON</a>
+(JavaScript Object Notation) is a general format to represent values and objects. It is described as in
+<a href="http://tools.ietf.org/html/rfc4627">RFC 4627</a>
+standard. Initially it was made for JavaScript, but many other languages have libraries to handle it as well.
+So it’s easy to use JSON for data exchange when the client uses JavaScript and the server is written on
+Ruby/PHP/Java/....
+</p><p>JavaScript provides methods:</p><ul class="bulleted-list"><li style="list-style-type: disc"><code>JSON.stringify</code>
+to convert objects into JSON.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>JSON.parse</code>
+to convert JSON back into an object.
+</li></ul><p>
+Limitations: Cannot de/serialize JS
+<em>functions</em>
+→ JSON can not transfer data that contains functions
+</p><p></p></details></li></ul></details></li></ul><ul class="toggle"><li><details open=""><summary>Classes</summary><p><strong>operator "new"</strong></p><div class="indented"><p>
+The regular
+<code>{...}</code>
+syntax allows to create one object. But often we need to create many similar objects, like multiple users or menu
+items and so on.
+</p><p>
+That can be done using constructor functions and the
+<code>"new"</code>
+operator.
+</p></div><p></p><p></p><p><strong>Constructor function</strong></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>They are named with capital letter first.</li></ol><ol class="numbered-list" start="2" type="1"><li>
+They should be executed only with
+<code>"new"</code>
+operator.
+<pre class="code"><code>function User(name) {
+this.name = name;
+this.isAdmin = false;
+}let user = new User("Jack");</code></pre><p></p><p>
+When a function is executed with
+<code>new</code>
+, it does the following steps:
+</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+A new empty object is created and assigned to
+<code>this</code>
+.
+</li></ol><ol class="numbered-list" start="2" type="1"><li>
+The function body executes. Usually it modifies
+<code>this</code>
+, adds new properties to it.
+</li></ol><ol class="numbered-list" start="3" type="1"><li>
+The value of
+<code>this</code>
+is returned.
+</li></ol></div><p></p><p></p><p>In other words, new User(...) does something like:</p><pre class="code"><code>function User(name) {
+// this = {};  (implicitly)this.name = name;
+this.isAdmin = false;// return this;  (implicitly)
+}</code></pre></li></ol></div><p></p><p></p><p><strong>The more advanced OOP syntax</strong></p><div class="indented"><p>The basic class syntax looks like this:</p><pre class="code"><code>class MyClass {
+prop = value; // propertyconstructor(...) { // constructor
+// ...
+}method(...) {} // methodget something(...) {} // getter method
+set something(...) {} // setter method[Symbol.iterator]() {} // method with computed name (symbol here)
+// ...
+} </code></pre><p><code>MyClass</code>
+is
+<mark class="highlight-teal">technically a function</mark>
+(
+<mark class="highlight-teal">the one that we provide as </mark><mark class="highlight-teal"><code>constructor</code></mark>
+), while methods, getters and setters are not. They are written to the
+<code>.prototype</code>
+.
+</p><p>
+The
+<code>constructor()</code>
+method is called automatically by
+<code>new</code>
+, so we can initialize the object there.
+</p></div><p></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Arrays</summary><p>Heterogenous Lists</p><ul class="bulleted-list"><li style="list-style-type: disc">Add/remove elements on start/end with: push/pop/shift/unshift</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Sort array: sort/reverse</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">can be concatenated with concat</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+String conversion with join
+<figure class="image"><a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%202.png"><img src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%202.png" style="width: 240px"/></a></figure></li></ul><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Functions as Objects</summary><p>Functions are objects too: they can have properties and methods</p><ul class="bulleted-list"><li style="list-style-type: disc">Difference to pure objects: They can be called and can return a value</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Definition assigned as properties (use
+<code>new</code>
+and
+<code>this</code>
+)
+<pre class="code"><code>function	Student(nr,	name,	age,	hasSteop) {
+this.nr	=	nr;
+this.name	=	name;
+this.age	=	age;
+this.hasSteop	=	hasSteop;
+this.finishSteop	=	function() {
+this.hasSteop	= true;
 }
-
-let user = new User("Jack");</code></pre>
-                                        <p></p>
-                                        <p>
-                                            When a function is executed with&nbsp;
-                                            <code>new</code>
-                                            , it does the following steps:
-                                        </p>
-                                        <div class="indented">
-                                            <ol type="1" class="numbered-list" start="1">
-                                                <li>
-                                                    A new empty object is created and assigned to&nbsp;
-                                                    <code>this</code>
-                                                    .
-                                                </li>
-                                            </ol>
-                                            <ol type="1" class="numbered-list" start="2">
-                                                <li>
-                                                    The function body executes. Usually it modifies&nbsp;
-                                                    <code>this</code>
-                                                    , adds new properties to it.
-                                                </li>
-                                            </ol>
-                                            <ol type="1" class="numbered-list" start="3">
-                                                <li>
-                                                    The value of&nbsp;
-                                                    <code>this</code>
-                                                    &nbsp;is returned.
-                                                </li>
-                                            </ol>
-                                        </div>
-                                        <p></p>
-                                        <p></p>
-                                        <p>In other words, new User(...) does something like:</p>
-                                        <pre class="code"><code>function User(name) {
-  // this = {};  (implicitly)
-
-  this.name = name;
-  this.isAdmin = false;
-
-  // return this;  (implicitly)
-}</code></pre>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><strong>The more advanced OOP syntax</strong></p>
-                            <div class="indented">
-                                <p>The basic class syntax looks like this:</p>
-                                <pre class="code"><code>class MyClass {
-  prop = value; // property
-
-  constructor(...) { // constructor
-    // ...
-  }
-
-  method(...) {} // method
-
-  get something(...) {} // getter method
-  set something(...) {} // setter method
-
-  [Symbol.iterator]() {} // method with computed name (symbol here)
-  // ...
-} </code></pre>
-                                <p>
-                                    <code>MyClass</code>
-                                    &nbsp;is
-                                    <mark class="highlight-teal">technically a function</mark>
-                                    (
-                                    <mark class="highlight-teal">the one that we provide as&nbsp;</mark>
-                                    <mark class="highlight-teal"><code>constructor</code></mark>
-                                    ), while methods, getters and setters are not. They are written to the&nbsp;
-                                    <code>.prototype</code>
-                                    .
-                                </p>
-                                <p>
-                                    The&nbsp;
-                                    <code>constructor()</code>
-                                    &nbsp;method is called automatically by&nbsp;
-                                    <code>new</code>
-                                    , so we can initialize the object there.
-                                </p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Arrays</summary>
-                            <p>Heterogenous Lists</p>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Add/remove elements on start/end with: push/pop/shift/unshift</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Sort array: sort/reverse</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">can be concatenated with concat</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    String conversion with join
-                                    <figure class="image">
-                                        <a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%202.png">
-                                            <img style="width: 240px" src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%202.png" />
-                                        </a>
-                                    </figure>
-                                </li>
-                            </ul>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Functions as Objects</summary>
-                            <p>Functions are objects too: they can have properties and methods</p>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Difference to pure objects: They can be called and can return a value</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    Definition assigned as properties (use
-                                    <code>new</code>
-                                    and
-                                    <code>this</code>
-                                    )
-                                    <pre class="code"><code>function	Student(nr,	name,	age,	hasSteop) {
-			this.nr	=	nr;
-			this.name	=	name;
-			this.age	=	age;
-			this.hasSteop	=	hasSteop;
-			
-			this.finishSteop	=	function() {
-					this.hasSteop	= true;
-			}
 }
 var	jc	= new	Student('e0828…',‘Jurgen	Cito',	29,	false);
-jc.finishSteop();</code></pre>
-                                    <p>ES6 Class is syntactic sugar for functions as objects:</p>
-                                    <pre class="code"><code>class	Student	{
-			constructor(nr,	name,	age,	hasSteop)	{
-				this.nr	=	nr;
-				this.name	=	name;
-				this.age	=	age;
-				this.hasSteop	=	hasSteop;
-			}	
-				
-			finishSteop()	{
-					this.hasSteop	= true;
-			}
+jc.finishSteop();</code></pre><p>ES6 Class is syntactic sugar for functions as objects:</p><pre class="code"><code>class	Student	{
+constructor(nr,	name,	age,	hasSteop)	{
+this.nr	=	nr;
+this.name	=	name;
+this.age	=	age;
+this.hasSteop	=	hasSteop;
+}
+finishSteop()	{
+this.hasSteop	= true;
+}
 }
 var	jc	= new	Student('e0828…', ‘Jurgen	Cito',	29,	false);
 jc.finishSteop();
 //Student	{	nr:	'e0828112',	name:	'Jurgen	Cito',	age:	29,	hasSteop:	true	}
-//typeof(jc) === 'object'</code></pre>
-                                    <p></p>
-                                </li>
-                            </ul>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Events</summary>
-                            <ul class="toggle">
-                                <li>
-                                    <details open="">
-                                        <summary>Pop-up Boxes</summary>
-                                        <p>
-                                            Confirm boxes will return "true" if ok is selected, and return "false" if cancel is selected. Alert boxes will not
-                                            return anything. Prompt boxes will return whatever is in the text box. (Note: prompt boxes also have an optional
-                                            second parameter, which is the text that will already be in the text box.)
-                                        </p>
-                                        <pre class="code code-wrap"><code>confirm("Hi!");
+//typeof(jc) === 'object'</code></pre><p></p></li></ul></details></li></ul><ul class="toggle"><li><details open=""><summary>Events</summary><ul class="toggle"><li><details open=""><summary>Pop-up Boxes</summary><p>
+Confirm boxes will return "true" if ok is selected, and return "false" if cancel is selected. Alert boxes will not
+return anything. Prompt boxes will return whatever is in the text box. (Note: prompt boxes also have an optional
+second parameter, which is the text that will already be in the text box.)
+</p><pre class="code code-wrap"><code>confirm("Hi!");
 prompt("Bye!");
-alert("Hello");</code></pre>
-                                    </details>
-                                </li>
-                            </ul>
-                            <p></p>
-                            <p>Event callback attached to HTML elements.</p>
-                            <div class="indented">
-                                <pre class="code"><code>&lt;button	onclick="alert('Test!')"&gt;
-			Test	me!
-&lt;/button&gt;</code></pre>
-                                <pre class="code"><code>let	button	=	document.getElementsByTagName(“button")[0] header.click();	//Execute	predefined	event
+alert("Hello");</code></pre></details></li></ul><p></p><p>Event callback attached to HTML elements.</p><div class="indented"><pre class="code"><code>&lt;button	onclick="alert('Test!')"&gt;
+Test	me!
+&lt;/button&gt;</code></pre><pre class="code"><code>let	button	=	document.getElementsByTagName(“button")[0] header.click();	//Execute	predefined	event
 header.onclick =	function(){alert('Clicked!');}	//Set	event	listener	-	only	one	listener	supported
 let	func =	function()	{alert('Clicked!');}
-header.addEventListener(“click",	func)	
-header.removeEventListener(“click",	func)</code></pre>
-                            </div>
-                            <p></p>
-                            <p>Event types</p>
-                            <div class="indented">
-                                <figure class="image">
-                                    <a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%203.png">
-                                        <img style="width: 432px" src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%203.png" />
-                                    </a>
-                                </figure>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Modules</summary>
-                            <p>
-                                <a href="https://www.samanthaming.com/tidbits/79-module-cheatsheet/">
-                                    https://www.samanthaming.com/tidbits/79-module-cheatsheet/
-                                </a>
-                            </p>
-                            <div class="indented">
-                                <figure class="image">
-                                    <a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%204.png">
-                                        <img style="width: 336px" src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%204.png" />
-                                    </a>
-                                </figure>
-                            </div>
-                            <p></p>
-                            <p>Establish namespace in separate module files: Ability to create named export or default exports</p>
-                            <div class="indented"><p>Rule: One module per file, one file per module</p></div>
-                            <p></p>
-                            <p>Export specific elements:</p>
-                            <div class="indented">
-                                <pre class="code"><code>export function gpa(student) {…}          //EITHER THIS WAY
-function gpa (student) {…}; export gpa;   //OR THIS WAY</code></pre>
-                            </div>
-                            <p></p>
-                            <p>Import in other files:</p>
-                            <div class="indented">
-                                <pre class="code"><code>import	*	as	Student	from	‘./student.js';
-s	=	{…};	s.gpa	=	Student.gpa(s);	//&lt;- now gpa is in the Student namespace
-
-import	{	gpa	}	from	‘./student.js’;
-s	=	{…};	s.gpa	=	gpa(s); //&lt;- now gpa can be accessed directly</code></pre>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><mark class="highlight-teal">Promises</mark></summary>
-                            <p class="block-color-gray">Analogy:</p>
-                            <div class="indented">
-                                <p>
-                                    Fans have subscribed the mailing subscription list of a singer so that they get instantly notified once the next album
-                                    becomes becomes available or if something goes wrong.
-                                </p>
-                            </div>
-                            <p></p>
-                            <p>Components:</p>
-                            <div class="indented">
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>
-                                        A “producing code” that does something and takes time. For instance, some code that loads the data over a network.
-                                        <mark class="highlight-gray">That’s a “singer”.</mark>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        A “consuming code” that wants the result of the “producing code” once it’s ready. Many functions may need that result.
-                                        <mark class="highlight-gray">These are the “fans”.</mark>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="3">
-                                    <li>
-                                        A&nbsp;
-                                        <em>promise</em>
-                                        &nbsp;is a special JavaScript object that links the “producing code” and the “consuming code” together. The “producing
-                                        code” takes whatever time it needs to produce the promised result, and the “promise” makes that result available to all
-                                        of the subscribed code when it’s ready.
-                                        <mark class="highlight-gray">This is the “subscription list”.</mark>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p>
-                                The constructor syntax for a
-                                <mark class="highlight-teal">promise object</mark>
-                                is:
-                            </p>
-                            <pre class="code"><code>let promise = new Promise(/*executor(resolve, reject)*/); </code></pre>
-                            <pre class="code"><code>let promise = new Promise(function(resolve, reject) {
-  // executor (the producing code)
-}); </code></pre>
-                            <p>The executor runs automatically and attempts to perform a job. When it is finished with the attempt it calls</p>
-                            <div class="indented">
-                                <p>
-                                    <code>resolve</code>
-                                    &nbsp;if it was successful
-                                </p>
-                                <p>
-                                    <code>reject</code>
-                                    &nbsp;if there was an error.
-                                </p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p>
-                                The&nbsp;
-                                <mark class="highlight-gray"><code>promise</code></mark>
-                                <mark class="highlight-gray">&nbsp;</mark>
-                                object returned by the&nbsp;
-                                <mark class="highlight-gray"><code>new Promise</code></mark>
-                                <mark class="highlight-gray">&nbsp;</mark>
-                                has 2 internal properties:
-                            </p>
-                            <div class="indented">
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>
-                                        <code>state</code>
-                                        <ul class="bulleted-list">
-                                            <li style="list-style-type: disc">
-                                                initially&nbsp;
-                                                <code>"pending"</code>
-                                            </li>
-                                        </ul>
-                                        <ul class="bulleted-list">
-                                            <li style="list-style-type: disc">
-                                                <code>"fulfilled"</code>
-                                                &nbsp;when&nbsp;
-                                                <code>resolve</code>
-                                                &nbsp;is called by the executor
-                                            </li>
-                                        </ul>
-                                        <ul class="bulleted-list">
-                                            <li style="list-style-type: disc">
-                                                <code>"rejected"</code>
-                                                &nbsp;when&nbsp;
-                                                <code>reject</code>
-                                                &nbsp;is called by the executor
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        <code>result</code>
-                                        <ul class="bulleted-list">
-                                            <li style="list-style-type: disc">
-                                                initially&nbsp;
-                                                <code>undefined</code>
-                                            </li>
-                                        </ul>
-                                        <ul class="bulleted-list">
-                                            <li style="list-style-type: disc">
-                                                <code>value</code>
-                                                &nbsp;when&nbsp;
-                                                <code>resolve(value)</code>
-                                                &nbsp;is called by the executor
-                                            </li>
-                                        </ul>
-                                        <ul class="bulleted-list">
-                                            <li style="list-style-type: disc">
-                                                <code>error</code>
-                                                &nbsp;when&nbsp;
-                                                <code>reject(error)</code>
-                                                &nbsp;is called by the executor
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <figure class="image">
-                                <a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%205.png">
-                                    <img style="width: 336px" src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%205.png" />
-                                </a>
-                            </figure>
-                            <p></p>
-                            <p>Example: Successful</p>
-                            <div class="indented">
-                                <pre class="code"><code>let promise = new Promise(function(resolve, reject) {
-  setTimeout(() =&gt; resolve("done"), 1000); //"done" is the result
-}); </code></pre>
-                                <p>
-                                    After one second of “processing” the executor calls&nbsp;
-                                    <code>resolve("done")</code>
-                                    &nbsp;to produce the result. This changes the state of the&nbsp;
-                                    <code>promise</code>
-                                    &nbsp;object:
-                                </p>
-                                <div class="indented">
-                                    <figure class="image">
-                                        <a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%206.png">
-                                            <img style="width: 384px" src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%206.png" />
-                                        </a>
-                                    </figure>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p>Example: Unsuccessful</p>
-                            <div class="indented">
-                                <pre class="code"><code>let promise = new Promise(function(resolve, reject) {
-  setTimeout(() =&gt; reject(new Error("Whoops!")), 1000); //"whoops" is the error statement
-}); </code></pre>
-                                <p>But it is recommended to use Error objects (or objects that inherit from Error).</p>
-                                <p>The call to reject(...) moves the promise object to "rejected" state:</p>
-                                <div class="indented">
-                                    <figure class="image">
-                                        <a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%207.png">
-                                            <img style="width: 384px" src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%207.png" />
-                                        </a>
-                                    </figure>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><mark class="highlight-teal">Consumers: then, catch, finally</mark></summary>
-                            <p>
-                                A Promise object serves as a link between the executor (the “producing code” or “singer”) and the consuming functions (the
-                                “fans”), which will receive the result or error.
-                            </p>
-                            <p>Consuming functions can be registered (subscribed) using methods .then, .catch and .finally.</p>
-                            <p></p>
-                            <p><code>.then</code></p>
-                            <div class="indented">
-                                <pre class="code"><code>promise.then(
-  function(result) { ... }, //RESOLVE FUNCTION
-  function(error) { ... } //REJECT FUNCTION
-); </code></pre>
-                                <p>Can also be called with only a single parameter (resolve function).</p>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p><code>.catch</code></p>
-                            <div class="indented">
-                                <p>
-                                    The call
-                                    <code>.catch(f)</code>
-                                    is a complete analog of
-                                    <code>.then(null, f)</code>
-                                    , it’s just a shorthand.
-                                </p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><code>.finally</code></p>
-                            <div class="indented">
-                                <p>
-                                    The call
-                                    <code>.finally(f)</code>
-                                    is similar to
-                                    <code>.then(f, f)</code>
-                                    in the sense that f always runs when the promise is settled: be it resolve or reject.
-                                </p>
-                                <p></p>
-                            </div>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><mark class="highlight-teal">async/await</mark></summary>
-                            <p>
-                                The async/await pattern: allows an asynchronous, non-blocking function to be structured in a way similar to an ordinary
-                                synchronous function.
-                            </p>
-                            <p></p>
-                            <p>
-                                <code>await</code>
-                                can only be used from inside an
-                                <code>async</code>
-                                function.
-                            </p>
-                            <p>
-                                <code>await</code>
-                                expressions make promise-returning functions behave as though they're synchronous
-                                <em>by suspending execution</em>
-                                until the returned promise is fulfilled or rejected.
-                            </p>
-                            <p>
-                                It literally
-                                <mark class="highlight-teal">suspends the function execution until the promise settles</mark>
-                                , and then resumes it with the promise result as the return value.
-                            </p>
-                            <p></p>
-                            <p>Here's an example:</p>
-                            <div class="indented">
-                                <p>
-                                    <mark class="highlight-gray"><code>resolveAfter2Seconds()</code></mark>
-                                    <mark class="highlight-gray"></mark>
-                                    returns a promise but the
-                                    <mark class="highlight-gray"><code>result</code></mark>
-                                    variable only stores the result of the promise:
-                                </p>
-                                <div class="indented">
-                                    <ul class="bulleted-list">
-                                        <li style="list-style-type: disc">
-                                            <mark class="highlight-gray"><code>value</code></mark>
-                                            <mark class="highlight-gray">&nbsp;</mark>
-                                            when&nbsp;
-                                            <mark class="highlight-gray"><code>resolve(value)</code></mark>
-                                        </li>
-                                    </ul>
-                                    <ul class="bulleted-list">
-                                        <li style="list-style-type: disc">
-                                            <mark class="highlight-gray"><code>error</code></mark>
-                                            <mark class="highlight-gray">&nbsp;</mark>
-                                            when&nbsp;
-                                            <mark class="highlight-gray"><code>reject(error)</code></mark>
-                                            &nbsp;
-                                        </li>
-                                    </ul>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <pre class="code"><code>function resolveAfter2Seconds() {
-  return new Promise( resolve =&gt; { //executor function 
-    setTimeout(() =&gt; { resolve('resolved'); }, 2000); //resolve function
-  });
-}
-
-async function asyncCall() {
-  console.log('calling');
-  const result = await resolveAfter2Seconds();
-  console.log(result);
-  // expected output: "resolved"
-}
-
-asyncCall();</code></pre>
-                            <p></p>
-                            <p>
-                                <code>Async</code>
-                                functions always return a promise.
-                            </p>
-                            <p>If the return value of an async function is not explicitly a promise, it will be implicitly wrapped in a promise.</p>
-                            <p>For example, the following:</p>
-                            <div class="indented">
-                                <pre class="code code-wrap"><code>async function foo() {
-   return 1
-}</code></pre>
-                            </div>
-                            <p></p>
-                            <p>...is similar to:</p>
-                            <div class="indented">
-                                <pre class="code code-wrap"><code>function foo() {
-   return Promise.resolve(1)
-}</code></pre>
-                            </div>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <p>Inheritance</p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Object Prototypes, Prototypal inheritance</summary>
-                            <p>
-                                In JavaScript, objects have a special hidden property
-                                <code>[[Prototype]]</code>
-                                , that is either null or references another object. That object is called “a prototype”.
-                            </p>
-                            <p>
-                                The property&nbsp;
-                                <code>[[Prototype]]</code>
-                                &nbsp;is internal and hidden, but there are many ways to set it.
-                            </p>
-                            <div class="indented">
-                                <p>
-                                    One of them is to use the special name&nbsp;
-                                    <code>__proto__</code>
-                                    , like this:
-                                </p>
-                                <div class="indented">
-                                    <p>
-                                        Now if we read a property from&nbsp;
-                                        <code>rabbit</code>
-                                        , and it’s missing, JavaScript will automatically take it from&nbsp;
-                                        <code>animal</code>
-                                        .
-                                    </p>
-                                    <p>For instance:</p>
-                                    <pre class="code"><code>let animal = {
-  eats: true
+header.addEventListener(“click",	func)
+header.removeEventListener(“click",	func)</code></pre></div><p></p><p>Event types</p><div class="indented"><figure class="image"><a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%203.png"><img src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%203.png" style="width: 432px"/></a></figure></div><p></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Modules</summary><p><a href="https://www.samanthaming.com/tidbits/79-module-cheatsheet/">
+https://www.samanthaming.com/tidbits/79-module-cheatsheet/
+</a></p><div class="indented"><figure class="image"><a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%204.png"><img src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%204.png" style="width: 336px"/></a></figure></div><p></p><p>Establish namespace in separate module files: Ability to create named export or default exports</p><div class="indented"><p>Rule: One module per file, one file per module</p></div><p></p><p>Export specific elements:</p><div class="indented"><pre class="code"><code>export function gpa(student) {…}          //EITHER THIS WAY
+function gpa (student) {…}; export gpa;   //OR THIS WAY</code></pre></div><p></p><p>Import in other files:</p><div class="indented"><pre class="code"><code>import	*	as	Student	from	‘./student.js';
+s	=	{…};	s.gpa	=	Student.gpa(s);	//&lt;- now gpa is in the Student namespaceimport	{	gpa	}	from	‘./student.js’;
+s	=	{…};	s.gpa	=	gpa(s); //&lt;- now gpa can be accessed directly</code></pre></div><p></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary><mark class="highlight-teal">Promises</mark></summary><p class="block-color-gray">Analogy:</p><div class="indented"><p>
+Fans have subscribed the mailing subscription list of a singer so that they get instantly notified once the next album
+becomes becomes available or if something goes wrong.
+</p></div><p></p><p>Components:</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+A “producing code” that does something and takes time. For instance, some code that loads the data over a network.
+<mark class="highlight-gray">That’s a “singer”.</mark></li></ol><ol class="numbered-list" start="2" type="1"><li>
+A “consuming code” that wants the result of the “producing code” once it’s ready. Many functions may need that result.
+<mark class="highlight-gray">These are the “fans”.</mark></li></ol><ol class="numbered-list" start="3" type="1"><li>
+A
+<em>promise</em>
+is a special JavaScript object that links the “producing code” and the “consuming code” together. The “producing
+code” takes whatever time it needs to produce the promised result, and the “promise” makes that result available to all
+of the subscribed code when it’s ready.
+<mark class="highlight-gray">This is the “subscription list”.</mark></li></ol></div><p></p><p></p><p>
+The constructor syntax for a
+<mark class="highlight-teal">promise object</mark>
+is:
+</p><pre class="code"><code>let promise = new Promise(/*executor(resolve, reject)*/); </code></pre><pre class="code"><code>let promise = new Promise(function(resolve, reject) {
+// executor (the producing code)
+}); </code></pre><p>The executor runs automatically and attempts to perform a job. When it is finished with the attempt it calls</p><div class="indented"><p><code>resolve</code>
+if it was successful
+</p><p><code>reject</code>
+if there was an error.
+</p></div><p></p><p></p><p>
+The
+<mark class="highlight-gray"><code>promise</code></mark><mark class="highlight-gray"></mark>
+object returned by the
+<mark class="highlight-gray"><code>new Promise</code></mark><mark class="highlight-gray"></mark>
+has 2 internal properties:
+</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li><code>state</code><ul class="bulleted-list"><li style="list-style-type: disc">
+initially
+<code>"pending"</code></li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>"fulfilled"</code>
+when
+<code>resolve</code>
+is called by the executor
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>"rejected"</code>
+when
+<code>reject</code>
+is called by the executor
+</li></ul></li></ol><ol class="numbered-list" start="2" type="1"><li><code>result</code><ul class="bulleted-list"><li style="list-style-type: disc">
+initially
+<code>undefined</code></li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>value</code>
+when
+<code>resolve(value)</code>
+is called by the executor
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>error</code>
+when
+<code>reject(error)</code>
+is called by the executor
+</li></ul></li></ol></div><p></p><p></p><figure class="image"><a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%205.png"><img src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%205.png" style="width: 336px"/></a></figure><p></p><p>Example: Successful</p><div class="indented"><pre class="code"><code>let promise = new Promise(function(resolve, reject) {
+setTimeout(() =&gt; resolve("done"), 1000); //"done" is the result
+}); </code></pre><p>
+After one second of “processing” the executor calls
+<code>resolve("done")</code>
+to produce the result. This changes the state of the
+<code>promise</code>
+object:
+</p><div class="indented"><figure class="image"><a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%206.png"><img src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%206.png" style="width: 384px"/></a></figure></div><p></p></div><p></p><p></p><p>Example: Unsuccessful</p><div class="indented"><pre class="code"><code>let promise = new Promise(function(resolve, reject) {
+setTimeout(() =&gt; reject(new Error("Whoops!")), 1000); //"whoops" is the error statement
+}); </code></pre><p>But it is recommended to use Error objects (or objects that inherit from Error).</p><p>The call to reject(...) moves the promise object to "rejected" state:</p><div class="indented"><figure class="image"><a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%207.png"><img src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%207.png" style="width: 384px"/></a></figure></div><p></p></div><p></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary><mark class="highlight-teal">Consumers: then, catch, finally</mark></summary><p>
+A Promise object serves as a link between the executor (the “producing code” or “singer”) and the consuming functions (the
+“fans”), which will receive the result or error.
+</p><p>Consuming functions can be registered (subscribed) using methods .then, .catch and .finally.</p><p></p><p><code>.then</code></p><div class="indented"><pre class="code"><code>promise.then(
+function(result) { ... }, //RESOLVE FUNCTION
+function(error) { ... } //REJECT FUNCTION
+); </code></pre><p>Can also be called with only a single parameter (resolve function).</p><p></p></div><p></p><p><code>.catch</code></p><div class="indented"><p>
+The call
+<code>.catch(f)</code>
+is a complete analog of
+<code>.then(null, f)</code>
+, it’s just a shorthand.
+</p></div><p></p><p></p><p><code>.finally</code></p><div class="indented"><p>
+The call
+<code>.finally(f)</code>
+is similar to
+<code>.then(f, f)</code>
+in the sense that f always runs when the promise is settled: be it resolve or reject.
+</p><p></p></div><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary><mark class="highlight-teal">async/await</mark></summary><p>
+The async/await pattern: allows an asynchronous, non-blocking function to be structured in a way similar to an ordinary
+synchronous function.
+</p><p></p><p><code>await</code>
+can only be used from inside an
+<code>async</code>
+function.
+</p><p><code>await</code>
+expressions make promise-returning functions behave as though they're synchronous
+<em>by suspending execution</em>
+until the returned promise is fulfilled or rejected.
+</p><p>
+It literally
+<mark class="highlight-teal">suspends the function execution until the promise settles</mark>
+, and then resumes it with the promise result as the return value.
+</p><p></p><p>Here's an example:</p><div class="indented"><p><mark class="highlight-gray"><code>resolveAfter2Seconds()</code></mark><mark class="highlight-gray"></mark>
+returns a promise but the
+<mark class="highlight-gray"><code>result</code></mark>
+variable only stores the result of the promise:
+</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc"><mark class="highlight-gray"><code>value</code></mark><mark class="highlight-gray"></mark>
+when
+<mark class="highlight-gray"><code>resolve(value)</code></mark></li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><mark class="highlight-gray"><code>error</code></mark><mark class="highlight-gray"></mark>
+when
+<mark class="highlight-gray"><code>reject(error)</code></mark></li></ul></div><p></p></div><p></p><pre class="code"><code>function resolveAfter2Seconds() {
+return new Promise( resolve =&gt; { //executor function
+setTimeout(() =&gt; { resolve('resolved'); }, 2000); //resolve function
+});
+}async function asyncCall() {
+console.log('calling');
+const result = await resolveAfter2Seconds();
+console.log(result);
+// expected output: "resolved"
+}asyncCall();</code></pre><p></p><p><code>Async</code>
+functions always return a promise.
+</p><p>If the return value of an async function is not explicitly a promise, it will be implicitly wrapped in a promise.</p><p>For example, the following:</p><div class="indented"><pre class="code code-wrap"><code>async function foo() {
+return 1
+}</code></pre></div><p></p><p>...is similar to:</p><div class="indented"><pre class="code code-wrap"><code>function foo() {
+return Promise.resolve(1)
+}</code></pre></div><p></p></details></li></ul><p></p><p>Inheritance</p><ul class="toggle"><li><details open=""><summary>Object Prototypes, Prototypal inheritance</summary><p>
+In JavaScript, objects have a special hidden property
+<code>[[Prototype]]</code>
+, that is either null or references another object. That object is called “a prototype”.
+</p><p>
+The property
+<code>[[Prototype]]</code>
+is internal and hidden, but there are many ways to set it.
+</p><div class="indented"><p>
+One of them is to use the special name
+<code>__proto__</code>
+, like this:
+</p><div class="indented"><p>
+Now if we read a property from
+<code>rabbit</code>
+, and it’s missing, JavaScript will automatically take it from
+<code>animal</code>
+.
+</p><p>For instance:</p><pre class="code"><code>let animal = {
+eats: true
 };
 let rabbit = {
-  jumps: true
-};
-
-rabbit.__proto__ = animal; // we can find both properties in rabbit now:
-alert( rabbit.eats ); // true 
-alert( rabbit.jumps );  </code></pre>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p>All objects have a prototype</p>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">All prototype are objects, any object can be a prototype</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">Objects inherit properties and methods from prototype</li>
-                            </ul>
-                            <ul class="bulleted-list">
-                                <li style="list-style-type: disc">
-                                    Object.prototype is top of the prototype chain (its prototype is null) (similar to Object.class in Java)
-                                    <pre class="code"><code>var aStudent	=	{	nr	: 'e120...',	...	};				//	aStudent		-&gt;	Object.prototype
+jumps: true
+};rabbit.__proto__ = animal; // we can find both properties in rabbit now:
+alert( rabbit.eats ); // true
+alert( rabbit.jumps );  </code></pre></div><p></p></div><p></p><p></p><p>All objects have a prototype</p><ul class="bulleted-list"><li style="list-style-type: disc">All prototype are objects, any object can be a prototype</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Objects inherit properties and methods from prototype</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Object.prototype is top of the prototype chain (its prototype is null) (similar to Object.class in Java)
+<pre class="code"><code>var aStudent	=	{	nr	: 'e120...',	...	};				//	aStudent		-&gt;	Object.prototype
 var students	=	[	aStudent,	...	];								//	students		-&gt;	Array.prototype			-&gt;	Object.prototpye
 var	jc	= new	Student('e08…', ...);							  //	aStudent	  -&gt;	Student.prototype		-&gt;	Object.prototype
-function	print() {	...	};												//	print				-&gt;	Function.prototype	-&gt;	Object.prototype</code></pre>
-                                </li>
-                            </ul>
-                            <p>Existing prototypes can be extended at any time: its called "monkey-patching" and should be avoided!</p>
-                            <div class="indented">
-                                <pre class="code"><code>String.prototype.distance	=	function() {	...	};			//	monkey	patching</code></pre>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>Class inheritance</summary>
-                            <p>
-                                To extend a class:&nbsp;
-                                <code>class Child</code>
-                                <strong><code>extends</code></strong>
-                                <code>Parent</code>
-                                :
-                            </p>
-                            <p>
-                                That means&nbsp;
-                                <code>Child.prototype.__proto__</code>
-                                &nbsp;will be&nbsp;
-                                <code>Parent.prototype</code>
-                                , so methods are inherited.
-                            </p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <h1>Browser and Document APIs</h1>
-                <p>Standard Library/Common APIs</p>
-                <p></p>
-                <h2>Overview</h2>
-                <p>Overview: There’s a root object called window.</p>
-                <div class="indented">
-                    <figure class="image">
-                        <a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%208.png">
-                            <img style="width: 108px" src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%208.png" />
-                        </a>
-                    </figure>
-                    <p></p>
-                </div>
-                <p></p>
-                <p>APIs accessible through Javascript.</p>
-                <p>Browser Object Model BOM → interact with browser</p>
-                <div class="indented">
-                    <p class="block-color-gray">
-                        <mark class="highlight-gray"><code>Window</code></mark>
-                        <mark class="highlight-gray">,</mark>
-                        <mark class="highlight-gray"><code>Frames</code></mark>
-                        <mark class="highlight-gray">,</mark>
-                        <mark class="highlight-gray"><code>History</code></mark>
-                        <mark class="highlight-gray">,</mark>
-                        <mark class="highlight-gray"><code>Location</code></mark>
-                        <mark class="highlight-gray">,</mark>
-                        <mark class="highlight-gray"><code>Navigator</code></mark>
-                        <mark class="highlight-gray"></mark>
-                        (browser type &amp; version), ...
-                    </p>
-                    <p class="block-color-gray">Storage (Local Storage, Cookies)</p>
-                </div>
-                <p></p>
-                <p>Document Object Model DOM → interact with HTML page</p>
-                <div class="indented">
-                    <p class="block-color-gray">
-                        Properties:
-                        <mark class="highlight-gray"><code>document.forms</code></mark>
-                        <mark class="highlight-gray">,</mark>
-                        <mark class="highlight-gray"><code>document.links</code></mark>
-                        , …
-                    </p>
-                    <p class="block-color-gray">
-                        Methods:
-                        <mark class="highlight-gray"><code>document.createElement</code></mark>
-                        <mark class="highlight-gray">,</mark>
-                        <mark class="highlight-gray"><code>document.getElementsByTagName</code></mark>
-                        , …
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>Browser Object Model BOM (window)</h2>
-                <p>Allows access to browser objects. → Not standardized but very similar in most browsers.</p>
-                <div class="indented">
-                    <p></p>
-                    <p><strong>Object Property and Methods</strong></p>
-                    <hr />
-                    <p>window Other global objects, open(), close(), moveTo(), resizeTo()</p>
-                    <p>screen width, height, colorDepth, pixelDepth, …</p>
-                    <p>location hostname, pathname, port, protocol, assign(), …</p>
-                    <p>history back(), forward()</p>
-                    <p>navigator userAgent, platform, systemLanguage, …</p>
-                    <p>document body, forms, write(), close(), getElementById(), …</p>
-                    <p>Popup Boxes alert(), confirm(), prompt()</p>
-                    <p>Timing setInterval(func,time,p1,…), setTimeout(func,time)</p>
-                    <p></p>
-                </div>
-                <p></p>
-                <h2>Storage (Local Storage, Cookies)</h2>
-                <p><span style="border-bottom: 0.05em solid">Cookies</span></p>
-                <div class="indented">
-                    <p>Cookies are sent with every single request.</p>
-                    <p>String/value pairs, Semicolon separated.</p>
-                    <pre class="code"><code>document.cookie	=	"name=Jane Doe; nr=1234567;	expires=" + date.toGMTString()</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Web Storage</span></p>
-                <div class="indented">
-                    <p>Data that the user is required to store (as key / value pairs)</p>
-                    <p>Browser defines storage quota.</p>
-                    <p>Both storage objects provide same methods and properties:</p>
-                    <div class="indented">
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">
-                                <code>setItem(key, value)</code>
-                                &nbsp;– store key/value pair.
-                            </li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">
-                                <code>getItem(key)</code>
-                                &nbsp;– get the value by key.
-                            </li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">
-                                <code>removeItem(key)</code>
-                                &nbsp;– remove the key with its value.
-                            </li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">
-                                <code>clear()</code>
-                                &nbsp;– delete everything.
-                            </li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">
-                                <code>key(index)</code>
-                                &nbsp;– get the key on a given position.
-                            </li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">
-                                <code>length</code>
-                                &nbsp;– the number of stored items.
-                            </li>
-                        </ul>
-                    </div>
-                    <p></p>
-                    <p></p>
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>
-                            <span style="border-bottom: 0.05em solid">Local Storage</span>
-                            <mark class="highlight-gray">(</mark>
-                            <mark class="highlight-gray"><code>window.localStorage</code></mark>
-                            <mark class="highlight-gray">)</mark>
-                            <p>stored in users browser without any expiration date.</p>
-                            <p>In comparison to Cookies: more secure, larger, not transferred (stays local)</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>
-                            <span style="border-bottom: 0.05em solid">Session Storage</span>
-                            <mark class="highlight-gray">(</mark>
-                            <mark class="highlight-gray"><code>window.sessionStorage</code></mark>
-                            <mark class="highlight-gray">)</mark>
-                            <p>Data is destroyed when tab/browser is closed.</p>
-                            <p></p>
-                        </li>
-                    </ol>
-                </div>
-                <p></p>
-                <h2>Document Object Model DOM</h2>
-                <p>For HTML, XHTML, XML</p>
-                <p>HTML elements as objects with properties, methods and events - DOM tree nodes.</p>
-                <p>
-                    The&nbsp;
-                    <code>document</code>
-                    &nbsp;object is the trees root.
-                </p>
-                <figure class="image">
-                    <a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%209.png">
-                        <img style="width: 120px" src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%209.png" />
-                    </a>
-                </figure>
-                <p>Everything in the html file becomes a node:</p>
-                <div class="indented">
-                    <p>
-                        text nodes (spaces and
-                        <em>\n</em>
-                        are stored as seperate nodes), comment nodes ...
-                    </p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Getting nodes</span></p>
-                <div class="indented">
-                    <p>ID, tag name, class name, Document properties</p>
-                    <pre class="code"><code>let	title	=	document.getElementById("title");
+function	print() {	...	};												//	print				-&gt;	Function.prototype	-&gt;	Object.prototype</code></pre></li></ul><p>Existing prototypes can be extended at any time: its called "monkey-patching" and should be avoided!</p><div class="indented"><pre class="code"><code>String.prototype.distance	=	function() {	...	};			//	monkey	patching</code></pre></div><p></p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Class inheritance</summary><p>
+To extend a class:
+<code>class Child</code><strong><code>extends</code></strong><code>Parent</code>
+:
+</p><p>
+That means
+<code>Child.prototype.__proto__</code>
+will be
+<code>Parent.prototype</code>
+, so methods are inherited.
+</p></details></li></ul><p></p><h1>Browser and Document APIs</h1><p>Standard Library/Common APIs</p><p></p><h2>Overview</h2><p>Overview: There’s a root object called window.</p><div class="indented"><figure class="image"><a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%208.png"><img src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%208.png" style="width: 108px"/></a></figure><p></p></div><p></p><p>APIs accessible through Javascript.</p><p>Browser Object Model BOM → interact with browser</p><div class="indented"><p class="block-color-gray"><mark class="highlight-gray"><code>Window</code></mark><mark class="highlight-gray">,</mark><mark class="highlight-gray"><code>Frames</code></mark><mark class="highlight-gray">,</mark><mark class="highlight-gray"><code>History</code></mark><mark class="highlight-gray">,</mark><mark class="highlight-gray"><code>Location</code></mark><mark class="highlight-gray">,</mark><mark class="highlight-gray"><code>Navigator</code></mark><mark class="highlight-gray"></mark>
+(browser type &amp; version), ...
+</p><p class="block-color-gray">Storage (Local Storage, Cookies)</p></div><p></p><p>Document Object Model DOM → interact with HTML page</p><div class="indented"><p class="block-color-gray">
+Properties:
+<mark class="highlight-gray"><code>document.forms</code></mark><mark class="highlight-gray">,</mark><mark class="highlight-gray"><code>document.links</code></mark>
+, …
+</p><p class="block-color-gray">
+Methods:
+<mark class="highlight-gray"><code>document.createElement</code></mark><mark class="highlight-gray">,</mark><mark class="highlight-gray"><code>document.getElementsByTagName</code></mark>
+, …
+</p></div><p></p><p></p><h2>Browser Object Model BOM (window)</h2><p>Allows access to browser objects. → Not standardized but very similar in most browsers.</p><div class="indented"><p></p><p><strong>Object Property and Methods</strong></p><hr/><p>window Other global objects, open(), close(), moveTo(), resizeTo()</p><p>screen width, height, colorDepth, pixelDepth, …</p><p>location hostname, pathname, port, protocol, assign(), …</p><p>history back(), forward()</p><p>navigator userAgent, platform, systemLanguage, …</p><p>document body, forms, write(), close(), getElementById(), …</p><p>Popup Boxes alert(), confirm(), prompt()</p><p>Timing setInterval(func,time,p1,…), setTimeout(func,time)</p><p></p></div><p></p><h2>Storage (Local Storage, Cookies)</h2><p><span style="border-bottom: 0.05em solid">Cookies</span></p><div class="indented"><p>Cookies are sent with every single request.</p><p>String/value pairs, Semicolon separated.</p><pre class="code"><code>document.cookie	=	"name=Jane Doe; nr=1234567;	expires=" + date.toGMTString()</code></pre></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Web Storage</span></p><div class="indented"><p>Data that the user is required to store (as key / value pairs)</p><p>Browser defines storage quota.</p><p>Both storage objects provide same methods and properties:</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc"><code>setItem(key, value)</code>
+– store key/value pair.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>getItem(key)</code>
+– get the value by key.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>removeItem(key)</code>
+– remove the key with its value.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>clear()</code>
+– delete everything.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>key(index)</code>
+– get the key on a given position.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc"><code>length</code>
+– the number of stored items.
+</li></ul></div><p></p><p></p><ol class="numbered-list" start="1" type="1"><li><span style="border-bottom: 0.05em solid">Local Storage</span><mark class="highlight-gray">(</mark><mark class="highlight-gray"><code>window.localStorage</code></mark><mark class="highlight-gray">)</mark><p>stored in users browser without any expiration date.</p><p>In comparison to Cookies: more secure, larger, not transferred (stays local)</p></li></ol><ol class="numbered-list" start="2" type="1"><li><span style="border-bottom: 0.05em solid">Session Storage</span><mark class="highlight-gray">(</mark><mark class="highlight-gray"><code>window.sessionStorage</code></mark><mark class="highlight-gray">)</mark><p>Data is destroyed when tab/browser is closed.</p><p></p></li></ol></div><p></p><h2>Document Object Model DOM</h2><p>For HTML, XHTML, XML</p><p>HTML elements as objects with properties, methods and events - DOM tree nodes.</p><p>
+The
+<code>document</code>
+object is the trees root.
+</p><figure class="image"><a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%209.png"><img src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%209.png" style="width: 120px"/></a></figure><p>Everything in the html file becomes a node:</p><div class="indented"><p>
+text nodes (spaces and
+<em>\n</em>
+are stored as seperate nodes), comment nodes ...
+</p></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Getting nodes</span></p><div class="indented"><p>ID, tag name, class name, Document properties</p><pre class="code"><code>let	title	=	document.getElementById("title");
 let	links	=	document.getElementsByTagName("a");
 let	greens	=	document.getElementsByClassName("green");
 let	imgs	=	document.images;
 let	firstParaBox	=	document.querySelector(“p.box”);
-let	allBoxes	=	document.querySelectorAll(“p.box,div.box”);</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Reading properties</span></p>
-                <div class="indented">
-                    <pre class="code"><code>&lt;UL id="t1"&gt;
-	&lt;LI&gt;Item 1&lt;/LI&gt;
-&lt;/UL&gt;</code></pre>
-                    <pre class="code"><code>document.getElementById('t1').nodeName
- // -&gt; returns 'UL'
+let	allBoxes	=	document.querySelectorAll(“p.box,div.box”);</code></pre></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Reading properties</span></p><div class="indented"><pre class="code"><code>&lt;UL id="t1"&gt;
+&lt;LI&gt;Item 1&lt;/LI&gt;
+&lt;/UL&gt;</code></pre><pre class="code"><code>document.getElementById('t1').nodeName
+// -&gt; returns 'UL'
 document.getElementById('t1').getAttribute('id')
- // -&gt; returns 't1'
+// -&gt; returns 't1'
 document.getElementById('t1').innerHTML
- // -&gt; returns '&lt;li&gt;Item 1&lt;/li&gt;'
+// -&gt; returns '&lt;li&gt;Item 1&lt;/li&gt;'
 document.getElementById('t1').children[0].nodeName
- // -&gt; returns 'LI'
+// -&gt; returns 'LI'
 document.getElementById('t1').children[0].innerText
- // -&gt; returns 'Item 1'</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Manipulating nodes</span></p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Content (innerHTML)</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Element attributes</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Element style</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Element class (
-                            <code>className</code>
-                            ,
-                            <code>classList</code>
-                            )
-                        </li>
-                    </ul>
-                    <pre class="code"><code>title.innerHTML	= "newTitle";
+// -&gt; returns 'Item 1'</code></pre></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Manipulating nodes</span></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Content (innerHTML)</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Element attributes</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Element style</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Element class (
+<code>className</code>
+,
+<code>classList</code>
+)
+</li></ul><pre class="code"><code>title.innerHTML	= "newTitle";
 links[0].href	= "http://...";
 links[0].setAttribute("href",…)
 greens[0].style.color	= “red";
 greens[0].className	=	“red"
-greens[0].classList.add(“dangerzone”)</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Adding nodes</span></p>
-                <div class="indented">
-                    <p>Create, append, remove, …</p>
-                    <pre class="code"><code>let	header	=	document.createElement("h2");
+greens[0].classList.add(“dangerzone”)</code></pre></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Adding nodes</span></p><div class="indented"><p>Create, append, remove, …</p><pre class="code"><code>let	header	=	document.createElement("h2");
 let	text	=	document.createTextNode("SubTitle");
 header.appendChild(text);
 document.removeChild(title);
-document.replaceChild(title, header);</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Adding Event Handlers</span></p>
-                <div class="indented">
-                    <pre class="code"><code>let list = document.getElementById('t1');
+document.replaceChild(title, header);</code></pre></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Adding Event Handlers</span></p><div class="indented"><pre class="code"><code>let list = document.getElementById('t1');
 list.addEventListener('click', (event) =&gt; {
- alert(`Clicked: ${event.target.innerText}`);
-});</code></pre>
-                </div>
-                <p></p>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Traversal of nodes</span></p>
-                <div class="indented"><p>parentElement, nextElementSibling, previousElementSibling, childNodes</p></div>
-                <p></p>
-                <figure class="image">
-                    <a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%2010.png">
-                        <img style="width: 144px" src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%2010.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <h1>Accessibility</h1>
-                <p><span style="border-bottom: 0.05em solid">DOM Updates</span></p>
-                <div class="indented">
-                    <p>Changing / updating the DOM frequently</p>
-                    <div class="indented">
-                        <p>can confuse screen readers</p>
-                        <p>not be visible in high magnification</p>
-                    </div>
-                    <p></p>
-                    <p>Updates may come too fast</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><span style="border-bottom: 0.05em solid">Guidelines - Accessible Rich Internet Applications (ARIA)</span></p>
-                <div class="indented">
-                    <p>If the content updates more than 5 seconds, provide ability to pause, stop, or hide them</p>
-                    <p>Inform users of changes: Setting focus, Highlight, Alert, Live Region (ARIA Term)</p>
-                    <p>Communicate to user that page is dynamic</p>
-                    <p>Provide static HTML page alternatives</p>
-                </div>
-                <p></p>
-                <p></p>
-                <h1>Event-Driven Programming</h1>
-                <ul class="bulleted-list">
-                    <li style="list-style-type: disc">Flow of the program is determined by responding to user actions called events</li>
-                </ul>
-                <ul class="bulleted-list">
-                    <li style="list-style-type: disc">Writing programs driven by user events</li>
-                </ul>
-                <pre class="code"><code>&lt;img src="..." alt="..." onclick="alert('Hello');" /&gt;</code></pre>
-                <pre class="code"><code>let	button = document.getElementsByTagName("button")[0]
+alert(`Clicked: ${event.target.innerText}`);
+});</code></pre></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Traversal of nodes</span></p><div class="indented"><p>parentElement, nextElementSibling, previousElementSibling, childNodes</p></div><p></p><figure class="image"><a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%2010.png"><img src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%2010.png" style="width: 144px"/></a></figure><p></p><h1>Accessibility</h1><p><span style="border-bottom: 0.05em solid">DOM Updates</span></p><div class="indented"><p>Changing / updating the DOM frequently</p><div class="indented"><p>can confuse screen readers</p><p>not be visible in high magnification</p></div><p></p><p>Updates may come too fast</p></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Guidelines - Accessible Rich Internet Applications (ARIA)</span></p><div class="indented"><p>If the content updates more than 5 seconds, provide ability to pause, stop, or hide them</p><p>Inform users of changes: Setting focus, Highlight, Alert, Live Region (ARIA Term)</p><p>Communicate to user that page is dynamic</p><p>Provide static HTML page alternatives</p></div><p></p><p></p><h1>Event-Driven Programming</h1><ul class="bulleted-list"><li style="list-style-type: disc">Flow of the program is determined by responding to user actions called events</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Writing programs driven by user events</li></ul><pre class="code"><code>&lt;img src="..." alt="..." onclick="alert('Hello');" /&gt;</code></pre><pre class="code"><code>let	button = document.getElementsByTagName("button")[0]
 header.click();	//Execute	predefined event
-header.onclick = function(){alert('Clicked!');}	//Set	event	listener
-
-let	func = function() {alert('Clicked!');}
+header.onclick = function(){alert('Clicked!');}	//Set	event	listenerlet	func = function() {alert('Clicked!');}
 header.addEventListener("click", func);
-header.removeEventListener("click",	func);</code></pre>
-                <p></p>
-                <h2>DOM Event Types</h2>
-                <p><strong>Event Description</strong></p>
-                <hr />
-                <p>load,unload User enters/leaves page</p>
-                <p>change Form input field changes</p>
-                <p>focus/blur User focuses/unfocuses an input field</p>
-                <p>Submit Form is submitted</p>
-                <p>mouseover, mouseout Mouse enters/leaves region</p>
-                <p>mousedown/mouseup/click Mouse click events</p>
-                <p>keydown/keyup/keypress Keyboard events</p>
-                <p>drag User drags an element</p>
-                <p></p>
-                <h1>Asynchronous Programming</h1>
-                <p>Asynchronous Programming ≠ Multithreading</p>
-                <p>Waiting for actions to finish is implicit in the synchronous model, while it is explicit, under our control, in the asynchronous one.</p>
-                <figure class="image">
-                    <a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%2011.png">
-                        <img style="width: 336px" src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%2011.png" />
-                    </a>
-                </figure>
-                <p>
-                    <em>Sending Asynchronous Requests</em>
-                    with Callbacks and Promises (like HTTP Fetch)
-                </p>
-                <p></p>
-            </div>
-        </article>
-    </body>
-</html>
+header.removeEventListener("click",	func);</code></pre><p></p><h2>DOM Event Types</h2><p><strong>Event Description</strong></p><hr/><p>load,unload User enters/leaves page</p><p>change Form input field changes</p><p>focus/blur User focuses/unfocuses an input field</p><p>Submit Form is submitted</p><p>mouseover, mouseout Mouse enters/leaves region</p><p>mousedown/mouseup/click Mouse click events</p><p>keydown/keyup/keypress Keyboard events</p><p>drag User drags an element</p><p></p><h1>Asynchronous Programming</h1><p>Asynchronous Programming ≠ Multithreading</p><p>Waiting for actions to finish is implicit in the synchronous model, while it is explicit, under our control, in the asynchronous one.</p><figure class="image"><a href="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%2011.png"><img src="JavaScript%20899f5abf45de4645a6c26ff871060237/Untitled%2011.png" style="width: 336px"/></a></figure><p><em>Sending Asynchronous Requests</em>
+with Callbacks and Promises (like HTTP Fetch)
+</p><p></p></div></article></body></html>

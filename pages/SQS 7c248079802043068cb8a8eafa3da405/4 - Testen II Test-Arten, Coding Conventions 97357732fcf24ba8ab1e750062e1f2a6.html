@@ -1,1821 +1,666 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>4 - Testen II: Test-Arten, Coding Conventions</title>
-        <style>
-            /* cspell:disable-file */
-            /* webkit printing magic: print all background colors */
-            html {
-                -webkit-print-color-adjust: exact;
-            }
-            * {
-                box-sizing: border-box;
-                -webkit-print-color-adjust: exact;
-            }
-
-            html,
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            @media only screen {
-                body {
-                    margin: 2em auto;
-                    max-width: 900px;
-                    color: rgb(55, 53, 47);
-                }
-            }
-
-            body {
-                line-height: 1.5;
-                white-space: pre-wrap;
-            }
-
-            a,
-            a.visited {
-                color: inherit;
-                text-decoration: underline;
-            }
-
-            .pdf-relative-link-path {
-                font-size: 80%;
-                color: #444;
-            }
-
-            h1,
-            h2,
-            h3 {
-                letter-spacing: -0.01em;
-                line-height: 1.2;
-                font-weight: 600;
-                margin-bottom: 0;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-top: 0;
-                margin-bottom: 0.75em;
-            }
-
-            h1 {
-                font-size: 1.875rem;
-                margin-top: 1.875rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-                margin-top: 1.5rem;
-            }
-
-            h3 {
-                font-size: 1.25rem;
-                margin-top: 1.25rem;
-            }
-
-            .source {
-                border: 1px solid #ddd;
-                border-radius: 3px;
-                padding: 1.5em;
-                word-break: break-all;
-            }
-
-            .callout {
-                border-radius: 3px;
-                padding: 1rem;
-            }
-
-            figure {
-                margin: 1.25em 0;
-                page-break-inside: avoid;
-            }
-
-            figcaption {
-                opacity: 0.5;
-                font-size: 85%;
-                margin-top: 0.5em;
-            }
-
-            mark {
-                background-color: transparent;
-            }
-
-            .indented {
-                padding-left: 1.5em;
-            }
-
-            hr {
-                background: transparent;
-                display: block;
-                width: 100%;
-                height: 1px;
-                visibility: visible;
-                border: none;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            @media only print {
-                img {
-                    max-height: 100vh;
-                    object-fit: contain;
-                }
-            }
-
-            @page {
-                margin: 1in;
-            }
-
-            .collection-content {
-                font-size: 0.875rem;
-            }
-
-            .column-list {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .column {
-                padding: 0 1em;
-            }
-
-            .column:first-child {
-                padding-left: 0;
-            }
-
-            .column:last-child {
-                padding-right: 0;
-            }
-
-            .table_of_contents-item {
-                display: block;
-                font-size: 0.875rem;
-                line-height: 1.3;
-                padding: 0.125rem;
-            }
-
-            .table_of_contents-indent-1 {
-                margin-left: 1.5rem;
-            }
-
-            .table_of_contents-indent-2 {
-                margin-left: 3rem;
-            }
-
-            .table_of_contents-indent-3 {
-                margin-left: 4.5rem;
-            }
-
-            .table_of_contents-link {
-                text-decoration: none;
-                opacity: 0.7;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-            }
-
-            table,
-            th,
-            td {
-                border: 1px solid rgba(55, 53, 47, 0.09);
-                border-collapse: collapse;
-            }
-
-            table {
-                border-left: none;
-                border-right: none;
-            }
-
-            th,
-            td {
-                font-weight: normal;
-                padding: 0.25em 0.5em;
-                line-height: 1.5;
-                min-height: 1.5em;
-                text-align: left;
-            }
-
-            th {
-                color: rgba(55, 53, 47, 0.6);
-            }
-
-            ol,
-            ul {
-                margin: 0;
-                margin-block-start: 0.6em;
-                margin-block-end: 0.6em;
-            }
-
-            li > ol:first-child,
-            li > ul:first-child {
-                margin-block-start: 0.6em;
-            }
-
-            ul > li {
-                list-style: disc;
-            }
-
-            ul.to-do-list {
-                padding-inline-start: 0;
-            }
-
-            ul.to-do-list > li {
-                list-style: none;
-            }
-
-            .to-do-children-checked {
-                text-decoration: line-through;
-                opacity: 0.375;
-            }
-
-            ul.toggle > li {
-                list-style: none;
-            }
-
-            ul {
-                padding-inline-start: 1.7em;
-            }
-
-            ul > li {
-                padding-left: 0.1em;
-            }
-
-            ol {
-                padding-inline-start: 1.6em;
-            }
-
-            ol > li {
-                padding-left: 0.2em;
-            }
-
-            .mono ol {
-                padding-inline-start: 2em;
-            }
-
-            .mono ol > li {
-                text-indent: -0.4em;
-            }
-
-            .toggle {
-                padding-inline-start: 0em;
-                list-style-type: none;
-            }
-
-            /* Indent toggle children */
-            .toggle > li > details {
-                padding-left: 1.7em;
-            }
-
-            .toggle > li > details > summary {
-                margin-left: -1.1em;
-            }
-
-            .selected-value {
-                display: inline-block;
-                padding: 0 0.5em;
-                background: rgba(206, 205, 202, 0.5);
-                border-radius: 3px;
-                margin-right: 0.5em;
-                margin-top: 0.3em;
-                margin-bottom: 0.3em;
-                white-space: nowrap;
-            }
-
-            .collection-title {
-                display: inline-block;
-                margin-right: 1em;
-            }
-
-            .page-description {
-                margin-bottom: 2em;
-            }
-
-            .simple-table {
-                margin-top: 1em;
-                font-size: 0.875rem;
-                empty-cells: show;
-            }
-            .simple-table td {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table th {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table-header-color {
-                background: rgb(247, 246, 243);
-                color: black;
-            }
-            .simple-table-header {
-                font-weight: 500;
-            }
-
-            time {
-                opacity: 0.5;
-            }
-
-            .icon {
-                display: inline-block;
-                max-width: 1.2em;
-                max-height: 1.2em;
-                text-decoration: none;
-                vertical-align: text-bottom;
-                margin-right: 0.5em;
-            }
-
-            img.icon {
-                border-radius: 3px;
-            }
-
-            .user-icon {
-                width: 1.5em;
-                height: 1.5em;
-                border-radius: 100%;
-                margin-right: 0.5rem;
-            }
-
-            .user-icon-inner {
-                font-size: 0.8em;
-            }
-
-            .text-icon {
-                border: 1px solid #000;
-                text-align: center;
-            }
-
-            .page-cover-image {
-                display: block;
-                object-fit: cover;
-                width: 100%;
-                max-height: 30vh;
-            }
-
-            .page-header-icon {
-                font-size: 3rem;
-                margin-bottom: 1rem;
-            }
-
-            .page-header-icon-with-cover {
-                margin-top: -0.72em;
-                margin-left: 0.07em;
-            }
-
-            .page-header-icon img {
-                border-radius: 3px;
-            }
-
-            .link-to-page {
-                margin: 1em 0;
-                padding: 0;
-                border: none;
-                font-weight: 500;
-            }
-
-            p > .user {
-                opacity: 0.5;
-            }
-
-            td > .user,
-            td > time {
-                white-space: nowrap;
-            }
-
-            input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 0.6em;
-                vertical-align: middle;
-            }
-
-            p {
-                margin-top: 0.5em;
-                margin-bottom: 0.5em;
-            }
-
-            .image {
-                border: none;
-                margin: 1.5em 0;
-                padding: 0;
-                border-radius: 0;
-                text-align: center;
-            }
-
-            .code,
-            code {
-                background: rgba(135, 131, 120, 0.15);
-                border-radius: 3px;
-                padding: 0.2em 0.4em;
-                border-radius: 3px;
-                font-size: 85%;
-                tab-size: 2;
-            }
-
-            code {
-                color: #eb5757;
-            }
-
-            .code {
-                padding: 1.5em 1em;
-            }
-
-            .code-wrap {
-                white-space: pre-wrap;
-                word-break: break-all;
-            }
-
-            .code > code {
-                background: none;
-                padding: 0;
-                font-size: 100%;
-                color: inherit;
-            }
-
-            blockquote {
-                font-size: 1.25em;
-                margin: 1em 0;
-                padding-left: 1em;
-                border-left: 3px solid rgb(55, 53, 47);
-            }
-
-            .bookmark {
-                text-decoration: none;
-                max-height: 8em;
-                padding: 0;
-                display: flex;
-                width: 100%;
-                align-items: stretch;
-            }
-
-            .bookmark-title {
-                font-size: 0.85em;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                height: 1.75em;
-                white-space: nowrap;
-            }
-
-            .bookmark-text {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .bookmark-info {
-                flex: 4 1 180px;
-                padding: 12px 14px 14px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-
-            .bookmark-image {
-                width: 33%;
-                flex: 1 1 180px;
-                display: block;
-                position: relative;
-                object-fit: cover;
-                border-radius: 1px;
-            }
-
-            .bookmark-description {
-                color: rgba(55, 53, 47, 0.6);
-                font-size: 0.75em;
-                overflow: hidden;
-                max-height: 4.5em;
-                word-break: break-word;
-            }
-
-            .bookmark-href {
-                font-size: 0.75em;
-                margin-top: 0.25em;
-            }
-
-            .sans {
-                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-                    "Segoe UI Symbol";
-            }
-            .code {
-                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
-            }
-            .serif {
-                font-family: Lyon-Text, Georgia, ui-serif, serif;
-            }
-            .mono {
-                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-            }
-            .pdf .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
-            }
-            .pdf:lang(zh-CN) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
-            }
-            .pdf:lang(zh-TW) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
-            }
-            .pdf:lang(ko-KR) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
-            }
-            .pdf .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK KR";
-            }
-            .pdf .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
-            }
-            .pdf:lang(zh-CN) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
-            }
-            .pdf:lang(zh-TW) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
-            }
-            .pdf:lang(ko-KR) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
-            }
-            .pdf .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
-            }
-            .highlight-default {
-                color: rgba(55, 53, 47, 1);
-            }
-            .highlight-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .highlight-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .highlight-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .highlight-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .highlight-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .highlight-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .highlight-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .highlight-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .highlight-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .highlight-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .highlight-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .highlight-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .highlight-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .highlight-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .highlight-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .highlight-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .highlight-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .highlight-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .block-color-default {
-                color: inherit;
-                fill: inherit;
-            }
-            .block-color-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .block-color-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .block-color-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .block-color-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .block-color-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .block-color-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .block-color-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .block-color-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .block-color-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .block-color-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .block-color-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .block-color-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .block-color-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .block-color-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .block-color-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .block-color-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .block-color-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .block-color-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .select-value-color-interactiveBlue {
-                background-color: rgba(35, 131, 226, 0.07);
-            }
-            .select-value-color-pink {
-                background-color: rgba(245, 224, 233, 1);
-            }
-            .select-value-color-purple {
-                background-color: rgba(232, 222, 238, 1);
-            }
-            .select-value-color-green {
-                background-color: rgba(219, 237, 219, 1);
-            }
-            .select-value-color-gray {
-                background-color: rgba(227, 226, 224, 1);
-            }
-            .select-value-color-translucentGray {
-                background-color: rgba(255, 255, 255, 0.0375);
-            }
-            .select-value-color-orange {
-                background-color: rgba(250, 222, 201, 1);
-            }
-            .select-value-color-brown {
-                background-color: rgba(238, 224, 218, 1);
-            }
-            .select-value-color-red {
-                background-color: rgba(255, 226, 221, 1);
-            }
-            .select-value-color-yellow {
-                background-color: rgba(253, 236, 200, 1);
-            }
-            .select-value-color-blue {
-                background-color: rgba(211, 229, 239, 1);
-            }
-            .select-value-color-pageGlass {
-                background-color: undefined;
-            }
-            .select-value-color-washGlass {
-                background-color: undefined;
-            }
-
-            .checkbox {
-                display: inline-flex;
-                vertical-align: text-bottom;
-                width: 16;
-                height: 16;
-                background-size: 16px;
-                margin-left: 2px;
-                margin-right: 5px;
-            }
-
-            .checkbox-on {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            .checkbox-off {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            /* -------- injections from notionBackup -------- */
-
-            body {
-                white-space: normal !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-
-            .code,
-            code {
-                font-size: 100% !important;
-            }
-
-            blockquote {
-                font-size: 100% !important;
-            }
-
-            .callout {
-                white-space: normal !important;
-            }
-            .callout div:has(span.icon) {
-                font-size: 100% !important;
-            }
-
-            .source:not(.bookmark) {
-                font-size: 100% !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-        </style>
-    </head>
-    <body>
-        <article class="page sans">
-            <header>
-                <h1 class="page-title">4 - Testen II: Test-Arten, Coding Conventions</h1>
-                <p class="page-description"></p>
-            </header>
-            <div class="page-body">
-                <p></p>
-                <nav class="block-color-gray table_of_contents">
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#cc51b30f-b187-4516-ae06-d9f05613851c">Software Testen Grundlagen</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#5b075aeb-fea5-41d2-8eb4-5548979c44cf">Teststufen</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#8f9aa1f3-063c-45c0-bc37-f3d91dd99b49">Testentwurfsverfahren</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#5d6e9675-3a10-4486-8969-04d2a374e821">Unit Tests</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#90b1887c-cd1b-4d91-946c-f8c3a1b66593">JUnit</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#e71cffcb-923c-48fa-8f55-3768ea549ec1">TDD</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#46588751-559c-43ca-95c6-c7e06006b28f">
-                            Test Abdeckung: Kontrollflussorientierte Testverfahren
-                        </a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#a334f564-7ebd-418e-abec-5425c748fe30">Test-Arten</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-0">
-                        <a class="table_of_contents-link" href="#68f759f0-c99f-4e0c-9e7b-832b3beaf0be">Sourcecode Qualitätskriterien</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#127926a8-214c-4cae-9242-24938049a5ff">Coding Conventions</a>
-                    </div>
-                    <div class="table_of_contents-item table_of_contents-indent-1">
-                        <a class="table_of_contents-link" href="#226b5afa-6b1c-4f24-ba01-8480794a38ea">Commit conventions, Commit management</a>
-                    </div>
-                </nav>
-                <p></p>
-                <h1>Software Testen Grundlagen</h1>
-                <p><mark class="highlight-blue">ISTQB Testprinzipien</mark></p>
-                <div class="indented">
-                    <ol type="1" class="numbered-list" start="1">
-                        <li>
-                            <mark class="highlight-teal">Testen zeigt Fehler auf</mark>
-                            <p>beweist aber nicht Fehlerfreiheit</p>
-                            <p>“Testen zeigt die Anwesenheit von Fehlern, nicht die Abwesenheit”</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="2">
-                        <li>
-                            <mark class="highlight-teal">Vollständiges Testen ist nicht möglich</mark>
-                            <p>Nicht alle Kombinationen an Eingaben, Vorbedingungen, Zuständen testbar (praktikabel zu testen)</p>
-                            <p>Stattdessen priorisiert nach Risiko testen</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="3">
-                        <li>
-                            <mark class="highlight-teal">Frühzeitig Testen</mark>
-                            <p>Je früher Fehler gefunden werden desto einfacher und günstiger zu beheben</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="4">
-                        <li>
-                            <mark class="highlight-teal">Fehlerhäufungen beachten</mark>
-                            <p>Fehler sind nicht gleichmäßig verteilt - tendenziell dort wo Fehler gefunden auch mehr zu erwarten</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="5">
-                        <li>
-                            <mark class="highlight-teal">Veränderung statt Wiederholung</mark>
-                            <p>Wiederholtes ausführen von den selben Testcases wird keine neuen Fehler finden</p>
-                        </li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="6">
-                        <li><mark class="highlight-teal">Testen ist kontextabhängig</mark></li>
-                    </ol>
-                    <ol type="1" class="numbered-list" start="7">
-                        <li>
-                            <mark class="highlight-teal">Trugschluss: Fehlerlose Systeme sind brauchbar</mark>
-                            <p>Fehler finden, beheben garantiert nicht, dass Produkt den Anforderungen und Bedürfnissen vom Benutzer entspricht</p>
-                        </li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Potentielle Fehlerquellen</mark></p>
-                <div class="indented">
-                    <p><em>Fehler in Anforderungen / Spezifikationen</em></p>
-                    <p><em>Fehler im Design</em></p>
-                    <div class="indented">
-                        <p>durch ungenauen, falsch interpretierten Anforderungen</p>
-                        <p>durch Mangel an Erfahrung mit Technologie</p>
-                    </div>
-                    <p></p>
-                    <p><em>Fehler in Testdaten</em></p>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled.png">
-                        <img
-                            style="width: 240px"
-                            src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <h2>Teststufen</h2>
-                <p>Teststufen sind Tests auf unterschiedlichen Ebenen des Entwicklugnsprozesses.</p>
-                <p><mark class="highlight-gray">Eine Teststufe besteht aus einem oder mehreren Test-Typen (bestimmte Art von Tests).</mark></p>
-                <div class="indented">
-                    <p><mark class="highlight-gray">Testtypen: Review, Funktionaler-Test, Massentest, Stresstest, Performancetest.</mark></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Akzeptanztests / Abnahmetests</mark></p>
-                <div class="indented">
-                    <p>Testen ob System im produktiven Einsatz den Abnahmekriterien vom Kunden entspricht (Validierung).</p>
-                    <p>
-                        Dient
-                        <em>nicht</em>
-                        dazu Fehler im System zu finden.
-                    </p>
-                    <p>
-                        <mark class="highlight-gray">wie Systemtest nur</mark>
-                        von Kunde, Benutzer ausgeführt
-                    </p>
-                    <ul class="block-color-gray toggle">
-                        <li>
-                            <details open="">
-                                <summary>Stufen von Akzeptanzkriterien</summary>
-                                <p>Bedingung / Anforderung (Condition of Satisfaction)</p>
-                                <div class="indented"><p>Beispiel: beim Login Passwörter dürfen nicht knackbar sein Beispielhafte</p></div>
-                                <p></p>
-                                <p>Akzeptanzkriterien (Acceptance Criteria)</p>
-                                <div class="indented">
-                                    <p>Definition für “nicht einfach knackbar” aus Condition of Satisfaction:</p>
-                                    <p>Min 8. Zeichen, nur alphanumerisch, mind. eine Zahl, ...</p>
-                                    <p></p>
-                                </div>
-                                <p></p>
-                            </details>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Systemtests</mark></p>
-                <div class="indented">
-                    <p>Testen vom integrierten System nach Kunden-Anforderungen (Validierung) und nach Spezifikation (Verifikation).</p>
-                    <div class="indented">
-                        <p><mark class="highlight-gray">Basiert auf: Anforderungsspezifikation, Use-Cases, Geschäftsprozesse.</mark></p>
-                    </div>
-                    <p></p>
-                    <p>Testumgebung sollte Abbild der Produktivumgebung sein (keine umgebungsspezifischen Fehler).</p>
-                    <p>von unabhängigem Testteam ausgeführt</p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Integrationtests</mark></p>
-                <div class="indented">
-                    <p>Testen mit dem Ziel Fehler in Interaktion zwischen Komponenten / Schnittstellen zu finden.</p>
-                    <p>Zusammenführung (Integration) von mehreren Komponenten.</p>
-                    <p>von Entwicklern erstellt und ausgeführt</p>
-                    <p class="block-color-gray"><mark class="highlight-gray">Bottom-up, Top-Down, Big-Bang Strategien</mark></p>
-                    <div class="indented">
-                        <ul class="toggle">
-                            <li>
-                                <details open="">
-                                    <summary>Bottom up</summary>
-                                    <p>Basis ausprogrammiert, dann Test-Treiber erstellt, dass Objekte erzeugt.</p>
-                                    <p>Nach jeder Integrationsstufe wird Treiber verändert und eine Ebene höher gestellt.</p>
-                                    <p></p>
-                                </details>
-                            </li>
-                        </ul>
-                        <ul class="toggle">
-                            <li>
-                                <details open="">
-                                    <summary>Top down</summary>
-                                    <p>Zuerst die obersten Module entwickelt und darauf den der Test-Treiber aufsetzt.</p>
-                                    <p>Alle darunterliegenden Module werden mithilfe von Stubs simuliert.</p>
-                                    <p>Stubs werden je nach Integrationsstufe im echten Code befüllt.</p>
-                                    <p>Vorteil: Es gibt nur einen Testtreiber.</p>
-                                    <p></p>
-                                </details>
-                            </li>
-                        </ul>
-                    </div>
-                    <p></p>
-                    <p><mark class="highlight-gray">Kann mehrere Integrationsstufen haben</mark></p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-blue">Komponententests / Modultests / Unittests</mark></p>
-                <div class="indented">
-                    <p>Testet Komponente isoliert vom restlichen System gegen Spezifikation.</p>
-                    <p>braucht Zugang zu Source-Code</p>
-                    <div class="indented">
-                        <p><mark class="highlight-gray">Testet Implementierung: Argumente werden übergeben, Ausgabe wird kontrolliert</mark></p>
-                    </div>
-                    <p></p>
-                    <p>von Entwicklern erstellt und ausgeführt</p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-gray">Privater Test</mark></p>
-                <div class="indented">
-                    <p><mark class="highlight-gray">Vom Entwickler vor der Freigabe, undokumentiert</mark></p>
-                </div>
-                <p></p>
-                <p><mark class="highlight-gray">Regressionstests</mark></p>
-                <div class="indented">
-                    <p><mark class="highlight-gray">Vor Durchführung von Veränderungen - Wiederholung von Tests</mark></p>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>Testentwurfsverfahren</h2>
-                <div class="column-list">
-                    <div style="width: 50%" class="column">
-                        <p>
-                            <mark class="highlight-blue">Blackbox Tests</mark>
-                            <mark class="highlight-gray">(Box geschlossen lassen)</mark>
-                        </p>
-                        <div class="indented">
-                            <p>basiert auf Spezifikation ohne Wissen über innere Struktur</p>
-                            <p>Daten-getrieben (Input-Output getrieben)</p>
-                            <p>Überdeckung von Anforderungen</p>
-                            <p>Partitionierung der Eingabedaten</p>
-                        </div>
-                        <p></p>
-                    </div>
-                    <div style="width: 50%" class="column">
-                        <p>
-                            <mark class="highlight-blue">Whitebox Tests</mark>
-                            <mark class="highlight-gray">(in Box hineinschauen)</mark>
-                        </p>
-                        <div class="indented">
-                            <p>basiert auf Code-Struktur, Modulen mit Wissen über innere Struktur</p>
-                            <p>Logik-getrieben</p>
-                            <p>Überdeckung von Knoten, Kanten, Pfaden</p>
-                            <p>
-                                Partitionierung von Eingabedaten für Bedingungsüberdeckung (
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow>
-                                                            <mstyle mathsize="0.9em">
-                                                                <msub>
-                                                                    <mi>C</mi>
-                                                                    <mn>0</mn>
-                                                                </msub>
-                                                                <mo>−</mo>
-                                                                <msub>
-                                                                    <mi>C</mi>
-                                                                    <mn>3</mn>
-                                                                </msub>
-                                                            </mstyle>
-                                                        </mrow>
-                                                        <annotation encoding="application/x-tex">\small C_0 - C_3</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span>
-                                                    <span class="mord sizing reset-size6 size5">
-                                                        <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
-                                                        <span class="msupsub">
-                                                            <span class="vlist-t vlist-t2">
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.2796266666666667em">
-                                                                        <span
-                                                                            style="top: -2.45em; margin-left: -0.07153em; margin-right: 0.05555555555555556em">
-                                                                            <span class="pstrut" style="height: 2.6em"></span>
-                                                                            <span class="sizing reset-size5 size2 mtight">
-                                                                                <span class="mord mtight">0</span>
-                                                                            </span>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="vlist-s">​</span>
-                                                                </span>
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.15em"><span></span></span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                    <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
-                                                    <span class="mbin sizing reset-size6 size5">−</span>
-                                                    <span class="mspace" style="margin-right: 0.2222222222222222em"></span>
-                                                </span>
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span>
-                                                    <span class="mord sizing reset-size6 size5">
-                                                        <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
-                                                        <span class="msupsub">
-                                                            <span class="vlist-t vlist-t2">
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.2796266666666667em">
-                                                                        <span
-                                                                            style="top: -2.45em; margin-left: -0.07153em; margin-right: 0.05555555555555556em">
-                                                                            <span class="pstrut" style="height: 2.6em"></span>
-                                                                            <span class="sizing reset-size5 size2 mtight">
-                                                                                <span class="mord mtight">3</span>
-                                                                            </span>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="vlist-s">​</span>
-                                                                </span>
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.15em"><span></span></span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                                )
-                            </p>
-                        </div>
-                        <p></p>
-                    </div>
-                </div>
-                <p><mark class="highlight-blue">Erfahrungsbasiertes Testen / Exploratives Testen</mark></p>
-                <div class="indented">
-                    <p>zusätzlich zu anderen Testentwurfsverfahren</p>
-                    <p>basiert auf Intuition, Erfahrung des Testers</p>
-                    <div class="indented"><p>zB Erfahrung aus anderen Projekten, Stellen die unter Zeitdruck entstanden sind etc.</p></div>
-                    <p></p>
-                    <p>muss dokumentiert werden</p>
-                    <figure class="block-color-gray_background callout" style="white-space: pre-wrap; display: flex">
-                        <div style="font-size: 1.5em"><span class="icon">💡</span></div>
-                        <div style="width: 100%">siehe 6. Vorlesung für vollständige Version</div>
-                    </figure>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%201.png">
-                        <img
-                            style="width: 144px"
-                            src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%201.png" />
-                    </a>
-                </figure>
-                <p></p>
-                <p></p>
-                <h1>Unit Tests</h1>
-                <h2>JUnit</h2>
-                <figure class="link-to-page">
-                    <a
-                        href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/JUnit%205%2041d0a02ef6604fe087977c4ea6e1b010.html">
-                        JUnit 5
-                    </a>
-                </figure>
-                <p></p>
-                <p><mark class="highlight-gray">Unit Tests Grobstruktur</mark></p>
-                <div class="indented">
-                    <ol type="1" class="block-color-gray numbered-list" start="1">
-                        <li>Set-Up (Vorbereitung)</li>
-                    </ol>
-                    <ol type="1" class="block-color-gray numbered-list" start="2">
-                        <li>Exercise (Ausführung)</li>
-                    </ol>
-                    <ol type="1" class="block-color-gray numbered-list" start="3">
-                        <li>Verify (Auswertung)</li>
-                    </ol>
-                    <ol type="1" class="block-color-gray numbered-list" start="4">
-                        <li>Tear-Down (Nachbearbeitung / zerstören)</li>
-                    </ol>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Testframework für Unit Tests</mark></p>
-                <div class="indented">
-                    <p>
-                        Automatische Ausführung von Komponententests:
-                        <em>xUnit</em>
-                    </p>
-                    <p><mark class="highlight-gray">JUnit, CPPUnit, NUnit, ...</mark></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Benennung</mark></p>
-                <div class="indented">
-                    <p>Testmethoden einheitlich benannt</p>
-                    <p>
-                        <mark class="highlight-gray"><code>(Test)&lt;UseCase/Method&gt;_should&lt;ExcpectedOutcome&gt;</code></mark>
-                    </p>
-                    <ul class="toggle">
-                        <li>
-                            <details open="">
-                                <summary>Beispiele</summary>
-                                <pre class="code"><code>@Test
-public void testAdd_shouldContainAddedWord() {...}
-
-@Test
-public void testAdd_moreThanMax_shouldReplaceFirstWord() {...}
-
-@Test
-public void testRemove_Null_shouldThrowNullPointerException() {...}</code></pre>
-                            </details>
-                        </li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Unit Testing - Best Practices</mark></p>
-                <div class="indented">
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Testfälle sind isoliert
-                            <p>keine Abhängigkeiten zueinander: Jeder Testfall bereitet eigene Daten vor, räumt sie auf</p>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Keine Logik in Tests (Abfragen, Schleifen, try/catch)</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">
-                            Jeder Testfall testet nur einen Aspekt bzw Zustand
-                            <p>Nur ein Testfall per Methode</p>
-                            <p>Keine Zufallsdaten sondern Äquivalenzklassen</p>
-                        </li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Namenskonventionen einhalten</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Verständliche Fehlermeldungen bei Assertions</li>
-                    </ul>
-                    <ul class="bulleted-list">
-                        <li style="list-style-type: disc">Klassen und Testklassen liegen im selben Package</li>
-                    </ul>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>TDD</h2>
-                <p><mark class="highlight-blue">Beispiel</mark></p>
-                <div class="indented">
-                    <figure class="link-to-page">
-                        <a
-                            href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Testen%20von%20Wo%CC%88rterbuch%20a6c413686cd04076bd51031d94191126.html">
-                            Testen von Wörterbuch
-                        </a>
-                    </figure>
-                </div>
-                <p></p>
-                <p></p>
-                <p></p>
-                <h1>Test Abdeckung: Kontrollflussorientierte Testverfahren</h1>
-                <p><mark class="highlight-gray">Tools zur Überprüfung der Testabdeckung: Clover, Cobertura, JaCoCo</mark></p>
-                <p></p>
-                <p><mark class="highlight-blue">Test Abdeckung</mark></p>
-                <div class="indented"><p>Code Coverage - sieht man in Coverage Reports</p></div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Kontrollflussorienterte Verfahren</mark></p>
-                <div class="indented">
-                    <p>
-                        <em>= Überdeckungstests</em>
-                        <mark class="highlight-teal"><em>(für Code Coverage)</em></mark>
-                    </p>
-                    <p>strukturorientiert (basiert auf Kontrollfluss des Programmes)</p>
-                    <p>
-                        relevant auf Unit Test Ebene
-                        <mark class="highlight-teal">(</mark>
-                        <mark class="highlight-teal"><em>Whitebox Tests</em></mark>
-                        <mark class="highlight-teal">)</mark>
-                    </p>
-                    <p>definieren keine Regeln für Erzeugung von Testdaten</p>
-                </div>
-                <p></p>
-                <figure class="image">
-                    <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%202.png">
-                        <img
-                            style="width: 192px"
-                            src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%202.png" />
-                    </a>
-                    <figcaption>Kontrollflussgraph</figcaption>
-                </figure>
-                <p></p>
-                <h2>Test-Arten</h2>
-                <p><mark class="highlight-gray">Man kann auch coverage von Klassen und Funktionen testen.</mark></p>
-                <div class="column-list">
-                    <div style="width: 93.75%" class="column">
-                        <p>
-                            <mark class="highlight-blue">
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow>
-                                                            <msub>
-                                                                <mi>C</mi>
-                                                                <mn>0</mn>
-                                                            </msub>
-                                                        </mrow>
-                                                        <annotation encoding="application/x-tex">C_0</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span>
-                                                    <span class="mord">
-                                                        <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
-                                                        <span class="msupsub">
-                                                            <span class="vlist-t vlist-t2">
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.30110799999999993em">
-                                                                        <span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em">
-                                                                            <span class="pstrut" style="height: 2.7em"></span>
-                                                                            <span class="sizing reset-size6 size3 mtight">
-                                                                                <span class="mord mtight">0</span>
-                                                                            </span>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="vlist-s">​</span>
-                                                                </span>
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.15em"><span></span></span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                            </mark>
-                            <mark class="highlight-blue">- Anweisungsüberdeckung / Statement Coverage</mark>
-                        </p>
-                        <div class="indented">
-                            <p>Jede Anweisung min 1x durchlaufen</p>
-                            <div class="indented">
-                                <p>Zeigt ob toter Code existiert (falls sie nie durchlaufen werden können)</p>
-                                <p>Zu schwaches Kriterium für sinnvolle Tests</p>
-                            </div>
-                            <p></p>
-                        </div>
-                        <p></p>
-                    </div>
-                    <div style="width: 6.25%" class="column">
-                        <figure class="image">
-                            <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%203.png">
-                                <img
-                                    style="width: 60px"
-                                    src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%203.png" />
-                            </a>
-                        </figure>
-                    </div>
-                </div>
-                <div class="column-list">
-                    <div style="width: 93.75%" class="column">
-                        <p>
-                            <mark class="highlight-blue">
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow>
-                                                            <msub>
-                                                                <mi>C</mi>
-                                                                <mn>1</mn>
-                                                            </msub>
-                                                        </mrow>
-                                                        <annotation encoding="application/x-tex">C_1</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span>
-                                                    <span class="mord">
-                                                        <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
-                                                        <span class="msupsub">
-                                                            <span class="vlist-t vlist-t2">
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.30110799999999993em">
-                                                                        <span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em">
-                                                                            <span class="pstrut" style="height: 2.7em"></span>
-                                                                            <span class="sizing reset-size6 size3 mtight">
-                                                                                <span class="mord mtight">1</span>
-                                                                            </span>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="vlist-s">​</span>
-                                                                </span>
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.15em"><span></span></span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                            </mark>
-                            <mark class="highlight-blue">- Zweigüberdeckung / Branch Coverage</mark>
-                        </p>
-                        <div class="indented">
-                            <p>Jede Kante min 1x durchlaufen</p>
-                            <div class="indented"><p>Zeigt ob nicht ausführbare Programmzweige existieren</p></div>
-                            <p></p>
-                        </div>
-                        <p></p>
-                    </div>
-                    <div style="width: 6.250000000000002%" class="column">
-                        <figure class="image">
-                            <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%204.png">
-                                <img
-                                    style="width: 60px"
-                                    src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%204.png" />
-                            </a>
-                        </figure>
-                    </div>
-                </div>
-                <div class="column-list">
-                    <div style="width: 93.75%" class="column">
-                        <p>
-                            <mark class="highlight-blue">
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow>
-                                                            <msub>
-                                                                <mi>C</mi>
-                                                                <mn>2</mn>
-                                                            </msub>
-                                                        </mrow>
-                                                        <annotation encoding="application/x-tex">C_2</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span>
-                                                    <span class="mord">
-                                                        <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
-                                                        <span class="msupsub">
-                                                            <span class="vlist-t vlist-t2">
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.30110799999999993em">
-                                                                        <span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em">
-                                                                            <span class="pstrut" style="height: 2.7em"></span>
-                                                                            <span class="sizing reset-size6 size3 mtight">
-                                                                                <span class="mord mtight">2</span>
-                                                                            </span>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="vlist-s">​</span>
-                                                                </span>
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.15em"><span></span></span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                            </mark>
-                            <mark class="highlight-blue">- Bedingungsüberdeckung / Condition Coverage</mark>
-                        </p>
-                        <div class="indented">
-                            <p>Ziel: Überprüfung zusammengesetzter Entscheidungen und Teilentscheidungen</p>
-                            <p></p>
-                            <ol type="1" class="numbered-list" start="1">
-                                <li>
-                                    Einfacher Bedingungsüberdeckungstest
-                                    <p>Alle atomaren Teilentscheidungen gleichzeitig true oder false</p>
-                                </li>
-                            </ol>
-                        </div>
-                        <p></p>
-                    </div>
-                    <div style="width: 6.250000000000004%" class="column">
-                        <figure class="image">
-                            <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%205.png">
-                                <img
-                                    style="width: 60px"
-                                    src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%205.png" />
-                            </a>
-                        </figure>
-                    </div>
-                </div>
-                <div class="column-list">
-                    <div style="width: 93.75%" class="column">
-                        <p></p>
-                        <div class="indented">
-                            <ol type="1" class="numbered-list" start="2">
-                                <li>
-                                    Mehrfach-Bedingungsüberdeckungstest
-                                    <p>Test aller true/false-Kombinationen der atomaren Teilentscheidungen</p>
-                                    <ul class="toggle">
-                                        <li>
-                                            <details open="">
-                                                <summary>Beispiel</summary>
-                                                <p>
-                                                    Entscheidung:
-                                                    <mark class="highlight-gray">
-                                                        <code>(((a == 0) || (b &lt; 5)) &amp;&amp; (x &lt; 6) || (y == 0)))</code>
-                                                    </mark>
-                                                </p>
-                                                <div class="indented">
-                                                    <p>
-                                                        <mark class="highlight-gray"><code>((A || B) &amp;&amp; (C || D))</code></mark>
-                                                    </p>
-                                                </div>
-                                                <p></p>
-                                                <p>
-                                                    sind
-                                                    <mark class="highlight-gray"><code>a</code></mark>
-                                                    ,
-                                                    <mark class="highlight-gray"><code>b</code></mark>
-                                                    ,
-                                                    <mark class="highlight-gray"><code>x</code></mark>
-                                                    ,
-                                                    <mark class="highlight-gray"><code>y</code></mark>
-                                                    <mark class="highlight-gray"></mark>
-                                                    unabhängig können die Teilaussagen
-                                                    <mark class="highlight-gray"><code>A</code></mark>
-                                                    ,
-                                                    <mark class="highlight-gray"><code>B</code></mark>
-                                                    ,
-                                                    <mark class="highlight-gray"><code>C</code></mark>
-                                                    ,
-                                                    <mark class="highlight-gray"><code>D</code></mark>
-                                                    <mark class="highlight-gray"></mark>
-                                                    unabhängig voneinander true oder false sein.
-                                                </p>
-                                                <p>
-                                                    Dadurch
-                                                    <style>
-                                                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                                    </style>
-                                                    <span
-                                                        data-token-index="0"
-                                                        contenteditable="false"
-                                                        class="notion-text-equation-token"
-                                                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                                        <span></span>
-                                                        <span>
-                                                            <span class="katex">
-                                                                <span class="katex-mathml">
-                                                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                                        <semantics>
-                                                                            <mrow>
-                                                                                <mstyle mathsize="0.9em">
-                                                                                    <msup>
-                                                                                        <mn>2</mn>
-                                                                                        <mn>4</mn>
-                                                                                    </msup>
-                                                                                    <mo>=</mo>
-                                                                                    <mn>16</mn>
-                                                                                </mstyle>
-                                                                            </mrow>
-                                                                            <annotation encoding="application/x-tex">\small 2^4 = 16</annotation>
-                                                                        </semantics>
-                                                                    </math>
-                                                                </span>
-                                                                <span class="katex-html" aria-hidden="true">
-                                                                    <span class="base">
-                                                                        <span class="strut" style="height: 0.713364em; vertical-align: 0em"></span>
-                                                                        <span class="mord sizing reset-size6 size5">
-                                                                            <span class="mord">2</span>
-                                                                            <span class="msupsub">
-                                                                                <span class="vlist-t">
-                                                                                    <span class="vlist-r">
-                                                                                        <span class="vlist" style="height: 0.7926266666666666em">
-                                                                                            <span style="top: -2.963em; margin-right: 0.05555555555555556em">
-                                                                                                <span class="pstrut" style="height: 2.6em"></span>
-                                                                                                <span class="sizing reset-size5 size2 mtight">
-                                                                                                    <span class="mord mtight">4</span>
-                                                                                                </span>
-                                                                                            </span>
-                                                                                        </span>
-                                                                                    </span>
-                                                                                </span>
-                                                                            </span>
-                                                                        </span>
-                                                                        <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
-                                                                        <span class="mrel sizing reset-size6 size5">=</span>
-                                                                        <span class="mspace" style="margin-right: 0.2777777777777778em"></span>
-                                                                    </span>
-                                                                    <span class="base">
-                                                                        <span class="strut" style="height: 0.5799960000000001em; vertical-align: 0em"></span>
-                                                                        <span class="mord sizing reset-size6 size5">16</span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                        <span>﻿</span>
-                                                    </span>
-                                                    Kombinationen bzw Testfälle.
-                                                </p>
-                                                <p></p>
-                                            </details>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ol>
-                        </div>
-                        <p></p>
-                    </div>
-                    <div style="width: 6.25%" class="column">
-                        <figure class="image">
-                            <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%206.png">
-                                <img
-                                    style="width: 72px"
-                                    src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%206.png" />
-                            </a>
-                        </figure>
-                    </div>
-                </div>
-                <div class="column-list">
-                    <div style="width: 93.75%" class="column">
-                        <p>
-                            <mark class="highlight-blue">
-                                <style>
-                                    @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                </style>
-                                <span
-                                    data-token-index="0"
-                                    contenteditable="false"
-                                    class="notion-text-equation-token"
-                                    style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                    <span></span>
-                                    <span>
-                                        <span class="katex">
-                                            <span class="katex-mathml">
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                    <semantics>
-                                                        <mrow>
-                                                            <msub>
-                                                                <mi>C</mi>
-                                                                <mn>3</mn>
-                                                            </msub>
-                                                        </mrow>
-                                                        <annotation encoding="application/x-tex">C_3</annotation>
-                                                    </semantics>
-                                                </math>
-                                            </span>
-                                            <span class="katex-html" aria-hidden="true">
-                                                <span class="base">
-                                                    <span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span>
-                                                    <span class="mord">
-                                                        <span class="mord mathnormal" style="margin-right: 0.07153em">C</span>
-                                                        <span class="msupsub">
-                                                            <span class="vlist-t vlist-t2">
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.30110799999999993em">
-                                                                        <span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em">
-                                                                            <span class="pstrut" style="height: 2.7em"></span>
-                                                                            <span class="sizing reset-size6 size3 mtight">
-                                                                                <span class="mord mtight">3</span>
-                                                                            </span>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="vlist-s">​</span>
-                                                                </span>
-                                                                <span class="vlist-r">
-                                                                    <span class="vlist" style="height: 0.15em"><span></span></span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span>﻿</span>
-                                </span>
-                            </mark>
-                            <mark class="highlight-blue">- Pfadüberdeckung / Path Coverage</mark>
-                        </p>
-                        <div class="indented">
-                            <p>Abdeckung aller möglichen Pfade (Knotenfolgen)</p>
-                            <p>für komplexe Module nicht geeignet (vor allem wenn Schleifen involviert sind)</p>
-                        </div>
-                        <p></p>
-                    </div>
-                    <div style="width: 6.250000000000004%" class="column">
-                        <figure class="image">
-                            <a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%207.png">
-                                <img
-                                    style="width: 48px"
-                                    src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%207.png" />
-                            </a>
-                        </figure>
-                    </div>
-                </div>
-                <p></p>
-                <p></p>
-                <h1>Sourcecode Qualitätskriterien</h1>
-                <p>Toolgestützte Code Analysen für statische QS-Methoden.</p>
-                <p></p>
-                <h2>Coding Conventions</h2>
-                <p><mark class="highlight-gray">Tools zur Überprüfung von Coding Standards: Checkstyle, IDE wie zB IntelliJ</mark></p>
-                <p></p>
-                <p><mark class="highlight-blue">Coding Conventions / Code Guidelines</mark></p>
-                <div class="indented">
-                    <p>Einheitlicher Stil im Projekt für jede Programmiersprache</p>
-                    <p>bessere Lesbarkeit, Verständlichkeit</p>
-                    <p>Eigene Regeln für</p>
-                    <div class="indented">
-                        <p>
-                            • Dokumentation • Einrückung (space/tab) • Max Zeilenlänge • Import Reihenfolge • Methoden/Feld Reihenfolg, Modifier/Sichtbarkeit,
-                            Veränderbarkeit • System.out Vermeidung, Logging • Namenskonventionen • Code Formatierung
-                        </p>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Kontrolle</mark></p>
-                <div class="indented">
-                    <figure class="link-to-page">
-                        <a
-                            href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Checkstyle%20(Allgemein)%209941544f14a442699c7cf6aa5b00dea3.html">
-                            Checkstyle (Allgemein)
-                        </a>
-                    </figure>
-                    <figure class="link-to-page">
-                        <a
-                            href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/ArchUnit%20(Architekturvorgaben)%20de4556fccaf34540a66fd5a963c02d36.html">
-                            ArchUnit (Architekturvorgaben)
-                        </a>
-                    </figure>
-                </div>
-                <p></p>
-                <p></p>
-                <h2>Commit conventions, Commit management</h2>
-                <p><mark class="highlight-blue">Commit messages</mark></p>
-                <div class="indented">
-                    <p>Gute Messages:</p>
-                    <div class="indented">
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">Warum wurde diese Änderung gemacht? Was wurde geändert?</li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">nur eine logische Änderung pro Commit</li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">Idempotent (in sich geschlossen)</li>
-                        </ul>
-                    </div>
-                    <p></p>
-                    <p>Zweck von Commit Messages:</p>
-                    <div class="indented">
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">Beschleunigung des Review-Prozesses</li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">Unterstützen das Erstellen von Release Notes</li>
-                        </ul>
-                        <ul class="bulleted-list">
-                            <li style="list-style-type: disc">Erleichtern zukünftige Wartung</li>
-                        </ul>
-                    </div>
-                    <p></p>
-                </div>
-                <p></p>
-                <p></p>
-                <p><mark class="highlight-blue">Commit Management</mark></p>
-                <div class="indented">
-                    <p><a href="https://www.conventionalcommits.org/">https://www.conventionalcommits.org</a></p>
-                    <p>Vorteile: Changelogs, Tracability, bessere Maintainability</p>
-                    <p></p>
-                </div>
-                <p></p>
-            </div>
-        </article>
-    </body>
-</html>
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>4 - Testen II: Test-Arten, Coding Conventions</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+-webkit-print-color-adjust: exact;
+}
+* {
+box-sizing: border-box;
+-webkit-print-color-adjust: exact;
+}html,
+body {
+margin: 0;
+padding: 0;
+}
+@media only screen {
+body {
+margin: 2em auto;
+max-width: 900px;
+color: rgb(55, 53, 47);
+}
+}body {
+line-height: 1.5;
+white-space: pre-wrap;
+}a,
+a.visited {
+color: inherit;
+text-decoration: underline;
+}.pdf-relative-link-path {
+font-size: 80%;
+color: #444;
+}h1,
+h2,
+h3 {
+letter-spacing: -0.01em;
+line-height: 1.2;
+font-weight: 600;
+margin-bottom: 0;
+}.page-title {
+font-size: 2.5rem;
+font-weight: 700;
+margin-top: 0;
+margin-bottom: 0.75em;
+}h1 {
+font-size: 1.875rem;
+margin-top: 1.875rem;
+}h2 {
+font-size: 1.5rem;
+margin-top: 1.5rem;
+}h3 {
+font-size: 1.25rem;
+margin-top: 1.25rem;
+}.source {
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 1.5em;
+word-break: break-all;
+}.callout {
+border-radius: 3px;
+padding: 1rem;
+}figure {
+margin: 1.25em 0;
+page-break-inside: avoid;
+}figcaption {
+opacity: 0.5;
+font-size: 85%;
+margin-top: 0.5em;
+}mark {
+background-color: transparent;
+}.indented {
+padding-left: 1.5em;
+}hr {
+background: transparent;
+display: block;
+width: 100%;
+height: 1px;
+visibility: visible;
+border: none;
+border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}img {
+max-width: 100%;
+}@media only print {
+img {
+max-height: 100vh;
+object-fit: contain;
+}
+}@page {
+margin: 1in;
+}.collection-content {
+font-size: 0.875rem;
+}.column-list {
+display: flex;
+justify-content: space-between;
+}.column {
+padding: 0 1em;
+}.column:first-child {
+padding-left: 0;
+}.column:last-child {
+padding-right: 0;
+}.table_of_contents-item {
+display: block;
+font-size: 0.875rem;
+line-height: 1.3;
+padding: 0.125rem;
+}.table_of_contents-indent-1 {
+margin-left: 1.5rem;
+}.table_of_contents-indent-2 {
+margin-left: 3rem;
+}.table_of_contents-indent-3 {
+margin-left: 4.5rem;
+}.table_of_contents-link {
+text-decoration: none;
+opacity: 0.7;
+border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}table,
+th,
+td {
+border: 1px solid rgba(55, 53, 47, 0.09);
+border-collapse: collapse;
+}table {
+border-left: none;
+border-right: none;
+}th,
+td {
+font-weight: normal;
+padding: 0.25em 0.5em;
+line-height: 1.5;
+min-height: 1.5em;
+text-align: left;
+}th {
+color: rgba(55, 53, 47, 0.6);
+}ol,
+ul {
+margin: 0;
+margin-block-start: 0.6em;
+margin-block-end: 0.6em;
+}li > ol:first-child,
+li > ul:first-child {
+margin-block-start: 0.6em;
+}ul > li {
+list-style: disc;
+}ul.to-do-list {
+padding-inline-start: 0;
+}ul.to-do-list > li {
+list-style: none;
+}.to-do-children-checked {
+text-decoration: line-through;
+opacity: 0.375;
+}ul.toggle > li {
+list-style: none;
+}ul {
+padding-inline-start: 1.7em;
+}ul > li {
+padding-left: 0.1em;
+}ol {
+padding-inline-start: 1.6em;
+}ol > li {
+padding-left: 0.2em;
+}.mono ol {
+padding-inline-start: 2em;
+}.mono ol > li {
+text-indent: -0.4em;
+}.toggle {
+padding-inline-start: 0em;
+list-style-type: none;
+}/* Indent toggle children */
+.toggle > li > details {
+padding-left: 1.7em;
+}.toggle > li > details > summary {
+margin-left: -1.1em;
+}.selected-value {
+display: inline-block;
+padding: 0 0.5em;
+background: rgba(206, 205, 202, 0.5);
+border-radius: 3px;
+margin-right: 0.5em;
+margin-top: 0.3em;
+margin-bottom: 0.3em;
+white-space: nowrap;
+}.collection-title {
+display: inline-block;
+margin-right: 1em;
+}.page-description {
+margin-bottom: 2em;
+}.simple-table {
+margin-top: 1em;
+font-size: 0.875rem;
+empty-cells: show;
+}
+.simple-table td {
+height: 29px;
+min-width: 120px;
+}.simple-table th {
+height: 29px;
+min-width: 120px;
+}.simple-table-header-color {
+background: rgb(247, 246, 243);
+color: black;
+}
+.simple-table-header {
+font-weight: 500;
+}time {
+opacity: 0.5;
+}.icon {
+display: inline-block;
+max-width: 1.2em;
+max-height: 1.2em;
+text-decoration: none;
+vertical-align: text-bottom;
+margin-right: 0.5em;
+}img.icon {
+border-radius: 3px;
+}.user-icon {
+width: 1.5em;
+height: 1.5em;
+border-radius: 100%;
+margin-right: 0.5rem;
+}.user-icon-inner {
+font-size: 0.8em;
+}.text-icon {
+border: 1px solid #000;
+text-align: center;
+}.page-cover-image {
+display: block;
+object-fit: cover;
+width: 100%;
+max-height: 30vh;
+}.page-header-icon {
+font-size: 3rem;
+margin-bottom: 1rem;
+}.page-header-icon-with-cover {
+margin-top: -0.72em;
+margin-left: 0.07em;
+}.page-header-icon img {
+border-radius: 3px;
+}.link-to-page {
+margin: 1em 0;
+padding: 0;
+border: none;
+font-weight: 500;
+}p > .user {
+opacity: 0.5;
+}td > .user,
+td > time {
+white-space: nowrap;
+}input[type="checkbox"] {
+transform: scale(1.5);
+margin-right: 0.6em;
+vertical-align: middle;
+}p {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}.image {
+border: none;
+margin: 1.5em 0;
+padding: 0;
+border-radius: 0;
+text-align: center;
+}.code,
+code {
+background: rgba(135, 131, 120, 0.15);
+border-radius: 3px;
+padding: 0.2em 0.4em;
+border-radius: 3px;
+font-size: 85%;
+tab-size: 2;
+}code {
+color: #eb5757;
+}.code {
+padding: 1.5em 1em;
+}.code-wrap {
+white-space: pre-wrap;
+word-break: break-all;
+}.code > code {
+background: none;
+padding: 0;
+font-size: 100%;
+color: inherit;
+}blockquote {
+font-size: 1.25em;
+margin: 1em 0;
+padding-left: 1em;
+border-left: 3px solid rgb(55, 53, 47);
+}.bookmark {
+text-decoration: none;
+max-height: 8em;
+padding: 0;
+display: flex;
+width: 100%;
+align-items: stretch;
+}.bookmark-title {
+font-size: 0.85em;
+overflow: hidden;
+text-overflow: ellipsis;
+height: 1.75em;
+white-space: nowrap;
+}.bookmark-text {
+display: flex;
+flex-direction: column;
+}.bookmark-info {
+flex: 4 1 180px;
+padding: 12px 14px 14px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}.bookmark-image {
+width: 33%;
+flex: 1 1 180px;
+display: block;
+position: relative;
+object-fit: cover;
+border-radius: 1px;
+}.bookmark-description {
+color: rgba(55, 53, 47, 0.6);
+font-size: 0.75em;
+overflow: hidden;
+max-height: 4.5em;
+word-break: break-word;
+}.bookmark-href {
+font-size: 0.75em;
+margin-top: 0.25em;
+}.sans {
+font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+"Segoe UI Symbol";
+}
+.code {
+font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+}
+.serif {
+font-family: Lyon-Text, Georgia, ui-serif, serif;
+}
+.mono {
+font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+}
+.pdf .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+}
+.pdf:lang(zh-CN) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+}
+.pdf:lang(zh-TW) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+}
+.pdf:lang(ko-KR) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+}
+.pdf .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK KR";
+}
+.pdf .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+}
+.pdf:lang(zh-CN) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+}
+.pdf:lang(zh-TW) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+}
+.pdf:lang(ko-KR) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+}
+.pdf .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+}
+.highlight-default {
+color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+color: inherit;
+fill: inherit;
+}
+.block-color-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue {
+background-color: rgba(35, 131, 226, 0.07);
+}
+.select-value-color-pink {
+background-color: rgba(245, 224, 233, 1);
+}
+.select-value-color-purple {
+background-color: rgba(232, 222, 238, 1);
+}
+.select-value-color-green {
+background-color: rgba(219, 237, 219, 1);
+}
+.select-value-color-gray {
+background-color: rgba(227, 226, 224, 1);
+}
+.select-value-color-translucentGray {
+background-color: rgba(255, 255, 255, 0.0375);
+}
+.select-value-color-orange {
+background-color: rgba(250, 222, 201, 1);
+}
+.select-value-color-brown {
+background-color: rgba(238, 224, 218, 1);
+}
+.select-value-color-red {
+background-color: rgba(255, 226, 221, 1);
+}
+.select-value-color-yellow {
+background-color: rgba(253, 236, 200, 1);
+}
+.select-value-color-blue {
+background-color: rgba(211, 229, 239, 1);
+}
+.select-value-color-pageGlass {
+background-color: undefined;
+}
+.select-value-color-washGlass {
+background-color: undefined;
+}.checkbox {
+display: inline-flex;
+vertical-align: text-bottom;
+width: 16;
+height: 16;
+background-size: 16px;
+margin-left: 2px;
+margin-right: 5px;
+}.checkbox-on {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}.checkbox-off {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}/* -------- injections from notionBackup -------- */body {
+white-space: normal !important;
+}p {
+min-height: 1em !important;
+}.code,
+code {
+font-size: 100% !important;
+}blockquote {
+font-size: 100% !important;
+}.callout {
+white-space: normal !important;
+}
+.callout div:has(span.icon) {
+font-size: 100% !important;
+}.source:not(.bookmark) {
+font-size: 100% !important;
+}p {
+min-height: 1em !important;
+}
+</style></head><body><article class="page sans"><header><h1 class="page-title">4 - Testen II: Test-Arten, Coding Conventions</h1><p class="page-description"></p></header><div class="page-body"><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cc51b30f-b187-4516-ae06-d9f05613851c">Software Testen Grundlagen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5b075aeb-fea5-41d2-8eb4-5548979c44cf">Teststufen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8f9aa1f3-063c-45c0-bc37-f3d91dd99b49">Testentwurfsverfahren</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5d6e9675-3a10-4486-8969-04d2a374e821">Unit Tests</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#90b1887c-cd1b-4d91-946c-f8c3a1b66593">JUnit</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e71cffcb-923c-48fa-8f55-3768ea549ec1">TDD</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#46588751-559c-43ca-95c6-c7e06006b28f">
+Test Abdeckung: Kontrollflussorientierte Testverfahren
+</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a334f564-7ebd-418e-abec-5425c748fe30">Test-Arten</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#68f759f0-c99f-4e0c-9e7b-832b3beaf0be">Sourcecode Qualitätskriterien</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#127926a8-214c-4cae-9242-24938049a5ff">Coding Conventions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#226b5afa-6b1c-4f24-ba01-8480794a38ea">Commit conventions, Commit management</a></div></nav><p></p><h1>Software Testen Grundlagen</h1><p><mark class="highlight-blue">ISTQB Testprinzipien</mark></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li><mark class="highlight-teal">Testen zeigt Fehler auf</mark><p>beweist aber nicht Fehlerfreiheit</p><p>“Testen zeigt die Anwesenheit von Fehlern, nicht die Abwesenheit”</p></li></ol><ol class="numbered-list" start="2" type="1"><li><mark class="highlight-teal">Vollständiges Testen ist nicht möglich</mark><p>Nicht alle Kombinationen an Eingaben, Vorbedingungen, Zuständen testbar (praktikabel zu testen)</p><p>Stattdessen priorisiert nach Risiko testen</p></li></ol><ol class="numbered-list" start="3" type="1"><li><mark class="highlight-teal">Frühzeitig Testen</mark><p>Je früher Fehler gefunden werden desto einfacher und günstiger zu beheben</p></li></ol><ol class="numbered-list" start="4" type="1"><li><mark class="highlight-teal">Fehlerhäufungen beachten</mark><p>Fehler sind nicht gleichmäßig verteilt - tendenziell dort wo Fehler gefunden auch mehr zu erwarten</p></li></ol><ol class="numbered-list" start="5" type="1"><li><mark class="highlight-teal">Veränderung statt Wiederholung</mark><p>Wiederholtes ausführen von den selben Testcases wird keine neuen Fehler finden</p></li></ol><ol class="numbered-list" start="6" type="1"><li><mark class="highlight-teal">Testen ist kontextabhängig</mark></li></ol><ol class="numbered-list" start="7" type="1"><li><mark class="highlight-teal">Trugschluss: Fehlerlose Systeme sind brauchbar</mark><p>Fehler finden, beheben garantiert nicht, dass Produkt den Anforderungen und Bedürfnissen vom Benutzer entspricht</p></li></ol></div><p></p><p></p><p><mark class="highlight-blue">Potentielle Fehlerquellen</mark></p><div class="indented"><p><em>Fehler in Anforderungen / Spezifikationen</em></p><p><em>Fehler im Design</em></p><div class="indented"><p>durch ungenauen, falsch interpretierten Anforderungen</p><p>durch Mangel an Erfahrung mit Technologie</p></div><p></p><p><em>Fehler in Testdaten</em></p></div><p></p><figure class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled.png"><img src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled.png" style="width: 240px"/></a></figure><p></p><h2>Teststufen</h2><p>Teststufen sind Tests auf unterschiedlichen Ebenen des Entwicklugnsprozesses.</p><p><mark class="highlight-gray">Eine Teststufe besteht aus einem oder mehreren Test-Typen (bestimmte Art von Tests).</mark></p><div class="indented"><p><mark class="highlight-gray">Testtypen: Review, Funktionaler-Test, Massentest, Stresstest, Performancetest.</mark></p></div><p></p><p></p><p><mark class="highlight-blue">Akzeptanztests / Abnahmetests</mark></p><div class="indented"><p>Testen ob System im produktiven Einsatz den Abnahmekriterien vom Kunden entspricht (Validierung).</p><p>
+Dient
+<em>nicht</em>
+dazu Fehler im System zu finden.
+</p><p><mark class="highlight-gray">wie Systemtest nur</mark>
+von Kunde, Benutzer ausgeführt
+</p><ul class="block-color-gray toggle"><li><details open=""><summary>Stufen von Akzeptanzkriterien</summary><p>Bedingung / Anforderung (Condition of Satisfaction)</p><div class="indented"><p>Beispiel: beim Login Passwörter dürfen nicht knackbar sein Beispielhafte</p></div><p></p><p>Akzeptanzkriterien (Acceptance Criteria)</p><div class="indented"><p>Definition für “nicht einfach knackbar” aus Condition of Satisfaction:</p><p>Min 8. Zeichen, nur alphanumerisch, mind. eine Zahl, ...</p><p></p></div><p></p></details></li></ul></div><p></p><p><mark class="highlight-blue">Systemtests</mark></p><div class="indented"><p>Testen vom integrierten System nach Kunden-Anforderungen (Validierung) und nach Spezifikation (Verifikation).</p><div class="indented"><p><mark class="highlight-gray">Basiert auf: Anforderungsspezifikation, Use-Cases, Geschäftsprozesse.</mark></p></div><p></p><p>Testumgebung sollte Abbild der Produktivumgebung sein (keine umgebungsspezifischen Fehler).</p><p>von unabhängigem Testteam ausgeführt</p></div><p></p><p><mark class="highlight-blue">Integrationtests</mark></p><div class="indented"><p>Testen mit dem Ziel Fehler in Interaktion zwischen Komponenten / Schnittstellen zu finden.</p><p>Zusammenführung (Integration) von mehreren Komponenten.</p><p>von Entwicklern erstellt und ausgeführt</p><p class="block-color-gray"><mark class="highlight-gray">Bottom-up, Top-Down, Big-Bang Strategien</mark></p><div class="indented"><ul class="toggle"><li><details open=""><summary>Bottom up</summary><p>Basis ausprogrammiert, dann Test-Treiber erstellt, dass Objekte erzeugt.</p><p>Nach jeder Integrationsstufe wird Treiber verändert und eine Ebene höher gestellt.</p><p></p></details></li></ul><ul class="toggle"><li><details open=""><summary>Top down</summary><p>Zuerst die obersten Module entwickelt und darauf den der Test-Treiber aufsetzt.</p><p>Alle darunterliegenden Module werden mithilfe von Stubs simuliert.</p><p>Stubs werden je nach Integrationsstufe im echten Code befüllt.</p><p>Vorteil: Es gibt nur einen Testtreiber.</p><p></p></details></li></ul></div><p></p><p><mark class="highlight-gray">Kann mehrere Integrationsstufen haben</mark></p></div><p></p><p><mark class="highlight-blue">Komponententests / Modultests / Unittests</mark></p><div class="indented"><p>Testet Komponente isoliert vom restlichen System gegen Spezifikation.</p><p>braucht Zugang zu Source-Code</p><div class="indented"><p><mark class="highlight-gray">Testet Implementierung: Argumente werden übergeben, Ausgabe wird kontrolliert</mark></p></div><p></p><p>von Entwicklern erstellt und ausgeführt</p></div><p></p><p></p><p><mark class="highlight-gray">Privater Test</mark></p><div class="indented"><p><mark class="highlight-gray">Vom Entwickler vor der Freigabe, undokumentiert</mark></p></div><p></p><p><mark class="highlight-gray">Regressionstests</mark></p><div class="indented"><p><mark class="highlight-gray">Vor Durchführung von Veränderungen - Wiederholung von Tests</mark></p></div><p></p><p></p><h2>Testentwurfsverfahren</h2><div class="column-list"><div class="column" style="width: 50%"><p><mark class="highlight-blue">Blackbox Tests</mark><mark class="highlight-gray">(Box geschlossen lassen)</mark></p><div class="indented"><p>basiert auf Spezifikation ohne Wissen über innere Struktur</p><p>Daten-getrieben (Input-Output getrieben)</p><p>Überdeckung von Anforderungen</p><p>Partitionierung der Eingabedaten</p></div><p></p></div><div class="column" style="width: 50%"><p><mark class="highlight-blue">Whitebox Tests</mark><mark class="highlight-gray">(in Box hineinschauen)</mark></p><div class="indented"><p>basiert auf Code-Struktur, Modulen mit Wissen über innere Struktur</p><p>Logik-getrieben</p><p>Überdeckung von Knoten, Kanten, Pfaden</p><p>
+Partitionierung von Eingabedaten für Bedingungsüberdeckung (
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mi>C</mi><mn>0</mn></msub><mo>−</mo><msub><mi>C</mi><mn>3</mn></msub></mstyle></mrow><annotation encoding="application/x-tex">\small C_0 - C_3</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right: 0.07153em">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.2796266666666667em"><span style="top: -2.45em; margin-left: -0.07153em; margin-right: 0.05555555555555556em"><span class="pstrut" style="height: 2.6em"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em"><span></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.2222222222222222em"></span><span class="mbin sizing reset-size6 size5">−</span><span class="mspace" style="margin-right: 0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height: 0.749997em; vertical-align: -0.135em"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right: 0.07153em">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.2796266666666667em"><span style="top: -2.45em; margin-left: -0.07153em; margin-right: 0.05555555555555556em"><span class="pstrut" style="height: 2.6em"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>
+)
+</p></div><p></p></div></div><p><mark class="highlight-blue">Erfahrungsbasiertes Testen / Exploratives Testen</mark></p><div class="indented"><p>zusätzlich zu anderen Testentwurfsverfahren</p><p>basiert auf Intuition, Erfahrung des Testers</p><div class="indented"><p>zB Erfahrung aus anderen Projekten, Stellen die unter Zeitdruck entstanden sind etc.</p></div><p></p><p>muss dokumentiert werden</p><figure class="block-color-gray_background callout" style="white-space: pre-wrap; display: flex"><div style="font-size: 1.5em"><span class="icon">💡</span></div><div style="width: 100%">siehe 6. Vorlesung für vollständige Version</div></figure></div><p></p><figure class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%201.png"><img src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%201.png" style="width: 144px"/></a></figure><p></p><p></p><h1>Unit Tests</h1><h2>JUnit</h2><figure class="link-to-page"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/JUnit%205%2041d0a02ef6604fe087977c4ea6e1b010.html">
+JUnit 5
+</a></figure><p></p><p><mark class="highlight-gray">Unit Tests Grobstruktur</mark></p><div class="indented"><ol class="block-color-gray numbered-list" start="1" type="1"><li>Set-Up (Vorbereitung)</li></ol><ol class="block-color-gray numbered-list" start="2" type="1"><li>Exercise (Ausführung)</li></ol><ol class="block-color-gray numbered-list" start="3" type="1"><li>Verify (Auswertung)</li></ol><ol class="block-color-gray numbered-list" start="4" type="1"><li>Tear-Down (Nachbearbeitung / zerstören)</li></ol></div><p></p><p></p><p><mark class="highlight-blue">Testframework für Unit Tests</mark></p><div class="indented"><p>
+Automatische Ausführung von Komponententests:
+<em>xUnit</em></p><p><mark class="highlight-gray">JUnit, CPPUnit, NUnit, ...</mark></p></div><p></p><p></p><p><mark class="highlight-blue">Benennung</mark></p><div class="indented"><p>Testmethoden einheitlich benannt</p><p><mark class="highlight-gray"><code>(Test)&lt;UseCase/Method&gt;_should&lt;ExcpectedOutcome&gt;</code></mark></p><ul class="toggle"><li><details open=""><summary>Beispiele</summary><pre class="code"><code>@Test
+public void testAdd_shouldContainAddedWord() {...}@Test
+public void testAdd_moreThanMax_shouldReplaceFirstWord() {...}@Test
+public void testRemove_Null_shouldThrowNullPointerException() {...}</code></pre></details></li></ul></div><p></p><p></p><p><mark class="highlight-blue">Unit Testing - Best Practices</mark></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Testfälle sind isoliert
+<p>keine Abhängigkeiten zueinander: Jeder Testfall bereitet eigene Daten vor, räumt sie auf</p></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Keine Logik in Tests (Abfragen, Schleifen, try/catch)</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
+Jeder Testfall testet nur einen Aspekt bzw Zustand
+<p>Nur ein Testfall per Methode</p><p>Keine Zufallsdaten sondern Äquivalenzklassen</p></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Namenskonventionen einhalten</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Verständliche Fehlermeldungen bei Assertions</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Klassen und Testklassen liegen im selben Package</li></ul></div><p></p><p></p><h2>TDD</h2><p><mark class="highlight-blue">Beispiel</mark></p><div class="indented"><figure class="link-to-page"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Testen%20von%20Wo%CC%88rterbuch%20a6c413686cd04076bd51031d94191126.html">
+Testen von Wörterbuch
+</a></figure></div><p></p><p></p><p></p><h1>Test Abdeckung: Kontrollflussorientierte Testverfahren</h1><p><mark class="highlight-gray">Tools zur Überprüfung der Testabdeckung: Clover, Cobertura, JaCoCo</mark></p><p></p><p><mark class="highlight-blue">Test Abdeckung</mark></p><div class="indented"><p>Code Coverage - sieht man in Coverage Reports</p></div><p></p><p></p><p><mark class="highlight-blue">Kontrollflussorienterte Verfahren</mark></p><div class="indented"><p><em>= Überdeckungstests</em><mark class="highlight-teal"><em>(für Code Coverage)</em></mark></p><p>strukturorientiert (basiert auf Kontrollfluss des Programmes)</p><p>
+relevant auf Unit Test Ebene
+<mark class="highlight-teal">(</mark><mark class="highlight-teal"><em>Whitebox Tests</em></mark><mark class="highlight-teal">)</mark></p><p>definieren keine Regeln für Erzeugung von Testdaten</p></div><p></p><figure class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%202.png"><img src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%202.png" style="width: 192px"/></a><figcaption>Kontrollflussgraph</figcaption></figure><p></p><h2>Test-Arten</h2><p><mark class="highlight-gray">Man kann auch coverage von Klassen und Funktionen testen.</mark></p><div class="column-list"><div class="column" style="width: 93.75%"><p><mark class="highlight-blue"><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">C_0</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.07153em">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.30110799999999993em"><span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em"><span class="pstrut" style="height: 2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-blue">- Anweisungsüberdeckung / Statement Coverage</mark></p><div class="indented"><p>Jede Anweisung min 1x durchlaufen</p><div class="indented"><p>Zeigt ob toter Code existiert (falls sie nie durchlaufen werden können)</p><p>Zu schwaches Kriterium für sinnvolle Tests</p></div><p></p></div><p></p></div><div class="column" style="width: 6.25%"><figure class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%203.png"><img src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%203.png" style="width: 60px"/></a></figure></div></div><div class="column-list"><div class="column" style="width: 93.75%"><p><mark class="highlight-blue"><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">C_1</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.07153em">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.30110799999999993em"><span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em"><span class="pstrut" style="height: 2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-blue">- Zweigüberdeckung / Branch Coverage</mark></p><div class="indented"><p>Jede Kante min 1x durchlaufen</p><div class="indented"><p>Zeigt ob nicht ausführbare Programmzweige existieren</p></div><p></p></div><p></p></div><div class="column" style="width: 6.250000000000002%"><figure class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%204.png"><img src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%204.png" style="width: 60px"/></a></figure></div></div><div class="column-list"><div class="column" style="width: 93.75%"><p><mark class="highlight-blue"><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">C_2</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.07153em">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.30110799999999993em"><span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em"><span class="pstrut" style="height: 2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-blue">- Bedingungsüberdeckung / Condition Coverage</mark></p><div class="indented"><p>Ziel: Überprüfung zusammengesetzter Entscheidungen und Teilentscheidungen</p><p></p><ol class="numbered-list" start="1" type="1"><li>
+Einfacher Bedingungsüberdeckungstest
+<p>Alle atomaren Teilentscheidungen gleichzeitig true oder false</p></li></ol></div><p></p></div><div class="column" style="width: 6.250000000000004%"><figure class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%205.png"><img src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%205.png" style="width: 60px"/></a></figure></div></div><div class="column-list"><div class="column" style="width: 93.75%"><p></p><div class="indented"><ol class="numbered-list" start="2" type="1"><li>
+Mehrfach-Bedingungsüberdeckungstest
+<p>Test aller true/false-Kombinationen der atomaren Teilentscheidungen</p><ul class="toggle"><li><details open=""><summary>Beispiel</summary><p>
+Entscheidung:
+<mark class="highlight-gray"><code>(((a == 0) || (b &lt; 5)) &amp;&amp; (x &lt; 6) || (y == 0)))</code></mark></p><div class="indented"><p><mark class="highlight-gray"><code>((A || B) &amp;&amp; (C || D))</code></mark></p></div><p></p><p>
+sind
+<mark class="highlight-gray"><code>a</code></mark>
+,
+<mark class="highlight-gray"><code>b</code></mark>
+,
+<mark class="highlight-gray"><code>x</code></mark>
+,
+<mark class="highlight-gray"><code>y</code></mark><mark class="highlight-gray"></mark>
+unabhängig können die Teilaussagen
+<mark class="highlight-gray"><code>A</code></mark>
+,
+<mark class="highlight-gray"><code>B</code></mark>
+,
+<mark class="highlight-gray"><code>C</code></mark>
+,
+<mark class="highlight-gray"><code>D</code></mark><mark class="highlight-gray"></mark>
+unabhängig voneinander true oder false sein.
+</p><p>
+Dadurch
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msup><mn>2</mn><mn>4</mn></msup><mo>=</mo><mn>16</mn></mstyle></mrow><annotation encoding="application/x-tex">\small 2^4 = 16</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.713364em; vertical-align: 0em"></span><span class="mord sizing reset-size6 size5"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.7926266666666666em"><span style="top: -2.963em; margin-right: 0.05555555555555556em"><span class="pstrut" style="height: 2.6em"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.2777777777777778em"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right: 0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height: 0.5799960000000001em; vertical-align: 0em"></span><span class="mord sizing reset-size6 size5">16</span></span></span></span></span><span>﻿</span></span>
+Kombinationen bzw Testfälle.
+</p><p></p></details></li></ul></li></ol></div><p></p></div><div class="column" style="width: 6.25%"><figure class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%206.png"><img src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%206.png" style="width: 72px"/></a></figure></div></div><div class="column-list"><div class="column" style="width: 93.75%"><p><mark class="highlight-blue"><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">C_3</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.83333em; vertical-align: -0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.07153em">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.30110799999999993em"><span style="top: -2.5500000000000003em; margin-left: -0.07153em; margin-right: 0.05em"><span class="pstrut" style="height: 2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-blue">- Pfadüberdeckung / Path Coverage</mark></p><div class="indented"><p>Abdeckung aller möglichen Pfade (Knotenfolgen)</p><p>für komplexe Module nicht geeignet (vor allem wenn Schleifen involviert sind)</p></div><p></p></div><div class="column" style="width: 6.250000000000004%"><figure class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%207.png"><img src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Untitled%207.png" style="width: 48px"/></a></figure></div></div><p></p><p></p><h1>Sourcecode Qualitätskriterien</h1><p>Toolgestützte Code Analysen für statische QS-Methoden.</p><p></p><h2>Coding Conventions</h2><p><mark class="highlight-gray">Tools zur Überprüfung von Coding Standards: Checkstyle, IDE wie zB IntelliJ</mark></p><p></p><p><mark class="highlight-blue">Coding Conventions / Code Guidelines</mark></p><div class="indented"><p>Einheitlicher Stil im Projekt für jede Programmiersprache</p><p>bessere Lesbarkeit, Verständlichkeit</p><p>Eigene Regeln für</p><div class="indented"><p>
+• Dokumentation • Einrückung (space/tab) • Max Zeilenlänge • Import Reihenfolge • Methoden/Feld Reihenfolg, Modifier/Sichtbarkeit,
+Veränderbarkeit • System.out Vermeidung, Logging • Namenskonventionen • Code Formatierung
+</p></div><p></p></div><p></p><p></p><p><mark class="highlight-blue">Kontrolle</mark></p><div class="indented"><figure class="link-to-page"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/Checkstyle%20(Allgemein)%209941544f14a442699c7cf6aa5b00dea3.html">
+Checkstyle (Allgemein)
+</a></figure><figure class="link-to-page"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%2097357732fcf24ba8ab1e750062e1f2a6/ArchUnit%20(Architekturvorgaben)%20de4556fccaf34540a66fd5a963c02d36.html">
+ArchUnit (Architekturvorgaben)
+</a></figure></div><p></p><p></p><h2>Commit conventions, Commit management</h2><p><mark class="highlight-blue">Commit messages</mark></p><div class="indented"><p>Gute Messages:</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Warum wurde diese Änderung gemacht? Was wurde geändert?</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">nur eine logische Änderung pro Commit</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Idempotent (in sich geschlossen)</li></ul></div><p></p><p>Zweck von Commit Messages:</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Beschleunigung des Review-Prozesses</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Unterstützen das Erstellen von Release Notes</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Erleichtern zukünftige Wartung</li></ul></div><p></p></div><p></p><p></p><p><mark class="highlight-blue">Commit Management</mark></p><div class="indented"><p><a href="https://www.conventionalcommits.org/">https://www.conventionalcommits.org</a></p><p>Vorteile: Changelogs, Tracability, bessere Maintainability</p><p></p></div><p></p></div></article></body></html>

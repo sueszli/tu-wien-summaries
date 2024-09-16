@@ -1,2119 +1,805 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Vorgehensmodelle (Prozesse)</title>
-        <style>
-            /* cspell:disable-file */
-            /* webkit printing magic: print all background colors */
-            html {
-                -webkit-print-color-adjust: exact;
-            }
-            * {
-                box-sizing: border-box;
-                -webkit-print-color-adjust: exact;
-            }
-
-            html,
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            @media only screen {
-                body {
-                    margin: 2em auto;
-                    max-width: 900px;
-                    color: rgb(55, 53, 47);
-                }
-            }
-
-            body {
-                line-height: 1.5;
-                white-space: pre-wrap;
-            }
-
-            a,
-            a.visited {
-                color: inherit;
-                text-decoration: underline;
-            }
-
-            .pdf-relative-link-path {
-                font-size: 80%;
-                color: #444;
-            }
-
-            h1,
-            h2,
-            h3 {
-                letter-spacing: -0.01em;
-                line-height: 1.2;
-                font-weight: 600;
-                margin-bottom: 0;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-top: 0;
-                margin-bottom: 0.75em;
-            }
-
-            h1 {
-                font-size: 1.875rem;
-                margin-top: 1.875rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-                margin-top: 1.5rem;
-            }
-
-            h3 {
-                font-size: 1.25rem;
-                margin-top: 1.25rem;
-            }
-
-            .source {
-                border: 1px solid #ddd;
-                border-radius: 3px;
-                padding: 1.5em;
-                word-break: break-all;
-            }
-
-            .callout {
-                border-radius: 3px;
-                padding: 1rem;
-            }
-
-            figure {
-                margin: 1.25em 0;
-                page-break-inside: avoid;
-            }
-
-            figcaption {
-                opacity: 0.5;
-                font-size: 85%;
-                margin-top: 0.5em;
-            }
-
-            mark {
-                background-color: transparent;
-            }
-
-            .indented {
-                padding-left: 1.5em;
-            }
-
-            hr {
-                background: transparent;
-                display: block;
-                width: 100%;
-                height: 1px;
-                visibility: visible;
-                border: none;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            @media only print {
-                img {
-                    max-height: 100vh;
-                    object-fit: contain;
-                }
-            }
-
-            @page {
-                margin: 1in;
-            }
-
-            .collection-content {
-                font-size: 0.875rem;
-            }
-
-            .column-list {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .column {
-                padding: 0 1em;
-            }
-
-            .column:first-child {
-                padding-left: 0;
-            }
-
-            .column:last-child {
-                padding-right: 0;
-            }
-
-            .table_of_contents-item {
-                display: block;
-                font-size: 0.875rem;
-                line-height: 1.3;
-                padding: 0.125rem;
-            }
-
-            .table_of_contents-indent-1 {
-                margin-left: 1.5rem;
-            }
-
-            .table_of_contents-indent-2 {
-                margin-left: 3rem;
-            }
-
-            .table_of_contents-indent-3 {
-                margin-left: 4.5rem;
-            }
-
-            .table_of_contents-link {
-                text-decoration: none;
-                opacity: 0.7;
-                border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-            }
-
-            table,
-            th,
-            td {
-                border: 1px solid rgba(55, 53, 47, 0.09);
-                border-collapse: collapse;
-            }
-
-            table {
-                border-left: none;
-                border-right: none;
-            }
-
-            th,
-            td {
-                font-weight: normal;
-                padding: 0.25em 0.5em;
-                line-height: 1.5;
-                min-height: 1.5em;
-                text-align: left;
-            }
-
-            th {
-                color: rgba(55, 53, 47, 0.6);
-            }
-
-            ol,
-            ul {
-                margin: 0;
-                margin-block-start: 0.6em;
-                margin-block-end: 0.6em;
-            }
-
-            li > ol:first-child,
-            li > ul:first-child {
-                margin-block-start: 0.6em;
-            }
-
-            ul > li {
-                list-style: disc;
-            }
-
-            ul.to-do-list {
-                padding-inline-start: 0;
-            }
-
-            ul.to-do-list > li {
-                list-style: none;
-            }
-
-            .to-do-children-checked {
-                text-decoration: line-through;
-                opacity: 0.375;
-            }
-
-            ul.toggle > li {
-                list-style: none;
-            }
-
-            ul {
-                padding-inline-start: 1.7em;
-            }
-
-            ul > li {
-                padding-left: 0.1em;
-            }
-
-            ol {
-                padding-inline-start: 1.6em;
-            }
-
-            ol > li {
-                padding-left: 0.2em;
-            }
-
-            .mono ol {
-                padding-inline-start: 2em;
-            }
-
-            .mono ol > li {
-                text-indent: -0.4em;
-            }
-
-            .toggle {
-                padding-inline-start: 0em;
-                list-style-type: none;
-            }
-
-            /* Indent toggle children */
-            .toggle > li > details {
-                padding-left: 1.7em;
-            }
-
-            .toggle > li > details > summary {
-                margin-left: -1.1em;
-            }
-
-            .selected-value {
-                display: inline-block;
-                padding: 0 0.5em;
-                background: rgba(206, 205, 202, 0.5);
-                border-radius: 3px;
-                margin-right: 0.5em;
-                margin-top: 0.3em;
-                margin-bottom: 0.3em;
-                white-space: nowrap;
-            }
-
-            .collection-title {
-                display: inline-block;
-                margin-right: 1em;
-            }
-
-            .page-description {
-                margin-bottom: 2em;
-            }
-
-            .simple-table {
-                margin-top: 1em;
-                font-size: 0.875rem;
-                empty-cells: show;
-            }
-            .simple-table td {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table th {
-                height: 29px;
-                min-width: 120px;
-            }
-
-            .simple-table-header-color {
-                background: rgb(247, 246, 243);
-                color: black;
-            }
-            .simple-table-header {
-                font-weight: 500;
-            }
-
-            time {
-                opacity: 0.5;
-            }
-
-            .icon {
-                display: inline-block;
-                max-width: 1.2em;
-                max-height: 1.2em;
-                text-decoration: none;
-                vertical-align: text-bottom;
-                margin-right: 0.5em;
-            }
-
-            img.icon {
-                border-radius: 3px;
-            }
-
-            .user-icon {
-                width: 1.5em;
-                height: 1.5em;
-                border-radius: 100%;
-                margin-right: 0.5rem;
-            }
-
-            .user-icon-inner {
-                font-size: 0.8em;
-            }
-
-            .text-icon {
-                border: 1px solid #000;
-                text-align: center;
-            }
-
-            .page-cover-image {
-                display: block;
-                object-fit: cover;
-                width: 100%;
-                max-height: 30vh;
-            }
-
-            .page-header-icon {
-                font-size: 3rem;
-                margin-bottom: 1rem;
-            }
-
-            .page-header-icon-with-cover {
-                margin-top: -0.72em;
-                margin-left: 0.07em;
-            }
-
-            .page-header-icon img {
-                border-radius: 3px;
-            }
-
-            .link-to-page {
-                margin: 1em 0;
-                padding: 0;
-                border: none;
-                font-weight: 500;
-            }
-
-            p > .user {
-                opacity: 0.5;
-            }
-
-            td > .user,
-            td > time {
-                white-space: nowrap;
-            }
-
-            input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 0.6em;
-                vertical-align: middle;
-            }
-
-            p {
-                margin-top: 0.5em;
-                margin-bottom: 0.5em;
-            }
-
-            .image {
-                border: none;
-                margin: 1.5em 0;
-                padding: 0;
-                border-radius: 0;
-                text-align: center;
-            }
-
-            .code,
-            code {
-                background: rgba(135, 131, 120, 0.15);
-                border-radius: 3px;
-                padding: 0.2em 0.4em;
-                border-radius: 3px;
-                font-size: 85%;
-                tab-size: 2;
-            }
-
-            code {
-                color: #eb5757;
-            }
-
-            .code {
-                padding: 1.5em 1em;
-            }
-
-            .code-wrap {
-                white-space: pre-wrap;
-                word-break: break-all;
-            }
-
-            .code > code {
-                background: none;
-                padding: 0;
-                font-size: 100%;
-                color: inherit;
-            }
-
-            blockquote {
-                font-size: 1.25em;
-                margin: 1em 0;
-                padding-left: 1em;
-                border-left: 3px solid rgb(55, 53, 47);
-            }
-
-            .bookmark {
-                text-decoration: none;
-                max-height: 8em;
-                padding: 0;
-                display: flex;
-                width: 100%;
-                align-items: stretch;
-            }
-
-            .bookmark-title {
-                font-size: 0.85em;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                height: 1.75em;
-                white-space: nowrap;
-            }
-
-            .bookmark-text {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .bookmark-info {
-                flex: 4 1 180px;
-                padding: 12px 14px 14px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-
-            .bookmark-image {
-                width: 33%;
-                flex: 1 1 180px;
-                display: block;
-                position: relative;
-                object-fit: cover;
-                border-radius: 1px;
-            }
-
-            .bookmark-description {
-                color: rgba(55, 53, 47, 0.6);
-                font-size: 0.75em;
-                overflow: hidden;
-                max-height: 4.5em;
-                word-break: break-word;
-            }
-
-            .bookmark-href {
-                font-size: 0.75em;
-                margin-top: 0.25em;
-            }
-
-            .sans {
-                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-                    "Segoe UI Symbol";
-            }
-            .code {
-                font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
-            }
-            .serif {
-                font-family: Lyon-Text, Georgia, ui-serif, serif;
-            }
-            .mono {
-                font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-            }
-            .pdf .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
-            }
-            .pdf:lang(zh-CN) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
-            }
-            .pdf:lang(zh-TW) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
-            }
-            .pdf:lang(ko-KR) .sans {
-                font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
-                    "Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
-            }
-            .pdf .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .code {
-                font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
-                    "Noto Sans Mono CJK KR";
-            }
-            .pdf .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
-            }
-            .pdf:lang(zh-CN) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
-            }
-            .pdf:lang(zh-TW) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
-            }
-            .pdf:lang(ko-KR) .serif {
-                font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
-            }
-            .pdf .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
-            }
-            .pdf:lang(zh-CN) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
-            }
-            .pdf:lang(zh-TW) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
-            }
-            .pdf:lang(ko-KR) .mono {
-                font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
-            }
-            .highlight-default {
-                color: rgba(55, 53, 47, 1);
-            }
-            .highlight-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .highlight-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .highlight-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .highlight-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .highlight-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .highlight-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .highlight-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .highlight-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .highlight-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .highlight-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .highlight-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .highlight-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .highlight-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .highlight-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .highlight-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .highlight-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .highlight-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .highlight-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .block-color-default {
-                color: inherit;
-                fill: inherit;
-            }
-            .block-color-gray {
-                color: rgba(120, 119, 116, 1);
-                fill: rgba(120, 119, 116, 1);
-            }
-            .block-color-brown {
-                color: rgba(159, 107, 83, 1);
-                fill: rgba(159, 107, 83, 1);
-            }
-            .block-color-orange {
-                color: rgba(217, 115, 13, 1);
-                fill: rgba(217, 115, 13, 1);
-            }
-            .block-color-yellow {
-                color: rgba(203, 145, 47, 1);
-                fill: rgba(203, 145, 47, 1);
-            }
-            .block-color-teal {
-                color: rgba(68, 131, 97, 1);
-                fill: rgba(68, 131, 97, 1);
-            }
-            .block-color-blue {
-                color: rgba(51, 126, 169, 1);
-                fill: rgba(51, 126, 169, 1);
-            }
-            .block-color-purple {
-                color: rgba(144, 101, 176, 1);
-                fill: rgba(144, 101, 176, 1);
-            }
-            .block-color-pink {
-                color: rgba(193, 76, 138, 1);
-                fill: rgba(193, 76, 138, 1);
-            }
-            .block-color-red {
-                color: rgba(212, 76, 71, 1);
-                fill: rgba(212, 76, 71, 1);
-            }
-            .block-color-gray_background {
-                background: rgba(241, 241, 239, 1);
-            }
-            .block-color-brown_background {
-                background: rgba(244, 238, 238, 1);
-            }
-            .block-color-orange_background {
-                background: rgba(251, 236, 221, 1);
-            }
-            .block-color-yellow_background {
-                background: rgba(251, 243, 219, 1);
-            }
-            .block-color-teal_background {
-                background: rgba(237, 243, 236, 1);
-            }
-            .block-color-blue_background {
-                background: rgba(231, 243, 248, 1);
-            }
-            .block-color-purple_background {
-                background: rgba(244, 240, 247, 0.8);
-            }
-            .block-color-pink_background {
-                background: rgba(249, 238, 243, 0.8);
-            }
-            .block-color-red_background {
-                background: rgba(253, 235, 236, 1);
-            }
-            .select-value-color-interactiveBlue {
-                background-color: rgba(35, 131, 226, 0.07);
-            }
-            .select-value-color-pink {
-                background-color: rgba(245, 224, 233, 1);
-            }
-            .select-value-color-purple {
-                background-color: rgba(232, 222, 238, 1);
-            }
-            .select-value-color-green {
-                background-color: rgba(219, 237, 219, 1);
-            }
-            .select-value-color-gray {
-                background-color: rgba(227, 226, 224, 1);
-            }
-            .select-value-color-translucentGray {
-                background-color: rgba(255, 255, 255, 0.0375);
-            }
-            .select-value-color-orange {
-                background-color: rgba(250, 222, 201, 1);
-            }
-            .select-value-color-brown {
-                background-color: rgba(238, 224, 218, 1);
-            }
-            .select-value-color-red {
-                background-color: rgba(255, 226, 221, 1);
-            }
-            .select-value-color-yellow {
-                background-color: rgba(253, 236, 200, 1);
-            }
-            .select-value-color-blue {
-                background-color: rgba(211, 229, 239, 1);
-            }
-            .select-value-color-pageGlass {
-                background-color: undefined;
-            }
-            .select-value-color-washGlass {
-                background-color: undefined;
-            }
-
-            .checkbox {
-                display: inline-flex;
-                vertical-align: text-bottom;
-                width: 16;
-                height: 16;
-                background-size: 16px;
-                margin-left: 2px;
-                margin-right: 5px;
-            }
-
-            .checkbox-on {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            .checkbox-off {
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-            }
-
-            /* -------- injections from notionBackup -------- */
-
-            body {
-                white-space: normal !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-
-            .code,
-            code {
-                font-size: 100% !important;
-            }
-
-            blockquote {
-                font-size: 100% !important;
-            }
-
-            .callout {
-                white-space: normal !important;
-            }
-            .callout div:has(span.icon) {
-                font-size: 100% !important;
-            }
-
-            .source:not(.bookmark) {
-                font-size: 100% !important;
-            }
-
-            p {
-                min-height: 1em !important;
-            }
-        </style>
-    </head>
-    <body>
-        <article class="page sans">
-            <header>
-                <h1 class="page-title">Vorgehensmodelle (Prozesse)</h1>
-                <p class="page-description"></p>
-            </header>
-            <div class="page-body">
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><span style="border-bottom: 0.05em solid">Planbasierte Methoden</span></summary>
-                            <p>
-                                = Systematische Prozesse. Sind plan-driven und orientieren sich eher an Abläufen mit Schwerpunkt auf Produkten und
-                                Dokumentation.
-                            </p>
-                            <p>Beispiele:</p>
-                            <div class="indented">
-                                <p>Wasserfallmodell</p>
-                                <p>V-Modell (XT)</p>
-                                <p>RUP</p>
-                                <p>Inkrementelle Modelle</p>
-                            </div>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>
-                                <span style="border-bottom: 0.05em solid">
-                                    Erklären und skizzieren Sie das Wasserfall Modell. Nennen Sie auch Vor- und Nachteile
-                                </span>
-                            </summary>
-                            <p>Klassisch / Sequentiell (traditionell)</p>
-                            <p>Umsetzung des Life-Cycles</p>
-                            <p>Fokus auf Dokumentation</p>
-                            <p>Strikt sequenzieller Projektablauf.</p>
-                            <div class="indented">
-                                <p>
-                                    Vorherige Phase muss vollständig abgeschlossen und freigegeben (Validierung und Verifikation) sein. → Wenn nicht erreicht,
-                                    zurückspringen.
-                                </p>
-                                <figure class="image">
-                                    <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%201.png">
-                                        <img style="width: 144px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%201.png" />
-                                    </a>
-                                </figure>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Vorteile</span></p>
-                            <div class="indented">
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Backtracking zu früheren Entwicklungsphasen.</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Weite Verbreitung und hoher Bekanntheitsgrad.</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Risikominimierung durch „Abschluss“ einer Phase.</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Weite Verbreitung und hoher Bekanntheitsgrad.</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Strikte Trennung der einzelnen Phasen.</li>
-                                </ul>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Nachteile</span></p>
-                            <div class="indented">
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Reaktion auf spätere Änderungen schwer.</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Software und Prototyp für Kunden steht spät zu verfügung.</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">keine parallele Entwicklung, tasks müssen abgeschlossen werden</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Starke Auswirkung von Fehlern aus frühen Phasen.</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Anwendung bei guten Kenntnissen über die Anforderungsdomäne</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">nur bei klar definierten und vollständigen Anforderungen.</li>
-                                </ul>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Anwendung</span></p>
-                            <div class="indented">
-                                <p>Für vollständige, stabile Anforderungen, kleinen Projekten.</p>
-                                <p>kleine Entwicklungsteams</p>
-                                <p>Gute Kenntnis erforderlich (No-Surprise Software)</p>
-                                <p>Alle Anforderungen / Erwartungen müssen von Anfang an komplett klar sein</p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>
-                                <span style="border-bottom: 0.05em solid">Erklären und skizzieren Sie das V-Modell. Nennen Sie auch Vor- und Nachteile.</span>
-                            </summary>
-                            <p>Für vollständige, stabile Anforderungen.</p>
-                            <p>Im öffentlichen Bereich.</p>
-                            <p>4 Submodelle: Systemerstellung, Qualitätssicherung, Konfigurationsmanagement, Projektmanagement</p>
-                            <p></p>
-                            <p>Ziel:</p>
-                            <div class="indented">
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Gesamtaufwand / Kostenreduktion</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Kürzere Einarbeitungszeiten für neue Mitarbeiter im Projekt</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Einfachere Kontrolle / vergleich des Projektfortschritts (auch für den Auftraggeber)</li>
-                                </ul>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p>Teilt auf in Realisierungs und Test-Phase.</p>
-                            <div class="indented">
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>
-                                        Analytische Phasen
-                                        <p><mark class="highlight-gray">Immer detailiertere Spezifikation</mark></p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        Synthetische Phasen
-                                        <p><mark class="highlight-gray">Immer weiter Implementiert und getestet</mark></p>
-                                        <p></p>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Sichten in analytischen und synthetischen Phasen</span></p>
-                            <p>
-                                Anwendersicht
-                                <mark class="highlight-gray">Kundensicht, Geschäftsprozesse, Akzeptanz und Abnahmetests</mark>
-                            </p>
-                            <p>
-                                Architektursicht
-                                <mark class="highlight-gray">Grundlegendes Architektur Design + Realisierug, Integrationstests</mark>
-                            </p>
-                            <p>
-                                Implementierungssicht
-                                <mark class="highlight-gray">konkret spezifizierte Komponenten, oft Test-Driven-Developement</mark>
-                            </p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Qualitätssicherung</span></p>
-                            <div class="indented">
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Ist integriert nach jeder Phase</li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Reviews, Inspektionen</li>
-                                </ul>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Vorteile</span></p>
-                            <div class="indented">
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">
-                                        Fehlerbehandlung in frühen Phasen mit Reviews
-                                        <p>
-                                            <style>
-                                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                            </style>
-                                            <span
-                                                data-token-index="0"
-                                                contenteditable="false"
-                                                class="notion-text-equation-token"
-                                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                                <span></span>
-                                                <span>
-                                                    <span class="katex">
-                                                        <span class="katex-mathml">
-                                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                                <semantics>
-                                                                    <mrow><mo>⋅</mo></mrow>
-                                                                    <annotation encoding="application/x-tex">\cdot</annotation>
-                                                                </semantics>
-                                                            </math>
-                                                        </span>
-                                                        <span class="katex-html" aria-hidden="true">
-                                                            <span class="base">
-                                                                <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                                <span class="mord">⋅</span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                                <span>﻿</span>
-                                            </span>
-                                            Frühe Fehlererkennung in analytischen Phasen
-                                        </p>
-                                        <p>
-                                            <style>
-                                                @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                            </style>
-                                            <span
-                                                data-token-index="0"
-                                                contenteditable="false"
-                                                class="notion-text-equation-token"
-                                                style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                                <span></span>
-                                                <span>
-                                                    <span class="katex">
-                                                        <span class="katex-mathml">
-                                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                                <semantics>
-                                                                    <mrow><mo>⋅</mo></mrow>
-                                                                    <annotation encoding="application/x-tex">\cdot</annotation>
-                                                                </semantics>
-                                                            </math>
-                                                        </span>
-                                                        <span class="katex-html" aria-hidden="true">
-                                                            <span class="base">
-                                                                <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                                <span class="mord">⋅</span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                                <span>﻿</span>
-                                            </span>
-                                            Gute Planung
-                                        </p>
-                                    </li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Verschiedene Abstraktionslevels.</li>
-                                </ul>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Nachteile</span></p>
-                            <div class="indented">
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">
-                                        Wie Wasserfallmodell
-                                        <p>Klare System-Anforderungen von Anfang an verlangt</p>
-                                        <p>Alle Anforderungen / Erwartungen müssen von Anfang an komplett klar sein</p>
-                                    </li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Viel Aufwand für Dokumentationen</li>
-                                </ul>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Anwendungsbereich</span></p>
-                            <div class="indented">
-                                <p>
-                                    für kleine Projekte zu detailliert, für große Projekte mit hohem Qualitätsanspruch geeignet (speziell Embedded Systems) an
-                                    die man mehrere Jahre entwickelt
-                                </p>
-                                <p>Große Projekte im öffentlichen Bereich</p>
-                                <p></p>
-                                <figure class="image">
-                                    <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%202.png">
-                                        <img style="width: 576px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%202.png" />
-                                    </a>
-                                </figure>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><span style="border-bottom: 0.05em solid">V Modell XT</span></summary>
-                            <h2>V-Modell XT</h2>
-                            <p>Baut auf V-Modell und V-Modell 97 auf.</p>
-                            <p>In DE im öffentlichen Bereich verpflichtend.</p>
-                            <p>
-                                Modular, flexibel (kann angepasst werden durch
-                                <em>Tailoring</em>
-                                ).
-                            </p>
-                            <p>Für unklare, sich ändernde Anforderungen auch geeignet.</p>
-                            <p>Ziel: Projektrisiko minimieren, Anpassbarkeit, Anwendbarkeit, Skalierbarkeit und Änder- und Erweiterbarkeit des V-Modells.</p>
-                            <p></p>
-                            <p>
-                                <span style="border-bottom: 0.05em solid">21 verschiedene Elemente /</span>
-                                <em>
-                                    <span style="border-bottom: 0.05em solid"><span style="border-bottom: 0.05em solid">Vorgehensbausteine</span></span>
-                                </em>
-                            </p>
-                            <div class="indented">
-                                <p>a) Kernelemente</p>
-                                <p>b) Optionale Elemente</p>
-                                <p></p>
-                                <p>Kapseln mit Schnittstellen:</p>
-                                <div class="indented">
-                                    <p>
-                                        <style>
-                                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                        </style>
-                                        <span
-                                            data-token-index="0"
-                                            contenteditable="false"
-                                            class="notion-text-equation-token"
-                                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                            <span></span>
-                                            <span>
-                                                <span class="katex">
-                                                    <span class="katex-mathml">
-                                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                            <semantics>
-                                                                <mrow><mo>⋅</mo></mrow>
-                                                                <annotation encoding="application/x-tex">\cdot</annotation>
-                                                            </semantics>
-                                                        </math>
-                                                    </span>
-                                                    <span class="katex-html" aria-hidden="true">
-                                                        <span class="base">
-                                                            <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                            <span class="mord">⋅</span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                            <span>﻿</span>
-                                        </span>
-                                        Produkte
-                                    </p>
-                                    <div class="indented">
-                                        <p class="block-color-gray">
-                                            Ein Produkt kann aus vielen Subprodukten stehen die voneinander abhängig sein können (dependency).
-                                        </p>
-                                    </div>
-                                    <p></p>
-                                    <p>
-                                        <style>
-                                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                        </style>
-                                        <span
-                                            data-token-index="0"
-                                            contenteditable="false"
-                                            class="notion-text-equation-token"
-                                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                            <span></span>
-                                            <span>
-                                                <span class="katex">
-                                                    <span class="katex-mathml">
-                                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                            <semantics>
-                                                                <mrow><mo>⋅</mo></mrow>
-                                                                <annotation encoding="application/x-tex">\cdot</annotation>
-                                                            </semantics>
-                                                        </math>
-                                                    </span>
-                                                    <span class="katex-html" aria-hidden="true">
-                                                        <span class="base">
-                                                            <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                            <span class="mord">⋅</span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                            <span>﻿</span>
-                                        </span>
-                                        Produktergebnisse
-                                    </p>
-                                    <p>
-                                        <style>
-                                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                        </style>
-                                        <span
-                                            data-token-index="0"
-                                            contenteditable="false"
-                                            class="notion-text-equation-token"
-                                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                            <span></span>
-                                            <span>
-                                                <span class="katex">
-                                                    <span class="katex-mathml">
-                                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                            <semantics>
-                                                                <mrow><mo>⋅</mo></mrow>
-                                                                <annotation encoding="application/x-tex">\cdot</annotation>
-                                                            </semantics>
-                                                        </math>
-                                                    </span>
-                                                    <span class="katex-html" aria-hidden="true">
-                                                        <span class="base">
-                                                            <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                            <span class="mord">⋅</span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                            <span>﻿</span>
-                                        </span>
-                                        zugeordnete Aktivitäten
-                                    </p>
-                                    <div class="indented">
-                                        <p class="block-color-gray">
-                                            Für einen Produkt gibt es genau eine Aktivität (die widerum aus anderen Subaktivitäten bestehen kann)
-                                        </p>
-                                    </div>
-                                    <p></p>
-                                    <p>
-                                        <style>
-                                            @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                        </style>
-                                        <span
-                                            data-token-index="0"
-                                            contenteditable="false"
-                                            class="notion-text-equation-token"
-                                            style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                            <span></span>
-                                            <span>
-                                                <span class="katex">
-                                                    <span class="katex-mathml">
-                                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                            <semantics>
-                                                                <mrow><mo>⋅</mo></mrow>
-                                                                <annotation encoding="application/x-tex">\cdot</annotation>
-                                                            </semantics>
-                                                        </math>
-                                                    </span>
-                                                    <span class="katex-html" aria-hidden="true">
-                                                        <span class="base">
-                                                            <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                            <span class="mord">⋅</span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                            <span>﻿</span>
-                                        </span>
-                                        verantwortliche Rollen
-                                    </p>
-                                    <div class="indented"><p class="block-color-gray">Für einen Produkt gibt es genau einen Verantwortlichen.</p></div>
-                                    <p></p>
-                                </div>
-                                <p></p>
-                                <p>Produkt und Aktivität können von anderen Produkte und Aktivitäten abhängig sein.</p>
-                                <p>Es gibt Abhängigkeiten zwischen den Bausteinen (steht in der V-Modell XT Dokumentation).</p>
-                            </div>
-                            <p></p>
-                            <figure class="image">
-                                <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%203.png">
-                                    <img style="width: 192px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%203.png" />
-                                </a>
-                            </figure>
-                            <p><span style="border-bottom: 0.05em solid">Projektgegenstand</span></p>
-                            <div class="indented">
-                                <p>
-                                    Inhalt des Projektes (bspws Hardware-Systeme, Software-Systeme, komplexe Systeme, eingebettete Systeme und Systemintegration
-                                    im V-Modell XT)
-                                </p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Projekttypen</span></p>
-                            <div class="indented">
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>
-                                        Systementwicklungsprojekt des Auftraggebers AG
-                                        <p>Auftraggeber-Sicht</p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        Systementwicklungsprojekt des Auftragnehmers AN
-                                        <p>Auftragnehmer-Sicht</p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="3">
-                                    <li>
-                                        Systementwicklungsprojekt des AN mit AG in derstelben Organisation
-                                        <p>
-                                            <em>InHouse-Projekt</em>
-                                            , keine externe Kommunikation
-                                        </p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="4">
-                                    <li>
-                                        Einführung und Pflege eines organisationsspezifischen Vorgehensmodells
-                                        <p>Warten und Verbessern</p>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Kern und optionale Bausteine nach Projekttyp</span></p>
-                            <figure class="image">
-                                <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%204.png">
-                                    <img style="width: 240px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%204.png" />
-                                </a>
-                            </figure>
-                            <figure class="image">
-                                <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%205.png">
-                                    <img style="width: 240px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%205.png" />
-                                </a>
-                            </figure>
-                            <figure class="image">
-                                <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%206.png">
-                                    <img style="width: 240px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%206.png" />
-                                </a>
-                            </figure>
-                            <p></p>
-                            <p class="block-color-gray"><span style="border-bottom: 0.05em solid">Projekttypen vs. Projektgegenstand</span></p>
-                            <p class="block-color-gray">Projekttypen eingeteilt nach:</p>
-                            <div class="indented">
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>Gegenstand: z.B. Hardwaresystem, Softwaresystem, Komplexes System</li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>Rollen: z.B. Auftraggeber / Auftragnehmerprojekte</li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <figure class="image">
-                                <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%207.png">
-                                    <img style="width: 240px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%207.png" />
-                                </a>
-                            </figure>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Gesamte Strategie inkl. Entscheidungspunkte (Projektdurchführung)</span></p>
-                            <div class="indented">
-                                <p>Projektdurchführungsstrategie: Aneinander-Reihung der Bausteine → Definiert Ablauf.</p>
-                                <p>Unterschiedliche Arten an Strategien möglich (auch inkrementell und agil).</p>
-                                <p>Beispiel:</p>
-                            </div>
-                            <p></p>
-                            <figure class="image">
-                                <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%208.png">
-                                    <img style="width: 240px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%208.png" />
-                                </a>
-                            </figure>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Tools</span></p>
-                            <div class="indented">
-                                <p>Kann man an unterschiedliche Projektgegebenheiten mit Open Source tools anpassen:</p>
-                                <div class="indented">
-                                    <ul class="bulleted-list">
-                                        <li style="list-style-type: disc">Auswahl von benötigten Vorgehensbausteinen</li>
-                                    </ul>
-                                    <ul class="bulleted-list">
-                                        <li style="list-style-type: disc">passende Projektdurchführungsstrategie</li>
-                                    </ul>
-                                    <ul class="bulleted-list">
-                                        <li style="list-style-type: disc">Ergebnis: maßgefertigte Vorgehensweise + Templates für die Projektdokumentation.</li>
-                                    </ul>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>
-                                <span style="border-bottom: 0.05em solid">
-                                    Erklären und skizzieren Sie den SCRUM Prozess. Nennen Sie auch Vor- und Nachteile
-                                </span>
-                            </summary>
-                            <p>
-                                Bisher mangelhafte Flexibilität, unnötig hoher Dokumentationsaufwand, fehlende Nähe zum Kunden, Kunde nicht mit in Entwicklung
-                                einbezogen.
-                            </p>
-                            <p></p>
-                            <h2>SCRUM</h2>
-                            <p>Art von agiler Entwicklung.</p>
-                            <p>Ziel: kleine effiziente Teams bilden.</p>
-                            <div class="indented">
-                                <p>Gesamte Dauer meistens 2-4 Wochen</p>
-                                <p>Sprint meistens 1 Tag → Keine Unterbrechungen, keine Änderungen zugelassen</p>
-                                <p>
-                                    Kurze tägliche Besprechungen vor
-                                    <em>Daily Scrums</em>
-                                    , 15 Minuten:
-                                </p>
-                                <div class="indented">
-                                    <ol type="1" class="numbered-list" start="1">
-                                        <li>Was wurde seit dem letzten meeting erledigt</li>
-                                    </ol>
-                                    <ol type="1" class="numbered-list" start="2">
-                                        <li>Welche Probleme sind aufgetreten während der Entwicklung</li>
-                                    </ol>
-                                    <ol type="1" class="numbered-list" start="3">
-                                        <li>Was ist das Ziel bis zum nächsten Meeting</li>
-                                    </ol>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p>Reagiert auf andauernd ändernde Anforderungen im Projektablauf. Teil-Produkte stehen dem Kunden frühzeitig zur Verfügung.</p>
-                            <p>Ein Team zuständig für Einheit / Produkt / Teilprodukt.</p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Begriffe</span></p>
-                            <div class="indented">
-                                <p class="block-color-gray">Temporal structure = daily Scrum Meeting + Review + Retrospective.</p>
-                                <p>Backlog</p>
-                                <div class="indented">
-                                    <p>
-                                        alle Arbeitspakete, die in nächster Zeit umgesetzt werden müssen (sowohl klar definierte als auch vage Anforderungen):
-                                        Produkt vs. Sprint Backlog.
-                                    </p>
-                                    <p class="block-color-gray">
-                                        <em>Priorisierte</em>
-                                        Projektergebnisse (Backlog Items).
-                                    </p>
-                                </div>
-                                <p></p>
-                                <p>Daily-Scrum</p>
-                                <div class="indented">
-                                    <p>Täglicher Arbeitsauftrag</p>
-                                    <p class="block-color-gray">Das Sprint-Team darf beim Arbeiten nicht gestört werden.</p>
-                                </div>
-                                <p></p>
-                                <p>Scrum Team</p>
-                                <div class="indented"><p>Funktionsübergreifendes Team, zuständig für den Sprint Backlog.</p></div>
-                                <p></p>
-                                <p>Burndown Chart</p>
-                                <div class="indented"><p>Visuelle Darstellung des Projektfortschritts.</p></div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Phasen</span></p>
-                            <div class="indented">
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>
-                                        Pregame
-                                        <p class="block-color-gray">Anforderungen → Architektur und Planung</p>
-                                        <p class="block-color-gray">
-                                            Alle Eigenschaften und Features
-                                            <em>gemeinsam mit Kunden</em>
-                                            → Product Backlog → Prioritisieren
-                                        </p>
-                                        <p class="block-color-gray">(alle zukünftigen Änderungen passieren im Product Backlog)</p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        Sprint
-                                        <p class="block-color-gray">Kleine Menge an features aus product backlog → spring backlog (machbare Menge)</p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="3">
-                                    <li>
-                                        Postgame
-                                        <p class="block-color-gray">Auslieferung</p>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Sprint</span></p>
-                            <div class="indented">
-                                <p>Team darf nicht gestört werden.</p>
-                                <p>Wiederholung von:</p>
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>
-                                        Develop and Test
-                                        <mark class="highlight-gray">Implementierung von neuer Software</mark>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        Wrap
-                                        <mark class="highlight-gray">Integration</mark>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="3">
-                                    <li>
-                                        Review
-                                        <mark class="highlight-gray">Review des integrierten Produkts</mark>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="4">
-                                    <li>
-                                        Adjust
-                                        <mark class="highlight-gray">Anpassung, Verbesserung</mark>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <figure class="image">
-                                <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2012.png">
-                                    <img style="width: 240px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2012.png" />
-                                </a>
-                            </figure>
-                            <figure class="image">
-                                <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2013.png">
-                                    <img style="width: 240px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2013.png" />
-                                </a>
-                            </figure>
-                            <figure class="image">
-                                <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2014.png">
-                                    <img style="width: 240px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2014.png" />
-                                </a>
-                            </figure>
-                            <p><span style="border-bottom: 0.05em solid">Methoden / Tools</span></p>
-                            <div class="indented">
-                                <p>
-                                    <style>
-                                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                    </style>
-                                    <span
-                                        data-token-index="0"
-                                        contenteditable="false"
-                                        class="notion-text-equation-token"
-                                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                        <span></span>
-                                        <span>
-                                            <span class="katex">
-                                                <span class="katex-mathml">
-                                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                        <semantics>
-                                                            <mrow><mo>⋅</mo></mrow>
-                                                            <annotation encoding="application/x-tex">\cdot</annotation>
-                                                        </semantics>
-                                                    </math>
-                                                </span>
-                                                <span class="katex-html" aria-hidden="true">
-                                                    <span class="base">
-                                                        <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                        <span class="mord">⋅</span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                        <span>﻿</span>
-                                    </span>
-                                    Burndown charts
-                                </p>
-                                <p>
-                                    <style>
-                                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                    </style>
-                                    <span
-                                        data-token-index="0"
-                                        contenteditable="false"
-                                        class="notion-text-equation-token"
-                                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                        <span></span>
-                                        <span>
-                                            <span class="katex">
-                                                <span class="katex-mathml">
-                                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                        <semantics>
-                                                            <mrow><mo>⋅</mo></mrow>
-                                                            <annotation encoding="application/x-tex">\cdot</annotation>
-                                                        </semantics>
-                                                    </math>
-                                                </span>
-                                                <span class="katex-html" aria-hidden="true">
-                                                    <span class="base">
-                                                        <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                        <span class="mord">⋅</span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                        <span>﻿</span>
-                                    </span>
-                                    Test-Driven Developement
-                                </p>
-                                <p>
-                                    <style>
-                                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                    </style>
-                                    <span
-                                        data-token-index="0"
-                                        contenteditable="false"
-                                        class="notion-text-equation-token"
-                                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                        <span></span>
-                                        <span>
-                                            <span class="katex">
-                                                <span class="katex-mathml">
-                                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                        <semantics>
-                                                            <mrow><mo>⋅</mo></mrow>
-                                                            <annotation encoding="application/x-tex">\cdot</annotation>
-                                                        </semantics>
-                                                    </math>
-                                                </span>
-                                                <span class="katex-html" aria-hidden="true">
-                                                    <span class="base">
-                                                        <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                        <span class="mord">⋅</span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                        <span>﻿</span>
-                                    </span>
-                                    Pair Programming
-                                </p>
-                                <p>
-                                    <style>
-                                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                    </style>
-                                    <span
-                                        data-token-index="0"
-                                        contenteditable="false"
-                                        class="notion-text-equation-token"
-                                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                        <span></span>
-                                        <span>
-                                            <span class="katex">
-                                                <span class="katex-mathml">
-                                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                        <semantics>
-                                                            <mrow><mo>⋅</mo></mrow>
-                                                            <annotation encoding="application/x-tex">\cdot</annotation>
-                                                        </semantics>
-                                                    </math>
-                                                </span>
-                                                <span class="katex-html" aria-hidden="true">
-                                                    <span class="base">
-                                                        <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                        <span class="mord">⋅</span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                        <span>﻿</span>
-                                    </span>
-                                    Reviews
-                                </p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p>Vorteile:</p>
-                            <div class="indented">
-                                <p>• Wenige Regeln, leicht verständlich.</p>
-                                <p>• Hohe Effektivität durch Selbstorganisation.</p>
-                                <p>• Adaptiv/Tolerant gegenüber Anforderungsänderungen und neu Priorisierung.</p>
-                                <p>• Hohe Transparenz durch regelmäßige Meetings und Backlogs.</p>
-                                <p>• Geringer Administrations- und Dokumentationsaufwand.</p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p>Nachteile:</p>
-                            <div class="indented">
-                                <p>• Kein Gesamtüberblick über die komplette Projektstrecke.</p>
-                                <p>• Hoher Kommunikations- und Abstimmungsaufwand.</p>
-                                <p>• Erschwerte Koordination mehrerer Entwicklungsteam bei Großprojekten.</p>
-                                <p>• Potentielle Verunsicherungen aufgrund fehlender Zuständigkeiten und Hierarchien.</p>
-                                <p>• Potentielle Unvereinbarkeit mit bestehenden Unternehmensstrukturen.</p>
-                            </div>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>
-                                <span style="border-bottom: 0.05em solid">Erklären Sie den Unterschied zwischen dem Produkt-Backlog und Sprint-Backlog.</span>
-                            </summary>
-                            <p>Produkt-Backlog: Vom Kunden priorisierte Liste alle Features zum Produkt.</p>
-                            <p>
-                                Sprint-Backlog: (Teilmenge von Produkt-Backlog) Alle Features die zu einem gewissen Sprint gehören. Features werden in kleinere
-                                Tasks aufgeteilt.
-                            </p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><span style="border-bottom: 0.05em solid">Was versteht man unter einem Burndown-Chart?</span></summary>
-                            <p>Visuelle Darstellung des Projektfortschrittes.</p>
-                            <p>Immer neue Schätzungen des Abschlusses basierend auf aktueller Geschwindigkeit bei jedem daily scrum.</p>
-                            <div class="indented">
-                                <figure class="image">
-                                    <a href="../Projekt%20Management%20PM%2083a336ae9dac4be0b1c061b5c390ab38/Untitled%206.png">
-                                        <img style="width: 192px" src="../Projekt%20Management%20PM%2083a336ae9dac4be0b1c061b5c390ab38/Untitled%206.png" />
-                                    </a>
-                                </figure>
-                            </div>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><span style="border-bottom: 0.05em solid">Was gehört zu den 12 Prinzipien des Agilen Manifests?</span></summary>
-                            <p></p>
-                            <p>Entstand aus Kritik an „schwergewichtigen“ Ansätzen.</p>
-                            <div class="indented">
-                                <p>
-                                    <em>
-                                        "Individuals and interactions over processes and tools; Working software over comprehensive documentation; Customer
-                                        collaboration over contract negotiation; Responding to change over following a plan"
-                                    </em>
-                                </p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p>Englisch:</p>
-                            <ol type="1" class="numbered-list" start="1">
-                                <li>Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="2">
-                                <li>
-                                    Welcome changing requirements, even late in development. Agile processes harness change for the customer's competitive
-                                    advantage.
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="3">
-                                <li>
-                                    Deliver working software frequently, from a couple of weeks to a couple of months, with a preference to the shorter
-                                    timescale.
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="4">
-                                <li>Business people and developers must work together daily throughout the project.</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="5">
-                                <li>
-                                    Build projects around motivated individuals. Give them the environment and support they need, and trust them to get the job
-                                    done.
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="6">
-                                <li>
-                                    The most efficient and effective method of conveying information to and within a development team is face-to-face
-                                    conversation.
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="7">
-                                <li>Working software is the primary measure of progress.</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="8">
-                                <li>
-                                    Agile processes promote sustainable development. The sponsors, developers, and users should be able to maintain a constant
-                                    pace indefinitely.
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="9">
-                                <li>Continuous attention to technical excellence and good design enhances agility.</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="10">
-                                <li>Simplicity--the art of maximizing the amount of work not done--is essential.</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="11">
-                                <li>The best architectures, requirements, and designs emerge from self-organizing teams.</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="12">
-                                <li>
-                                    At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly.
-                                </li>
-                            </ol>
-                            <p></p>
-                            <p>Deutsch:</p>
-                            <ol type="1" class="numbered-list" start="1">
-                                <li>
-                                    Unsere höchste Priorität ist es, den Kunden durch frühe und kontinuierliche Auslieferung wertvoller Software zufrieden zu
-                                    stellen.
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="2">
-                                <li>
-                                    Heiße Anforderungsänderungen selbst spät in der Entwicklung willkommen. Agile Prozesse nutzen Veränderungen zum
-                                    Wettbewerbsvorteil des Kunden.
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="3">
-                                <li>
-                                    Liefere funktionierende Software regelmäßig innerhalb weniger Wochen oder Monate und bevorzuge dabei die kürzere Zeitspanne.
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="4">
-                                <li>Fachexperten und Entwickler müssen während des Projektes täglich zusammenarbeiten.</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="5">
-                                <li>
-                                    Errichte Projekte rund um motivierte Individuen. Gib ihnen das Umfeld und die Unterstützung, die sie benötigen und vertraue
-                                    darauf, dass sie die Aufgabe erledigen.
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="6">
-                                <li>
-                                    Die effizienteste und effektivste Methode, Informationen an und innerhalb eines Entwicklungsteams zu übermitteln, ist im
-                                    Gespräch von Angesicht zu Angesicht.
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="7">
-                                <li>Funktionierende Software ist das wichtigste Fortschrittsmaß.</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="8">
-                                <li>
-                                    Agile Prozesse fördern nachhaltige Entwicklung. Die Auftraggeber, Entwickler und Benutzer sollten ein gleichmäßiges Tempo
-                                    auf unbegrenzte Zeit halten können.
-                                </li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="9">
-                                <li>Ständiges Augenmerk auf technische Exzellenz und gutes Design fördert Agilität.</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="10">
-                                <li>Einfachheit – die Kunst, die Menge nicht getaner Arbeit zu maximieren – ist essenziell.</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="11">
-                                <li>Die besten Architekturen, Anforderungen und Entwürfe entstehen durch selbstorganisierte Teams.</li>
-                            </ol>
-                            <ol type="1" class="numbered-list" start="12">
-                                <li>In regelmäßigen Abständen reflektiert das Team, wie es effektiver werden kann und passt sein Verhalten entsprechend an.</li>
-                            </ol>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary><span style="border-bottom: 0.05em solid">Rational Unified Process, RUP</span></summary>
-                            <p>Inkrementell, iterativ, phasenorientiert.</p>
-                            <p>Im kommerziellen Umfeld.</p>
-                            <p>UML in jeder Phase.</p>
-                            <p>Integriertes Anforderungsmanagement und Änderungsmanagement (supporting workflow).</p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Phasen mit Meilensteinen</span></p>
-                            <div class="indented">
-                                <p>Eine Phase kann mehrere Iterationen haben (Von Projektmanager festgelegt).</p>
-                                <p>Aktivität + Verantwortlicher = Artifakt</p>
-                                <div class="indented">
-                                    <p>
-                                        Jede Phase /
-                                        <em>Aktivität</em>
-                                        von einem
-                                        <em>Verantwortlichen</em>
-                                        erzeugt ein Produkt /
-                                        <em>Artefakt</em>
-                                        → überprüft, freigegeben.
-                                    </p>
-                                    <p>Wenn Überprüfung nicht bestanden, weitere Iteration.</p>
-                                </div>
-                                <p></p>
-                                <p></p>
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>
-                                        Inception (Beginn)
-                                        <p class="block-color-gray">Anforderungen (Geschäftsfälle / Business Cases), Rahmenbedingungen definiert.</p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        Elaboration (Entwurf + Design)
-                                        <p class="block-color-gray">Spezifikation aus Anforderungen.</p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="3">
-                                    <li>
-                                        Construction (Implementierung)
-                                        <p class="block-color-gray">Komponenten umgesetzt.</p>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="4">
-                                    <li>
-                                        Transition (Auslieferung)
-                                        <p class="block-color-gray">Auslieferung an Kunden, Product release.</p>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <figure class="image">
-                                <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2011.png">
-                                    <img style="width: 192px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2011.png" />
-                                </a>
-                            </figure>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Disziplinen und Workflows</span></p>
-                            <div class="indented">
-                                <p>9 Disziplinen die durch alle Phasen geführt werden</p>
-                                <div class="indented">
-                                    <p>6 Engineering Workflows</p>
-                                    <p>3 Supporting Workflows</p>
-                                    <p></p>
-                                </div>
-                                <p></p>
-                                <p>Engineering Workflows</p>
-                                <div class="indented">
-                                    <ol type="1" class="numbered-list" start="1">
-                                        <li>
-                                            Business Modeling:
-                                            <mark class="highlight-gray">Geschäftsfallmodellierung mit UML</mark>
-                                        </li>
-                                    </ol>
-                                    <ol type="1" class="numbered-list" start="2">
-                                        <li>
-                                            Requirements:
-                                            <mark class="highlight-gray">Anforderungen genau erheben, Verfeinerung der Use-Cases</mark>
-                                        </li>
-                                    </ol>
-                                    <ol type="1" class="numbered-list" start="3">
-                                        <li>
-                                            Analysis &amp; Design:
-                                            <mark class="highlight-gray">Erstellen wichtige Dokumente / Artefakte: Architektur, Design, Test-Dokumente</mark>
-                                        </li>
-                                    </ol>
-                                    <ol type="1" class="numbered-list" start="4">
-                                        <li>Implementation</li>
-                                    </ol>
-                                    <ol type="1" class="numbered-list" start="5">
-                                        <li>Test</li>
-                                    </ol>
-                                    <ol type="1" class="numbered-list" start="6">
-                                        <li>
-                                            Deployment:
-                                            <mark class="highlight-gray">Fertigstellung, Auslieferung</mark>
-                                        </li>
-                                    </ol>
-                                </div>
-                                <p></p>
-                                <p></p>
-                                <p>Supporting Workflows</p>
-                                <div class="indented">
-                                    <ol type="1" class="numbered-list" start="1">
-                                        <li>
-                                            Configuration and Change Management:
-                                            <mark class="highlight-gray">Dokumentenversionierung mit Version Control System</mark>
-                                        </li>
-                                    </ol>
-                                    <ol type="1" class="numbered-list" start="2">
-                                        <li>Project Management</li>
-                                    </ol>
-                                    <ol type="1" class="numbered-list" start="3">
-                                        <li>
-                                            Environment:
-                                            <mark class="highlight-gray">Definiert Ressourcen, Budget und Werkzeuge für Entwickler</mark>
-                                        </li>
-                                    </ol>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Vorteile</span></p>
-                            <div class="indented">
-                                <p>Real-world Szenarien.</p>
-                                <p>Werkzeugunterstützung (Rational XDE, IBM).</p>
-                                <p>Vordefinierte Liste mit erforderlichen Artefakten.</p>
-                            </div>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Nachteile</span></p>
-                            <div class="indented"><p>Komplexität, Dokumentationsaufwand</p></div>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Anwendungsbereich</span></p>
-                            <div class="indented"><p>Grosse Projekte die einen Überblick brauchen (inkl. Deployment).</p></div>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>
-                                <span style="border-bottom: 0.05em solid">
-                                    Erklären Sie die wesentlichen Konzepte des „Process Customizing“ und des „Prozess Tailoring“. Wozu und wann werden sie
-                                    eingesetzt?
-                                </span>
-                            </summary>
-                            <p>Modelle müssen dem Projekt angepasst werden.</p>
-                            <p>Nicht alle Schritte aus dem Life-Cycle können ausgeführt werden.</p>
-                            <div class="indented">
-                                <p>
-                                    <style>
-                                        @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
-                                    </style>
-                                    <span
-                                        data-token-index="0"
-                                        contenteditable="false"
-                                        class="notion-text-equation-token"
-                                        style="user-select: all; -webkit-user-select: all; -moz-user-select: all">
-                                        <span></span>
-                                        <span>
-                                            <span class="katex">
-                                                <span class="katex-mathml">
-                                                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                        <semantics>
-                                                            <mrow><mo>⋅</mo></mrow>
-                                                            <annotation encoding="application/x-tex">\cdot</annotation>
-                                                        </semantics>
-                                                    </math>
-                                                </span>
-                                                <span class="katex-html" aria-hidden="true">
-                                                    <span class="base">
-                                                        <span class="strut" style="height: 0.44445em; vertical-align: 0em"></span>
-                                                        <span class="mord">⋅</span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                        <span>﻿</span>
-                                    </span>
-                                    Schritte Zusammenlegen oder auslassen
-                                </p>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p>Anpassung an</p>
-                            <div class="indented">
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">
-                                        Organisation mit eigener Domäne (= Fachgebiet)
-                                        <p>zb Wenn eine Organisation öfter Web Applikationen macht.</p>
-                                        <p>
-                                            Kann Best-Practices in der Domäne nutzen -
-                                            <em>Process Pattern</em>
-                                        </p>
-                                    </li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">Projekt</li>
-                                </ul>
-                            </div>
-                            <p></p>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Reihenfolge</span></p>
-                            <div class="indented">
-                                <ol type="1" class="numbered-list" start="1">
-                                    <li>
-                                        Process Customization:
-                                        <mark class="highlight-gray">Organisation + Domäne</mark>
-                                    </li>
-                                </ol>
-                                <ol type="1" class="numbered-list" start="2">
-                                    <li>
-                                        Process Tailoring:
-                                        <mark class="highlight-gray">Projekt</mark>
-                                    </li>
-                                </ol>
-                            </div>
-                            <p></p>
-                            <figure class="image">
-                                <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2015.png">
-                                    <img style="width: 144px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2015.png" />
-                                </a>
-                            </figure>
-                            <figure class="image">
-                                <a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2016.png">
-                                    <img style="width: 144px" src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2016.png" />
-                                </a>
-                            </figure>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Prozess Customization (Standardisierung)</span></p>
-                            <div class="indented">
-                                <p>Verallgemeinerte Form des „Tailorings“.</p>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">
-                                        unternehmensspezifische Standards (für eher große Unternehmen) → Domänenabhängige Anpassungen, z.B. für
-                                        Produktionsautomatisierung.
-                                    </li>
-                                </ul>
-                                <ul class="bulleted-list">
-                                    <li style="list-style-type: disc">ähnliche Projekte (z.B. Webapplikationen).</li>
-                                </ul>
-                                <p>Dient dann als Grundlage für Projektspezifisches Tailoring.</p>
-                                <p></p>
-                            </div>
-                            <p></p>
-                            <p><span style="border-bottom: 0.05em solid">Prozess Tailoring (Prozess auf das jeweilige Projekt anpassen</span></p>
-                            <div class="indented">
-                                <p>Angepasst an konkrete Projekte (Projektgröße, Projekttyp und Anwendungsdomäne)</p>
-                                <p>Braucht erfahrene Projektleiter und Toolunterstützung (z.B. V-Modell XT Projektassistent).</p>
-                                <p></p>
-                            </div>
-                            <p></p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-                <ul class="toggle">
-                    <li>
-                        <details open="">
-                            <summary>
-                                <span style="border-bottom: 0.05em solid">
-                                    Auf welcher Grundannahme basiert die klassische / sequenzielle Softwareentwicklung? Zu welchen Problemen kann dies führen
-                                    und wie wird damit bei der kontinuierlichen Softwareentwicklung umgegangen?
-                                </span>
-                            </summary>
-                            <p>Der sequentielle Entwicklungsprozess basiert auf stabilen Anforderungen.</p>
-                            <p>
-                                Anforderungen ändern sich allerdings oft, was bei sequentiellen Vorgehensmodellen in der Regel dazu führt, dass das Endprodukt
-                                nicht mehr den Anforderungen entspricht.
-                            </p>
-                            <p>
-                                Beim kontinuirlichen Modell wird iterativ gearbeitet, der Funktionsumfang steigt mit jeder Iteration, gesteuert durch den
-                                Soll-Ist-Vergleich → auf Anforderungsänderungen kann besser reagiert werden.
-                            </p>
-                        </details>
-                    </li>
-                </ul>
-                <p></p>
-            </div>
-        </article>
-    </body>
-</html>
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>Vorgehensmodelle (Prozesse)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+-webkit-print-color-adjust: exact;
+}
+* {
+box-sizing: border-box;
+-webkit-print-color-adjust: exact;
+}html,
+body {
+margin: 0;
+padding: 0;
+}
+@media only screen {
+body {
+margin: 2em auto;
+max-width: 900px;
+color: rgb(55, 53, 47);
+}
+}body {
+line-height: 1.5;
+white-space: pre-wrap;
+}a,
+a.visited {
+color: inherit;
+text-decoration: underline;
+}.pdf-relative-link-path {
+font-size: 80%;
+color: #444;
+}h1,
+h2,
+h3 {
+letter-spacing: -0.01em;
+line-height: 1.2;
+font-weight: 600;
+margin-bottom: 0;
+}.page-title {
+font-size: 2.5rem;
+font-weight: 700;
+margin-top: 0;
+margin-bottom: 0.75em;
+}h1 {
+font-size: 1.875rem;
+margin-top: 1.875rem;
+}h2 {
+font-size: 1.5rem;
+margin-top: 1.5rem;
+}h3 {
+font-size: 1.25rem;
+margin-top: 1.25rem;
+}.source {
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 1.5em;
+word-break: break-all;
+}.callout {
+border-radius: 3px;
+padding: 1rem;
+}figure {
+margin: 1.25em 0;
+page-break-inside: avoid;
+}figcaption {
+opacity: 0.5;
+font-size: 85%;
+margin-top: 0.5em;
+}mark {
+background-color: transparent;
+}.indented {
+padding-left: 1.5em;
+}hr {
+background: transparent;
+display: block;
+width: 100%;
+height: 1px;
+visibility: visible;
+border: none;
+border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}img {
+max-width: 100%;
+}@media only print {
+img {
+max-height: 100vh;
+object-fit: contain;
+}
+}@page {
+margin: 1in;
+}.collection-content {
+font-size: 0.875rem;
+}.column-list {
+display: flex;
+justify-content: space-between;
+}.column {
+padding: 0 1em;
+}.column:first-child {
+padding-left: 0;
+}.column:last-child {
+padding-right: 0;
+}.table_of_contents-item {
+display: block;
+font-size: 0.875rem;
+line-height: 1.3;
+padding: 0.125rem;
+}.table_of_contents-indent-1 {
+margin-left: 1.5rem;
+}.table_of_contents-indent-2 {
+margin-left: 3rem;
+}.table_of_contents-indent-3 {
+margin-left: 4.5rem;
+}.table_of_contents-link {
+text-decoration: none;
+opacity: 0.7;
+border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}table,
+th,
+td {
+border: 1px solid rgba(55, 53, 47, 0.09);
+border-collapse: collapse;
+}table {
+border-left: none;
+border-right: none;
+}th,
+td {
+font-weight: normal;
+padding: 0.25em 0.5em;
+line-height: 1.5;
+min-height: 1.5em;
+text-align: left;
+}th {
+color: rgba(55, 53, 47, 0.6);
+}ol,
+ul {
+margin: 0;
+margin-block-start: 0.6em;
+margin-block-end: 0.6em;
+}li > ol:first-child,
+li > ul:first-child {
+margin-block-start: 0.6em;
+}ul > li {
+list-style: disc;
+}ul.to-do-list {
+padding-inline-start: 0;
+}ul.to-do-list > li {
+list-style: none;
+}.to-do-children-checked {
+text-decoration: line-through;
+opacity: 0.375;
+}ul.toggle > li {
+list-style: none;
+}ul {
+padding-inline-start: 1.7em;
+}ul > li {
+padding-left: 0.1em;
+}ol {
+padding-inline-start: 1.6em;
+}ol > li {
+padding-left: 0.2em;
+}.mono ol {
+padding-inline-start: 2em;
+}.mono ol > li {
+text-indent: -0.4em;
+}.toggle {
+padding-inline-start: 0em;
+list-style-type: none;
+}/* Indent toggle children */
+.toggle > li > details {
+padding-left: 1.7em;
+}.toggle > li > details > summary {
+margin-left: -1.1em;
+}.selected-value {
+display: inline-block;
+padding: 0 0.5em;
+background: rgba(206, 205, 202, 0.5);
+border-radius: 3px;
+margin-right: 0.5em;
+margin-top: 0.3em;
+margin-bottom: 0.3em;
+white-space: nowrap;
+}.collection-title {
+display: inline-block;
+margin-right: 1em;
+}.page-description {
+margin-bottom: 2em;
+}.simple-table {
+margin-top: 1em;
+font-size: 0.875rem;
+empty-cells: show;
+}
+.simple-table td {
+height: 29px;
+min-width: 120px;
+}.simple-table th {
+height: 29px;
+min-width: 120px;
+}.simple-table-header-color {
+background: rgb(247, 246, 243);
+color: black;
+}
+.simple-table-header {
+font-weight: 500;
+}time {
+opacity: 0.5;
+}.icon {
+display: inline-block;
+max-width: 1.2em;
+max-height: 1.2em;
+text-decoration: none;
+vertical-align: text-bottom;
+margin-right: 0.5em;
+}img.icon {
+border-radius: 3px;
+}.user-icon {
+width: 1.5em;
+height: 1.5em;
+border-radius: 100%;
+margin-right: 0.5rem;
+}.user-icon-inner {
+font-size: 0.8em;
+}.text-icon {
+border: 1px solid #000;
+text-align: center;
+}.page-cover-image {
+display: block;
+object-fit: cover;
+width: 100%;
+max-height: 30vh;
+}.page-header-icon {
+font-size: 3rem;
+margin-bottom: 1rem;
+}.page-header-icon-with-cover {
+margin-top: -0.72em;
+margin-left: 0.07em;
+}.page-header-icon img {
+border-radius: 3px;
+}.link-to-page {
+margin: 1em 0;
+padding: 0;
+border: none;
+font-weight: 500;
+}p > .user {
+opacity: 0.5;
+}td > .user,
+td > time {
+white-space: nowrap;
+}input[type="checkbox"] {
+transform: scale(1.5);
+margin-right: 0.6em;
+vertical-align: middle;
+}p {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}.image {
+border: none;
+margin: 1.5em 0;
+padding: 0;
+border-radius: 0;
+text-align: center;
+}.code,
+code {
+background: rgba(135, 131, 120, 0.15);
+border-radius: 3px;
+padding: 0.2em 0.4em;
+border-radius: 3px;
+font-size: 85%;
+tab-size: 2;
+}code {
+color: #eb5757;
+}.code {
+padding: 1.5em 1em;
+}.code-wrap {
+white-space: pre-wrap;
+word-break: break-all;
+}.code > code {
+background: none;
+padding: 0;
+font-size: 100%;
+color: inherit;
+}blockquote {
+font-size: 1.25em;
+margin: 1em 0;
+padding-left: 1em;
+border-left: 3px solid rgb(55, 53, 47);
+}.bookmark {
+text-decoration: none;
+max-height: 8em;
+padding: 0;
+display: flex;
+width: 100%;
+align-items: stretch;
+}.bookmark-title {
+font-size: 0.85em;
+overflow: hidden;
+text-overflow: ellipsis;
+height: 1.75em;
+white-space: nowrap;
+}.bookmark-text {
+display: flex;
+flex-direction: column;
+}.bookmark-info {
+flex: 4 1 180px;
+padding: 12px 14px 14px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}.bookmark-image {
+width: 33%;
+flex: 1 1 180px;
+display: block;
+position: relative;
+object-fit: cover;
+border-radius: 1px;
+}.bookmark-description {
+color: rgba(55, 53, 47, 0.6);
+font-size: 0.75em;
+overflow: hidden;
+max-height: 4.5em;
+word-break: break-word;
+}.bookmark-href {
+font-size: 0.75em;
+margin-top: 0.25em;
+}.sans {
+font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+"Segoe UI Symbol";
+}
+.code {
+font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+}
+.serif {
+font-family: Lyon-Text, Georgia, ui-serif, serif;
+}
+.mono {
+font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+}
+.pdf .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
+}
+.pdf:lang(zh-CN) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
+}
+.pdf:lang(zh-TW) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
+}
+.pdf:lang(ko-KR) .sans {
+font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+"Segoe UI Emoji", "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
+}
+.pdf .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .code {
+font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji", "Noto Color Emoji",
+"Noto Sans Mono CJK KR";
+}
+.pdf .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK JP";
+}
+.pdf:lang(zh-CN) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK SC";
+}
+.pdf:lang(zh-TW) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK TC";
+}
+.pdf:lang(ko-KR) .serif {
+font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji", "Noto Color Emoji", "Noto Serif CJK KR";
+}
+.pdf .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
+}
+.pdf:lang(zh-CN) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
+}
+.pdf:lang(zh-TW) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
+}
+.pdf:lang(ko-KR) .mono {
+font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
+}
+.highlight-default {
+color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+color: inherit;
+fill: inherit;
+}
+.block-color-gray {
+color: rgba(120, 119, 116, 1);
+fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+color: rgba(159, 107, 83, 1);
+fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+color: rgba(217, 115, 13, 1);
+fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+color: rgba(203, 145, 47, 1);
+fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+color: rgba(68, 131, 97, 1);
+fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+color: rgba(51, 126, 169, 1);
+fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+color: rgba(144, 101, 176, 1);
+fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+color: rgba(193, 76, 138, 1);
+fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+color: rgba(212, 76, 71, 1);
+fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue {
+background-color: rgba(35, 131, 226, 0.07);
+}
+.select-value-color-pink {
+background-color: rgba(245, 224, 233, 1);
+}
+.select-value-color-purple {
+background-color: rgba(232, 222, 238, 1);
+}
+.select-value-color-green {
+background-color: rgba(219, 237, 219, 1);
+}
+.select-value-color-gray {
+background-color: rgba(227, 226, 224, 1);
+}
+.select-value-color-translucentGray {
+background-color: rgba(255, 255, 255, 0.0375);
+}
+.select-value-color-orange {
+background-color: rgba(250, 222, 201, 1);
+}
+.select-value-color-brown {
+background-color: rgba(238, 224, 218, 1);
+}
+.select-value-color-red {
+background-color: rgba(255, 226, 221, 1);
+}
+.select-value-color-yellow {
+background-color: rgba(253, 236, 200, 1);
+}
+.select-value-color-blue {
+background-color: rgba(211, 229, 239, 1);
+}
+.select-value-color-pageGlass {
+background-color: undefined;
+}
+.select-value-color-washGlass {
+background-color: undefined;
+}.checkbox {
+display: inline-flex;
+vertical-align: text-bottom;
+width: 16;
+height: 16;
+background-size: 16px;
+margin-left: 2px;
+margin-right: 5px;
+}.checkbox-on {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}.checkbox-off {
+background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}/* -------- injections from notionBackup -------- */body {
+white-space: normal !important;
+}p {
+min-height: 1em !important;
+}.code,
+code {
+font-size: 100% !important;
+}blockquote {
+font-size: 100% !important;
+}.callout {
+white-space: normal !important;
+}
+.callout div:has(span.icon) {
+font-size: 100% !important;
+}.source:not(.bookmark) {
+font-size: 100% !important;
+}p {
+min-height: 1em !important;
+}
+</style></head><body><article class="page sans"><header><h1 class="page-title">Vorgehensmodelle (Prozesse)</h1><p class="page-description"></p></header><div class="page-body"><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">Planbasierte Methoden</span></summary><p>
+= Systematische Prozesse. Sind plan-driven und orientieren sich eher an Abläufen mit Schwerpunkt auf Produkten und
+Dokumentation.
+</p><p>Beispiele:</p><div class="indented"><p>Wasserfallmodell</p><p>V-Modell (XT)</p><p>RUP</p><p>Inkrementelle Modelle</p></div><p></p></details></li></ul><p></p><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">
+Erklären und skizzieren Sie das Wasserfall Modell. Nennen Sie auch Vor- und Nachteile
+</span></summary><p>Klassisch / Sequentiell (traditionell)</p><p>Umsetzung des Life-Cycles</p><p>Fokus auf Dokumentation</p><p>Strikt sequenzieller Projektablauf.</p><div class="indented"><p>
+Vorherige Phase muss vollständig abgeschlossen und freigegeben (Validierung und Verifikation) sein. → Wenn nicht erreicht,
+zurückspringen.
+</p><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%201.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%201.png" style="width: 144px"/></a></figure><p></p></div><p></p><p><span style="border-bottom: 0.05em solid">Vorteile</span></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Backtracking zu früheren Entwicklungsphasen.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Weite Verbreitung und hoher Bekanntheitsgrad.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Risikominimierung durch „Abschluss“ einer Phase.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Weite Verbreitung und hoher Bekanntheitsgrad.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Strikte Trennung der einzelnen Phasen.</li></ul></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Nachteile</span></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Reaktion auf spätere Änderungen schwer.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Software und Prototyp für Kunden steht spät zu verfügung.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">keine parallele Entwicklung, tasks müssen abgeschlossen werden</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Starke Auswirkung von Fehlern aus frühen Phasen.</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Anwendung bei guten Kenntnissen über die Anforderungsdomäne</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">nur bei klar definierten und vollständigen Anforderungen.</li></ul></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Anwendung</span></p><div class="indented"><p>Für vollständige, stabile Anforderungen, kleinen Projekten.</p><p>kleine Entwicklungsteams</p><p>Gute Kenntnis erforderlich (No-Surprise Software)</p><p>Alle Anforderungen / Erwartungen müssen von Anfang an komplett klar sein</p></div><p></p><p></p><p></p></details></li></ul><p></p><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">Erklären und skizzieren Sie das V-Modell. Nennen Sie auch Vor- und Nachteile.</span></summary><p>Für vollständige, stabile Anforderungen.</p><p>Im öffentlichen Bereich.</p><p>4 Submodelle: Systemerstellung, Qualitätssicherung, Konfigurationsmanagement, Projektmanagement</p><p></p><p>Ziel:</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Gesamtaufwand / Kostenreduktion</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Kürzere Einarbeitungszeiten für neue Mitarbeiter im Projekt</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Einfachere Kontrolle / vergleich des Projektfortschritts (auch für den Auftraggeber)</li></ul></div><p></p><p></p><p>Teilt auf in Realisierungs und Test-Phase.</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Analytische Phasen
+<p><mark class="highlight-gray">Immer detailiertere Spezifikation</mark></p></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Synthetische Phasen
+<p><mark class="highlight-gray">Immer weiter Implementiert und getestet</mark></p><p></p></li></ol></div><p></p><p><span style="border-bottom: 0.05em solid">Sichten in analytischen und synthetischen Phasen</span></p><p>
+Anwendersicht
+<mark class="highlight-gray">Kundensicht, Geschäftsprozesse, Akzeptanz und Abnahmetests</mark></p><p>
+Architektursicht
+<mark class="highlight-gray">Grundlegendes Architektur Design + Realisierug, Integrationstests</mark></p><p>
+Implementierungssicht
+<mark class="highlight-gray">konkret spezifizierte Komponenten, oft Test-Driven-Developement</mark></p><p></p><p><span style="border-bottom: 0.05em solid">Qualitätssicherung</span></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Ist integriert nach jeder Phase</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Reviews, Inspektionen</li></ul><p></p></div><p></p><p><span style="border-bottom: 0.05em solid">Vorteile</span></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Fehlerbehandlung in frühen Phasen mit Reviews
+<p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+Frühe Fehlererkennung in analytischen Phasen
+</p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+Gute Planung
+</p></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Verschiedene Abstraktionslevels.</li></ul><p></p></div><p></p><p><span style="border-bottom: 0.05em solid">Nachteile</span></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Wie Wasserfallmodell
+<p>Klare System-Anforderungen von Anfang an verlangt</p><p>Alle Anforderungen / Erwartungen müssen von Anfang an komplett klar sein</p></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Viel Aufwand für Dokumentationen</li></ul><p></p></div><p></p><p><span style="border-bottom: 0.05em solid">Anwendungsbereich</span></p><div class="indented"><p>
+für kleine Projekte zu detailliert, für große Projekte mit hohem Qualitätsanspruch geeignet (speziell Embedded Systems) an
+die man mehrere Jahre entwickelt
+</p><p>Große Projekte im öffentlichen Bereich</p><p></p><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%202.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%202.png" style="width: 576px"/></a></figure></div><p></p><p></p></details></li></ul><p></p><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">V Modell XT</span></summary><h2>V-Modell XT</h2><p>Baut auf V-Modell und V-Modell 97 auf.</p><p>In DE im öffentlichen Bereich verpflichtend.</p><p>
+Modular, flexibel (kann angepasst werden durch
+<em>Tailoring</em>
+).
+</p><p>Für unklare, sich ändernde Anforderungen auch geeignet.</p><p>Ziel: Projektrisiko minimieren, Anpassbarkeit, Anwendbarkeit, Skalierbarkeit und Änder- und Erweiterbarkeit des V-Modells.</p><p></p><p><span style="border-bottom: 0.05em solid">21 verschiedene Elemente /</span><em><span style="border-bottom: 0.05em solid"><span style="border-bottom: 0.05em solid">Vorgehensbausteine</span></span></em></p><div class="indented"><p>a) Kernelemente</p><p>b) Optionale Elemente</p><p></p><p>Kapseln mit Schnittstellen:</p><div class="indented"><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+Produkte
+</p><div class="indented"><p class="block-color-gray">
+Ein Produkt kann aus vielen Subprodukten stehen die voneinander abhängig sein können (dependency).
+</p></div><p></p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+Produktergebnisse
+</p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+zugeordnete Aktivitäten
+</p><div class="indented"><p class="block-color-gray">
+Für einen Produkt gibt es genau eine Aktivität (die widerum aus anderen Subaktivitäten bestehen kann)
+</p></div><p></p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+verantwortliche Rollen
+</p><div class="indented"><p class="block-color-gray">Für einen Produkt gibt es genau einen Verantwortlichen.</p></div><p></p></div><p></p><p>Produkt und Aktivität können von anderen Produkte und Aktivitäten abhängig sein.</p><p>Es gibt Abhängigkeiten zwischen den Bausteinen (steht in der V-Modell XT Dokumentation).</p></div><p></p><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%203.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%203.png" style="width: 192px"/></a></figure><p><span style="border-bottom: 0.05em solid">Projektgegenstand</span></p><div class="indented"><p>
+Inhalt des Projektes (bspws Hardware-Systeme, Software-Systeme, komplexe Systeme, eingebettete Systeme und Systemintegration
+im V-Modell XT)
+</p></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Projekttypen</span></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Systementwicklungsprojekt des Auftraggebers AG
+<p>Auftraggeber-Sicht</p></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Systementwicklungsprojekt des Auftragnehmers AN
+<p>Auftragnehmer-Sicht</p></li></ol><ol class="numbered-list" start="3" type="1"><li>
+Systementwicklungsprojekt des AN mit AG in derstelben Organisation
+<p><em>InHouse-Projekt</em>
+, keine externe Kommunikation
+</p></li></ol><ol class="numbered-list" start="4" type="1"><li>
+Einführung und Pflege eines organisationsspezifischen Vorgehensmodells
+<p>Warten und Verbessern</p></li></ol></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Kern und optionale Bausteine nach Projekttyp</span></p><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%204.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%204.png" style="width: 240px"/></a></figure><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%205.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%205.png" style="width: 240px"/></a></figure><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%206.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%206.png" style="width: 240px"/></a></figure><p></p><p class="block-color-gray"><span style="border-bottom: 0.05em solid">Projekttypen vs. Projektgegenstand</span></p><p class="block-color-gray">Projekttypen eingeteilt nach:</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Gegenstand: z.B. Hardwaresystem, Softwaresystem, Komplexes System</li></ol><ol class="numbered-list" start="2" type="1"><li>Rollen: z.B. Auftraggeber / Auftragnehmerprojekte</li></ol></div><p></p><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%207.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%207.png" style="width: 240px"/></a></figure><p></p><p></p><p><span style="border-bottom: 0.05em solid">Gesamte Strategie inkl. Entscheidungspunkte (Projektdurchführung)</span></p><div class="indented"><p>Projektdurchführungsstrategie: Aneinander-Reihung der Bausteine → Definiert Ablauf.</p><p>Unterschiedliche Arten an Strategien möglich (auch inkrementell und agil).</p><p>Beispiel:</p></div><p></p><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%208.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%208.png" style="width: 240px"/></a></figure><p></p><p><span style="border-bottom: 0.05em solid">Tools</span></p><div class="indented"><p>Kann man an unterschiedliche Projektgegebenheiten mit Open Source tools anpassen:</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">Auswahl von benötigten Vorgehensbausteinen</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">passende Projektdurchführungsstrategie</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Ergebnis: maßgefertigte Vorgehensweise + Templates für die Projektdokumentation.</li></ul></div><p></p></div><p></p><p></p></details></li></ul><p></p><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">
+Erklären und skizzieren Sie den SCRUM Prozess. Nennen Sie auch Vor- und Nachteile
+</span></summary><p>
+Bisher mangelhafte Flexibilität, unnötig hoher Dokumentationsaufwand, fehlende Nähe zum Kunden, Kunde nicht mit in Entwicklung
+einbezogen.
+</p><p></p><h2>SCRUM</h2><p>Art von agiler Entwicklung.</p><p>Ziel: kleine effiziente Teams bilden.</p><div class="indented"><p>Gesamte Dauer meistens 2-4 Wochen</p><p>Sprint meistens 1 Tag → Keine Unterbrechungen, keine Änderungen zugelassen</p><p>
+Kurze tägliche Besprechungen vor
+<em>Daily Scrums</em>
+, 15 Minuten:
+</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Was wurde seit dem letzten meeting erledigt</li></ol><ol class="numbered-list" start="2" type="1"><li>Welche Probleme sind aufgetreten während der Entwicklung</li></ol><ol class="numbered-list" start="3" type="1"><li>Was ist das Ziel bis zum nächsten Meeting</li></ol></div><p></p></div><p></p><p></p><p>Reagiert auf andauernd ändernde Anforderungen im Projektablauf. Teil-Produkte stehen dem Kunden frühzeitig zur Verfügung.</p><p>Ein Team zuständig für Einheit / Produkt / Teilprodukt.</p><p></p><p><span style="border-bottom: 0.05em solid">Begriffe</span></p><div class="indented"><p class="block-color-gray">Temporal structure = daily Scrum Meeting + Review + Retrospective.</p><p>Backlog</p><div class="indented"><p>
+alle Arbeitspakete, die in nächster Zeit umgesetzt werden müssen (sowohl klar definierte als auch vage Anforderungen):
+Produkt vs. Sprint Backlog.
+</p><p class="block-color-gray"><em>Priorisierte</em>
+Projektergebnisse (Backlog Items).
+</p></div><p></p><p>Daily-Scrum</p><div class="indented"><p>Täglicher Arbeitsauftrag</p><p class="block-color-gray">Das Sprint-Team darf beim Arbeiten nicht gestört werden.</p></div><p></p><p>Scrum Team</p><div class="indented"><p>Funktionsübergreifendes Team, zuständig für den Sprint Backlog.</p></div><p></p><p>Burndown Chart</p><div class="indented"><p>Visuelle Darstellung des Projektfortschritts.</p></div><p></p></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Phasen</span></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Pregame
+<p class="block-color-gray">Anforderungen → Architektur und Planung</p><p class="block-color-gray">
+Alle Eigenschaften und Features
+<em>gemeinsam mit Kunden</em>
+→ Product Backlog → Prioritisieren
+</p><p class="block-color-gray">(alle zukünftigen Änderungen passieren im Product Backlog)</p></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Sprint
+<p class="block-color-gray">Kleine Menge an features aus product backlog → spring backlog (machbare Menge)</p></li></ol><ol class="numbered-list" start="3" type="1"><li>
+Postgame
+<p class="block-color-gray">Auslieferung</p></li></ol></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Sprint</span></p><div class="indented"><p>Team darf nicht gestört werden.</p><p>Wiederholung von:</p><ol class="numbered-list" start="1" type="1"><li>
+Develop and Test
+<mark class="highlight-gray">Implementierung von neuer Software</mark></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Wrap
+<mark class="highlight-gray">Integration</mark></li></ol><ol class="numbered-list" start="3" type="1"><li>
+Review
+<mark class="highlight-gray">Review des integrierten Produkts</mark></li></ol><ol class="numbered-list" start="4" type="1"><li>
+Adjust
+<mark class="highlight-gray">Anpassung, Verbesserung</mark></li></ol></div><p></p><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2012.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2012.png" style="width: 240px"/></a></figure><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2013.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2013.png" style="width: 240px"/></a></figure><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2014.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2014.png" style="width: 240px"/></a></figure><p><span style="border-bottom: 0.05em solid">Methoden / Tools</span></p><div class="indented"><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+Burndown charts
+</p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+Test-Driven Developement
+</p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+Pair Programming
+</p><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+Reviews
+</p></div><p></p><p></p><p>Vorteile:</p><div class="indented"><p>• Wenige Regeln, leicht verständlich.</p><p>• Hohe Effektivität durch Selbstorganisation.</p><p>• Adaptiv/Tolerant gegenüber Anforderungsänderungen und neu Priorisierung.</p><p>• Hohe Transparenz durch regelmäßige Meetings und Backlogs.</p><p>• Geringer Administrations- und Dokumentationsaufwand.</p></div><p></p><p></p><p>Nachteile:</p><div class="indented"><p>• Kein Gesamtüberblick über die komplette Projektstrecke.</p><p>• Hoher Kommunikations- und Abstimmungsaufwand.</p><p>• Erschwerte Koordination mehrerer Entwicklungsteam bei Großprojekten.</p><p>• Potentielle Verunsicherungen aufgrund fehlender Zuständigkeiten und Hierarchien.</p><p>• Potentielle Unvereinbarkeit mit bestehenden Unternehmensstrukturen.</p></div><p></p></details></li></ul><p></p><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">Erklären Sie den Unterschied zwischen dem Produkt-Backlog und Sprint-Backlog.</span></summary><p>Produkt-Backlog: Vom Kunden priorisierte Liste alle Features zum Produkt.</p><p>
+Sprint-Backlog: (Teilmenge von Produkt-Backlog) Alle Features die zu einem gewissen Sprint gehören. Features werden in kleinere
+Tasks aufgeteilt.
+</p></details></li></ul><p></p><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">Was versteht man unter einem Burndown-Chart?</span></summary><p>Visuelle Darstellung des Projektfortschrittes.</p><p>Immer neue Schätzungen des Abschlusses basierend auf aktueller Geschwindigkeit bei jedem daily scrum.</p><div class="indented"><figure class="image"><a href="../Projekt%20Management%20PM%2083a336ae9dac4be0b1c061b5c390ab38/Untitled%206.png"><img src="../Projekt%20Management%20PM%2083a336ae9dac4be0b1c061b5c390ab38/Untitled%206.png" style="width: 192px"/></a></figure></div><p></p></details></li></ul><p></p><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">Was gehört zu den 12 Prinzipien des Agilen Manifests?</span></summary><p></p><p>Entstand aus Kritik an „schwergewichtigen“ Ansätzen.</p><div class="indented"><p><em>
+"Individuals and interactions over processes and tools; Working software over comprehensive documentation; Customer
+collaboration over contract negotiation; Responding to change over following a plan"
+</em></p></div><p></p><p></p><p>Englisch:</p><ol class="numbered-list" start="1" type="1"><li>Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.</li></ol><ol class="numbered-list" start="2" type="1"><li>
+Welcome changing requirements, even late in development. Agile processes harness change for the customer's competitive
+advantage.
+</li></ol><ol class="numbered-list" start="3" type="1"><li>
+Deliver working software frequently, from a couple of weeks to a couple of months, with a preference to the shorter
+timescale.
+</li></ol><ol class="numbered-list" start="4" type="1"><li>Business people and developers must work together daily throughout the project.</li></ol><ol class="numbered-list" start="5" type="1"><li>
+Build projects around motivated individuals. Give them the environment and support they need, and trust them to get the job
+done.
+</li></ol><ol class="numbered-list" start="6" type="1"><li>
+The most efficient and effective method of conveying information to and within a development team is face-to-face
+conversation.
+</li></ol><ol class="numbered-list" start="7" type="1"><li>Working software is the primary measure of progress.</li></ol><ol class="numbered-list" start="8" type="1"><li>
+Agile processes promote sustainable development. The sponsors, developers, and users should be able to maintain a constant
+pace indefinitely.
+</li></ol><ol class="numbered-list" start="9" type="1"><li>Continuous attention to technical excellence and good design enhances agility.</li></ol><ol class="numbered-list" start="10" type="1"><li>Simplicity--the art of maximizing the amount of work not done--is essential.</li></ol><ol class="numbered-list" start="11" type="1"><li>The best architectures, requirements, and designs emerge from self-organizing teams.</li></ol><ol class="numbered-list" start="12" type="1"><li>
+At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly.
+</li></ol><p></p><p>Deutsch:</p><ol class="numbered-list" start="1" type="1"><li>
+Unsere höchste Priorität ist es, den Kunden durch frühe und kontinuierliche Auslieferung wertvoller Software zufrieden zu
+stellen.
+</li></ol><ol class="numbered-list" start="2" type="1"><li>
+Heiße Anforderungsänderungen selbst spät in der Entwicklung willkommen. Agile Prozesse nutzen Veränderungen zum
+Wettbewerbsvorteil des Kunden.
+</li></ol><ol class="numbered-list" start="3" type="1"><li>
+Liefere funktionierende Software regelmäßig innerhalb weniger Wochen oder Monate und bevorzuge dabei die kürzere Zeitspanne.
+</li></ol><ol class="numbered-list" start="4" type="1"><li>Fachexperten und Entwickler müssen während des Projektes täglich zusammenarbeiten.</li></ol><ol class="numbered-list" start="5" type="1"><li>
+Errichte Projekte rund um motivierte Individuen. Gib ihnen das Umfeld und die Unterstützung, die sie benötigen und vertraue
+darauf, dass sie die Aufgabe erledigen.
+</li></ol><ol class="numbered-list" start="6" type="1"><li>
+Die effizienteste und effektivste Methode, Informationen an und innerhalb eines Entwicklungsteams zu übermitteln, ist im
+Gespräch von Angesicht zu Angesicht.
+</li></ol><ol class="numbered-list" start="7" type="1"><li>Funktionierende Software ist das wichtigste Fortschrittsmaß.</li></ol><ol class="numbered-list" start="8" type="1"><li>
+Agile Prozesse fördern nachhaltige Entwicklung. Die Auftraggeber, Entwickler und Benutzer sollten ein gleichmäßiges Tempo
+auf unbegrenzte Zeit halten können.
+</li></ol><ol class="numbered-list" start="9" type="1"><li>Ständiges Augenmerk auf technische Exzellenz und gutes Design fördert Agilität.</li></ol><ol class="numbered-list" start="10" type="1"><li>Einfachheit – die Kunst, die Menge nicht getaner Arbeit zu maximieren – ist essenziell.</li></ol><ol class="numbered-list" start="11" type="1"><li>Die besten Architekturen, Anforderungen und Entwürfe entstehen durch selbstorganisierte Teams.</li></ol><ol class="numbered-list" start="12" type="1"><li>In regelmäßigen Abständen reflektiert das Team, wie es effektiver werden kann und passt sein Verhalten entsprechend an.</li></ol></details></li></ul><p></p><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">Rational Unified Process, RUP</span></summary><p>Inkrementell, iterativ, phasenorientiert.</p><p>Im kommerziellen Umfeld.</p><p>UML in jeder Phase.</p><p>Integriertes Anforderungsmanagement und Änderungsmanagement (supporting workflow).</p><p></p><p><span style="border-bottom: 0.05em solid">Phasen mit Meilensteinen</span></p><div class="indented"><p>Eine Phase kann mehrere Iterationen haben (Von Projektmanager festgelegt).</p><p>Aktivität + Verantwortlicher = Artifakt</p><div class="indented"><p>
+Jede Phase /
+<em>Aktivität</em>
+von einem
+<em>Verantwortlichen</em>
+erzeugt ein Produkt /
+<em>Artefakt</em>
+→ überprüft, freigegeben.
+</p><p>Wenn Überprüfung nicht bestanden, weitere Iteration.</p></div><p></p><p></p><ol class="numbered-list" start="1" type="1"><li>
+Inception (Beginn)
+<p class="block-color-gray">Anforderungen (Geschäftsfälle / Business Cases), Rahmenbedingungen definiert.</p></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Elaboration (Entwurf + Design)
+<p class="block-color-gray">Spezifikation aus Anforderungen.</p></li></ol><ol class="numbered-list" start="3" type="1"><li>
+Construction (Implementierung)
+<p class="block-color-gray">Komponenten umgesetzt.</p></li></ol><ol class="numbered-list" start="4" type="1"><li>
+Transition (Auslieferung)
+<p class="block-color-gray">Auslieferung an Kunden, Product release.</p></li></ol></div><p></p><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2011.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2011.png" style="width: 192px"/></a></figure><p></p><p><span style="border-bottom: 0.05em solid">Disziplinen und Workflows</span></p><div class="indented"><p>9 Disziplinen die durch alle Phasen geführt werden</p><div class="indented"><p>6 Engineering Workflows</p><p>3 Supporting Workflows</p><p></p></div><p></p><p>Engineering Workflows</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Business Modeling:
+<mark class="highlight-gray">Geschäftsfallmodellierung mit UML</mark></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Requirements:
+<mark class="highlight-gray">Anforderungen genau erheben, Verfeinerung der Use-Cases</mark></li></ol><ol class="numbered-list" start="3" type="1"><li>
+Analysis &amp; Design:
+<mark class="highlight-gray">Erstellen wichtige Dokumente / Artefakte: Architektur, Design, Test-Dokumente</mark></li></ol><ol class="numbered-list" start="4" type="1"><li>Implementation</li></ol><ol class="numbered-list" start="5" type="1"><li>Test</li></ol><ol class="numbered-list" start="6" type="1"><li>
+Deployment:
+<mark class="highlight-gray">Fertigstellung, Auslieferung</mark></li></ol></div><p></p><p></p><p>Supporting Workflows</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Configuration and Change Management:
+<mark class="highlight-gray">Dokumentenversionierung mit Version Control System</mark></li></ol><ol class="numbered-list" start="2" type="1"><li>Project Management</li></ol><ol class="numbered-list" start="3" type="1"><li>
+Environment:
+<mark class="highlight-gray">Definiert Ressourcen, Budget und Werkzeuge für Entwickler</mark></li></ol></div><p></p></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Vorteile</span></p><div class="indented"><p>Real-world Szenarien.</p><p>Werkzeugunterstützung (Rational XDE, IBM).</p><p>Vordefinierte Liste mit erforderlichen Artefakten.</p></div><p></p><p><span style="border-bottom: 0.05em solid">Nachteile</span></p><div class="indented"><p>Komplexität, Dokumentationsaufwand</p></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Anwendungsbereich</span></p><div class="indented"><p>Grosse Projekte die einen Überblick brauchen (inkl. Deployment).</p></div><p></p></details></li></ul><p></p><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">
+Erklären Sie die wesentlichen Konzepte des „Process Customizing“ und des „Prozess Tailoring“. Wozu und wann werden sie
+eingesetzt?
+</span></summary><p>Modelle müssen dem Projekt angepasst werden.</p><p>Nicht alle Schritte aus dem Life-Cycle können ausgeführt werden.</p><div class="indented"><p><style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
+</style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.44445em; vertical-align: 0em"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span>
+Schritte Zusammenlegen oder auslassen
+</p></div><p></p><p></p><p>Anpassung an</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+Organisation mit eigener Domäne (= Fachgebiet)
+<p>zb Wenn eine Organisation öfter Web Applikationen macht.</p><p>
+Kann Best-Practices in der Domäne nutzen -
+<em>Process Pattern</em></p></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Projekt</li></ul></div><p></p><p></p><p><span style="border-bottom: 0.05em solid">Reihenfolge</span></p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>
+Process Customization:
+<mark class="highlight-gray">Organisation + Domäne</mark></li></ol><ol class="numbered-list" start="2" type="1"><li>
+Process Tailoring:
+<mark class="highlight-gray">Projekt</mark></li></ol></div><p></p><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2015.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2015.png" style="width: 144px"/></a></figure><figure class="image"><a href="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2016.png"><img src="../Vorgehensmodelle%20(Prozesse)%20f95d5a5a8dc14da8b3764ef3f4eb60f0/Untitled%2016.png" style="width: 144px"/></a></figure><p></p><p><span style="border-bottom: 0.05em solid">Prozess Customization (Standardisierung)</span></p><div class="indented"><p>Verallgemeinerte Form des „Tailorings“.</p><ul class="bulleted-list"><li style="list-style-type: disc">
+unternehmensspezifische Standards (für eher große Unternehmen) → Domänenabhängige Anpassungen, z.B. für
+Produktionsautomatisierung.
+</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">ähnliche Projekte (z.B. Webapplikationen).</li></ul><p>Dient dann als Grundlage für Projektspezifisches Tailoring.</p><p></p></div><p></p><p><span style="border-bottom: 0.05em solid">Prozess Tailoring (Prozess auf das jeweilige Projekt anpassen</span></p><div class="indented"><p>Angepasst an konkrete Projekte (Projektgröße, Projekttyp und Anwendungsdomäne)</p><p>Braucht erfahrene Projektleiter und Toolunterstützung (z.B. V-Modell XT Projektassistent).</p><p></p></div><p></p></details></li></ul><p></p><ul class="toggle"><li><details open=""><summary><span style="border-bottom: 0.05em solid">
+Auf welcher Grundannahme basiert die klassische / sequenzielle Softwareentwicklung? Zu welchen Problemen kann dies führen
+und wie wird damit bei der kontinuierlichen Softwareentwicklung umgegangen?
+</span></summary><p>Der sequentielle Entwicklungsprozess basiert auf stabilen Anforderungen.</p><p>
+Anforderungen ändern sich allerdings oft, was bei sequentiellen Vorgehensmodellen in der Regel dazu führt, dass das Endprodukt
+nicht mehr den Anforderungen entspricht.
+</p><p>
+Beim kontinuirlichen Modell wird iterativ gearbeitet, der Funktionsumfang steigt mit jeder Iteration, gesteuert durch den
+Soll-Ist-Vergleich → auf Anforderungsänderungen kann besser reagiert werden.
+</p></details></li></ul><p></p></div></article></body></html>
