@@ -589,7 +589,7 @@ font-size: 100% !important;
 }p {
 min-height: 1em !important;
 }
-</style></head><body><article class="page sans"><header><h1 class="page-title">Create, insert, delete, update (und Datenintegrität)</h1><p class="page-description"></p></header><div class="page-body"><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f0843766-e3ae-43c2-85a4-972785d440ed">Datentypen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c5e7a923-abb8-4ab2-890f-90e749c753ea">Manipulate Tables</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f401a9d7-c913-4154-beb1-4d69d8ffb56a">Manipulate Tuples</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#28803a56-8013-4e3e-b4d7-db9eaa7c8750">Integritätsbedingungen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d611f510-d7f4-4062-9ae4-c6e3437da023">In SQL</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#99866c83-ebc7-4cea-ba59-27572e3001d3">Einfügen mit zyklischen Abhängigkeiten</a></div></nav><p></p><p></p><h1>Datentypen</h1><p><mark class="highlight-blue">Datentypen / Attribut-Domäne</mark></p><div class="indented"><p>
+</style></head><body><article class="page sans"><header><h1 class="page-title">Create, insert, delete, update (und Datenintegrität)</h1><p class="page-description"></p></header><div class="page-body"><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f0843766-e3ae-43c2-85a4-972785d440ed">Datentypen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c5e7a923-abb8-4ab2-890f-90e749c753ea">Manipulate Tables</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f401a9d7-c913-4154-beb1-4d69d8ffb56a">Manipulate Tuples</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#28803a56-8013-4e3e-b4d7-db9eaa7c8750">Integritätsbedingungen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d611f510-d7f4-4062-9ae4-c6e3437da023">In SQL</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#99866c83-ebc7-4cea-ba59-27572e3001d3">Einfügen mit zyklischen Abhängigkeiten</a></div></nav><p></p><p></p><h1 id="f0843766-e3ae-43c2-85a4-972785d440ed">Datentypen</h1><p><mark class="highlight-blue">Datentypen / Attribut-Domäne</mark></p><div class="indented"><p>
 Zahlen
 <mark class="highlight-gray"><code>numeric(p, s)</code></mark>
 ,
@@ -611,14 +611,14 @@ Große datenmengen
 ,
 <mark class="highlight-gray"><code>raw</code></mark>
 ,
-<mark class="highlight-gray"><code>clob</code></mark></p><p>xml (xml Dokumente)</p></div><p></p><p></p><p></p><p></p><p></p><p></p><h1>Manipulate Tables</h1><p><mark class="highlight-blue">Create</mark></p><div class="indented"><pre class="code"><code>create table ProfessorIn (
+<mark class="highlight-gray"><code>clob</code></mark></p><p>xml (xml Dokumente)</p></div><p></p><p></p><p></p><p></p><p></p><p></p><h1 id="c5e7a923-abb8-4ab2-890f-90e749c753ea">Manipulate Tables</h1><p><mark class="highlight-blue">Create</mark></p><div class="indented"><pre class="code"><code>create table ProfessorIn (
 PersNr integer primary key ,
 Name varchar (10) not null ,
 Rang character (2)
 );</code></pre></div><p></p><p></p><p><mark class="highlight-blue">Update</mark></p><div class="indented"><pre class="code"><code>alter table ProfessorIn rename to Vortragende;
 alter table ProfessorIn add Raum integer;
 alter table ProfessorIn drop Raum;
-alter table ProfessorIn alter Name type varchar (30);</code></pre></div><p></p><p></p><p><mark class="highlight-blue">Delete</mark></p><div class="indented"><pre class="code"><code>drop table ProfessorIn;</code></pre></div><p></p><p></p><p></p><p></p><p></p><p></p><h1>Manipulate Tuples</h1><p><mark class="highlight-blue">Create</mark></p><div class="indented"><pre class="code"><code>insert into ProfessorIn values (2136 , 'Curie', 'C4', 36);
+alter table ProfessorIn alter Name type varchar (30);</code></pre></div><p></p><p></p><p><mark class="highlight-blue">Delete</mark></p><div class="indented"><pre class="code"><code>drop table ProfessorIn;</code></pre></div><p></p><p></p><p></p><p></p><p></p><p></p><h1 id="f401a9d7-c913-4154-beb1-4d69d8ffb56a">Manipulate Tuples</h1><p><mark class="highlight-blue">Create</mark></p><div class="indented"><pre class="code"><code>insert into ProfessorIn values (2136 , 'Curie', 'C4', 36);
 insert into ProfessorIn value
 (2125 , 'Sokrates', 'C4', 226),
 (2126 , 'Russel', 'C4', 232);</code></pre><pre class="code"><code>insert into hören
@@ -628,13 +628,13 @@ where Titel = 'Logik';</code></pre></div><p></p><p></p><p><mark class="highlight
 set Semester = Semester + 1;</code></pre><pre class="code"><code>update ProfessorIn
 set Rang = 'C2'
 where Rang = 'C3' and PersNr &gt; 2500;</code></pre></div><p></p><p></p><p><mark class="highlight-blue">Delete</mark></p><div class="indented"><pre class="code"><code>delete from ProfessorIn
-values (2137 , 'Kant', 'C4', 7);</code></pre><pre class="code"><code>delete from ProfessorIn where PersNr = 2137;</code></pre></div><p></p><p></p><p></p><p></p><p></p><p></p><h1>Integritätsbedingungen</h1><p><mark class="highlight-blue">Dynamisch</mark>
+values (2137 , 'Kant', 'C4', 7);</code></pre><pre class="code"><code>delete from ProfessorIn where PersNr = 2137;</code></pre></div><p></p><p></p><p></p><p></p><p></p><p></p><h1 id="28803a56-8013-4e3e-b4d7-db9eaa7c8750">Integritätsbedingungen</h1><p><mark class="highlight-blue">Dynamisch</mark>
 Constraints an DB Zustandsänderungen
 </p><p><mark class="highlight-blue">Statisch</mark>
 Constraints an DB Zuständen selbst
 </p><p><mark class="highlight-blue">Semantisch</mark>
 aus der modellierten Welt.
-</p><p></p><p><em>zB bekannte implizite Bedingungen:</em></p><div class="indented"><p>IDs müssen eindeutig sein</p><p>Kardinalitäten aus ER Modell werden eingehalten (durch Relationenmodell)</p><p>Attribut-Domänen Datentypen und Wertebereiche</p><p>Inklusion bei Generalisierung Untertypen Entities müssen auch im Obertyp enthalten sein</p></div><p></p><p></p><p></p><h2>In SQL</h2><p>
+</p><p></p><p><em>zB bekannte implizite Bedingungen:</em></p><div class="indented"><p>IDs müssen eindeutig sein</p><p>Kardinalitäten aus ER Modell werden eingehalten (durch Relationenmodell)</p><p>Attribut-Domänen Datentypen und Wertebereiche</p><p>Inklusion bei Generalisierung Untertypen Entities müssen auch im Obertyp enthalten sein</p></div><p></p><p></p><p></p><h2 id="d611f510-d7f4-4062-9ae4-c6e3437da023">In SQL</h2><p>
 Bei Definition:
 <mark class="highlight-gray"><code>CREATE TABLE</code></mark></p><p>
 Nachträglich hinzugefügt oder entfernt:
@@ -683,7 +683,7 @@ in anderer Tabelle
 oder
 <mark class="highlight-gray"><code>null</code></mark>
 .
-</p></div><p></p></div><p></p><p></p><p></p><p></p><p></p><p></p><h1>Einfügen mit zyklischen Abhängigkeiten</h1><p>Problem: "What came first? The chicken or the egg?"</p><div class="indented"><p>Fehlermeldungen:</p><pre class="code"><code>create table chicken (
+</p></div><p></p></div><p></p><p></p><p></p><p></p><p></p><p></p><h1 id="99866c83-ebc7-4cea-ba59-27572e3001d3">Einfügen mit zyklischen Abhängigkeiten</h1><p>Problem: "What came first? The chicken or the egg?"</p><div class="indented"><p>Fehlermeldungen:</p><pre class="code"><code>create table chicken (
 cID integer primary key,
 eID integer references egg;
 );-&gt; ERROR: relation ''egg'' does not exist</code></pre><pre class="code"><code>create table egg (

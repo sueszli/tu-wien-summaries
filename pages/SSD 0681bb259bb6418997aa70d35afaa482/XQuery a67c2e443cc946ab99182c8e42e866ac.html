@@ -589,7 +589,7 @@ font-size: 100% !important;
 }p {
 min-height: 1em !important;
 }
-</style></head><body><article class="page sans"><header><h1 class="page-title">XQuery</h1><p class="page-description"></p></header><div class="page-body"><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9f38cad3-290d-488a-ab17-f5bb1065f1fc">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2a78ba9f-8b05-47b1-ad42-3dc7d54fdcc5">FLWOR Expressions</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3991b998-8280-4b6f-8d60-e640a92bf2bb">Other Features</a></div></nav><p></p><h1>Definition</h1><p><mark class="highlight-blue">XQuery</mark></p><div class="indented"><p>
+</style></head><body><article class="page sans"><header><h1 class="page-title">XQuery</h1><p class="page-description"></p></header><div class="page-body"><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9f38cad3-290d-488a-ab17-f5bb1065f1fc">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2a78ba9f-8b05-47b1-ad42-3dc7d54fdcc5">FLWOR Expressions</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3991b998-8280-4b6f-8d60-e640a92bf2bb">Other Features</a></div></nav><p></p><h1 id="9f38cad3-290d-488a-ab17-f5bb1065f1fc">Definition</h1><p><mark class="highlight-blue">XQuery</mark></p><div class="indented"><p>
 XPath
 <style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
@@ -616,7 +616,7 @@ Query:
 Query:
 <mark class="highlight-gray"><code>for $x in doc("courses.xml")/courses/course</code></mark></p><div class="indented"><p><mark class="highlight-gray"><code>where $x/@semester="Winter"</code></mark></p><p><mark class="highlight-gray"><code>return $x/title</code></mark></p><p><mark class="highlight-gray"><code>&lt;title&gt; Databases &lt;/title&gt;</code></mark></p></div><p></p><hr/><p>
 Query:
-<code><mark class="highlight-gray">for $x in doc("courses.xml")/courses/course</mark></code></p><div class="indented"><p><code><mark class="highlight-gray">where $x/@semester="Winter"</mark></code></p><p><code><mark class="highlight-gray">order by $x/title descending</mark></code></p><p><code><mark class="highlight-gray">return $x/title</mark></code></p><p><mark class="highlight-gray"><code>&lt;title&gt; SSD &lt;/title&gt; &lt;title&gt; Databases &lt;/title&gt;</code></mark></p></div><p></p></details></li></ul><p></p><p></p><h1>FLWOR Expressions</h1><p><mark class="highlight-blue">FLWOR</mark></p><div class="indented"><p>pronounced: “flower expressions”</p><p>
+<code><mark class="highlight-gray">for $x in doc("courses.xml")/courses/course</mark></code></p><div class="indented"><p><code><mark class="highlight-gray">where $x/@semester="Winter"</mark></code></p><p><code><mark class="highlight-gray">order by $x/title descending</mark></code></p><p><code><mark class="highlight-gray">return $x/title</mark></code></p><p><mark class="highlight-gray"><code>&lt;title&gt; SSD &lt;/title&gt; &lt;title&gt; Databases &lt;/title&gt;</code></mark></p></div><p></p></details></li></ul><p></p><p></p><h1 id="2a78ba9f-8b05-47b1-ad42-3dc7d54fdcc5">FLWOR Expressions</h1><p><mark class="highlight-blue">FLWOR</mark></p><div class="indented"><p>pronounced: “flower expressions”</p><p>
 generalized version of
 <mark class="highlight-gray"><code>select from having where</code></mark><mark class="highlight-gray"></mark>
 in SQL
@@ -666,7 +666,7 @@ return
 &lt;size&gt; {count($e)} &lt;/size&gt;
 &lt;avg_salary&gt; {avg($e/salary)} &lt;/avg_salary&gt;
 &lt;/large_dept&gt;
-} &lt;/sorted_departments&gt;</code></pre></details></li></ul></div><p></p><p></p><p></p><h1>Other Features</h1><p><mark class="highlight-blue">List</mark></p><div class="indented"><p>XQuery expressions manupulate lists of items.</p><div class="indented"><p>
+} &lt;/sorted_departments&gt;</code></pre></details></li></ul></div><p></p><p></p><p></p><h1 id="3991b998-8280-4b6f-8d60-e640a92bf2bb">Other Features</h1><p><mark class="highlight-blue">List</mark></p><div class="indented"><p>XQuery expressions manupulate lists of items.</p><div class="indented"><p>
 operators
 <mark class="highlight-gray"><code>"3 to 10"</code></mark><mark class="highlight-gray">,</mark><mark class="highlight-gray"><code>union</code></mark><mark class="highlight-gray">,</mark><mark class="highlight-gray"><code>intersect</code></mark><mark class="highlight-gray">,</mark><mark class="highlight-gray"><code>except</code></mark><mark class="highlight-gray">,</mark><mark class="highlight-gray"><code>concatenation with ","</code></mark></p><p>
 functions

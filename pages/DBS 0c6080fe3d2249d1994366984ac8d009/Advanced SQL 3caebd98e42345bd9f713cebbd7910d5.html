@@ -589,7 +589,7 @@ font-size: 100% !important;
 }p {
 min-height: 1em !important;
 }
-</style></head><body><article class="page sans"><header><h1 class="page-title">Advanced SQL</h1><p class="page-description"></p></header><div class="page-body"><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5a2167a3-a62d-470c-bb0f-a481e05fa751">Sub Queries</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#aae566ff-276f-417a-908b-512ff7432331">Rekursive Queries</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f1ca0a30-172a-45fc-98c1-a3c84cbbd115">Views</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9b2739c1-5d0c-4642-97e8-6763381effbc">Window Functions</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f61a0940-dd15-4908-a05c-f3ec181aa4a5">Sequences</a></div></nav><p></p><h1>Sub Queries</h1><p>
+</style></head><body><article class="page sans"><header><h1 class="page-title">Advanced SQL</h1><p class="page-description"></p></header><div class="page-body"><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5a2167a3-a62d-470c-bb0f-a481e05fa751">Sub Queries</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#aae566ff-276f-417a-908b-512ff7432331">Rekursive Queries</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f1ca0a30-172a-45fc-98c1-a3c84cbbd115">Views</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9b2739c1-5d0c-4642-97e8-6763381effbc">Window Functions</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f61a0940-dd15-4908-a05c-f3ec181aa4a5">Sequences</a></div></nav><p></p><h1 id="5a2167a3-a62d-470c-bb0f-a481e05fa751">Sub Queries</h1><p>
 ermöglicht durch
 <mark class="highlight-gray"><code>WITH</code></mark></p><p></p><pre class="code"><code>SELECT MatrNr, avg(Note)
 FROM pruefen
@@ -605,8 +605,8 @@ SELECT MatrNr, avg(Note) AS dsN FROM pruefen GROUP BY MatrNr
 -- Tupel aus avgNote mit maximaler dsN
 bestAvgNote AS (
 SELECT MatrNr, dsN FROM avgNote WHERE dsN = (SELECT max(dsN) FROM avgNote))
-)SELECT MatrNr, dsN FROM bestAvgNote;</code></pre><p></p><p></p><p></p><p></p><p></p><h1>Rekursive Queries</h1><p><a href="https://www.postgresql.org/docs/current/queries-with.html">https://www.postgresql.org/docs/current/queries-with.html</a></p><p><a href="https://towardsdatascience.com/recursive-sql-queries-with-postgresql-87e2a453f1b">
-https://towardsdatascience.com/recursive-sql-queries-with-postgresql-87e2a453f1b
+)SELECT MatrNr, dsN FROM bestAvgNote;</code></pre><p></p><p></p><p></p><p></p><p></p><h1 id="aae566ff-276f-417a-908b-512ff7432331">Rekursive Queries</h1><p><a href="https://www.postgresql.org/docs/current/queries-with.html">https://www.postgresql.org/docs/current/queries-with.html</a></p><p><a href="https://martinheinz.dev/blog/18">
+https://martinheinz.dev/blog/18
 </a></p><p><a href="https://www.citusdata.com/blog/2018/05/15/fun-with-sql-recursive-ctes/">
 https://www.citusdata.com/blog/2018/05/15/fun-with-sql-recursive-ctes/
 </a></p><p></p><p>
@@ -653,7 +653,7 @@ SELECT voraussetzen.vorgnr, voraus.c+1
 FROM voraus, voraussetzen
 WHERE voraus.v=voraussetzen.nachfnr
 )-- findet zusätzlich die distanz von jeder node zu 5216
-SELECT v, max(c) FROM voraus;</code></pre><p></p><p></p><p></p><p></p><p></p><h1>Views</h1><p>Gespeicherte queries als virtuelle Tabellen</p><p><mark class="highlight-blue">zB aus Datenschutzgründen</mark></p><div class="indented"><pre class="code"><code>create view prüfenSicht as
+SELECT v, max(c) FROM voraus;</code></pre><p></p><p></p><p></p><p></p><p></p><h1 id="f1ca0a30-172a-45fc-98c1-a3c84cbbd115">Views</h1><p>Gespeicherte queries als virtuelle Tabellen</p><p><mark class="highlight-blue">zB aus Datenschutzgründen</mark></p><div class="indented"><pre class="code"><code>create view prüfenSicht as
 select MatrNr, VorlNr, PersNr from prüfen;</code></pre></div><p></p><p><mark class="highlight-blue">Implementierung von Generalisierung</mark></p><div class="indented"><pre class="code"><code>create table Professor (PersNr ..., Name ..., Rang ..., Raum ...);
 create table Assistent (PersNr ..., Name ..., Fachgebiet ..., Boss ...);
 create table AndereAngestellte (PersNr ..., Name ...);</code></pre><p>Tupel vom Untertyp gehören automatisch zum Obertyp - Obertyp als View</p><div class="indented"><pre class="code"><code>create view Angestellte as
@@ -662,7 +662,7 @@ create table AndereAngestellte (PersNr ..., Name ...);</code></pre><p>Tupel vom 
 (select * from AndereAngestellte)</code></pre></div><p></p><p>Typen vom Obertyp werden vererbt - Untertyp als View</p><div class="indented"><pre class="code"><code>create view Professor as
 select * from Angestellte natural join ProfDaten;
 create view Assistent as
-select * from Angestellte natural join AssiDaten;</code></pre></div><p></p></div><p></p><p></p><p></p><p></p><p></p><p></p><h1>Window Functions</h1><p>
+select * from Angestellte natural join AssiDaten;</code></pre></div><p></p></div><p></p><p></p><p></p><p></p><p></p><p></p><h1 id="9b2739c1-5d0c-4642-97e8-6763381effbc">Window Functions</h1><p>
 Aggregatsfunktionen ohne
 <mark class="highlight-gray"><code>GROUP BY</code></mark><mark class="highlight-gray"></mark>
 durch
@@ -683,7 +683,7 @@ LIMIT 1) -- mit LIMIT ist Aufruf von count(*) sinnlos
 ) ...;</code></pre><p></p><pre class="code"><code>SELECT matrnr, count(*) AS anzahl
 FROM hoeren
 GROUP BY matrnr;</code></pre><pre class="code"><code>SELECT DISTINCT matrnr, count(*) OVER (PARTITION BY matrnr) AS anzahl
-FROM hoeren;</code></pre><p></p><p></p><p></p><p></p><p></p><h1>Sequences</h1><p>erzeugt Zahlenfolge</p><pre class="code"><code>CREATE SEQUENCE name
+FROM hoeren;</code></pre><p></p><p></p><p></p><p></p><p></p><h1 id="f61a0940-dd15-4908-a05c-f3ec181aa4a5">Sequences</h1><p>erzeugt Zahlenfolge</p><pre class="code"><code>CREATE SEQUENCE name
 [INCREMENT [BY] inc]
 [MINVALUE min | NO MINVALUE]
 [MAXVALUE max | NO MAXVALUE]

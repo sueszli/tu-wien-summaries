@@ -589,7 +589,7 @@ font-size: 100% !important;
 }p {
 min-height: 1em !important;
 }
-</style></head><body><article class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📎</span></div><h1 class="page-title">synchronization constructs in C</h1><p class="page-description"></p></header><div class="page-body"><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1d560519-8223-46ec-a4f7-a5352c4c8f18">Locks (mutex)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#96a0a008-7423-4020-b795-fdc1a18a1ba5">Condition variables</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ce5d2afa-512b-4869-9c4e-9673ff808c3e">Barrier</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#03414b86-0b54-41a1-b9cc-c95700714d40">Semaphores</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#afa94612-2625-4558-af5f-71b877ea3a22">Atomic operation</a></div></nav><p></p><h1>Locks (mutex)</h1><p>
+</style></head><body><article class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📎</span></div><h1 class="page-title">synchronization constructs in C</h1><p class="page-description"></p></header><div class="page-body"><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1d560519-8223-46ec-a4f7-a5352c4c8f18">Locks (mutex)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#96a0a008-7423-4020-b795-fdc1a18a1ba5">Condition variables</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ce5d2afa-512b-4869-9c4e-9673ff808c3e">Barrier</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#03414b86-0b54-41a1-b9cc-c95700714d40">Semaphores</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#afa94612-2625-4558-af5f-71b877ea3a22">Atomic operation</a></div></nav><p></p><h1 id="1d560519-8223-46ec-a4f7-a5352c4c8f18">Locks (mutex)</h1><p>
 Have the type
 <mark class="highlight-gray"></mark><mark class="highlight-gray"><code>pthread_mutex_t</code></mark></p><p></p><p><mark class="highlight-blue">Allocation and initialization</mark></p><div class="indented"><pre class="code"><code>pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;</code></pre></div><p></p><p><mark class="highlight-blue">Dynamic allocation (init and destroy)</mark></p><div class="indented"><pre class="code"><code>#include &lt;pthread.h&gt;
 int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutex_attr *attr);
@@ -623,12 +623,12 @@ In contrast to other mutex locks it can not be suspended (put to sleep) by OS an
 suspension required.
 </p></div><p></p><p>Bad performance on systems with more threads than processors.</p><pre class="code"><code>#include &lt;pthread.h&gt;
 int pthread_spin_destroy(pthread_spinlock_t *lock);
-int pthread_spin_init(pthread_spinlock_t *lock, int pshared);int pthread_spin_unlock(pthread_spinlock_t *lock);</code></pre></div><p></p><p></p><p></p><h1>Condition variables</h1><p><mark class="highlight-blue">Allocation and initialization</mark></p><div class="indented"><pre class="code"><code>#include &lt;pthread.h&gt;
+int pthread_spin_init(pthread_spinlock_t *lock, int pshared);int pthread_spin_unlock(pthread_spinlock_t *lock);</code></pre></div><p></p><p></p><p></p><h1 id="96a0a008-7423-4020-b795-fdc1a18a1ba5">Condition variables</h1><p><mark class="highlight-blue">Allocation and initialization</mark></p><div class="indented"><pre class="code"><code>#include &lt;pthread.h&gt;
 int pthread_cond_init(pthread_cond_t *cond, const pthread_cond_attr *attr);
 int pthread_cond_destroy(pthread_cond_t *cond);</code></pre></div><p></p><p><mark class="highlight-blue">Waiting for signal</mark></p><div class="indented"><p>Thread suspended (waits), lock is temporarily relinquished (released).</p><p>When resumed later by a signal from other thread, it has acquired lock.</p><pre class="code"><code>#include &lt;pthread.h&gt;
 int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex);</code></pre></div><p></p><p><mark class="highlight-blue">Signaling</mark></p><div class="indented"><pre class="code"><code>#include &lt;pthread.h&gt;
 int pthread_cond_signal(pthread_cond_t *cond); // single thread
-int pthread_cond_broadcast(pthread_cond_t *cond); // all threads</code></pre></div><p></p><p></p><p></p><h1>Barrier</h1><p><mark class="highlight-blue">Nonstandard pthreads barrier</mark></p><div class="indented"><pre class="code"><code>#include &lt;pthreads.h&gt;
+int pthread_cond_broadcast(pthread_cond_t *cond); // all threads</code></pre></div><p></p><p></p><p></p><h1 id="ce5d2afa-512b-4869-9c4e-9673ff808c3e">Barrier</h1><p><mark class="highlight-blue">Nonstandard pthreads barrier</mark></p><div class="indented"><pre class="code"><code>#include &lt;pthreads.h&gt;
 int pthread_barrier_init(pthrad_barrier_t *barrier, pthread_barrierattr_t *attr, unsigned count);
 int pthread_barrier_destroy(pthread_barrier_t *barrier);
 int pthread_barrier_wait(pthread_barrier_t *barrier);</code></pre><p><mark class="highlight-gray"><code>count</code></mark>
@@ -637,9 +637,9 @@ int pthread_barrier_wait(pthread_barrier_t *barrier);</code></pre><p><mark class
 Executing thread blocks until
 <mark class="highlight-gray"><code>count</code></mark><em></em>
 threads have been reached.
-</p></div><p></p><p></p><p></p><h1>Semaphores</h1><p><mark class="highlight-blue">Semaphores</mark></p><div class="indented"><p>Can be shared across processes</p><pre class="code"><code>#include &lt;semaphore.h&gt;
+</p></div><p></p><p></p><p></p><h1 id="03414b86-0b54-41a1-b9cc-c95700714d40">Semaphores</h1><p><mark class="highlight-blue">Semaphores</mark></p><div class="indented"><p>Can be shared across processes</p><pre class="code"><code>#include &lt;semaphore.h&gt;
 int sem_init(sem_t *sem, int pshared, unsigned int value);int sem_wait(sem_t *sem); // decrement
-Int sem_trywait(sem_t *sem);int sem_post(sem_t *sem); // increment</code></pre></div><p></p><p></p><p></p><h1>Atomic operation</h1><p><mark class="highlight-blue">Atomic operation</mark></p><div class="indented"><p>
+Int sem_trywait(sem_t *sem);int sem_post(sem_t *sem); // increment</code></pre></div><p></p><p></p><p></p><h1 id="afa94612-2625-4558-af5f-71b877ea3a22">Atomic operation</h1><p><mark class="highlight-blue">Atomic operation</mark></p><div class="indented"><p>
 Special hardware operation in
 <style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");

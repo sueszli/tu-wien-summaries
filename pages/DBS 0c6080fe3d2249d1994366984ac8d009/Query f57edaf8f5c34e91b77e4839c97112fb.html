@@ -591,7 +591,7 @@ min-height: 1em !important;
 }
 </style></head><body><article class="page sans"><header><h1 class="page-title">Query</h1><p class="page-description"></p></header><div class="page-body"><p><mark class="highlight-gray">Üben auf</mark><mark class="highlight-gray"><a href="https://sqlbolt.com/">https://sqlbolt.com/</a></mark></p><figure class="link-to-page"><a href="Query%20f57edaf8f5c34e91b77e4839c97112fb/Allquantor%20erstellen%20796d8b8c5e1b4851bad9a8972395ccaa.html"><span class="icon">📎</span>
 Allquantor erstellen
-</a></figure><p></p><p>Arbeitet auf Tabellen, nicht Tupel-Mengen, deshalb Duplikate möglich und es hat eine Implizite Ordnung.</p><p></p><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a073986a-4b5e-479e-96d3-4997ff593e76">Basics</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#685a7209-df5e-45ad-b1ee-70d2e976855f">Group by</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#96ee9b95-06b4-4582-bd5e-87345b304798">Nested Queries</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8e2ee424-896e-4efa-8ceb-3aac58f67838">Umgang mit null</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4f5f39fb-a0aa-4480-96c5-7d52ba1c5b02">Syntactic Sugar</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#026fd6a2-b5a5-4d9a-b34f-cefc9c3ab269">Joins</a></div></nav><p></p><p></p><h1>Basics</h1><pre class="code"><code>SELECT &lt;attr&gt; as a1,  &lt;attr&gt; as a2, ...
+</a></figure><p></p><p>Arbeitet auf Tabellen, nicht Tupel-Mengen, deshalb Duplikate möglich und es hat eine Implizite Ordnung.</p><p></p><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a073986a-4b5e-479e-96d3-4997ff593e76">Basics</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#685a7209-df5e-45ad-b1ee-70d2e976855f">Group by</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#96ee9b95-06b4-4582-bd5e-87345b304798">Nested Queries</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8e2ee424-896e-4efa-8ceb-3aac58f67838">Umgang mit null</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4f5f39fb-a0aa-4480-96c5-7d52ba1c5b02">Syntactic Sugar</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#026fd6a2-b5a5-4d9a-b34f-cefc9c3ab269">Joins</a></div></nav><p></p><p></p><h1 id="a073986a-4b5e-479e-96d3-4997ff593e76">Basics</h1><pre class="code"><code>SELECT &lt;attr&gt; as a1,  &lt;attr&gt; as a2, ...
 FROM &lt;tables...&gt;
 WHERE &lt;conditions&gt;
 ORDER BY &lt;attr1&gt; desc, &lt;attr2&gt; asc;</code></pre><p>Bei mehreren Tables wird Kreuzprodukt gebildet.</p><div class="indented"><p>Bei jeder Anfrage kann andere Ordnung auftauchen.</p><p>
@@ -620,7 +620,7 @@ Mit Duplikate
 ,
 <code>sum()</code>
 ,
-<code>count()</code></p></div><p></p><p></p><p></p><p></p><p></p><p></p><h1>Group by</h1><p>
+<code>count()</code></p></div><p></p><p></p><p></p><p></p><p></p><p></p><h1 id="685a7209-df5e-45ad-b1ee-70d2e976855f">Group by</h1><p>
 Pro Gruppe
 <em>ein einziges</em>
 Tupel erstellt.
@@ -662,7 +662,7 @@ from Student;</code></pre><pre class="code"><code>select Name, max(Semester)
 from Student
 group by Name;</code></pre><pre class="code"><code>select Name
 from Student
-where Semester = (select max(Semester) from Student);</code></pre><p></p></details></li></ul></li></ol><p></p><p></p><p></p><p></p><p></p><h1>Nested Queries</h1><p>
+where Semester = (select max(Semester) from Student);</code></pre><p></p></details></li></ul></li></ol><p></p><p></p><p></p><p></p><p></p><h1 id="96ee9b95-06b4-4582-bd5e-87345b304798">Nested Queries</h1><p>
 Skalare retournieren in
 <mark class="highlight-gray"><code>SELECT</code></mark>
 ,
@@ -676,7 +676,7 @@ Tabellen retournieren in
 ,
 <code>ALL</code>
 vergleich mit allen Werten einer Tabelle, zb durch
-<mark class="highlight-gray"><code>&gt;= any ageTable.age</code></mark></p><p><code>EXISTS</code><mark class="highlight-gray"><code>!isEmpty()</code></mark><mark class="highlight-gray">solche queries nennt man "Existenziell quantifizierte Anfragen"</mark></p></div><p></p><p></p><p></p><p></p><p></p><p></p><p></p><h1>Umgang mit null</h1><p><mark class="highlight-blue">Prüfen</mark></p><div class="indented"><p><code>IS NULL</code>
+<mark class="highlight-gray"><code>&gt;= any ageTable.age</code></mark></p><p><code>EXISTS</code><mark class="highlight-gray"><code>!isEmpty()</code></mark><mark class="highlight-gray">solche queries nennt man "Existenziell quantifizierte Anfragen"</mark></p></div><p></p><p></p><p></p><p></p><p></p><p></p><p></p><h1 id="8e2ee424-896e-4efa-8ceb-3aac58f67838">Umgang mit null</h1><p><mark class="highlight-blue">Prüfen</mark></p><div class="indented"><p><code>IS NULL</code>
 ,
 <code>IS NOT NULL</code></p></div><p></p><p></p><p><mark class="highlight-blue">Count</mark></p><div class="indented"><p><code>count(*)</code>
 Zählt alle Tupel
@@ -684,7 +684,7 @@ Zählt alle Tupel
 Zählt alle ≠ null
 </p><p><code>count(distinct att)</code>
 Zählt alle ≠ null
-</p></div><p></p><p></p><p><mark class="highlight-blue">Arithmetische Ausdrücke</mark></p><div class="indented"><p>Wenn irgendein Operant null ist → immer null</p></div><p></p><p></p><p><mark class="highlight-blue">Vergleichsoperatoren</mark></p><div class="indented"><p>Dreiwertige Logik in SQL: true, false, unknown</p><p>Wenn irgendein Operant null ist → immer unknown</p></div><p></p><p></p><p></p><p></p><p></p><p></p><h1>Syntactic Sugar</h1><p><mark class="highlight-blue">Between, in</mark></p><div class="indented"><pre class="code"><code>select * from StudentIn
+</p></div><p></p><p></p><p><mark class="highlight-blue">Arithmetische Ausdrücke</mark></p><div class="indented"><p>Wenn irgendein Operant null ist → immer null</p></div><p></p><p></p><p><mark class="highlight-blue">Vergleichsoperatoren</mark></p><div class="indented"><p>Dreiwertige Logik in SQL: true, false, unknown</p><p>Wenn irgendein Operant null ist → immer unknown</p></div><p></p><p></p><p></p><p></p><p></p><p></p><h1 id="4f5f39fb-a0aa-4480-96c5-7d52ba1c5b02">Syntactic Sugar</h1><p><mark class="highlight-blue">Between, in</mark></p><div class="indented"><pre class="code"><code>select * from StudentIn
 where Semester &gt;= 1 and Semester &lt;= 4;</code></pre><pre class="code"><code>select * from StudentIn
 where Semester between 1 and 4;</code></pre><pre class="code"><code>select * from StudentIn
 where Semester in (1 ,2 ,3 ,4); --konstante Liste</code></pre></div><p></p><p></p><p><mark class="highlight-blue">Zeichenketten Wildcards</mark></p><div class="indented"><p><code>like</code></p><div class="indented"><p><code>_</code>
@@ -702,7 +702,7 @@ from prüfen ;</code></pre></div><p></p><p></p><p><mark class="highlight-blue">c
 → Wenn val null ist, dann gebe -1 aus.
 </p><p>kann auch mit cases gelöst werden</p></div><p></p><p></p><p><mark class="highlight-blue">concat</mark></p><div class="indented"><pre class="code"><code>select Vorname + Nachname from Person;
 select Vorname || Nachname from Person;
-select concat(Vorname, Nachname) from Person; </code></pre></div><p></p><p></p><p></p><h2>Joins</h2><p>Zwischen Table namen:</p><div class="indented"><p><code>cross join</code>
+select concat(Vorname, Nachname) from Person; </code></pre></div><p></p><p></p><p></p><h2 id="026fd6a2-b5a5-4d9a-b34f-cefc9c3ab269">Joins</h2><p>Zwischen Table namen:</p><div class="indented"><p><code>cross join</code>
 Kreuzprodukt (kann Beistrich ersetzen)
 </p><p><code>natural join</code>
 natürlicher Join
