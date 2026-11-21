@@ -593,7 +593,7 @@ min-height: 1em !important;
 Solution 1:
 <mark class="highlight-gray"><code>Allscatter</code></mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b6d47836-fa59-404e-9d52-f151c1ee8999">
 Solution 2:
-<mark class="highlight-gray"><code>Reduce_scatter</code></mark></a></div></nav><p></p><h1>Theory</h1><p><style>
+<mark class="highlight-gray"><code>Reduce_scatter</code></mark></a></div></nav><p></p><h1 id="b82624b4-8005-43be-bf2c-462dac8da53d">Theory</h1><p><style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
 </style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mover accent="true"><mi>w</mi><mo>⃗</mo></mover><mo>=</mo><mi>M</mi><mo>⋅</mo><mover accent="true"><mi>v</mi><mo>⃗</mo></mover></mstyle></mrow><annotation encoding="application/x-tex">\small \vec w= M \cdot \vec v</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.6426em; vertical-align: 0em"></span><span class="mord accent sizing reset-size6 size5"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.714em"><span style="top: -2.9em"><span class="pstrut" style="height: 2.9em"></span><span class="mord mathnormal" style="margin-right: 0.02691em">w</span></span><span style="top: -2.9em"><span class="pstrut" style="height: 2.9em"></span><span class="accent-body" style="left: -0.15216em"><span class="overlay" style="height: 0.714em; width: 0.471em"><svg height="0.714em" preserveaspectratio="xMinYMin" style="width: 0.471em" viewbox="0 0 471 714" width="0.471em"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
 3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
@@ -813,7 +813,7 @@ The sequential algorithm is always in in
 @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
 </style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n^2)</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.938364em; vertical-align: -0.225em"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right: 0.02778em">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.7926266666666666em"><span style="top: -2.963em; margin-right: 0.05555555555555556em"><span class="pstrut" style="height: 2.6em"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span>
 .
-</p><p>We now want to use collective operations to parallelize this.</p><p></p><p></p><h1>
+</p><p>We now want to use collective operations to parallelize this.</p><p></p><p></p><h1 id="87979775-950e-4725-ac88-fe15cd468c08">
 Solution 1:
 <mark class="highlight-gray"><code>Allscatter</code></mark></h1><p>Based on method 1</p><p></p><p><style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
@@ -931,7 +931,7 @@ is different for each process (and they iterate through
 @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
 </style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>i</mi></mstyle></mrow><annotation encoding="application/x-tex">\small i</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.593568em; vertical-align: 0em"></span><span class="mord mathnormal sizing reset-size6 size5">i</span></span></span></span></span><span>﻿</span></span>
 locally).
-</p></li></ol></div><p></p><p></p><h1>
+</p></li></ol></div><p></p><p></p><h1 id="b6d47836-fa59-404e-9d52-f151c1ee8999">
 Solution 2:
 <mark class="highlight-gray"><code>Reduce_scatter</code></mark></h1><p>Based on method 2</p><p></p><p><style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");

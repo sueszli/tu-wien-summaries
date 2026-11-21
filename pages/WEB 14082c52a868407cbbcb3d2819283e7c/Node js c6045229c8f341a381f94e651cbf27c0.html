@@ -591,7 +591,7 @@ min-height: 1em !important;
 }
 </style></head><body><article class="page sans"><header><h1 class="page-title">Node.js</h1><p class="page-description"></p></header><div class="page-body"><p><a href="https://joecreager.com/learnyounode-unofficial-companion/">https://joecreager.com/learnyounode-unofficial-companion/</a></p><p><a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs">
 https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs
-</a></p><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6e6cba7d-cb3f-4d62-ba2c-16059198ee28">Backend</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#51ad6eaa-59e8-47b6-84a8-8f3227370f36">Node.js</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c9ceb8e5-9f5e-434c-8d77-20730617392a">Express</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#49996dcf-67e1-4673-bbcb-12e2dfdb4100">Routes / URL Mapping</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4970dc75-3f8c-4bdc-a7cd-7bab2d6031e8">Request and Response Objects</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#60763f2b-2a72-4bdb-969e-6dc6d0341d8d">Middleware</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#43cafbbe-9a39-4ce2-889f-cb883a7084e3">Cookies and Sessions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3a5c38da-1bee-4cde-a648-b4e828f8342a">Environment Variables / Configuration (secrets)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f86b6e6e-e52e-4e67-a18c-11ae94b5dae7">Templating (Templates / Views)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c369e149-b058-4ea2-91d4-b19431da1bd6">Networking</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dc6f22cf-8a8b-4524-9dc8-7038a8931f64">Persistent Storage (Files)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4eb394f9-c206-4db4-ad49-674c0ba1e53f">Modules</a></div></nav><h1>Backend</h1><p>Technologies used for Backend in this course:</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Node.js</li></ol><ol class="numbered-list" start="2" type="1"><li>Express.js Framework</li></ol><ol class="numbered-list" start="3" type="1"><li>Node Package Manager NPM (Dependency Management)</li></ol></div><p></p><h1>Node.js</h1><p>JavaScript runtime environment = executes JavaScript code outside a web browser but in Chrome's V8 Engine.</p><p>Used to make Web Servers and networking tools.</p><p>"JavaScript everywhere" paradigm:</p><div class="indented"><p>
+</a></p><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6e6cba7d-cb3f-4d62-ba2c-16059198ee28">Backend</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#51ad6eaa-59e8-47b6-84a8-8f3227370f36">Node.js</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c9ceb8e5-9f5e-434c-8d77-20730617392a">Express</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#49996dcf-67e1-4673-bbcb-12e2dfdb4100">Routes / URL Mapping</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4970dc75-3f8c-4bdc-a7cd-7bab2d6031e8">Request and Response Objects</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#60763f2b-2a72-4bdb-969e-6dc6d0341d8d">Middleware</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#43cafbbe-9a39-4ce2-889f-cb883a7084e3">Cookies and Sessions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3a5c38da-1bee-4cde-a648-b4e828f8342a">Environment Variables / Configuration (secrets)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f86b6e6e-e52e-4e67-a18c-11ae94b5dae7">Templating (Templates / Views)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c369e149-b058-4ea2-91d4-b19431da1bd6">Networking</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dc6f22cf-8a8b-4524-9dc8-7038a8931f64">Persistent Storage (Files)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4eb394f9-c206-4db4-ad49-674c0ba1e53f">Modules</a></div></nav><h1 id="6e6cba7d-cb3f-4d62-ba2c-16059198ee28">Backend</h1><p>Technologies used for Backend in this course:</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Node.js</li></ol><ol class="numbered-list" start="2" type="1"><li>Express.js Framework</li></ol><ol class="numbered-list" start="3" type="1"><li>Node Package Manager NPM (Dependency Management)</li></ol></div><p></p><h1 id="51ad6eaa-59e8-47b6-84a8-8f3227370f36">Node.js</h1><p>JavaScript runtime environment = executes JavaScript code outside a web browser but in Chrome's V8 Engine.</p><p>Used to make Web Servers and networking tools.</p><p>"JavaScript everywhere" paradigm:</p><div class="indented"><p>
 web-application development around a single programming language, rather than different languages for server-side and client-side
 scripts.
 </p></div><p></p><p></p><p>Example: Simple Node.js Webserver Example (without Express)</p><div class="indented"><pre class="code"><code>const	http = require('http'); //importing package
@@ -610,7 +610,7 @@ Executing a Node.js program
 Opening cmd in the right path where
 <mark class="highlight-gray"><code>program.js</code></mark>
 is located
-</li></ol><ol class="numbered-list" start="2" type="1"><li><mark class="highlight-gray"><code>node program.js</code></mark></li></ol></div><p></p><p></p><h1>Express</h1><h2>Routes / URL Mapping</h2><pre class="code"><code>const	express	=	require('express');
+</li></ol><ol class="numbered-list" start="2" type="1"><li><mark class="highlight-gray"><code>node program.js</code></mark></li></ol></div><p></p><p></p><h1 id="c9ceb8e5-9f5e-434c-8d77-20730617392a">Express</h1><h2 id="49996dcf-67e1-4673-bbcb-12e2dfdb4100">Routes / URL Mapping</h2><pre class="code"><code>const	express	=	require('express');
 const	app	=	express();app.get('/hello',	function(req,	res)	{
 res.send('Hello	World!');
 });const	port	=	3000;
@@ -624,7 +624,7 @@ Here in
 path =
 <mark class="highlight-gray"><code>'/hello'</code></mark></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
 response =
-<mark class="highlight-gray"><code>res.send()</code></mark></li></ul></div><p></p><p></p><h2>Request and Response Objects</h2><p>Here we search for a recipe via its ID to update it:</p><pre class="code"><code>app.put('/recipes/:id', (req, res) =&gt; { //:id as a variable
+<mark class="highlight-gray"><code>res.send()</code></mark></li></ul></div><p></p><p></p><h2 id="4970dc75-3f8c-4bdc-a7cd-7bab2d6031e8">Request and Response Objects</h2><p>Here we search for a recipe via its ID to update it:</p><pre class="code"><code>app.put('/recipes/:id', (req, res) =&gt; { //:id as a variable
 const recipeId = req.params.id;
 const hasImage = req.query.hasImage == 'true'; //?hasImageconst recipe = Recipes.find(recipeId, hasImage);
 if(!recipe) {
@@ -633,7 +633,7 @@ return res.sendStatus(404); //not found
 const payload = req.body; //payload is received body
 recipe.update(payload);
 res.send({updateSuccess : recipeId}); //JSON
-});</code></pre><p></p><h2>Middleware</h2><p>Processing data from client with "Middleware functions":</p><pre class="code"><code>// for parsing application/json
+});</code></pre><p></p><h2 id="60763f2b-2a72-4bdb-969e-6dc6d0341d8d">Middleware</h2><p>Processing data from client with "Middleware functions":</p><pre class="code"><code>// for parsing application/json
 app.use(express.json());
 // for parsing HTML form data
 // application/x-www-form-urlencoded
@@ -642,7 +642,7 @@ app.use(express.urlencoded({ extended: true }));
 const payload = req.body;
 ...</code></pre><p>
 Also have access to
-<mark class="highlight-gray"><code>.next()</code></mark></p><p></p><h2>Cookies and Sessions</h2><p>Cookies can be set by both client and server as part of HTTP headers and are transmitted with every request/response cycle.</p><p>Sessions use cookies to store a unique identifier.</p><p>The associated session data is stored on the server.</p><pre class="code"><code>routes.get('/', async (req, res) =&gt; {
+<mark class="highlight-gray"><code>.next()</code></mark></p><p></p><h2 id="43cafbbe-9a39-4ce2-889f-cb883a7084e3">Cookies and Sessions</h2><p>Cookies can be set by both client and server as part of HTTP headers and are transmitted with every request/response cycle.</p><p>Sessions use cookies to store a unique identifier.</p><p>The associated session data is stored on the server.</p><pre class="code"><code>routes.get('/', async (req, res) =&gt; {
 let sessionId = req.cookies.sessionId; //parsed by middleware
 ...
 if(!sessionId) {
@@ -650,12 +650,12 @@ if(!sessionId) {
 res.cookie('sessionId', sessionId); //Cookie written into response header
 }
 ...
-}</code></pre><p></p><h2>Environment Variables / Configuration (secrets)</h2><p>Configuration can be kept a secret.</p><pre class="code"><code>const	db	=	require('db')
+}</code></pre><p></p><h2 id="3a5c38da-1bee-4cde-a648-b4e828f8342a">Environment Variables / Configuration (secrets)</h2><p>Configuration can be kept a secret.</p><pre class="code"><code>const	db	=	require('db')
 db.connect({
 host:	process.env.DB_HOST,
 username:	process.env.DB_USER,
 password:	process.env.DB_PASS
-})</code></pre><p>Other ways to pass configuration to the program (pass parameters, read from configuration file, etc.)</p><pre class="code"><code>const	port	=	process.argv.length	&gt;=	3	?	+process.argv[2] : 3000;</code></pre><p></p><h2>Templating (Templates / Views)</h2><p>Separation between program logic and output.</p><pre class="code"><code>app.set('view	engine', 'pug'); //enabled by middleware
+})</code></pre><p>Other ways to pass configuration to the program (pass parameters, read from configuration file, etc.)</p><pre class="code"><code>const	port	=	process.argv.length	&gt;=	3	?	+process.argv[2] : 3000;</code></pre><p></p><h2 id="f86b6e6e-e52e-4e67-a18c-11ae94b5dae7">Templating (Templates / Views)</h2><p>Separation between program logic and output.</p><pre class="code"><code>app.set('view	engine', 'pug'); //enabled by middleware
 ...
 routes.get('/',	async	(req,	res)	=&gt;	{
 res.render('users',	{
@@ -686,7 +686,7 @@ jane.doe@tuwien.ac.at
 jack.bauer@tuwien.ac.at
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/html&gt;</code></pre><p></p><h2>Networking</h2><p>
+&lt;/html&gt;</code></pre><p></p><h2 id="c369e149-b058-4ea2-91d4-b19431da1bd6">Networking</h2><p>
 Many Libraries, ie.
 <mark class="highlight-gray"><code>node-fetch</code></mark>
 to fetch resources from other APIs
@@ -697,9 +697,9 @@ if(response.status !== 200) { //not successful
 console.log('Could not find object with id'	+	objectID);
 return	false;
 }
-const	object = await response.json();</code></pre><p></p><h2>Persistent Storage (Files)</h2><p>Filesystem utilities have synchronous and asynchronous API in Node</p><pre class="code"><code>const	fs = require('fs');
+const	object = await response.json();</code></pre><p></p><h2 id="dc6f22cf-8a8b-4524-9dc8-7038a8931f64">Persistent Storage (Files)</h2><p>Filesystem utilities have synchronous and asynchronous API in Node</p><pre class="code"><code>const	fs = require('fs');
 const	path = require('path');
-const	destinations = JSON.parse(fs.readFileSync(path.join(__dirname,	'../res/data.json'))); </code></pre><p></p><h2>Modules</h2><p>≠ ES6 Modules like in JavaScript but similar</p><pre class="code"><code>const search = async (term, max=100) =&gt; { ... }
+const	destinations = JSON.parse(fs.readFileSync(path.join(__dirname,	'../res/data.json'))); </code></pre><p></p><h2 id="4eb394f9-c206-4db4-ad49-674c0ba1e53f">Modules</h2><p>≠ ES6 Modules like in JavaScript but similar</p><pre class="code"><code>const search = async (term, max=100) =&gt; { ... }
 ...
 module.exports.search = search;</code></pre><pre class="code"><code>const met = require('../utils/met.js');
 const artworks = met.search('van gogh');</code></pre></div></article></body></html>

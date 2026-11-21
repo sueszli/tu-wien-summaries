@@ -589,7 +589,7 @@ font-size: 100% !important;
 }p {
 min-height: 1em !important;
 }
-</style></head><body><article class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📎</span></div><h1 class="page-title">Semaphoren Patterns</h1><p class="page-description"></p></header><div class="page-body"><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e24439d6-a938-4f04-99b2-1c006b651257">Producer-Consumer Problem</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#91ece40b-867e-461d-8ee2-8d4cdbd2c58b">Priorität von Prozessen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bdec222c-7220-45c5-8204-296ccf0357ac">Reader-Writer Problem</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#01d4550e-f236-469f-aa85-8052ac0d7964">Dining Philosophers Problem</a></div></nav><h1>Producer-Consumer Problem</h1><p>Producer generieren daten die sie über einen Puffer an Consumer übergeben.</p><p>Mutual exclusion</p><div class="indented"><p>Zu jedem Zeitpunkt darf nur ein Prozess auf den Puffer zugreifen.</p></div><p></p><p>Condition synchronization</p><div class="indented"><p>Ein Consumer darf nur dann lesen wenn mindestens 1 Element im Buffer steht</p></div><p></p><p></p><p><mark class="highlight-blue">Endloser Buffer-Speicher</mark></p><pre class="code"><code>append(v):
+</style></head><body><article class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📎</span></div><h1 class="page-title">Semaphoren Patterns</h1><p class="page-description"></p></header><div class="page-body"><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e24439d6-a938-4f04-99b2-1c006b651257">Producer-Consumer Problem</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#91ece40b-867e-461d-8ee2-8d4cdbd2c58b">Priorität von Prozessen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bdec222c-7220-45c5-8204-296ccf0357ac">Reader-Writer Problem</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#01d4550e-f236-469f-aa85-8052ac0d7964">Dining Philosophers Problem</a></div></nav><h1 id="e24439d6-a938-4f04-99b2-1c006b651257">Producer-Consumer Problem</h1><p>Producer generieren daten die sie über einen Puffer an Consumer übergeben.</p><p>Mutual exclusion</p><div class="indented"><p>Zu jedem Zeitpunkt darf nur ein Prozess auf den Puffer zugreifen.</p></div><p></p><p>Condition synchronization</p><div class="indented"><p>Ein Consumer darf nur dann lesen wenn mindestens 1 Element im Buffer steht</p></div><p></p><p></p><p><mark class="highlight-blue">Endloser Buffer-Speicher</mark></p><pre class="code"><code>append(v):
 b[in] := v;
 in := in + 1;take():
 w := b[out];
@@ -635,7 +635,7 @@ w := take();
 signal(S);
 signal(E); &lt;--
 consume(w);
-}</code></pre></div></div><p></p><h1>Priorität von Prozessen</h1><p>Wir wollen P1-Prozesse gegenüber P2-Prozessen priorisieren.</p><p><mark class="highlight-blue">Lösung 1</mark></p><p>
+}</code></pre></div></div><p></p><h1 id="91ece40b-867e-461d-8ee2-8d4cdbd2c58b">Priorität von Prozessen</h1><p>Wir wollen P1-Prozesse gegenüber P2-Prozessen priorisieren.</p><p><mark class="highlight-blue">Lösung 1</mark></p><p>
 Synchronisierung von 2 Prozessen die mit mutual exclusion of ein
 <mark class="highlight-gray"><code>ShM</code></mark><mark class="highlight-gray"></mark>
 zugreifen, wobei P1 gegenüber P2 priorisiert wird.
@@ -670,7 +670,7 @@ ShMAccess;
 signal(A);
 }</code></pre></div></div><p><mark class="highlight-gray"><code>B</code></mark><mark class="highlight-gray"></mark>
 dient dazu in jedem der drei Segmente im Programm1 alle instructions atomar zu exekutieren.
-</p><p></p><h1>Reader-Writer Problem</h1><p>Analogie: Tafel in einer Schule</p><div class="indented"><p>
+</p><p></p><h1 id="bdec222c-7220-45c5-8204-296ccf0357ac">Reader-Writer Problem</h1><p>Analogie: Tafel in einer Schule</p><div class="indented"><p>
 Während die Tafel jeweils von einem einzigen Schreiber beschrieben wird darf niemand zusehen aber danach dürfen beliebig viele Leser
 parellel die Tafel lesen.
 </p></div><p></p><p>Writer muss priorisiert werden und darf jederzeit die Leser unterbrechen.</p><div class="indented"><p></p></div><p></p><p><mark class="highlight-blue">Versuch 1</mark></p><p>Der 1.reader muss sich mit dem writer synchronisieren, der Rest der reader nicht.</p><pre class="code"><code>init(x,1); init(wsem,1);
@@ -787,7 +787,7 @@ signal(x);
 wait(rsem);wait(wsem);
 write;
 signal(wsem);signal(rsem);
-}</code></pre></div></div><p></p><h1>Dining Philosophers Problem</h1><p>5 Philosophen die gemeinsam essen, jeder braucht 2 Gabeln.</p><figure class="image"><a href="Semaphoren%20Patterns%20ab7ddee9f9214711976eee0832ee4282/Untitled.png"><img src="Semaphoren%20Patterns%20ab7ddee9f9214711976eee0832ee4282/Untitled.png" style="width: 120px"/></a></figure><p></p><p><mark class="highlight-blue">Versuch</mark></p><p>Ein Prozess pro Philosoph. Ein Semaphor pro Gabel.</p><p>
+}</code></pre></div></div><p></p><h1 id="01d4550e-f236-469f-aa85-8052ac0d7964">Dining Philosophers Problem</h1><p>5 Philosophen die gemeinsam essen, jeder braucht 2 Gabeln.</p><figure class="image"><a href="Semaphoren%20Patterns%20ab7ddee9f9214711976eee0832ee4282/Untitled.png"><img src="Semaphoren%20Patterns%20ab7ddee9f9214711976eee0832ee4282/Untitled.png" style="width: 120px"/></a></figure><p></p><p><mark class="highlight-blue">Versuch</mark></p><p>Ein Prozess pro Philosoph. Ein Semaphor pro Gabel.</p><p>
 Jeder Philosoph ist greedy und nimmt beide gabeln nacheinander. → Deadlock, kein Prozess kann die 3. Zeile ausführen wenn alle gleichzeitig
 die 2. Zeile ausführen.
 </p><pre class="code"><code>for(i=0; i&lt;=4; i++){

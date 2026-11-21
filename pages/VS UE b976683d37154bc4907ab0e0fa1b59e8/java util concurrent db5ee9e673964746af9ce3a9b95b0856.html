@@ -597,11 +597,11 @@ https://docs.oracle.com/javase/tutorial/essential/concurrency/executors.html
 https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-summary.html#MemoryVisibility
 </a></p><p></p><p>In depth tutorials</p><div class="indented"><p><a href="https://www.youtube.com/watch?v=mTGdtC9f4EU&amp;list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&amp;index=1">
 https://www.youtube.com/watch?v=mTGdtC9f4EU&amp;list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&amp;index=1
-</a></p></div><p></p><p>Compact summary</p><div class="indented"><p><a href="https://www.youtube.com/watch?v=c-a5JHVfGYM">https://www.youtube.com/watch?v=c-a5JHVfGYM</a></p></div><p></p><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#115fe601-eb41-4963-a297-96fda761ce2e">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8ad9fc1d-3b46-4305-9cf6-0789987c9e64">Thread</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#21093a83-e2a9-45b0-8031-d083230fe6ae">Thread API</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f325b5f2-3018-422d-8137-fd5a001b8d2d">Synchronization</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#144e5af9-9ab9-4022-bc39-b826385e9577">Liveliness</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bbdce8ab-a095-4e6a-acb5-a839ef65fb3c">Guarded Blocks</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#781f7f64-a37f-478c-bf6d-80793a96d3c9">High level Concurrency Objects</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fc918062-86c0-4c03-8455-534b4b48feab">Lock</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ae77970d-79f4-4fa1-86c9-c93da153ef43">Executor</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b6820dc2-949a-4275-8fa4-138f087b06c4">Thread Pools</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2d38581e-d3ba-4ace-8d78-6ec15261d57d">Concurrent Collections</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#28fb931f-614f-45a6-afde-f401980f64de">Atomic Variables</a></div></nav><p></p><h1>Definition</h1><p><mark class="highlight-blue">Process</mark></p><div class="indented"><p>The JVM is run as a single process process scheduled by the OS.</p><p>A Java application can also create additional processes (not part of this tutorial).</p><p></p></div><p></p><p><mark class="highlight-blue">Thread</mark></p><div class="indented"><p>Lightweight processes - creating it requires less resources.</p><p>Exist within a process and share its resources.</p><p>
+</a></p></div><p></p><p>Compact summary</p><div class="indented"><p><a href="https://www.youtube.com/watch?v=c-a5JHVfGYM">https://www.youtube.com/watch?v=c-a5JHVfGYM</a></p></div><p></p><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#115fe601-eb41-4963-a297-96fda761ce2e">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8ad9fc1d-3b46-4305-9cf6-0789987c9e64">Thread</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#21093a83-e2a9-45b0-8031-d083230fe6ae">Thread API</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f325b5f2-3018-422d-8137-fd5a001b8d2d">Synchronization</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#144e5af9-9ab9-4022-bc39-b826385e9577">Liveliness</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bbdce8ab-a095-4e6a-acb5-a839ef65fb3c">Guarded Blocks</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#781f7f64-a37f-478c-bf6d-80793a96d3c9">High level Concurrency Objects</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fc918062-86c0-4c03-8455-534b4b48feab">Lock</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ae77970d-79f4-4fa1-86c9-c93da153ef43">Executor</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b6820dc2-949a-4275-8fa4-138f087b06c4">Thread Pools</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2d38581e-d3ba-4ace-8d78-6ec15261d57d">Concurrent Collections</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#28fb931f-614f-45a6-afde-f401980f64de">Atomic Variables</a></div></nav><p></p><h1 id="115fe601-eb41-4963-a297-96fda761ce2e">Definition</h1><p><mark class="highlight-blue">Process</mark></p><div class="indented"><p>The JVM is run as a single process process scheduled by the OS.</p><p>A Java application can also create additional processes (not part of this tutorial).</p><p></p></div><p></p><p><mark class="highlight-blue">Thread</mark></p><div class="indented"><p>Lightweight processes - creating it requires less resources.</p><p>Exist within a process and share its resources.</p><p>
 You start with the
 <em>main</em><em>thread</em>
 .
-</p><p></p></div><p></p><p></p><h1>Thread</h1><p><code>Runnable</code></p><div class="indented"><p>
+</p><p></p></div><p></p><p></p><h1 id="8ad9fc1d-3b46-4305-9cf6-0789987c9e64">Thread</h1><p><code>Runnable</code></p><div class="indented"><p>
 Runnable is an interface which represents a task that could be executed by either a
 <mark class="highlight-gray"><code>Thread</code></mark><mark class="highlight-gray"></mark>
 or
@@ -619,7 +619,7 @@ Object must implement.
 System.out.println("Hello from a thread!");
 }public static void main(String args[]) {
 (new Thread(new HelloRunnable())).start();
-}}</code></pre><p></p><p></p><h2>Thread API</h2><p><code>.sleep()</code></p><div class="indented"><p>suspend execution inside a Thread (not precise).</p><p>Make CPU time available for other threads or processes.</p><p>
+}}</code></pre><p></p><p></p><h2 id="21093a83-e2a9-45b0-8031-d083230fe6ae">Thread API</h2><p><code>.sleep()</code></p><div class="indented"><p>suspend execution inside a Thread (not precise).</p><p>Make CPU time available for other threads or processes.</p><p>
 Can be interrupted with
 <mark class="highlight-gray"><code>InterruptedException</code></mark>
 .
@@ -706,7 +706,7 @@ SimpleThreads.threadMessage(importantInfo[i]);
 SimpleThreads.threadMessage("I wasn't done!");
 }
 }
-}</code></pre><p></p><p></p><h1>Synchronization</h1><p>Threads communicate by sharing memory. This might cause:</p><div class="indented"><p><mark class="highlight-blue">Thread Interference</mark></p><div class="indented"><p>Multiple Threads access shared memory</p><div class="indented"><p>
+}</code></pre><p></p><p></p><h1 id="f325b5f2-3018-422d-8137-fd5a001b8d2d">Synchronization</h1><p>Threads communicate by sharing memory. This might cause:</p><div class="indented"><p><mark class="highlight-blue">Thread Interference</mark></p><div class="indented"><p>Multiple Threads access shared memory</p><div class="indented"><p>
 This happens when two operations running on different threads acting on the same data,
 <em>interleave</em>
 .
@@ -765,7 +765,7 @@ Reads and writes are atomic for all primitive variables - but
 and
 <mark class="highlight-gray"><code>double</code></mark><mark class="highlight-gray"></mark>
 variables must be declared
-<code>volatile</code></p></div><p></p><p></p><h1>Liveliness</h1><p>Synchronization can cause thread contention like these.</p><p></p><p><mark class="highlight-blue">Deadlock</mark></p><div class="indented"><p>describes a situation where two or more threads are blocked forever, waiting for each other.</p></div><p></p><p>Example</p><div class="indented"><p>Two Friends (Gaston, Alphonse) who bow and remain bowed until the other friend can bow back.</p><p>
+<code>volatile</code></p></div><p></p><p></p><h1 id="144e5af9-9ab9-4022-bc39-b826385e9577">Liveliness</h1><p>Synchronization can cause thread contention like these.</p><p></p><p><mark class="highlight-blue">Deadlock</mark></p><div class="indented"><p>describes a situation where two or more threads are blocked forever, waiting for each other.</p></div><p></p><p>Example</p><div class="indented"><p>Two Friends (Gaston, Alphonse) who bow and remain bowed until the other friend can bow back.</p><p>
 If both bow at the same time, they remain locked forever. Neither block will ever end, because each thread is waiting for the other to
 exit
 <mark class="highlight-gray"><code>bow</code></mark>
@@ -793,7 +793,7 @@ gaston.bow(alphonse);
 }
 }).start();
 }
-}</code></pre><p></p><p><mark class="highlight-blue">Starvation</mark></p><div class="indented"><p>situation where a thread is unable to gain regular access to shared resources and is unable to make progress.</p><p>This happens when shared resources are made unavailable for long periods by "greedy" threads.</p></div><p></p><p></p><p><mark class="highlight-blue">Livelock</mark></p><div class="indented"><p>The threads are not blocked but still make no process- they are simply too busy responding to each other to resume work.</p></div><p></p><p></p><h2>Guarded Blocks</h2><p>Only proceed if a specified condition is met.</p><p>Using loops is wasteful:</p><div class="indented"><pre class="code"><code>public void guardedJoy() {
+}</code></pre><p></p><p><mark class="highlight-blue">Starvation</mark></p><div class="indented"><p>situation where a thread is unable to gain regular access to shared resources and is unable to make progress.</p><p>This happens when shared resources are made unavailable for long periods by "greedy" threads.</p></div><p></p><p></p><p><mark class="highlight-blue">Livelock</mark></p><div class="indented"><p>The threads are not blocked but still make no process- they are simply too busy responding to each other to resume work.</p></div><p></p><p></p><h2 id="bbdce8ab-a095-4e6a-acb5-a839ef65fb3c">Guarded Blocks</h2><p>Only proceed if a specified condition is met.</p><p>Using loops is wasteful:</p><div class="indented"><pre class="code"><code>public void guardedJoy() {
 while(!joy) {}
 System.out.println("Joy has been achieved!");
 }</code></pre></div><p></p><p></p><p><code>Object.wait()</code></p><div class="indented"><p>Suspends current Thread until (any) event - then it checks if the condition was met, again.</p><pre class="code"><code>public synchronized void guardedJoy() {
@@ -862,11 +862,11 @@ Drop drop = new Drop();
 (new Thread(new Producer(drop))).start();
 (new Thread(new Consumer(drop))).start();
 }
-}</code></pre><p></p><p></p><h1>High level Concurrency Objects</h1><p>
+}</code></pre><p></p><p></p><h1 id="781f7f64-a37f-478c-bf6d-80793a96d3c9">High level Concurrency Objects</h1><p>
 Synchronized code is build on top of a simple
 <em>reentrant lock</em>
 .
-</p><div class="indented"><p>Easy to use but many limitations.</p><p>One thread can lock an object at a time (kritischen Abschnitt betreten).</p><p>We now encapsulate task creation and management (previously done by threads) and the tasks themselves (runnables).</p></div><p></p><p></p><h2>Lock</h2><p><code>Lock</code>
+</p><div class="indented"><p>Easy to use but many limitations.</p><p>One thread can lock an object at a time (kritischen Abschnitt betreten).</p><p>We now encapsulate task creation and management (previously done by threads) and the tasks themselves (runnables).</p></div><p></p><p></p><h2 id="fc918062-86c0-4c03-8455-534b4b48feab">Lock</h2><p><code>Lock</code>
 Interface in
 <code>java.util.concurrent.locks</code></p><p>Example: Solve Deadlock</p><ul class="toggle"><li><details open=""><summary>Example</summary><pre class="code"><code>  public static void main(String[] args) {
 final Friend alphonse = new Friend("Alphonse");
@@ -928,7 +928,7 @@ this.name,
 bower.getName()
 );
 }
-}</code></pre></details></li></ul><p></p><h2>Executor</h2><p>Previously, we seperated the task being done by the thread (Runnable), and the thread itself, responsible for creating tasks.</p><p>We dont want to sperate thread management and creation from the rest of the application in large applications.</p><p></p><p><code>Executor</code></p><div class="indented"><p>Interface for launching new tasks.</p><p>
+}</code></pre></details></li></ul><p></p><h2 id="ae77970d-79f4-4fa1-86c9-c93da153ef43">Executor</h2><p>Previously, we seperated the task being done by the thread (Runnable), and the thread itself, responsible for creating tasks.</p><p>We dont want to sperate thread management and creation from the rest of the application in large applications.</p><p></p><p><code>Executor</code></p><div class="indented"><p>Interface for launching new tasks.</p><p>
 The Executor runs an existing worker thread to run the runnable
 <mark class="highlight-gray"><code>r</code></mark>
 or place it in a queue until the worker thread is available
@@ -953,7 +953,7 @@ objects.
 Accepts
 <mark class="highlight-gray"><code>Runnable</code></mark><mark class="highlight-gray"></mark>
 and
-<mark class="highlight-gray"><code>Callable</code></mark></p><p>Calls tasks with specified delay or in intervals with fixed delays.</p></div><p></p></div><p></p><p></p><h2>Thread Pools</h2><p>
+<mark class="highlight-gray"><code>Callable</code></mark></p><p>Calls tasks with specified delay or in intervals with fixed delays.</p></div><p></p></div><p></p><p></p><h2 id="b6820dc2-949a-4275-8fa4-138f087b06c4">Thread Pools</h2><p>
 These are implementations of the
 <mark class="highlight-gray"><code>ExecutorService</code></mark>
 .
@@ -977,13 +977,13 @@ Usage: Writing small portions of code in a
 do the work directly
 else
 split my work into two pieces
-invoke the two pieces and wait for the results</code></pre></div><p></p><p></p></div><p></p><h1>Concurrent Collections</h1><p>Help avoid Memory Consistency Errors.</p><div class="indented"><p>Set an Execution Order.</p></div><p></p><p></p><p><code>BlockingQueue</code></p><div class="indented"><p>Fifo Queue</p><p>Blocks when you try to add to a full queue or retrieve from an empty queue.</p><p></p></div><p></p><p><code>ConcurrentMap</code>
+invoke the two pieces and wait for the results</code></pre></div><p></p><p></p></div><p></p><h1 id="2d38581e-d3ba-4ace-8d78-6ec15261d57d">Concurrent Collections</h1><p>Help avoid Memory Consistency Errors.</p><div class="indented"><p>Set an Execution Order.</p></div><p></p><p></p><p><code>BlockingQueue</code></p><div class="indented"><p>Fifo Queue</p><p>Blocks when you try to add to a full queue or retrieve from an empty queue.</p><p></p></div><p></p><p><code>ConcurrentMap</code>
 /
 <code>ConcurrentHashMap</code></p><div class="indented"><p>
 Subinterface of
-<a href="http://java.util.Map"><mark class="highlight-gray"><code>java.util.Map</code></mark></a><mark class="highlight-gray">/</mark><mark class="highlight-gray"><code>java.util.Hashmap</code></mark></p><p>Atomic operations</p><p></p></div><p></p><p><code>ConcurrentNavigableMap</code></p><div class="indented"><p>
+<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html"><mark class="highlight-gray"><code>java.util.Map</code></mark></a><mark class="highlight-gray">/</mark><mark class="highlight-gray"><code>java.util.Hashmap</code></mark></p><p>Atomic operations</p><p></p></div><p></p><p><code>ConcurrentNavigableMap</code></p><div class="indented"><p>
 Analog of
-<mark class="highlight-gray"><code>TreeMap</code></mark></p></div><p></p><p></p><h1>Atomic Variables</h1><p>Atomic operations on a single variable.</p><p>
+<mark class="highlight-gray"><code>TreeMap</code></mark></p></div><p></p><p></p><h1 id="28fb931f-614f-45a6-afde-f401980f64de">Atomic Variables</h1><p>Atomic operations on a single variable.</p><p>
 All classes have
 <mark class="highlight-gray"></mark><mark class="highlight-gray"><code>get</code></mark><mark class="highlight-gray"></mark>
 and

@@ -589,7 +589,7 @@ font-size: 100% !important;
 }p {
 min-height: 1em !important;
 }
-</style></head><body><article class="page sans"><header><h1 class="page-title">PL/pgSQL</h1><p class="page-description"></p></header><div class="page-body"><p><a href="https://www.postgresql.org/docs/current/static/plpgsql.html">https://www.postgresql.org/docs/current/static/plpgsql.html</a></p><p>Prozedurale DB-Sprache für PostgreSQL</p><p></p><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c893f001-a22e-4568-85d9-b0a6c1de0b31">Funktionen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#851c73f7-81ec-4fac-a4d9-c291a1c85503">Variablen Typen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#51a0b569-fde7-4f3a-ae67-26f3eebb391a">Befehle</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b333d000-9ecf-4a22-b20d-3125af0d23af">Kontrollstrukturen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#79782f92-9596-4b58-884f-8270b651b2ed">Cursors</a></div></nav><p></p><p></p><h1>Funktionen</h1><pre class="code"><code>CREATE [OR REPLACE] FUNCTION name (arg argtype)
+</style></head><body><article class="page sans"><header><h1 class="page-title">PL/pgSQL</h1><p class="page-description"></p></header><div class="page-body"><p><a href="https://www.postgresql.org/docs/current/static/plpgsql.html">https://www.postgresql.org/docs/current/static/plpgsql.html</a></p><p>Prozedurale DB-Sprache für PostgreSQL</p><p></p><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c893f001-a22e-4568-85d9-b0a6c1de0b31">Funktionen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#851c73f7-81ec-4fac-a4d9-c291a1c85503">Variablen Typen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#51a0b569-fde7-4f3a-ae67-26f3eebb391a">Befehle</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b333d000-9ecf-4a22-b20d-3125af0d23af">Kontrollstrukturen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#79782f92-9596-4b58-884f-8270b651b2ed">Cursors</a></div></nav><p></p><p></p><h1 id="c893f001-a22e-4568-85d9-b0a6c1de0b31">Funktionen</h1><pre class="code"><code>CREATE [OR REPLACE] FUNCTION name (arg argtype)
 [RETURNS rettype | RETURNS TABLE (colname coltype)] AS $$
 ...
 $$ LANGUAGE plpgsql;</code></pre><p></p><p><mark class="highlight-blue">Funktionen</mark></p><div class="indented"><pre class="code"><code>SELECT sum(2,3);</code></pre><pre class="code"><code>CREATE FUNCTION sum (integer, integer) RETURNS integer AS $$
@@ -610,7 +610,7 @@ möglich)
 Ausgabe
 <mark class="highlight-gray"><code>RETURN NEXT exp;</code></mark><mark class="highlight-gray"></mark>
 concatinated tupel an Ergebnis - oder auch
-<mark class="highlight-gray"><code>void</code></mark></p></div><p></p><p></p><p></p><p></p><p></p><p></p><h1>Variablen Typen</h1><pre class="code"><code>name [CONSTANT] type [NOT NULL] [{DEFAULT | =} expression];</code></pre><p></p><p><mark class="highlight-blue">Typ</mark></p><div class="indented"><pre class="code"><code>matrknr integer;
+<mark class="highlight-gray"><code>void</code></mark></p></div><p></p><p></p><p></p><p></p><p></p><p></p><h1 id="851c73f7-81ec-4fac-a4d9-c291a1c85503">Variablen Typen</h1><pre class="code"><code>name [CONSTANT] type [NOT NULL] [{DEFAULT | =} expression];</code></pre><p></p><p><mark class="highlight-blue">Typ</mark></p><div class="indented"><pre class="code"><code>matrknr integer;
 input1 ALIAS FOR $1;
 rang CONSTANT varchar(2) = 'C4';</code></pre></div><p></p><p></p><p><mark class="highlight-blue">Copying Types</mark>
 von anderen Variable oder Tabellenspalte
@@ -622,7 +622,7 @@ von Tabelle (nicht veränderbar)
 von Tabelle (veränderbar, wiederverwendbar)
 </p><div class="indented"><pre class="code"><code>ergebnis RECORD;
 SELECT * INTO ergebnis FROM Studenten;
-SELECT * INTO ergebnis FROM Professoren;</code></pre></div><p></p><p></p><p></p><p></p><p></p><p></p><h1>Befehle</h1><p><mark class="highlight-blue">Befehl ohne Ergebnis</mark></p><div class="indented"><pre class="code"><code>PERFORM statement</code></pre><p><mark class="highlight-gray"><code>INSERT, UPDATE, ...</code></mark><mark class="highlight-gray"></mark>
+SELECT * INTO ergebnis FROM Professoren;</code></pre></div><p></p><p></p><p></p><p></p><p></p><p></p><h1 id="51a0b569-fde7-4f3a-ae67-26f3eebb391a">Befehle</h1><p><mark class="highlight-blue">Befehl ohne Ergebnis</mark></p><div class="indented"><pre class="code"><code>PERFORM statement</code></pre><p><mark class="highlight-gray"><code>INSERT, UPDATE, ...</code></mark><mark class="highlight-gray"></mark>
 brauchen kein prefix beim Aufrufen
 </p><p>
 Andere Befehle zB
@@ -641,7 +641,7 @@ oder
 Mit
 <mark class="highlight-gray"><code>STRICT</code></mark><mark class="highlight-gray"></mark>
 muss genau eine Zeile zurückgeliefert werden (ansonsten wird die erste gewählt).
-</p></div><p></p><p></p><p><mark class="highlight-blue">String parsen und executen</mark></p><div class="indented"><pre class="code"><code>EXECUTE cmdString [INTO [STRICT] var] [USING expr]; </code></pre><pre class="code"><code>EXECUTE format('SELECT count(*) FROM %I WHERE Sem &gt; $1', tabname) INTO c; </code></pre></div><p></p><p></p><p></p><p></p><p></p><p></p><h1>Kontrollstrukturen</h1><p><mark class="highlight-blue">BLOCK</mark></p><div class="indented"><pre class="code"><code>[&lt;&lt;label&gt;&gt;] -- name für Block
+</p></div><p></p><p></p><p><mark class="highlight-blue">String parsen und executen</mark></p><div class="indented"><pre class="code"><code>EXECUTE cmdString [INTO [STRICT] var] [USING expr]; </code></pre><pre class="code"><code>EXECUTE format('SELECT count(*) FROM %I WHERE Sem &gt; $1', tabname) INTO c; </code></pre></div><p></p><p></p><p></p><p></p><p></p><p></p><h1 id="b333d000-9ecf-4a22-b20d-3125af0d23af">Kontrollstrukturen</h1><p><mark class="highlight-blue">BLOCK</mark></p><div class="indented"><pre class="code"><code>[&lt;&lt;label&gt;&gt;] -- name für Block
 [DECLARE declarations] -- lokale Variablen
 BEGIN
 statements
@@ -697,7 +697,7 @@ BEGIN
 INSERT INTO pruefen VALUES (mn, vn, pn, 1);
 RETURN;
 EXCEPTION WHEN uniquie_violation THEN -- hier leer lassen
-END;END LOOP;</code></pre></div><p></p><p></p><p></p><p></p><p></p><h1>Cursors</h1><pre class="code"><code>name refcursor;
+END;END LOOP;</code></pre></div><p></p><p></p><p></p><p></p><p></p><h1 id="79782f92-9596-4b58-884f-8270b651b2ed">Cursors</h1><pre class="code"><code>name refcursor;
 name [[NO] SCROLL] CURSOR [(args)] FOR query;</code></pre><p><mark class="highlight-gray"><code>FOR query</code></mark>
 ,
 <mark class="highlight-gray"><code>SCROLL</code></mark><mark class="highlight-gray"></mark>

@@ -599,18 +599,18 @@ https://sqlbolt.com/
 select -
 <strong>statements / queries</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ce04b864-0642-40d8-bc6e-ed85d7009695">
 where -
-<strong>constraints and string matching</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bba61c7d-4f7a-4e2d-8096-9429abb0457d">distinct - remove duplicates</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e6afe624-8fd7-4d32-9e0e-2fac36cfcde0">order by - sort results, set limit and offset</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c99e8ef3-36f8-4c61-9e71-baa0eb836f2d">join - multi table queries</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c5d2bd1f-fc6f-4ff1-bb79-57e047bad848">as - queries with expressions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#af64ae82-8ae5-41c6-a7bc-ba6a77b76965">functions - aggregate expressions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#53311808-1857-4c85-b22b-09b7ff2e7a87">group by - grouping</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6ded7964-b38a-4d41-bae5-d25dd33bf660">Summary: A complete query</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e7c6f16d-4af5-4e1b-a3ce-4595f66c119f">Bonus: Matching character strings in the WHERE clause</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2165eb49-78a9-46e3-8cee-7552f06bfc6b">Insertion of data</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dc80f6ed-7b79-4013-a550-46850d76d235">SQL schema</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b97335dd-9f89-4faa-b86a-513073b8678b">insert - inserting new data</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ef4ad2f7-d029-488e-8722-3e4f3824334d">update - updating rows</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4788fbc3-aa5f-4f20-9e67-6ff5fb3dcc7c">delete - deleting rows</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c7d4eb6c-40b1-48db-9049-52d5a08dd15f">create table - defining table schemas</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1a9d9c53-5998-4b26-9b79-8d5c85eb61d6">alter table - changing database schemas</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#700fa629-2a45-449b-bfc8-60d33031c2be">drop table - removing database schema</a></div></nav><p></p><hr/><h2>About SQL</h2><p>
+<strong>constraints and string matching</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bba61c7d-4f7a-4e2d-8096-9429abb0457d">distinct - remove duplicates</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e6afe624-8fd7-4d32-9e0e-2fac36cfcde0">order by - sort results, set limit and offset</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c99e8ef3-36f8-4c61-9e71-baa0eb836f2d">join - multi table queries</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c5d2bd1f-fc6f-4ff1-bb79-57e047bad848">as - queries with expressions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#af64ae82-8ae5-41c6-a7bc-ba6a77b76965">functions - aggregate expressions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#53311808-1857-4c85-b22b-09b7ff2e7a87">group by - grouping</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6ded7964-b38a-4d41-bae5-d25dd33bf660">Summary: A complete query</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e7c6f16d-4af5-4e1b-a3ce-4595f66c119f">Bonus: Matching character strings in the WHERE clause</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2165eb49-78a9-46e3-8cee-7552f06bfc6b">Insertion of data</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dc80f6ed-7b79-4013-a550-46850d76d235">SQL schema</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b97335dd-9f89-4faa-b86a-513073b8678b">insert - inserting new data</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ef4ad2f7-d029-488e-8722-3e4f3824334d">update - updating rows</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4788fbc3-aa5f-4f20-9e67-6ff5fb3dcc7c">delete - deleting rows</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c7d4eb6c-40b1-48db-9049-52d5a08dd15f">create table - defining table schemas</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1a9d9c53-5998-4b26-9b79-8d5c85eb61d6">alter table - changing database schemas</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#700fa629-2a45-449b-bfc8-60d33031c2be">drop table - removing database schema</a></div></nav><p></p><hr/><h2 id="2ebca4c9-fbc9-4cc6-bf93-04e288e43838">About SQL</h2><p>
 is a language designed to allow users query, manipulate, and transform data from a
 <span style="border-bottom: 0.05em solid">relational database</span>
 .
 </p><p><mark class="highlight-gray">
 There are many popular SQL databases including SQLite, MySQL, Postgres, Oracle and Microsoft SQL Server. All of them support the common
 SQL language standard,
-</mark></p><p></p><p><strong>Relational Databases</strong></p><p>A relational database represents a collection of related (two-dimensional) tables.</p><p></p><h2>Select queries</h2><h3>
+</mark></p><p></p><p><strong>Relational Databases</strong></p><p>A relational database represents a collection of related (two-dimensional) tables.</p><p></p><h2 id="3b9ecea6-14a5-4939-8b40-3e79eee28d4f">Select queries</h2><h3 id="aeeaacd2-b64d-456e-8bb1-b1958764a00f">
 select -
 <strong>statements / queries</strong></h3><p>show entire table</p><div class="indented"><pre class="code"><code>SELECT *
 FROM myTable;</code></pre><p></p></div><p></p><p></p><p>select query for a specific column</p><div class="indented"><pre class="code"><code>SELECT column0, column1, ...
-FROM myTable;</code></pre></div><p></p><p></p><h3>
+FROM myTable;</code></pre></div><p></p><p></p><h3 id="ce04b864-0642-40d8-bc6e-ed85d7009695">
 where -
 <strong>constraints and string matching</strong></h3><p>Select query with constraints</p><div class="indented"><pre class="code"><code>SELECT column0, column1, …
 FROM myTable
@@ -620,9 +620,9 @@ AND/OR …;</code></pre><figure class="image"><a href="SQL%20Syntax%20c88f519eca
 FROM mytable
 WHERE column0 IS/IS NOT NULL
 AND/OR another_condition
-AND/OR …;</code></pre></div><p></p><p></p><h3>distinct - remove duplicates</h3><p>Only select unique results</p><div class="indented"><pre class="code"><code>SELECT DISTINCT column0, column1, …
+AND/OR …;</code></pre></div><p></p><p></p><h3 id="bba61c7d-4f7a-4e2d-8096-9429abb0457d">distinct - remove duplicates</h3><p>Only select unique results</p><div class="indented"><pre class="code"><code>SELECT DISTINCT column0, column1, …
 FROM mytable
-WHERE condition(s);</code></pre></div><p></p><p></p><h3>order by - sort results, set limit and offset</h3><p>SQL provides a way to sort your results by a given column in ascending or descending order</p><div class="indented"><pre class="code"><code>SELECT column0, column1, …
+WHERE condition(s);</code></pre></div><p></p><p></p><h3 id="e6afe624-8fd7-4d32-9e0e-2fac36cfcde0">order by - sort results, set limit and offset</h3><p>SQL provides a way to sort your results by a given column in ascending or descending order</p><div class="indented"><pre class="code"><code>SELECT column0, column1, …
 FROM mytable
 WHERE condition(s)
 ORDER BY column0 ASC/DESC;</code></pre></div><p></p><p></p><p>Using LIMIT and OFFSET clauses to indicate to the database the subset of the results you care about</p><div class="indented"><p>LIMIT: number of rows to return</p><p>OFFSET: where to begin counting the rows from</p><p><mark class="highlight-gray">
@@ -632,7 +632,7 @@ subsequent page can be represented by sets of links at different offsets in the 
 FROM mytable
 WHERE condition(s)
 ORDER BY column0 ASC/DESC
-LIMIT num_limit OFFSET num_offset;</code></pre></div><p></p><p></p><h3>join - multi table queries</h3><p>
+LIMIT num_limit OFFSET num_offset;</code></pre></div><p></p><p></p><h3 id="c99e8ef3-36f8-4c61-9e71-baa0eb836f2d">join - multi table queries</h3><p>
 Entity data in the real world is often broken down into pieces and stored across multiple orthogonal tables using a process known as
 <span style="border-bottom: 0.05em solid">normalization</span>
 .
@@ -655,14 +655,14 @@ INNER/LEFT/RIGHT/FULL JOIN another_table
 ON mytable.id = another_table.matching_id
 WHERE condition(s)
 ORDER BY column, … ASC/DESC
-LIMIT num_limit OFFSET num_offset;</code></pre></div><p></p><figure class="image"><a href="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%202.png"><img src="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%202.png" style="width: 624px"/></a></figure><p></p><h3>as - queries with expressions</h3><p>We can create a new column based on a self defined expression:</p><div class="indented"><pre class="code"><code>SELECT particle_speed / 2.0 AS half_particle_speed
+LIMIT num_limit OFFSET num_offset;</code></pre></div><p></p><figure class="image"><a href="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%202.png"><img src="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%202.png" style="width: 624px"/></a></figure><p></p><h3 id="c5d2bd1f-fc6f-4ff1-bb79-57e047bad848">as - queries with expressions</h3><p>We can create a new column based on a self defined expression:</p><div class="indented"><pre class="code"><code>SELECT particle_speed / 2.0 AS half_particle_speed
 FROM physics_data
 WHERE ABS(particle_position) * 10.0 &gt; 500;</code></pre><pre class="code"><code>SELECT column AS better_column_name, …
 FROM a_long_widgets_table_name AS mywidgets
 INNER JOIN widget_sales
-ON mywidgets.id = widget_sales.widget_id;</code></pre></div><p></p><p></p><h3>functions - aggregate expressions</h3><p>Functions used on columns</p><div class="indented"><pre class="code"><code>SELECT AGG_FUNC(column_or_expression) AS aggregate_description, …
+ON mywidgets.id = widget_sales.widget_id;</code></pre></div><p></p><p></p><h3 id="af64ae82-8ae5-41c6-a7bc-ba6a77b76965">functions - aggregate expressions</h3><p>Functions used on columns</p><div class="indented"><pre class="code"><code>SELECT AGG_FUNC(column_or_expression) AS aggregate_description, …
 FROM mytable
-WHERE constraint_expression;</code></pre><figure class="image"><a href="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%203.png"><img src="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%203.png" style="width: 1231px"/></a></figure></div><p></p><p></p><h3>group by - grouping</h3><p>Using aggregate functions on groups</p><p>The GROUP BY clause works by grouping rows that have the same value in the column specified.</p><div class="indented"><pre class="code"><code>SELECT AGG_FUNC(column_or_expression) AS aggregate_description, …
+WHERE constraint_expression;</code></pre><figure class="image"><a href="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%203.png"><img src="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%203.png" style="width: 1231px"/></a></figure></div><p></p><p></p><h3 id="53311808-1857-4c85-b22b-09b7ff2e7a87">group by - grouping</h3><p>Using aggregate functions on groups</p><p>The GROUP BY clause works by grouping rows that have the same value in the column specified.</p><div class="indented"><pre class="code"><code>SELECT AGG_FUNC(column_or_expression) AS aggregate_description, …
 FROM mytable
 WHERE constraint_expression
 GROUP BY column0;</code></pre><p>all groups with same val in column0</p><p></p></div><p></p><p><span style="border-bottom: 0.05em solid">HAVING</span>
@@ -673,7 +673,7 @@ the groups are formed).
 FROM mytable
 WHERE condition
 GROUP BY column0
-HAVING group_condition;</code></pre></div><p></p><p></p><h3>Summary: A complete query</h3><p>A complete query:</p><div class="indented"><pre class="code"><code>SELECT DISTINCT column, AGG_FUNC(column_or_expression), …
+HAVING group_condition;</code></pre></div><p></p><p></p><h3 id="6ded7964-b38a-4d41-bae5-d25dd33bf660">Summary: A complete query</h3><p>A complete query:</p><div class="indented"><pre class="code"><code>SELECT DISTINCT column, AGG_FUNC(column_or_expression), …
 FROM mytable
 JOIN another_table
 ON mytable.column = another_table.column
@@ -749,13 +749,13 @@ Finally, the rows that fall outside the range specified by the
 and
 <code><strong>OFFSET</strong></code>
 are discarded, leaving the final set of rows to be returned from the query.
-</p><p></p></div><p></p><h3>Bonus: Matching character strings in the WHERE clause</h3><p>The LIKE keyword indicates that the following character string is a matching pattern.</p><div class="indented"><pre class="code"><code>SELECT Surname
+</p><p></p></div><p></p><h3 id="e7c6f16d-4af5-4e1b-a3ce-4595f66c119f">Bonus: Matching character strings in the WHERE clause</h3><p>The LIKE keyword indicates that the following character string is a matching pattern.</p><div class="indented"><pre class="code"><code>SELECT Surname
 FROM Contacts
 WHERE Surname LIKE 'Mc%';</code></pre><p><code>Mc%</code>
 : Search for every name that begins with the letters Mc → McEvoy
 </p><p><code>%en%</code>
 : Search for every name containing the letters en → Pettengill, Lencki, Cohen
-</p></div><p></p><p>To make queries case insensitive:</p><div class="indented"><p>Lets say only the entry Pedro is available → we have to format every query to lower and then search:</p><pre class="code"><code>SELECT * FROM HORSE WHERE lower(name)='pedro'</code></pre></div><p></p><p></p><h2>Insertion of data</h2><h3>SQL schema</h3><p>
+</p></div><p></p><p>To make queries case insensitive:</p><div class="indented"><p>Lets say only the entry Pedro is available → we have to format every query to lower and then search:</p><pre class="code"><code>SELECT * FROM HORSE WHERE lower(name)='pedro'</code></pre></div><p></p><p></p><h2 id="2165eb49-78a9-46e3-8cee-7552f06bfc6b">Insertion of data</h2><h3 id="dc80f6ed-7b79-4013-a550-46850d76d235">SQL schema</h3><p>
 We previously described a table in a database as a two-dimensional set of rows and columns, with the columns being the properties and the
 rows being instances of the entity in the table. In SQL, the database schema is what describes the structure of each table, and
 the datatypes that each column of the table can contain.
@@ -767,7 +767,7 @@ table, the values in the
 column must be an Integer, and the values in the
 <em><strong>Title</strong></em>
 column must be a String.
-</p></div><p></p><p></p><h3>insert - inserting new data</h3><p>
+</p></div><p></p><p></p><h3 id="b97335dd-9f89-4faa-b86a-513073b8678b">insert - inserting new data</h3><p>
 declares which table to write into, the columns of data that we are filling, and one or more rows of data to insert. In general, each row of
 data you insert should contain values for every corresponding column in the table. You can insert multiple rows at a time by just listing
 them sequentially.
@@ -781,12 +781,12 @@ columns of data you have by specifying them explicitly.
 (column0, column1, …)
 VALUES (value_or_expr, another_value_or_expr, …),
 (value_or_expr_2, another_value_or_expr_2, …),
-…;</code></pre></div><p></p><p></p><h3>update - updating rows</h3><p>Update statement</p><div class="indented"><pre class="code"><code>UPDATE mytable
+…;</code></pre></div><p></p><p></p><h3 id="ef4ad2f7-d029-488e-8722-3e4f3824334d">update - updating rows</h3><p>Update statement</p><div class="indented"><pre class="code"><code>UPDATE mytable
 SET column0 = value_or_expr,
 column1 = another_value_or_expr,
 …
-WHERE condition;</code></pre></div><p></p><p></p><h3>delete - deleting rows</h3><p>To remove rows</p><div class="indented"><pre class="code"><code>DELETE FROM mytable
-WHERE condition;</code></pre><p></p></div><p></p><h3>create table - defining table schemas</h3><p>you can create a new database table using the CREATE TABLE statement. (default value is optional)</p><div class="indented"><pre class="code"><code>CREATE TABLE IF NOT EXISTS mytable (
+WHERE condition;</code></pre></div><p></p><p></p><h3 id="4788fbc3-aa5f-4f20-9e67-6ff5fb3dcc7c">delete - deleting rows</h3><p>To remove rows</p><div class="indented"><pre class="code"><code>DELETE FROM mytable
+WHERE condition;</code></pre><p></p></div><p></p><h3 id="c7d4eb6c-40b1-48db-9049-52d5a08dd15f">create table - defining table schemas</h3><p>you can create a new database table using the CREATE TABLE statement. (default value is optional)</p><div class="indented"><pre class="code"><code>CREATE TABLE IF NOT EXISTS mytable (
 column DataType TableConstraint DEFAULT default_value,
 another_column DataType TableConstraint DEFAULT default_value,
 …
@@ -796,7 +796,7 @@ title TEXT,
 director TEXT,
 year INTEGER,
 length_minutes INTEGER
-);</code></pre></div><p></p><p></p><p>Datatypes:</p><div class="indented"><figure class="image"><a href="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%204.png"><img src="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%204.png" style="width: 753px"/></a></figure></div><p></p><p></p><p>Table constraints:</p><div class="indented"><figure class="image"><a href="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%205.png"><img src="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%205.png" style="width: 741px"/></a></figure></div><p></p><p></p><h3>alter table - changing database schemas</h3><p>Adding a column:</p><div class="indented"><pre class="code"><code>ALTER TABLE mytable
+);</code></pre></div><p></p><p></p><p>Datatypes:</p><div class="indented"><figure class="image"><a href="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%204.png"><img src="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%204.png" style="width: 753px"/></a></figure></div><p></p><p></p><p>Table constraints:</p><div class="indented"><figure class="image"><a href="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%205.png"><img src="SQL%20Syntax%20c88f519ecac04a6c99243772789593a3/Untitled%205.png" style="width: 741px"/></a></figure></div><p></p><p></p><h3 id="1a9d9c53-5998-4b26-9b79-8d5c85eb61d6">alter table - changing database schemas</h3><p>Adding a column:</p><div class="indented"><pre class="code"><code>ALTER TABLE mytable
 ADD column0 DataType OptionalTableConstraint DEFAULT default_value;</code></pre></div><p></p><p></p><p>Removing columns:</p><div class="indented"><pre class="code"><code>ALTER TABLE mytable
 DROP column_to_be_deleted;</code></pre></div><p></p><p></p><p>Renaming table:</p><div class="indented"><pre class="code"><code>ALTER TABLE mytable
-RENAME TO new_table_name;</code></pre></div><p></p><p></p><h3>drop table - removing database schema</h3><p>To delete entire table</p><div class="indented"><pre class="code"><code>DROP TABLE IF EXISTS mytable;</code></pre></div><p></p><p></p></div></article></body></html>
+RENAME TO new_table_name;</code></pre></div><p></p><p></p><h3 id="700fa629-2a45-449b-bfc8-60d33031c2be">drop table - removing database schema</h3><p>To delete entire table</p><div class="indented"><pre class="code"><code>DROP TABLE IF EXISTS mytable;</code></pre></div><p></p><p></p></div></article></body></html>

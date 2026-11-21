@@ -592,7 +592,7 @@ min-height: 1em !important;
 </style></head><body><article class="page sans"><header><h1 class="page-title">SAX</h1><p class="page-description"></p></header><div class="page-body"><p><a href="https://docs.oracle.com/javase/7/docs/api/org/xml/sax/ContentHandler.html#endElement(java.lang.String,%20java.lang.String,%20java.lang.String)">
 https://docs.oracle.com/javase/7/docs/api/org/xml/sax/ContentHandler.html#endElement(java.lang.String, java.lang.String,
 java.lang.String)
-</a></p><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#07bd9e2f-733b-4629-8a5f-65efeff97b62">XML Parsers</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c4d7f1b4-1203-470b-bd65-84a2558b767f">Callbacks</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a77fe6c7-f55b-42ce-9874-b1ae43722fb2">Content handling: Examples</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#30fc3978-b260-4fb6-b3c4-fa49312d389e">Error Handling</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#340cbec2-2ca6-4288-823e-94b6588bf57c">Features</a></div></nav><p></p><h1>XML Parsers</h1><p><mark class="highlight-blue">Standards for XML parsers</mark></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
+</a></p><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#07bd9e2f-733b-4629-8a5f-65efeff97b62">XML Parsers</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c4d7f1b4-1203-470b-bd65-84a2558b767f">Callbacks</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a77fe6c7-f55b-42ce-9874-b1ae43722fb2">Content handling: Examples</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#30fc3978-b260-4fb6-b3c4-fa49312d389e">Error Handling</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#340cbec2-2ca6-4288-823e-94b6588bf57c">Features</a></div></nav><p></p><h1 id="07bd9e2f-733b-4629-8a5f-65efeff97b62">XML Parsers</h1><p><mark class="highlight-blue">Standards for XML parsers</mark></p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">
 DOM
 <p>= Document Object Model (tree-based)</p><p>W3C standard</p></li></ul><ul class="bulleted-list"><li style="list-style-type: disc">
 SAX
@@ -608,7 +608,7 @@ XML parser
 App
 </p><p>XML parser: splits document into pieces and sends the “XML information set” to the application.</p></div><p></p><figure class="image"><a href="SAX%202caacb16bc244eebba4db66ca6dfbaf0/Untitled.png"><img src="SAX%202caacb16bc244eebba4db66ca6dfbaf0/Untitled.png" style="width: 192px"/></a></figure><p></p><p><mark class="highlight-blue">Event-based Parser</mark></p><div class="indented"><p>
 Events = callbacks sent to the application by the event-based parser
-<mark class="highlight-gray">(ie. element start, end)</mark></p><p>Handlers = implemented by application to deal with events</p><p>Used for large documents with a lack of data structure.</p><ul class="bulleted-list"><li style="list-style-type: disc">Sequential access</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Fast</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Constant memory</li></ul></div><p></p><figure class="image"><a href="SAX%202caacb16bc244eebba4db66ca6dfbaf0/Untitled%201.png"><img src="SAX%202caacb16bc244eebba4db66ca6dfbaf0/Untitled%201.png" style="width: 192px"/></a></figure><figure class="image"><a href="SAX%202caacb16bc244eebba4db66ca6dfbaf0/Untitled%202.png"><img src="SAX%202caacb16bc244eebba4db66ca6dfbaf0/Untitled%202.png" style="width: 192px"/></a></figure><p></p><p></p><h1>Callbacks</h1><p><mark class="highlight-blue">Callbacks</mark></p><div class="indented"><p>We call the SAX-parser (and supply it with methods) which it calls back:</p><p><mark class="highlight-gray"><code>startDocument(...)</code></mark><mark class="highlight-gray"></mark>
+<mark class="highlight-gray">(ie. element start, end)</mark></p><p>Handlers = implemented by application to deal with events</p><p>Used for large documents with a lack of data structure.</p><ul class="bulleted-list"><li style="list-style-type: disc">Sequential access</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Fast</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Constant memory</li></ul></div><p></p><figure class="image"><a href="SAX%202caacb16bc244eebba4db66ca6dfbaf0/Untitled%201.png"><img src="SAX%202caacb16bc244eebba4db66ca6dfbaf0/Untitled%201.png" style="width: 192px"/></a></figure><figure class="image"><a href="SAX%202caacb16bc244eebba4db66ca6dfbaf0/Untitled%202.png"><img src="SAX%202caacb16bc244eebba4db66ca6dfbaf0/Untitled%202.png" style="width: 192px"/></a></figure><p></p><p></p><h1 id="c4d7f1b4-1203-470b-bd65-84a2558b767f">Callbacks</h1><p><mark class="highlight-blue">Callbacks</mark></p><div class="indented"><p>We call the SAX-parser (and supply it with methods) which it calls back:</p><p><mark class="highlight-gray"><code>startDocument(...)</code></mark><mark class="highlight-gray"></mark>
 beginning of parsing
 </p><p><mark class="highlight-gray"><code>startElement(...)</code></mark><mark class="highlight-gray"></mark>
 beginning of element
@@ -644,7 +644,7 @@ to implement stubs for all methods
 handles notation, unparsed entity declarations
 </p><p><mark class="highlight-gray"><code>EntityResolver</code></mark><mark class="highlight-gray"></mark>
 customized handling for external entities
-</p></div><p></p><p></p><p></p><h1>Content handling: Examples</h1><p><mark class="highlight-blue">Example 1) Simple SAX program</mark></p><div class="indented"><pre class="code"><code>&lt;?xml version="1.0"?&gt;
+</p></div><p></p><p></p><p></p><h1 id="a77fe6c7-f55b-42ce-9874-b1ae43722fb2">Content handling: Examples</h1><p><mark class="highlight-blue">Example 1) Simple SAX program</mark></p><div class="indented"><pre class="code"><code>&lt;?xml version="1.0"?&gt;
 &lt;course&gt;Semi-structured Data&lt;/course&gt;</code></pre><pre class="code"><code>startElement: course
 characters: Semi-structured Data
 endElement: course</code></pre><p>Program consists of 2 classes:</p><div class="indented"><ul class="toggle"><li><details open=""><summary><code><mark class="highlight-gray">CourseApp</mark></code></summary><pre class="code"><code>import org.xml.sax.*;
@@ -735,7 +735,7 @@ if (level == 0) {
 System.out.println(value);
 value = 0;
 }
-}}</code></pre></details></li></ul></div><p></p></div><p></p><p></p><p></p><h1>Error Handling</h1><p>
+}}</code></pre></details></li></ul></div><p></p></div><p></p><p></p><p></p><h1 id="30fc3978-b260-4fb6-b3c4-fa49312d389e">Error Handling</h1><p>
 Programming an
 <mark class="highlight-gray"><code>ErrorHandler</code></mark>
 to handle parsing errors (otherwise parsing errors will be ignored).
@@ -769,7 +769,7 @@ ex.getMessage());
 → validation error
 </p><p><mark class="highlight-gray"><code>public void warning(SAXParseException ex) throws SAXException</code></mark><mark class="highlight-gray"></mark>
 → minor error
-</p></div><p></p><p></p><p></p><h1>Features</h1><p><mark class="highlight-blue">Features</mark></p><div class="indented"><p><a href="https://xerces.apache.org/xerces2-j/features.html">https://xerces.apache.org/xerces2-j/features.html</a></p><p>
+</p></div><p></p><p></p><p></p><h1 id="340cbec2-2ca6-4288-823e-94b6588bf57c">Features</h1><p><mark class="highlight-blue">Features</mark></p><div class="indented"><p><a href="https://xerces.apache.org/xerces2-j/features.html">https://xerces.apache.org/xerces2-j/features.html</a></p><p>
 Used to configure parser with:
 <mark class="highlight-gray"><code>setFeature(java.lang.String name, boolean value)</code></mark></p><ul class="block-color-gray toggle"><li><details open=""><summary>Example</summary><pre class="code"><code>import org.xml.sax.*;
 import org.xml.sax.helpers.*;
@@ -792,7 +792,7 @@ parser.parse(args[i]);
 - if feature can not be assigned
 </p><div class="indented"><p>ie. turn on validation in a non-validating parser</p></div><p></p><p><mark class="highlight-gray"><code>SAXNotSupportedException</code></mark>
 - if feature can not be activated
-</p><div class="indented"><p>ie. turn on validation (in a validating parser) when part of the document has already been parsed</p></div><p></p></div><p></p></div><p></p><p></p><p><mark class="highlight-gray">Example of features:</mark><mark class="highlight-blue">Namespace awareness</mark></p><div class="indented"><p><a href="http://xml.org/sax/features/namespaces">http://xml.org/sax/features/namespaces</a></p><ul class="toggle"><li><details open=""><summary>
+</p><div class="indented"><p>ie. turn on validation (in a validating parser) when part of the document has already been parsed</p></div><p></p></div><p></p></div><p></p><p></p><p><mark class="highlight-gray">Example of features:</mark><mark class="highlight-blue">Namespace awareness</mark></p><div class="indented"><p><code>http://xml.org/sax/features/namespaces</code></p><ul class="toggle"><li><details open=""><summary>
 Reminder:
 <mark class="highlight-gray"><code>startElement(...)</code></mark><mark class="highlight-gray"></mark>
 is called at the beggining of every element
@@ -816,4 +816,4 @@ empty
 empty
 </p><p><mark class="highlight-gray"><code>qualifiedName</code></mark><mark class="highlight-gray"></mark>
 holds elements name (with prefix)
-</p></div><p></p></div><p></p><p></p><p><mark class="highlight-blue">Validation of document</mark></p><div class="indented"><p><a href="http://xml.org/sax/features/validation">http://xml.org/sax/features/validation</a></p></div><p></p></div></article></body></html>
+</p></div><p></p></div><p></p><p></p><p><mark class="highlight-blue">Validation of document</mark></p><div class="indented"><p><code>http://xml.org/sax/features/validation</code></p></div><p></p></div></article></body></html>

@@ -593,7 +593,7 @@ min-height: 1em !important;
 header
 </p><p><mark class="highlight-gray"><code>pthread_</code></mark><mark class="highlight-gray"></mark>
 prefix for names and functions
-</p><pre class="code"><code>gcc -Wall -o pthreadshello pthreadshello.c -pthread</code></pre></div><p></p><p></p><h2>Spawning</h2><p><mark class="highlight-blue">spawning thread</mark></p><div class="indented"><pre class="code"><code>#include &lt;pthread.h&gt;
+</p><pre class="code"><code>gcc -Wall -o pthreadshello pthreadshello.c -pthread</code></pre></div><p></p><p></p><h2 id="137ecf92-7749-4694-8551-94b10082e895">Spawning</h2><p><mark class="highlight-blue">spawning thread</mark></p><div class="indented"><pre class="code"><code>#include &lt;pthread.h&gt;
 int pthread_create(
 pthread_t *thread, // pointer as thread ID (thread object, opaque)
 const pthread_attr_t *attr, // attributes
@@ -719,7 +719,7 @@ pthread_join(handle[i],NULL); // wait to terminate
 }free(rank);
 free(handle);
 return 0;
-}</code></pre><p></p></details></li></ul></div><p></p><p></p><h2>Error codes</h2><p><mark class="highlight-blue">pthread error codes</mark></p><div class="indented"><p>
+}</code></pre><p></p></details></li></ul></div><p></p><p></p><h2 id="5eee7dc7-7a11-42bf-99ed-392aaef6a851">Error codes</h2><p><mark class="highlight-blue">pthread error codes</mark></p><div class="indented"><p>
 Good practice: checking return value (
 <mark class="highlight-gray"><code>error</code></mark>
 )
@@ -728,9 +728,9 @@ error = pthread_&lt;any pthreads function&gt;
 if (error!=0) {
 fprintf(stderr, "Thread %d in trouble with %d\", myid, error);
 // ...
-}</code></pre></div><p></p><p></p><h2>Finalizing</h2><p><mark class="highlight-blue">finalizing thread</mark></p><div class="indented"><pre class="code"><code>#include &lt;pthread.h&gt;
+}</code></pre></div><p></p><p></p><h2 id="55d7601f-348a-49eb-9d2c-9e3155d968b5">Finalizing</h2><p><mark class="highlight-blue">finalizing thread</mark></p><div class="indented"><pre class="code"><code>#include &lt;pthread.h&gt;
 void pthread_exit(void *status);</code></pre><pre class="code"><code>#include &lt;pthread.h&gt;
-int pthread_join(pthread_t thread, void **status); // allows catching status</code></pre></div><p></p><figure class="image"><a href="pthreads%20in%20C%20a302f3e3f5b143d6b98c716441b1a07e/Untitled%201.png"><img src="pthreads%20in%20C%20a302f3e3f5b143d6b98c716441b1a07e/Untitled%201.png" style="width: 240px"/></a></figure><p></p><h2>Binding threads to cores</h2><p><mark class="highlight-blue">Binding threads to cores</mark></p><div class="indented"><p><mark class="highlight-gray"><code>_np</code></mark><mark class="highlight-gray"></mark>
+int pthread_join(pthread_t thread, void **status); // allows catching status</code></pre></div><p></p><figure class="image"><a href="pthreads%20in%20C%20a302f3e3f5b143d6b98c716441b1a07e/Untitled%201.png"><img src="pthreads%20in%20C%20a302f3e3f5b143d6b98c716441b1a07e/Untitled%201.png" style="width: 240px"/></a></figure><p></p><h2 id="13f86ba0-4797-4b0a-b9ff-82e001256e14">Binding threads to cores</h2><p><mark class="highlight-blue">Binding threads to cores</mark></p><div class="indented"><p><mark class="highlight-gray"><code>_np</code></mark><mark class="highlight-gray"></mark>
 non-portable, non-standard extension to pthreads.
 </p><pre class="code"><code>#define _GNU_SOURCE
 #include &lt;pthread.h&gt;int pthread_setaffinity_np(pthread_t thread, size_t cpusetsize, const cpu_set_t *cpuset);

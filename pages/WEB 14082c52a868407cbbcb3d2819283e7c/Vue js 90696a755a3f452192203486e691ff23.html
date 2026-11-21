@@ -589,7 +589,7 @@ font-size: 100% !important;
 }p {
 min-height: 1em !important;
 }
-</style></head><body><article class="page sans"><header><h1 class="page-title">Vue.js</h1><p class="page-description"></p></header><div class="page-body"><p><a href="https://vuejs.org/v2/guide/">https://vuejs.org/v2/guide/</a></p><hr/><p><a href="https://www.youtube.com/watch?v=gbw8dyJT9AI">https://www.youtube.com/watch?v=gbw8dyJT9AI</a></p><div class="indented"><p><a href="https://github.com/web-engineering-tuwien/recipe-search-live-demo/tree/vue">
+</style></head><body><article class="page sans"><header><h1 class="page-title">Vue.js</h1><p class="page-description"></p></header><div class="page-body"><p><a href="https://v2.vuejs.org/v2/guide/">https://v2.vuejs.org/v2/guide/</a></p><hr/><p><a href="https://www.youtube.com/watch?v=gbw8dyJT9AI">https://www.youtube.com/watch?v=gbw8dyJT9AI</a></p><div class="indented"><p><a href="https://github.com/web-engineering-tuwien/recipe-search-live-demo/tree/vue">
 https://github.com/web-engineering-tuwien/recipe-search-live-demo/tree/vue
 </a></p></div><p></p><p><a href="https://www.youtube.com/watch?v=Wy9q22isx3U">https://www.youtube.com/watch?v=Wy9q22isx3U</a></p><p></p><nav class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5d775d66-d6b2-4a5d-9bb4-a824cc893b19">Concepts</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9c42a196-aec2-4d42-9e38-e5db205ed748">Vue.js</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ee6069fd-853f-4cfd-bc77-f705e5b31771">Components</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8ff052e1-0e09-40a4-9888-228f6aacb37f">
 One-Way Binding
@@ -609,7 +609,7 @@ Bounded loops
 Events and Methods
 <code>v-on, @event_name</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a312bbe4-e1a3-4def-8633-7a3ae878a5a6">
 Custom Events
-<code>this.$emit(event_name, 'data')</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e64140ed-ae4b-4857-9608-ebe4f990ae8b">Lifecycle Hooks</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9013d7ee-93a6-4405-8517-582279f98e81">State Management (Vuex)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#56f80e92-b413-44cd-b3da-5a4c835236e6">Routing / Navigation</a></div></nav><h1>Concepts</h1><p><mark class="highlight-teal">declarative</mark></p><div class="indented"><p>Using templates instead of imperatively defining DOM changes command by command.</p><p>Using binding to define relationships between DOM and data.</p></div><p></p><p><mark class="highlight-teal">reactive</mark></p><div class="indented"><p>Reacting to user input changes / events.</p></div><p></p><p><mark class="highlight-teal">MVVM</mark></p><div class="indented"><p>stands for:</p><ul class="bulleted-list"><li style="list-style-type: disc">Model (Data) Plain JavaScript Objects</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">ViewModel (Logic) Vue → Keeps View and Model in synch</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">View (DOM) Output / Design</li></ul></div><p></p><p><mark class="highlight-teal">Front-End vs. Back-End Templating</mark></p><div class="indented"><p><mark class="highlight-gray">Templating = seperating View and ViewModel.</mark></p><p>Backend templates work through request - response:</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Backend receives request</li></ol><ol class="numbered-list" start="2" type="1"><li>retrieves / computes data</li></ol><ol class="numbered-list" start="3" type="1"><li>generates HTML file</li></ol></div><p></p><p>Frontend templates are reactive (work through binding):</p><div class="indented"><p>
+<code>this.$emit(event_name, 'data')</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e64140ed-ae4b-4857-9608-ebe4f990ae8b">Lifecycle Hooks</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9013d7ee-93a6-4405-8517-582279f98e81">State Management (Vuex)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#56f80e92-b413-44cd-b3da-5a4c835236e6">Routing / Navigation</a></div></nav><h1 id="5d775d66-d6b2-4a5d-9bb4-a824cc893b19">Concepts</h1><p><mark class="highlight-teal">declarative</mark></p><div class="indented"><p>Using templates instead of imperatively defining DOM changes command by command.</p><p>Using binding to define relationships between DOM and data.</p></div><p></p><p><mark class="highlight-teal">reactive</mark></p><div class="indented"><p>Reacting to user input changes / events.</p></div><p></p><p><mark class="highlight-teal">MVVM</mark></p><div class="indented"><p>stands for:</p><ul class="bulleted-list"><li style="list-style-type: disc">Model (Data) Plain JavaScript Objects</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">ViewModel (Logic) Vue → Keeps View and Model in synch</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">View (DOM) Output / Design</li></ul></div><p></p><p><mark class="highlight-teal">Front-End vs. Back-End Templating</mark></p><div class="indented"><p><mark class="highlight-gray">Templating = seperating View and ViewModel.</mark></p><p>Backend templates work through request - response:</p><div class="indented"><ol class="numbered-list" start="1" type="1"><li>Backend receives request</li></ol><ol class="numbered-list" start="2" type="1"><li>retrieves / computes data</li></ol><ol class="numbered-list" start="3" type="1"><li>generates HTML file</li></ol></div><p></p><p>Frontend templates are reactive (work through binding):</p><div class="indented"><p>
 Model changes (triggered by user or backend)
 <style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
@@ -619,7 +619,7 @@ Value changes
 @import url("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css");
 </style><span class="notion-text-equation-token" contenteditable="false" data-token-index="0" style="user-select: all; -webkit-user-select: all; -moz-user-select: all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height: 0.36687em; vertical-align: 0em"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span>
 DOM update
-</p></div><p></p></div><p></p><p><mark class="highlight-teal">single page application</mark></p><div class="indented"><p>A single fetch from backend</p><p></p></div><p></p><h1>Vue.js</h1><p>Vue.js is a JavaScript Framework.</p><ul class="toggle"><li><details open=""><summary>CLI commands</summary><p><a href="https://cli.vuejs.org/guide/">https://cli.vuejs.org/guide/</a></p><p></p><p>Create project</p><div class="indented"><p><mark class="highlight-gray"><code>vue create &lt;projectName&gt;</code></mark></p><p><mark class="highlight-gray"><code>vue ui</code></mark><mark class="highlight-gray">→ graphical ui</mark></p></div><p></p><p></p><p>Project setup</p><div class="indented"><p><mark class="highlight-gray"><code>npm install</code></mark></p></div><p></p><p>Compiles and hot-reloads for development</p><div class="indented"><p><mark class="highlight-gray"><code>npm run serve</code></mark></p></div><p></p><p>Compiles and minifies for production</p><div class="indented"><p><mark class="highlight-gray"><code>npm run build</code></mark></p></div><p></p><p>Lints and fixes files</p><div class="indented"><p><mark class="highlight-gray"><code>npm run lint</code></mark></p></div><p></p></details></li></ul><p></p><p>Ways to import</p><ul class="toggle"><li><details open=""><summary><mark class="highlight-teal">As library - directly in html</mark></summary><pre class="code"><code>&lt;script	src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"&gt;&lt;/script&gt;&lt;div id="app"&gt;
+</p></div><p></p></div><p></p><p><mark class="highlight-teal">single page application</mark></p><div class="indented"><p>A single fetch from backend</p><p></p></div><p></p><h1 id="9c42a196-aec2-4d42-9e38-e5db205ed748">Vue.js</h1><p>Vue.js is a JavaScript Framework.</p><ul class="toggle"><li><details open=""><summary>CLI commands</summary><p><a href="https://cli.vuejs.org/guide/">https://cli.vuejs.org/guide/</a></p><p></p><p>Create project</p><div class="indented"><p><mark class="highlight-gray"><code>vue create &lt;projectName&gt;</code></mark></p><p><mark class="highlight-gray"><code>vue ui</code></mark><mark class="highlight-gray">→ graphical ui</mark></p></div><p></p><p></p><p>Project setup</p><div class="indented"><p><mark class="highlight-gray"><code>npm install</code></mark></p></div><p></p><p>Compiles and hot-reloads for development</p><div class="indented"><p><mark class="highlight-gray"><code>npm run serve</code></mark></p></div><p></p><p>Compiles and minifies for production</p><div class="indented"><p><mark class="highlight-gray"><code>npm run build</code></mark></p></div><p></p><p>Lints and fixes files</p><div class="indented"><p><mark class="highlight-gray"><code>npm run lint</code></mark></p></div><p></p></details></li></ul><p></p><p>Ways to import</p><ul class="toggle"><li><details open=""><summary><mark class="highlight-teal">As library - directly in html</mark></summary><pre class="code"><code>&lt;script	src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"&gt;&lt;/script&gt;&lt;div id="app"&gt;
 Hello, {{ course }}	    &lt;- View
 &lt;/div&gt;&lt;script&gt;
 var	app	=	new Vue({	    &lt;- ViewModel
@@ -650,7 +650,7 @@ course: 'Web Engineering'
 font-family:	Arial;
 color:	#2c3e50;
 }
-&lt;/style&gt;</code></pre></details></li></ul><p></p><h2>Components</h2><p>Consist of</p><div class="indented"><p><mark class="highlight-gray"><code>&lt;template&gt;</code></mark>
+&lt;/style&gt;</code></pre></details></li></ul><p></p><h2 id="ee6069fd-853f-4cfd-bc77-f705e5b31771">Components</h2><p>Consist of</p><div class="indented"><p><mark class="highlight-gray"><code>&lt;template&gt;</code></mark>
 HTML code, declares binding
 </p><p><mark class="highlight-gray"><code>&lt;script&gt;</code></mark>
 Behaviour of ViewModel
@@ -666,7 +666,7 @@ registered sub components of this template
 functions for event handling
 </p><p><mark class="highlight-gray"><code>mounted,...</code></mark><mark class="highlight-gray"></mark>
 life cycle methods
-</p></div><p></p><p></p><h2>
+</p></div><p></p><p></p><h2 id="8ff052e1-0e09-40a4-9888-228f6aacb37f">
 One-Way Binding
 <code>v-bind</code></h2><p>
 Interpolation Syntax
@@ -697,7 +697,7 @@ standardImage	:
 }
 }
 }
-&lt;/script&gt;</code></pre><h2>
+&lt;/script&gt;</code></pre><h2 id="a53d8072-f270-4a04-9f28-931d6362969c">
 Two-Way Binding
 <code>v-model</code></h2><p><mark class="highlight-gray">Not possible for properties, direct binding to parent causes maintainability issues</mark></p><p>The same as one way binding + emitting events.</p><p>
 As attribute
@@ -713,7 +713,7 @@ type="text" name="ingredients" /&gt;
 &lt;/form&gt;
 &lt;/section&gt;
 ...
-&lt;/template&gt;</code></pre><h2>Computed Properties</h2><p>Derived properties from model (data).</p><p>Should only</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">contain simple operations</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">be synchronous (will be cache, lazy reevaluated)</li></ul></div><p></p><pre class="code"><code>&lt;template&gt;
+&lt;/template&gt;</code></pre><h2 id="40facfe9-a4bf-4e04-abb6-05e34681d2fa">Computed Properties</h2><p>Derived properties from model (data).</p><p>Should only</p><div class="indented"><ul class="bulleted-list"><li style="list-style-type: disc">contain simple operations</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">be synchronous (will be cache, lazy reevaluated)</li></ul></div><p></p><pre class="code"><code>&lt;template&gt;
 &lt;article&gt;
 &lt;h2&gt;{{recipe.title}}&lt;/h2&gt;
 ...
@@ -745,7 +745,7 @@ set: function(ingredients) {
 this.ingredientInput = ingredients.join(',');
 }
 }
-}</code></pre><h2>
+}</code></pre><h2 id="467564b7-c598-4e5c-bdf8-765584a3bca9">
 Conditional rendering in Templates
 <code>v-if</code>
 ,
@@ -767,7 +767,7 @@ Full Recipe
 &lt;/template&gt;
 &lt;/div&gt;
 &lt;/article&gt;
-&lt;/template&gt;</code></pre><h2>
+&lt;/template&gt;</code></pre><h2 id="370e42a8-2c9d-47a3-96f8-9c5c1fbf203d">
 Bounded loops
 <code>v-for</code>
 ,
@@ -780,7 +780,7 @@ Bounded loops
 &lt;/li&gt;
 &lt;/ul&gt;
 ...
-&lt;/template&gt;</code></pre><h2>
+&lt;/template&gt;</code></pre><h2 id="3ef05e68-1a52-4939-8780-3c9dff078759">
 Events and Methods
 <code>v-on, @event_name</code></h2><p>
 Reacting to DOM events and adding
@@ -810,7 +810,7 @@ this.recipes = ...
 }
 ...
 }
-&lt;/script&gt;</code></pre><p></p><h2>
+&lt;/script&gt;</code></pre><p></p><h2 id="a312bbe4-e1a3-4def-8633-7a3ae878a5a6">
 Custom Events
 <code>this.$emit(event_name, 'data')</code></h2><p>
 get emitted with
@@ -836,7 +836,7 @@ this.$emit("ingredientAdd",	ingredient);
 }
 }
 ...
-&lt;/script&gt;</code></pre><p></p><h2>Lifecycle Hooks</h2><p>Only two hooks important for this Lecture:</p><ol class="numbered-list" start="1" type="1"><li><mark class="highlight-gray"><code>mounted()</code></mark><ul class="bulleted-list"><li style="list-style-type: disc">after DOM has been fully rendered for component (but maybe not all child components!)</li></ul></li></ol><ol class="numbered-list" start="2" type="1"><li><mark class="highlight-gray"><code>created()</code></mark><ul class="bulleted-list"><li style="list-style-type: disc">before DOM has been loaded</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">access to data, computed properties, methods, etc</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Used to trigger actions like fetching data from backends</li></ul></li></ol><p></p><h2>State Management (Vuex)</h2><p><mark class="highlight-gray">Uses</mark><mark class="highlight-gray"><code>Vuex</code></mark><mark class="highlight-gray">library.</mark><mark class="highlight-gray"><a href="https://vuex.vuejs.org/">https://vuex.vuejs.org/</a></mark></p><p>Managing a shared global state between all components.</p><p>No direct access to global state:</p><ol class="numbered-list" start="1" type="1"><li>
+&lt;/script&gt;</code></pre><p></p><h2 id="e64140ed-ae4b-4857-9608-ebe4f990ae8b">Lifecycle Hooks</h2><p>Only two hooks important for this Lecture:</p><ol class="numbered-list" start="1" type="1"><li><mark class="highlight-gray"><code>mounted()</code></mark><ul class="bulleted-list"><li style="list-style-type: disc">after DOM has been fully rendered for component (but maybe not all child components!)</li></ul></li></ol><ol class="numbered-list" start="2" type="1"><li><mark class="highlight-gray"><code>created()</code></mark><ul class="bulleted-list"><li style="list-style-type: disc">before DOM has been loaded</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">access to data, computed properties, methods, etc</li></ul><ul class="bulleted-list"><li style="list-style-type: disc">Used to trigger actions like fetching data from backends</li></ul></li></ol><p></p><h2 id="9013d7ee-93a6-4405-8517-582279f98e81">State Management (Vuex)</h2><p><mark class="highlight-gray">Uses</mark><mark class="highlight-gray"><code>Vuex</code></mark><mark class="highlight-gray">library.</mark><mark class="highlight-gray"><a href="https://vuex.vuejs.org/">https://vuex.vuejs.org/</a></mark></p><p>Managing a shared global state between all components.</p><p>No direct access to global state:</p><ol class="numbered-list" start="1" type="1"><li>
 Committing Mutations:
 <mark class="highlight-gray">(Synchronous functions)</mark><p>
 ie. calling
@@ -846,7 +846,7 @@ triggers a predefined increment mutation.
 Actions:
 <mark class="highlight-gray">(Can be Asynchronous)</mark><p>
 Can be read in components
-<code>this.$store.dispatch('incrementCart')</code></p></li></ol><p></p><h2>Routing / Navigation</h2><p>For single page applications.</p><p>
+<code>this.$store.dispatch('incrementCart')</code></p></li></ol><p></p><h2 id="56f80e92-b413-44cd-b3da-5a4c835236e6">Routing / Navigation</h2><p>For single page applications.</p><p>
 URL fragments allow linking while on the same browser page:
 <mark class="highlight-gray"><code>www.example.com/#/coolStuff</code></mark></p><pre class="code"><code>const routes = [
 { path: '/', redirect: '/search'},
