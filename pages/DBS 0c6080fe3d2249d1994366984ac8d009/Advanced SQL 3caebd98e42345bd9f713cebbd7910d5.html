@@ -605,7 +605,9 @@ SELECT MatrNr, avg(Note) AS dsN FROM pruefen GROUP BY MatrNr
 -- Tupel aus avgNote mit maximaler dsN
 bestAvgNote AS (
 SELECT MatrNr, dsN FROM avgNote WHERE dsN = (SELECT max(dsN) FROM avgNote))
-)SELECT MatrNr, dsN FROM bestAvgNote;</code></pre><p></p><p></p><p></p><p></p><p></p><h1 id="aae566ff-276f-417a-908b-512ff7432331">Rekursive Queries</h1><p><a href="https://www.postgresql.org/docs/current/queries-with.html">https://www.postgresql.org/docs/current/queries-with.html</a></p><p><a href="https://www.postgresql.org/docs/current/queries-with.html#QUERIES-WITH-RECURSIVE">PostgreSQL documentation: Recursive Queries</a></p><p><a href="https://www.citusdata.com/blog/2018/05/15/fun-with-sql-recursive-ctes/">
+)SELECT MatrNr, dsN FROM bestAvgNote;</code></pre><p></p><p></p><p></p><p></p><p></p><h1 id="aae566ff-276f-417a-908b-512ff7432331">Rekursive Queries</h1><p><a href="https://www.postgresql.org/docs/current/queries-with.html">https://www.postgresql.org/docs/current/queries-with.html</a></p><p><a href="https://martinheinz.dev/blog/18">
+https://martinheinz.dev/blog/18
+</a></p><p><a href="https://www.citusdata.com/blog/2018/05/15/fun-with-sql-recursive-ctes/">
 https://www.citusdata.com/blog/2018/05/15/fun-with-sql-recursive-ctes/
 </a></p><p></p><p>
 ermöglicht durch
